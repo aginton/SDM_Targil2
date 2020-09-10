@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.viewInfoMenu.ItemsView.ItemsUIController">
+   <children>
+      <TableView layoutX="14.0" layoutY="14.0" prefHeight="384.0" prefWidth="583.0">
+        <columns>
+          <TableColumn fx:id="itemIdLabel" prefWidth="75.0" text="Item id" />
+          <TableColumn fx:id="itemNameLabel" prefWidth="75.0" text="Item Name" />
+            <TableColumn fx:id="purchaseCategoryLabel" prefWidth="116.3333740234375" text="Purchase Category" />
+            <TableColumn fx:id="numberCarryingStoresLabel" prefWidth="114.3333740234375" text="Number Stores Carryig Item" />
+            <TableColumn fx:id="averagePriceLabel" prefWidth="91.6666259765625" text="Average Price" />
+            <TableColumn fx:id="totalAmountSoldLabel" prefWidth="75.0" text="Total Amount Sold" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

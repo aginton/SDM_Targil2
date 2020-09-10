@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.newOrderMenu.OrderMenuController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="155.0" spacing="20.0">
+         <children>
+            <Label fx:id="chooseCustomerLabel" text="Customer" />
+            <Label fx:id="chooseDateLabel" text="Date" />
+            <Label fx:id="chooseOrderTypeLabel" text="Order type" />
+            <Label fx:id="storeLabel" text="Store" />
+            <Label fx:id="addItemsLabel" text="Add items" />
+            <Label fx:id="chooseSalesLabel" text="Sales" />
+            <Label fx:id="confirmLabel" text="Confirm" />
+         </children>
+      </VBox>
+   </children>
+</HBox>

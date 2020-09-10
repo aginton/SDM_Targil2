@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainAnchorPane" prefHeight="581.0" prefWidth="862.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Main.MainAppController">
+    <children>
+      <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+              <SplitPane fx:id="mainSplitPane" dividerPositions="0.19230769230769232" maxWidth="1.7976931348623157E308" prefHeight="160.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(aliceblue, lightblue);;">
+                  <items>
+                      <AnchorPane fx:id="leftAnchorPane" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="115.0">
+                          <children>
+                              <VBox alignment="CENTER" maxWidth="115.0" prefHeight="400.0" prefWidth="115.0" spacing="20.0">
+                                  <children>
+                                      <Label alignment="TOP_CENTER" prefHeight="16.0" prefWidth="30.0" text="SDM" />
+                                      <Button fx:id="loadButton" mnemonicParsing="false" onAction="#loadButtonAction" prefWidth="52.0" text="Load" />
+                                      <Button fx:id="viewInfoButton" mnemonicParsing="false" onAction="#viewInfoButtonAction" text="View" />
+                                      <Button fx:id="newOrderButton" mnemonicParsing="false" onAction="#newOrderAction" text="New Order" />
+                                      <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateButtonAction" text="Update" />
+                                  </children>
+                              </VBox>
+                          </children>
+                      </AnchorPane>
+                      <AnchorPane fx:id="rightAnchorPane" minHeight="0.0" prefHeight="474.0" prefWidth="619.0">
+                     <children>
+                         <Label fx:id="testLabel" layoutX="229.0" layoutY="192.0" text="Label" visible="false" />
+                         <Label fx:id="errorMessageLabel" layoutX="193.0" layoutY="283.0" text="errorMessage" visible="false" />
+                     </children>
+                  </AnchorPane>
+                  </items>
+              </SplitPane>
+         </center>
+         <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="862.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="File:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="selectedFileName" text="(no file loaded)">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="10.0" top="10.0" />
+               </padding>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" right="10.0" />
+               </BorderPane.margin>
+            </HBox>
+         </top>
+      </BorderPane>
+    </children>
+</AnchorPane>

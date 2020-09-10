@@ -1,0 +1,1 @@
+xjc -p Resources.Schema.JAXBGenerated Resources/Schema/SDM-V2.xsd
