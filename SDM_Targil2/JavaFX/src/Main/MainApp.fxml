@@ -18,7 +18,7 @@
                   <items>
                       <AnchorPane fx:id="leftAnchorPane" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="115.0">
                           <children>
-                              <VBox alignment="CENTER" maxWidth="115.0" prefHeight="400.0" prefWidth="115.0" spacing="20.0">
+                              <VBox alignment="CENTER" maxWidth="115.0" prefHeight="527.0" prefWidth="115.0" spacing="20.0">
                                   <children>
                                       <Label alignment="TOP_CENTER" prefHeight="16.0" prefWidth="30.0" text="SDM" />
                                       <Button fx:id="loadButton" mnemonicParsing="false" onAction="#loadButtonAction" prefWidth="52.0" text="Load" />

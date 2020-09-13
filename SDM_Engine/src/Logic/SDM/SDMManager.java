@@ -1,14 +1,13 @@
 package Logic.SDM;
 
+import Logic.Customers.Customer;
+import Logic.Customers.Customers;
 import Logic.Inventory.Inventory;
 import Logic.Inventory.InventoryItem;
 import Logic.Order.Order;
 import Logic.Order.Orders;
 import Logic.Store.Store;
-import Resources.Schema.JAXBGenerated.SDMItem;
-import Resources.Schema.JAXBGenerated.SDMSell;
-import Resources.Schema.JAXBGenerated.SDMStore;
-import Resources.Schema.JAXBGenerated.SuperDuperMarketDescriptor;
+import Resources.Schema.JAXBGenerated.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -28,6 +27,7 @@ public class SDMManager extends SDMFileVerifier{
     private ObservableList<Store> stores2;
     private Inventory inventory;
     private Orders orderHistory;
+    private Customers customers;
 
 
     //Constructor
@@ -74,6 +74,23 @@ public class SDMManager extends SDMFileVerifier{
     public void setOrderHistory(Orders orderHistory) {
         this.orderHistory = orderHistory;
     }
+
+    public ObservableList<Store> getStores2() {
+        return stores2;
+    }
+
+    public void setStores2(ObservableList<Store> stores2) {
+        this.stores2 = stores2;
+    }
+
+    public Customers getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Customers customers) {
+        this.customers = customers;
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     //methods
@@ -86,6 +103,7 @@ public class SDMManager extends SDMFileVerifier{
             setIsValidFile(true);
             setLoadingErrorMessage("");
             setSDMDescriptor(sdmForChosenFile.getSDMDescriptor());
+            createCustomers(getSDMDescriptor());
             createInventory(getSDMDescriptor());
             createStores(getSDMDescriptor());
             Order.setNumOfOrders(0);
@@ -99,6 +117,15 @@ public class SDMManager extends SDMFileVerifier{
         }
     }
 
+    private void createCustomers(SuperDuperMarketDescriptor sdmDescriptor) {
+        customers = new Customers();
+        for (SDMCustomer customer: sdmDescriptor.getSDMCustomers().getSDMCustomer()){
+            Customer newCustomer =
+                    new Customer(customer.getId(), customer.getName(), customer.getLocation().getX(), customer.getLocation().getY());
+
+            customers.add(newCustomer);
+        }
+    }
 
 
     private void createInventory(SuperDuperMarketDescriptor sdm) {
@@ -135,21 +162,10 @@ public class SDMManager extends SDMFileVerifier{
 
 
     public void fillSampleData(ObservableList<Store> backingList) {
-        for (Store store: stores){
+        for (Store store: stores2){
             backingList.add(store);
         }
-//        backingList.add(new Person("Waldo", "Soller", "random notes 1"));
-//        backingList.add(new Person("Herb", "Dinapoli", "random notes 2"));
-//        backingList.add(new Person("Shawanna", "Goehring", "random notes 3"));
-//        backingList.add(new Person("Flossie", "Goehring", "random notes 4"));
-//        backingList.add(new Person("Magdalen", "Meadors", "random notes 5"));
-//        backingList.add(new Person("Marylou", "Berube", "random notes 6"));
-//        backingList.add(new Person("Ethan", "Nieto", "random notes 7"));
-//        backingList.add(new Person("Elli", "Combes", "random notes 8"));
-//        backingList.add(new Person("Andy", "Toupin", "random notes 9"));
-//        backingList.add(new Person("Zenia", "Linwood", "random notes 10"));
     }
-
 
 
 

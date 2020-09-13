@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -22,25 +23,7 @@ import java.io.IOException;
 public class MainAppController {
 
     @FXML
-    private HBox orderMenuRef;
-    private AnchorPane viewMenuRef;
-
-    @FXML
-    private Label testLabel;
-
-    @FXML
-    private Label errorMessageLabel;
-
-    @FXML
-    private AnchorPane mainAnchorPane;
-
-    @FXML
-    private AnchorPane leftAnchorPane;
-
-    @FXML
-    private AnchorPane rightAnchorPane;
-    @FXML
-    private Label selectedFileName;
+    private GridPane mainGridPane;
 
     @FXML
     private Button loadButton;
@@ -53,6 +36,25 @@ public class MainAppController {
 
     @FXML
     private Button updateButton;
+
+    @FXML
+    private Label fileLabel;
+    @FXML
+    private Label errorMessageLabel;
+
+
+    @FXML
+    private Label selectedFileName;
+
+    @FXML
+    private AnchorPane childAnchorPane;
+
+    @FXML
+    private GridPane orderMenuRef;
+
+    @FXML
+    private GridPane viewMenuRef;
+
 
     private
     SDMManager sdmManager;
@@ -80,7 +82,7 @@ public class MainAppController {
     @FXML
     void loadButtonAction(ActionEvent event) {
 
-        Window stage = mainAnchorPane.getScene().getWindow();
+        Window stage = mainGridPane.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose SDM file");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("xml files", "*.xml"));
@@ -129,9 +131,9 @@ public class MainAppController {
     private void loadXMLForOtherButtons() {
         System.out.println("Going to try and store ref to viewMenu.fxml");
         try {
-            viewMenuRef = FXMLLoader.load(getClass().getResource("/components/viewInfoMenu/ViewMenu.fxml"));
+            viewMenuRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewContainer.fxml"));
             System.out.println("Going to try and store ref to orderMenu.fxml");
-            orderMenuRef = FXMLLoader.load(getClass().getResource("/components/newOrderMenu/OrderMenu.fxml"));
+            orderMenuRef = FXMLLoader.load(getClass().getResource("/components/newOrderMenu/NewOrderContainer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -142,8 +144,12 @@ public class MainAppController {
 
         //loadPage("/components/ordermenu/OrderMenu");
         System.out.println("Calling setCenterPane(orderMenuRef):");
-        rightAnchorPane.getChildren().clear();
-        rightAnchorPane.getChildren().add(orderMenuRef);
+        childAnchorPane.getChildren().clear();
+        childAnchorPane.getChildren().add(orderMenuRef);
+        AnchorPane.setBottomAnchor(orderMenuRef, 0.0);
+        AnchorPane.setLeftAnchor(orderMenuRef, 0.0);
+        AnchorPane.setRightAnchor(orderMenuRef, 0.0);
+        AnchorPane.setTopAnchor(orderMenuRef, 0.0);
         //rightPane.getChildren().setAll(orderMenuRef);
     }
 
@@ -161,8 +167,8 @@ public class MainAppController {
 
         //loadPage("/components/viewMenu/ViewMenu");
         System.out.println("Calling setCenterPane(viewMenuRef):");
-        rightAnchorPane.getChildren().clear();
-        rightAnchorPane.getChildren().add(viewMenuRef);
+        childAnchorPane.getChildren().clear();
+        childAnchorPane.getChildren().add(viewMenuRef);
         AnchorPane.setBottomAnchor(viewMenuRef, 0.0);
         AnchorPane.setLeftAnchor(viewMenuRef, 0.0);
         AnchorPane.setRightAnchor(viewMenuRef, 0.0);

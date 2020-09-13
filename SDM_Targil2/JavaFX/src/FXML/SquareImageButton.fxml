@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="134.0" prefWidth="128.0" styleClass="square-button" stylesheets="@../CSS/shapes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML.SquareImageButton">
+   <children>
+      <Button mnemonicParsing="false" prefHeight="136.0" prefWidth="147.0" text="Button" />
+   </children>
+</AnchorPane>

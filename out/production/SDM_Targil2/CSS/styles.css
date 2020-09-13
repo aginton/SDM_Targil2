@@ -1,0 +1,27 @@
+.gridpane-borders{
+    -fx-border-color: #912344;
+    -fx-border-radius: 2;
+}
+.border-2{
+    -fx-border-color: #25b52d;
+    -fx-border-radius: 15;
+}
+.text-display{
+    -fx-font-weight: 18;
+    -fx-font-family: "Arial Rounded MT Bold";
+}
+.selected-cell{
+    -fx-background-color: #dc910e;
+    -fx-font-weight: bold;
+    -fx-border-radius: 1;
+    -fx-border-color: black;
+}
+.titled-pane > .title > .arrow-button .arrow{
+    -fx-shape: null;
+}
+.accordion .title > .arrow-button
+{
+    visibility: hidden;
+}
+
+

@@ -129,7 +129,7 @@ public class SDMFileVerifier {
 
         areCustomerIdsUnique = checkListOfIntsUnique(listOfCustomerIds, "SDMCustomer");
 
-        return (areItemIdsUnique && areStoreIdsUnique && isStoreUsingExistingItemIds && isStoreUsingUniqueItemIds && isEachExistingItemSoldSomewhere && areLocationsLegal);
+        return (areItemIdsUnique && areStoreIdsUnique && areCustomerIdsUnique && isStoreUsingExistingItemIds && isStoreUsingUniqueItemIds && isEachExistingItemSoldSomewhere && areLocationsLegal);
     }
 
 

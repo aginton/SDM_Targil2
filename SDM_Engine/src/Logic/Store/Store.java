@@ -22,15 +22,20 @@ public class Store {
     private StringProperty storeName = new SimpleStringProperty(this, "storeName","");
     private IntegerProperty deliveryPpk = new SimpleIntegerProperty(this, "deliveryPpk",0);
     private FloatProperty totalDeliveryIncome = new SimpleFloatProperty(this, "totalDeliveryIncome", 0f);
-    private ObservableList<Integer> storeLocation = FXCollections.observableArrayList();
+    private List<Integer> storeLocation = FXCollections.observableArrayList();
 
 //    private final ObservableList<InventoryItem> inventoryItems = FXCollections.observableArrayList(InventoryItem.extractor);
-    private ObservableList<InventoryItem> inventoryItems = FXCollections.observableArrayList();
+    private List<InventoryItem> inventoryItems = FXCollections.observableArrayList();
 //    private ObservableList<StoreItem> storeItems = FXCollections.observableArrayList();
-    private List<StoreItem> storeItems;
+    private List<StoreItem> storeItems = FXCollections.observableArrayList();
 
+    public List<StoreItem> getStoreItems() {
+        return storeItems;
+    }
 
-
+    public void setStoreItems(List<StoreItem> storeItems) {
+        this.storeItems = storeItems;
+    }
 
     //    private int deliveryPpk;
     private HashMap<Integer, Float> mapItemsToAmountSold;
@@ -65,7 +70,6 @@ public class Store {
         setStoreId(store.getId());
         setStoreName(store.getName());
         setDeliveryPpk(store.getDeliveryPpk());
-        storeItems = new ArrayList<>();
 
         storeLocation.add(store.getLocation().getX());
         storeLocation.add(store.getLocation().getY());
@@ -101,6 +105,10 @@ public class Store {
         this.storeName.set(storeName);
     }
 
+    public String getStoreName() {
+        return storeName.get();
+    }
+
     //storePPK
     public int getDeliveryPpk() {
         return deliveryPpk.get();
@@ -126,7 +134,7 @@ public class Store {
     }
 
     //storeLocation
-    public ObservableList<Integer> getStoreLocation() {
+    public List<Integer> getStoreLocation() {
         return storeLocation;
     }
 
@@ -135,11 +143,11 @@ public class Store {
     }
 
     //inventoryItems
-    public ObservableList<InventoryItem> getInventoryItems() {
+    public List<InventoryItem> getInventoryItems() {
         return inventoryItems;
     }
 
-    public void setInventoryItems(ObservableList<InventoryItem> inventoryItems) {
+    public void setInventoryItems(List<InventoryItem> inventoryItems) {
         this.inventoryItems = inventoryItems;
     }
 

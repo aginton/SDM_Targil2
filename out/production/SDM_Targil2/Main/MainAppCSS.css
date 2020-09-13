@@ -5,7 +5,7 @@
     -fx-text-fill: #b11010;
     -fx-font-size: 25px;
 }
-.label{
+.bordered-label{
     -fx-border-radius: 2;
     -fx-border-color: black;
 }

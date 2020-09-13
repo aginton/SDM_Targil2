@@ -19,7 +19,7 @@ public class SDMApp extends Application {
 
         primaryStage.setTitle("Super Duper Market");
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("MainApp.fxml");
+        URL url = getClass().getResource("MainContainer.fxml");
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(url.openStream());
 

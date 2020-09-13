@@ -1,0 +1,6 @@
+.square-button{
+    -fx-shape: M 50 300 L 50 550 L 300 550 L 300 300 L 50 300 ;
+    -fx-background-color: #039BE5;
+    -fx-arc-height: 10;
+    -fx-arc-width: 10;
+}

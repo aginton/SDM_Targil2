@@ -94,7 +94,7 @@
 //            try {
 //                viewMenuRef = FXMLLoader.load(getClass().getResource("/components/viewMenu/ViewMenu.fxml"));
 //                System.out.println("Going to try and store ref to orderMenu.fxml");
-//                orderMenuRef = FXMLLoader.load(getClass().getResource("/components/ordermenu/OrderMenu.fxml"));
+//                orderMenuRef = FXMLLoader.load(getClass().getResource("/components/ordermenu/NewOrderContainer.fxml"));
 //            } catch (IOException e) {
 //                e.printStackTrace();
 //            }

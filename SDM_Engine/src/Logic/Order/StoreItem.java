@@ -1,26 +1,24 @@
 package Logic.Order;
 
 import Logic.Inventory.InventoryItem;
-import Logic.Store.Store;
 
 public class StoreItem extends InventoryItem {
 
-    private int price;
+    private int normalPrice;
     private float totalAmountSoldAtStore;
 
-    public StoreItem(InventoryItem inventoryItem, int price){
+    public StoreItem(InventoryItem inventoryItem, int normalPrice){
         super(inventoryItem);
-        this.price = price;
+        this.normalPrice = normalPrice;
         totalAmountSoldAtStore = 0;
     }
 
-
-    public int getPrice() {
-        return price;
+    public int getNormalPrice() {
+        return normalPrice;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setNormalPrice(int normalPrice) {
+        this.normalPrice = normalPrice;
     }
 
     public float getTotalAmountSoldAtStore() {
