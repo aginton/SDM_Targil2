@@ -13,7 +13,7 @@ public class MyFloatStringConverter extends FloatStringConverter {
 
         try{
             Float parsedFloat = Float.parseFloat(value);
-            return parsedFloat>0;
+            return parsedFloat>=0;
 
         } catch(NumberFormatException nfe){
             System.out.println("Threw Number Format Exception");

@@ -5,15 +5,13 @@ package components.newOrderMenu.ChooseItemsView;
 
 import Logic.Inventory.InventoryItem;
 import Logic.Inventory.ePurchaseCategory;
+import Logic.Order.Cart;
 import Logic.Order.CartItem;
 import Logic.Order.StoreItem;
 import Logic.Store.Store;
 import Utilities.EditCell;
 import Utilities.MyFloatStringConverter;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyFloatWrapper;
-import javafx.beans.property.ReadOnlyIntegerWrapper;
-import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -56,13 +54,18 @@ public class ChooseItemsController implements Initializable {
     private TableColumn<CartItem, Void> removeButtonColumn;
 
     private Store store;
-    private ObservableList<CartItem> storeItems = FXCollections.observableArrayList();
+    private ObservableList<CartItem> storeItems;
     private ChangeListener<CartItem> storeItemChangeListener;
-    private InventoryItem selectedStoreItem;
+    private CartItem selectedStoreItem;
+    private FloatProperty selectedItemAmountProperty;
+    private Cart currentCart;
 
     public ChooseItemsController(){
-
+        storeItems = FXCollections.observableArrayList();
+        selectedItemAmountProperty = new SimpleFloatProperty(0);
+        currentCart = new Cart();
     }
+
 
     public void initData(Store selectedStore) {
         store = selectedStore;
@@ -72,28 +75,21 @@ public class ChooseItemsController implements Initializable {
         itemsTableView.setItems(storeItems);
     }
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         itemIdColumn.setCellValueFactory(new PropertyValueFactory<CartItem, Integer>("inventoryItemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<CartItem,String>("itemName"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<CartItem, ObjectProperty<ePurchaseCategory>>("purchaseCategory"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<CartItem, Integer>("price"));
 
         setUpAmountColumn();
 
 
-        priceColumn.setCellValueFactory(cellData ->{
-            InventoryItem item = cellData.getValue();
-            int itemId = item.getInventoryItemId();
-            int price = -1;
-            if (store != null){
-                price = store.getMapItemToPrices().get(itemId);
-            }
-            return new ReadOnlyIntegerWrapper(price).asObject();
-        });
-
         itemsTableView.getSelectionModel().selectedItemProperty().addListener(
                 storeItemChangeListener = (((observable, oldValue, newValue) -> {
                     selectedStoreItem = newValue;
+//                    selectedItemAmountProperty = selectedStoreItem.pitemAmountProperty();
                     if (newValue != null){
                         System.out.println("aaaa");
                     }
@@ -112,22 +108,94 @@ public class ChooseItemsController implements Initializable {
         amountColumn.setOnEditCommit(event -> {
             Float value = event.getOldValue();
             CartItem selectedItem = ((CartItem) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+            Boolean isValidNewAmount = true;
 
             if (event.getNewValue() != null){
-                if (selectedItem.getPurchaseCategory() == ePurchaseCategory.QUANTITY){
-                    if (event.getNewValue() != Math.round(event.getNewValue())){
-                        System.out.println("Amount for this item must be a positive integer!");
-                    } else
-                        value = event.getNewValue();
-                } else{
+                System.out.println("event.getNewValue() is not null");
+
+                if ((event.getNewValue() - value == 0)){
+                    System.out.println("event.getOldValue() is equal to event.getNewValue()");
+                    isValidNewAmount = false;
+                }
+
+                if ((event.getNewValue() - value) != 0){
+                    System.out.println("event.getOldValue() is not equal to event.getNewValue()");
+
+                    if (selectedItem.getPurchaseCategory() == ePurchaseCategory.QUANTITY){
+                        if (event.getNewValue() != Math.round(event.getNewValue())){
+                            isValidNewAmount = false;
+                            System.out.println("Amount for this item must be a positive integer!");
+                        }
+                    }
+
+                }
+                if (isValidNewAmount){
                     value = event.getNewValue();
+                    selectedItem.setItemAmount(value);
+                    if (value > 0)
+                        updateAmountOfItemInCart(selectedItem, value);
+                    else
+                        removeSelectedItemFromCart(selectedItem);
                 }
             }
-            selectedItem.setItemAmount(value);
             itemsTableView.refresh();
         });
-
     }
+
+    private void removeSelectedItemFromCart(CartItem selectedItem) {
+        System.out.println("Calling removeSelectedItemFromCart()");
+        currentCart.removeItemFromCart(selectedItem);
+        System.out.println("Updated Amount: " + currentCart);
+    }
+
+    private void updateAmountOfItemInCart(CartItem selectedItem, Float value) {
+        if (!currentCart.getCart().containsKey(selectedItem.getInventoryItemId())){
+            currentCart.add(selectedItem);
+            System.out.println("Updated Amount: " + currentCart);
+            return;
+        }
+        currentCart.updateItemAmount(selectedItem,value);
+        System.out.println("Updated Amount: " + currentCart);
+    }
+
+//    private void setUpAmountColumn() {
+//        amountColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Float>("itemAmount"));
+//
+//        amountColumn.setCellFactory(TextFieldTableCell.forTableColumn(new MyFloatStringConverter()));
+//
+//        amountColumn.setOnEditCommit(event -> {
+//            Float value = event.getOldValue();
+//            CartItem selectedItem = ((CartItem) event.getTableView().getItems().get(event.getTablePosition().getRow()));
+//            Boolean isValidNewAmount = true;
+//
+//            if (event.getNewValue() != null){
+//                System.out.println("event.getNewValue() is not null");
+//
+//                if ((event.getNewValue() - value == 0)){
+//                    System.out.println("event.getOldValue() is equal to event.getNewValue()");
+//                    isValidNewAmount = false;
+//                }
+//
+//                if ((event.getNewValue() - value) != 0){
+//                    System.out.println("event.getOldValue() is not equal to event.getNewValue()");
+//
+//                    if (selectedItem.getPurchaseCategory() == ePurchaseCategory.QUANTITY){
+//                        if (event.getNewValue() != Math.round(event.getNewValue())){
+//                            isValidNewAmount = false;
+//                            System.out.println("Amount for this item must be a positive integer!");
+//                        } else
+//                            value = event.getNewValue();
+//                    } else{
+//                        value = event.getNewValue();
+//                    }
+//                }
+//            }
+//            selectedItem.setItemAmount(value);
+//
+//            //selectedItem.setPitemAmount(value);
+//            itemsTableView.refresh();
+//        });
+//    }
 
 
     private void setTableEditable() {
@@ -156,6 +224,5 @@ public class ChooseItemsController implements Initializable {
                 .focusModelProperty().get().focusedCellProperty().get();
         itemsTableView.edit(focusedCell.getRow(), focusedCell.getTableColumn());
     }
-
 
 }

@@ -68,4 +68,35 @@ public class Cart {
         cart.forEach((k,v) -> storesBoughtFrom.add(v.getStoreBoughtFrom()));
         return storesBoughtFrom;
     }
+
+    public void updateItemAmount(CartItem selectedItem, Float value) {
+        if (!cart.containsKey(selectedItem.getInventoryItemId())){
+            return;
+        }
+        CartItem existingItem = cart.get(selectedItem.getInventoryItemId());
+        existingItem.setItemAmount(value);
+    }
+
+    public void removeItemFromCart(CartItem selectedItem) {
+        if (!cart.containsKey(selectedItem.getInventoryItemId()))
+            return;
+        else
+            cart.remove(selectedItem.getInventoryItemId());
+    }
+
+    @Override
+    public String toString() {
+        if (cart.isEmpty())
+            return "empty cart";
+
+        StringBuilder sb = new StringBuilder( "Cart {");
+        cart.forEach((k,v)->{
+            sb.append("\n\titem " + v.getInventoryItemId() + ", amount= ");
+            sb.append(String.valueOf(v.getItemAmount()));
+        });
+        sb.append("}");
+        return sb.toString();
+    }
+
+
 }
