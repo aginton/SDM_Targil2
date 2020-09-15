@@ -63,7 +63,6 @@ public class Store {
         }
 
         this.orders = new ArrayList<>();
-
     }
 
     public Store(SDMStore store, Inventory inventory) {

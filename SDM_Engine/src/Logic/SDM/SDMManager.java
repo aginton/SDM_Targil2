@@ -152,6 +152,7 @@ public class SDMManager extends SDMFileVerifier{
                 InventoryItem itemToAdd = inventory.getListInventoryItems().stream().filter(i->i.getInventoryItemId()==sell.getItemId()).findFirst().get();
                 if (itemToAdd != null){
                     newStore.getInventoryItems().add(itemToAdd);
+                    newStore2.getInventoryItems().add(itemToAdd);
                 }
             }
 
@@ -162,7 +163,7 @@ public class SDMManager extends SDMFileVerifier{
 
 
     public void fillSampleData(ObservableList<Store> backingList) {
-        for (Store store: stores2){
+        for (Store store: stores){
             backingList.add(store);
         }
     }

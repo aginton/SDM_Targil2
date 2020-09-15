@@ -10,28 +10,38 @@ import java.util.Objects;
 
 public class CartItem extends InventoryItem {
 
-    private FloatProperty itemAmount = new SimpleFloatProperty(this, "itemAmount", 0);
+//    private FloatProperty itemAmount = new SimpleFloatProperty(this, "itemAmount", 0);
+    private float itemAmount;
     private int price;
     Store storeBoughtFrom;
 
     public CartItem(InventoryItem item, float amount, int price, Store storeBoughtFrom){
         super(item);
         setItemAmount(amount);
+//        this.itemAmount = amount;
         this.price = price;
         this.storeBoughtFrom = storeBoughtFrom;
     }
 
     public float getItemAmount() {
-        return itemAmount.get();
-    }
-
-    public FloatProperty itemAmountProperty() {
         return itemAmount;
     }
 
     public void setItemAmount(float itemAmount) {
-        this.itemAmount.set(itemAmount);
+        this.itemAmount = itemAmount;
     }
+
+//        public float getItemAmount() {
+//        return itemAmount.get();
+//    }
+//
+//    public FloatProperty itemAmountProperty() {
+//        return itemAmount;
+//    }
+//
+//    public void setItemAmount(float itemAmount) {
+//        this.itemAmount.set(itemAmount);
+//    }
 
     public int getPrice() {
         return price;
@@ -68,12 +78,10 @@ public class CartItem extends InventoryItem {
             setItemAmount(0);
     }
 
-//    @Override
-//    public String toString() {
-//        return "CartItem{" +
-//                "itemAmount=" + itemAmount +
-//                ", price=" + price +
-////                ", storeBoughtFrom=" + (storeBoughtFrom.equals(null)? " not yet known" : storeBoughtFrom)   +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "itemAmount=" + itemAmount +
+                '}';
+    }
 }

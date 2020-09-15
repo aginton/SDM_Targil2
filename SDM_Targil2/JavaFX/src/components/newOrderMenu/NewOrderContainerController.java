@@ -4,6 +4,7 @@ import Logic.Customers.Customer;
 import Logic.Order.eOrderType;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
+import components.newOrderMenu.ChooseItemsView.ChooseItemsController;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
@@ -14,6 +15,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -112,6 +115,7 @@ public class NewOrderContainerController {
     private Customer selectedCustomer;
     private ChangeListener<LocalDate> orderDateChangeListener;
     private eOrderType orderType;
+    private ObjectProperty<eOrderType> orderTypeObjectProperty;
     private IntegerProperty activeLabelID = new SimpleIntegerProperty(0);
     private List<TitledPane> panes;
     private int openPaneNumber;
@@ -135,13 +139,24 @@ public class NewOrderContainerController {
         for (int i=1; i<numberOfPanes; i++){
             panes.get(i).setDisable(true);
         }
-        staticOrderRadioButton.setSelected(true);
 
         backButton.disableProperty().bind(accordion.expandedPaneProperty().isEqualTo(customerPane));
         nextButton.disableProperty().bind(accordion.expandedPaneProperty().isEqualTo(confirmPane));
         confirmButton.disableProperty().bind(accordion.expandedPaneProperty().isNotEqualTo(confirmPane));
         sdmManager.fillSampleData(storeList);
         storesListView.setItems(storeList);
+
+
+        orderTypeGroup.selectedToggleProperty().addListener(
+                orderTypeChangeListener = (((observable, oldValue, newValue) -> {
+                    System.out.println("ToggleGroup change detected:");
+                    if (newValue == dynamicOrderRadioButton)
+                        orderType = eOrderType.DYNAMIC_ORDER;
+                    else if (newValue == staticOrderRadioButton)
+                        orderType = eOrderType.STATIC_ORDER;
+                }))
+        );
+        staticOrderRadioButton.setSelected(true);
 
 
         storesListView.getSelectionModel().selectedItemProperty().addListener(
@@ -156,6 +171,7 @@ public class NewOrderContainerController {
                     }
                 }))
         );
+        storesListView.getSelectionModel().selectFirst();
 
 
         chooseCustomerComboBox.getSelectionModel().selectedItemProperty().addListener(
@@ -208,7 +224,11 @@ public class NewOrderContainerController {
 //            setIsStoreSelected(false);
         }
         if (panes.get(openPaneNumber)==itemsPane){
-//            setIsItemsSelected(false);
+            if (orderType == eOrderType.DYNAMIC_ORDER){
+                panes.get(openPaneNumber).setDisable(true);
+                panes.get(--openPaneNumber).setDisable(false);
+                accordion.setExpandedPane(panes.get(openPaneNumber));
+            }
         }
         if (panes.get(openPaneNumber)==salesPane){
 //            setIsSalesSelected(false);
@@ -232,10 +252,8 @@ public class NewOrderContainerController {
 
 
         if (panes.get(openPaneNumber)==orderTypePane){
-            if (orderType==eOrderType.STATIC_ORDER){
 
-            }
-            else if (orderType == eOrderType.DYNAMIC_ORDER){
+            if (orderType == eOrderType.DYNAMIC_ORDER){
                 panes.get(openPaneNumber).setDisable(true);
                 panes.get(++openPaneNumber).setDisable(false);
                 accordion.setExpandedPane(panes.get(openPaneNumber));
@@ -243,19 +261,42 @@ public class NewOrderContainerController {
             }
         }
         if (panes.get(openPaneNumber)==storePane){
-            loadItemsForStore(selectedStore);
+            if (orderType == eOrderType.STATIC_ORDER)
+                loadItemsForStore(selectedStore);
         }
+
         if (panes.get(openPaneNumber)==itemsPane){
         }
         if (panes.get(openPaneNumber)==salesPane){
         }
 
+        System.out.println("Next: orderType = " + orderType + ", selectedStore = " + (selectedStore==null?"not chosen": selectedStore.getStoreName()));
         panes.get(openPaneNumber).setDisable(true);
         panes.get(++openPaneNumber).setDisable(false);
         accordion.setExpandedPane(panes.get(openPaneNumber));
     }
 
     private void loadItemsForStore(Store selectedStore) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/components/newOrderMenu/ChooseItemsView/ChooseItems.fxml"));
+            Parent gridPaneParent = loader.load();
+            //After setting the scene, we can access the controller and call a method
+            ChooseItemsController controller = loader.getController();
+            controller.initData(selectedStore);
+
+            itemsAnchorPane.getChildren().clear();
+            itemsAnchorPane.getChildren().add(gridPaneParent);
+            AnchorPane.setTopAnchor(gridPaneParent,0.0);
+            AnchorPane.setRightAnchor(gridPaneParent,0.0);
+            AnchorPane.setLeftAnchor(gridPaneParent,0.0);
+            AnchorPane.setBottomAnchor(gridPaneParent,0.0);
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

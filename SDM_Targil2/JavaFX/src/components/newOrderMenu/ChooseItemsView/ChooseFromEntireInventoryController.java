@@ -5,8 +5,11 @@ import Logic.Order.CartItem;
 import Logic.Order.StoreItem;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableObjectValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -46,7 +49,10 @@ public class ChooseFromEntireInventoryController implements Initializable {
 
     private final ObservableList<CartItem> cartItems = FXCollections.observableArrayList();
     private ChangeListener<CartItem> cartItemChangeListener;
+    private FloatProperty cartItemObjectProperty;
     private CartItem selectedCartItem;
+    private ObservableObjectValue observableObjectValue;
+
 
     public ChooseFromEntireInventoryController(){
         for (InventoryItem item: SDMManager.getInstance().getInventory().getListInventoryItems()){
