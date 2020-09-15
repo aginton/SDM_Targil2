@@ -100,6 +100,10 @@ public class ChooseItemsController implements Initializable {
 
     }
 
+    public Cart getCurrentCart() {
+        return currentCart;
+    }
+
     private void setUpAmountColumn() {
         amountColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Float>("itemAmount"));
 
@@ -157,45 +161,6 @@ public class ChooseItemsController implements Initializable {
         currentCart.updateItemAmount(selectedItem,value);
         System.out.println("Updated Amount: " + currentCart);
     }
-
-//    private void setUpAmountColumn() {
-//        amountColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Float>("itemAmount"));
-//
-//        amountColumn.setCellFactory(TextFieldTableCell.forTableColumn(new MyFloatStringConverter()));
-//
-//        amountColumn.setOnEditCommit(event -> {
-//            Float value = event.getOldValue();
-//            CartItem selectedItem = ((CartItem) event.getTableView().getItems().get(event.getTablePosition().getRow()));
-//            Boolean isValidNewAmount = true;
-//
-//            if (event.getNewValue() != null){
-//                System.out.println("event.getNewValue() is not null");
-//
-//                if ((event.getNewValue() - value == 0)){
-//                    System.out.println("event.getOldValue() is equal to event.getNewValue()");
-//                    isValidNewAmount = false;
-//                }
-//
-//                if ((event.getNewValue() - value) != 0){
-//                    System.out.println("event.getOldValue() is not equal to event.getNewValue()");
-//
-//                    if (selectedItem.getPurchaseCategory() == ePurchaseCategory.QUANTITY){
-//                        if (event.getNewValue() != Math.round(event.getNewValue())){
-//                            isValidNewAmount = false;
-//                            System.out.println("Amount for this item must be a positive integer!");
-//                        } else
-//                            value = event.getNewValue();
-//                    } else{
-//                        value = event.getNewValue();
-//                    }
-//                }
-//            }
-//            selectedItem.setItemAmount(value);
-//
-//            //selectedItem.setPitemAmount(value);
-//            itemsTableView.refresh();
-//        });
-//    }
 
 
     private void setTableEditable() {

@@ -1,5 +1,6 @@
 package components.ViewInfo.ViewOrders.SingleOrder;
 
+import Logic.Order.Order;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -53,5 +54,12 @@ public class SingleOrderViewController {
 
     @FXML
     private Label totalLabel;
+
+    private Order order;
+
+    public void setOrder(Order order){
+        this.order = order;
+        System.out.println("Do something with this order");
+    }
 
 }

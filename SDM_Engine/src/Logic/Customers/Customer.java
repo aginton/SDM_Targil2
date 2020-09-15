@@ -17,6 +17,30 @@ public class Customer {
         customerLocation.add(yPosition);
     }
 
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public List<Integer> getCustomerLocation() {
+        return customerLocation;
+    }
+
+    public void setCustomerLocation(List<Integer> customerLocation) {
+        this.customerLocation = customerLocation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

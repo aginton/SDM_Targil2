@@ -2,9 +2,11 @@ package Main;
 
 import Logic.SDM.SDMFileVerifier;
 import Logic.SDM.SDMManager;
+import components.newOrderMenu.NewOrderContainerController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -60,13 +61,39 @@ public class MainAppController {
     SDMManager sdmManager;
     private Boolean hasLoadedSDMFile = false;
     private BooleanProperty isFileSelected;
+    private BooleanProperty isNewOrderComplete;
     private SimpleStringProperty selectedFileProperty;
-
+    private NewOrderContainerController newOrderContainerController;
+    private ChangeListener<Boolean> isNewOrderCompleteChangeListener;
 
     public MainAppController(){
         isFileSelected = new SimpleBooleanProperty(false);
+        isNewOrderComplete = new SimpleBooleanProperty(false);
         selectedFileProperty = new SimpleStringProperty("");
         sdmManager = SDMManager.getInstance();
+
+        isNewOrderComplete.addListener(((observable, oldValue, newValue) -> {
+            if (newValue == true){
+                System.out.println("Do something when true");
+                loadNewPane(viewMenuRef);
+                setIsNewOrderComplete(false);
+            }
+            if (newValue == false){
+                System.out.println("Do something when false");
+            }
+        }));
+    }
+
+    public boolean isIsNewOrderComplete() {
+        return isNewOrderComplete.get();
+    }
+
+    public BooleanProperty isNewOrderCompleteProperty() {
+        return isNewOrderComplete;
+    }
+
+    public void setIsNewOrderComplete(boolean isNewOrderComplete) {
+        this.isNewOrderComplete.set(isNewOrderComplete);
     }
 
     @FXML
@@ -133,7 +160,12 @@ public class MainAppController {
         try {
             viewMenuRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewContainer.fxml"));
             System.out.println("Going to try and store ref to orderMenu.fxml");
-            orderMenuRef = FXMLLoader.load(getClass().getResource("/components/newOrderMenu/NewOrderContainer.fxml"));
+            FXMLLoader newOrderLoader = new FXMLLoader();
+            newOrderLoader.setLocation(getClass().getResource("/components/newOrderMenu/NewOrderContainer.fxml"));
+            orderMenuRef = newOrderLoader.load();
+            newOrderContainerController = newOrderLoader.getController();
+            isNewOrderComplete.bindBidirectional(newOrderContainerController.isOrderCompleteProperty());
+//            orderMenuRef = FXMLLoader.load(getClass().getResource("/components/newOrderMenu/NewOrderContainer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -144,18 +176,10 @@ public class MainAppController {
 
         //loadPage("/components/ordermenu/OrderMenu");
         System.out.println("Calling setCenterPane(orderMenuRef):");
-        childAnchorPane.getChildren().clear();
-        childAnchorPane.getChildren().add(orderMenuRef);
-        AnchorPane.setBottomAnchor(orderMenuRef, 0.0);
-        AnchorPane.setLeftAnchor(orderMenuRef, 0.0);
-        AnchorPane.setRightAnchor(orderMenuRef, 0.0);
-        AnchorPane.setTopAnchor(orderMenuRef, 0.0);
-        //rightPane.getChildren().setAll(orderMenuRef);
+        loadNewPane(orderMenuRef);
     }
 
-//    private void setCenterPane(Parent newCenter) {
-//        mainAnchorPane.setCenter(newCenter);
-//    }
+
 
     @FXML
     void updateButtonAction(ActionEvent event) {
@@ -167,19 +191,17 @@ public class MainAppController {
 
         //loadPage("/components/viewMenu/ViewMenu");
         System.out.println("Calling setCenterPane(viewMenuRef):");
-        childAnchorPane.getChildren().clear();
-        childAnchorPane.getChildren().add(viewMenuRef);
-        AnchorPane.setBottomAnchor(viewMenuRef, 0.0);
-        AnchorPane.setLeftAnchor(viewMenuRef, 0.0);
-        AnchorPane.setRightAnchor(viewMenuRef, 0.0);
-        AnchorPane.setTopAnchor(viewMenuRef, 0.0);
-        //setCenterPane(viewMenuRef);
-        //rightPane.getChildren().setAll(viewMenuRef);
-
+        loadNewPane(viewMenuRef);
     }
 
-
-
+    private void loadNewPane(GridPane paneToLoad) {
+        childAnchorPane.getChildren().clear();
+        childAnchorPane.getChildren().add(paneToLoad);
+        AnchorPane.setBottomAnchor(paneToLoad, 0.0);
+        AnchorPane.setLeftAnchor(paneToLoad, 0.0);
+        AnchorPane.setRightAnchor(paneToLoad, 0.0);
+        AnchorPane.setTopAnchor(paneToLoad, 0.0);
+    }
 
 
 }

@@ -16,14 +16,23 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12079fe1-433f-4321-8686-68adaa6eba3a" name="Default Changelist" comment="created basic item tableview for item selection from individual store">
+    <list default="true" id="12079fe1-433f-4321-8686-68adaa6eba3a" name="Default Changelist" comment="begins adding item to cart on cartPane">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/Order/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/Order/Cart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/Order/CartItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/Order/CartItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/Customers/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/Customers/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/Main/MainAppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/Main/MainAppController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewOrders/OrdersViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewOrders/OrdersViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewOrders/SingleOrder/SingleOrderView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewOrders/SingleOrder/SingleOrderView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewOrders/SingleOrder/SingleOrderViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewOrders/SingleOrder/SingleOrderViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/newOrderMenu/ChooseItemsView/ChooseItemsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/newOrderMenu/ChooseItemsView/ChooseItemsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Order/Cart.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Order/Cart.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Order/CartItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Order/CartItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/newOrderMenu/NewOrderContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/newOrderMenu/NewOrderContainerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Customers/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Customers/Customer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/Main/MainAppController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/Main/MainAppController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewOrders/OrdersViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewOrders/OrdersViewController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewOrders/SingleOrder/SingleOrderViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewOrders/SingleOrder/SingleOrderViewController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseItemsView/ChooseItemsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseItemsView/ChooseItemsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/NewOrderContainerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/NewOrderContainerController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +150,7 @@
       <workItem from="1599899098052" duration="6681000" />
       <workItem from="1599932484818" duration="2188000" />
       <workItem from="1599979920597" duration="49196000" />
-      <workItem from="1600146330004" duration="16045000" />
+      <workItem from="1600146330004" duration="24212000" />
     </task>
     <task id="LOCAL-00001" summary="started trying to implement tableView, began changing class fields to properties">
       <created>1599565972508</created>
@@ -192,7 +201,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600156299889</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="begins adding item to cart on cartPane">
+      <created>1600163780962</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1600163780962</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,25 +247,26 @@
     <MESSAGE value="changed container types" />
     <MESSAGE value="inventoryTableView lets you edit amount value directly" />
     <MESSAGE value="created basic item tableview for item selection from individual store" />
-    <option name="LAST_COMMIT_MESSAGE" value="created basic item tableview for item selection from individual store" />
+    <MESSAGE value="begins adding item to cart on cartPane" />
+    <option name="LAST_COMMIT_MESSAGE" value="begins adding item to cart on cartPane" />
   </component>
   <component name="WindowStateProjectService">
     <state x="578" y="183" key="#Inspections" timestamp="1599386944020">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="578" y="183" key="#Inspections/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1599386944020" />
-    <state x="1056" y="135" key="#com.intellij.ide.util.MemberChooser" timestamp="1600162640169">
+    <state x="1056" y="135" key="#com.intellij.ide.util.MemberChooser" timestamp="1600168502218">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="1056" y="135" key="#com.intellij.ide.util.MemberChooser/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600162640169" />
+    <state x="1056" y="135" key="#com.intellij.ide.util.MemberChooser/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600168502218" />
     <state x="389" y="430" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1599386726779">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="389" y="430" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1599386726779" />
-    <state x="125" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1599831151606">
+    <state x="125" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1600167392289">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="125" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1599831151606" />
+    <state x="125" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600167392289" />
     <state x="596" y="97" key="#xdebugger.evaluate" timestamp="1599562783834">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -263,45 +280,45 @@
     </state>
     <state x="634" y="174" key="FileChooserDialogImpl/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600150581874" />
     <state x="423" y="0" key="FileChooserDialogImpl/0.0.1280.720@0.0.1280.720" timestamp="1599735782305" />
-    <state width="1853" height="273" key="GridCell.Tab.0.bottom" timestamp="1600163412176">
+    <state width="1853" height="273" key="GridCell.Tab.0.bottom" timestamp="1600171611770">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="273" key="GridCell.Tab.0.bottom/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600163412176" />
+    <state width="1853" height="273" key="GridCell.Tab.0.bottom/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600171611770" />
     <state width="1213" height="146" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1599754459453" />
-    <state width="1853" height="273" key="GridCell.Tab.0.center" timestamp="1600163412176">
+    <state width="1853" height="273" key="GridCell.Tab.0.center" timestamp="1600171611770">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="273" key="GridCell.Tab.0.center/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600163412176" />
+    <state width="1853" height="273" key="GridCell.Tab.0.center/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600171611770" />
     <state width="1213" height="146" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1599754459453" />
-    <state width="1853" height="273" key="GridCell.Tab.0.left" timestamp="1600163412176">
+    <state width="1853" height="273" key="GridCell.Tab.0.left" timestamp="1600171611770">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="273" key="GridCell.Tab.0.left/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600163412176" />
+    <state width="1853" height="273" key="GridCell.Tab.0.left/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600171611770" />
     <state width="1213" height="146" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1599754459452" />
-    <state width="1853" height="273" key="GridCell.Tab.0.right" timestamp="1600163412176">
+    <state width="1853" height="273" key="GridCell.Tab.0.right" timestamp="1600171611770">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="273" key="GridCell.Tab.0.right/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600163412176" />
+    <state width="1853" height="273" key="GridCell.Tab.0.right/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600171611770" />
     <state width="1213" height="146" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1599754459453" />
-    <state width="1853" height="308" key="GridCell.Tab.1.bottom" timestamp="1600149724835">
+    <state width="1853" height="308" key="GridCell.Tab.1.bottom" timestamp="1600171383129">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="308" key="GridCell.Tab.1.bottom/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600149724835" />
+    <state width="1853" height="308" key="GridCell.Tab.1.bottom/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600171383129" />
     <state width="1213" height="111" key="GridCell.Tab.1.bottom/0.0.1280.720@0.0.1280.720" timestamp="1599547133147" />
-    <state width="1853" height="308" key="GridCell.Tab.1.center" timestamp="1600149724835">
+    <state width="1853" height="308" key="GridCell.Tab.1.center" timestamp="1600171383129">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="308" key="GridCell.Tab.1.center/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600149724835" />
+    <state width="1853" height="308" key="GridCell.Tab.1.center/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600171383129" />
     <state width="1213" height="111" key="GridCell.Tab.1.center/0.0.1280.720@0.0.1280.720" timestamp="1599547133147" />
-    <state width="1853" height="308" key="GridCell.Tab.1.left" timestamp="1600149724835">
+    <state width="1853" height="308" key="GridCell.Tab.1.left" timestamp="1600171383129">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="308" key="GridCell.Tab.1.left/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600149724835" />
+    <state width="1853" height="308" key="GridCell.Tab.1.left/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600171383129" />
     <state width="1213" height="111" key="GridCell.Tab.1.left/0.0.1280.720@0.0.1280.720" timestamp="1599547133147" />
-    <state width="1853" height="308" key="GridCell.Tab.1.right" timestamp="1600149724835">
+    <state width="1853" height="308" key="GridCell.Tab.1.right" timestamp="1600171383129">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="308" key="GridCell.Tab.1.right/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600149724835" />
+    <state width="1853" height="308" key="GridCell.Tab.1.right/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600171383129" />
     <state width="1213" height="111" key="GridCell.Tab.1.right/0.0.1280.720@0.0.1280.720" timestamp="1599547133147" />
     <state x="468" y="106" key="NewModule_or_Project.wizard" timestamp="1600150626535">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -312,10 +329,10 @@
     </state>
     <state x="218" y="0" key="SettingsEditor/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1599407834285" />
     <state x="0" y="0" key="SettingsEditor/0.0.1280.720@0.0.1280.720" timestamp="1599733512838" />
-    <state x="50" y="0" key="Vcs.Push.Dialog.v2" timestamp="1599759575184">
+    <state x="50" y="0" key="Vcs.Push.Dialog.v2" timestamp="1600164308341">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="50" y="0" key="Vcs.Push.Dialog.v2/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1599759575184" />
+    <state x="50" y="0" key="Vcs.Push.Dialog.v2/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600164308341" />
     <state x="33" y="0" key="Vcs.Push.Dialog.v2/0.0.1280.720@0.0.1280.720" timestamp="1599732580066" />
     <state x="370" y="143" key="VcsDiffUtil.ChangesDialog" timestamp="1599989986014">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -337,10 +354,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="220" y="136" width="1480" height="858" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600082341257" />
-    <state x="717" y="158" width="968" height="844" key="find.popup" timestamp="1600157010655">
+    <state x="717" y="158" width="968" height="844" key="find.popup" timestamp="1600167701239">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="717" y="158" width="968" height="844" key="find.popup/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600157010655" />
+    <state x="717" y="158" width="968" height="844" key="find.popup/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600167701239" />
     <state x="365" y="0" width="915" height="720" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1599744459388" />
     <state x="234" y="209" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1599732367479">
       <screen x="0" y="0" width="1280" height="720" />
@@ -369,19 +386,27 @@
         </line-breakpoint>
         <line-breakpoint type="java-method">
           <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMenuController.java</url>
-          <line>53</line>
+          <line>56</line>
           <properties class="components.ViewInfo.ViewMenuController">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/newOrderMenu/ChooseItemsView/ChooseItemsController.java</url>
-          <line>69</line>
-          <properties class="components.newOrderMenu.ChooseItemsView.ChooseItemsController" method="initData">
+          <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/newOrderMenu/NewOrderContainerController.java</url>
+          <line>269</line>
+          <properties class="components.newOrderMenu.NewOrderContainerController" method="confirmButtonAction">
             <option name="EMULATED" value="true" />
           </properties>
-          <option name="timeStamp" value="36" />
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewOrders/SingleOrder/SingleOrderViewController.java</url>
+          <line>59</line>
+          <properties class="components.ViewInfo.ViewOrders.SingleOrder.SingleOrderViewController" method="setOrder">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/SDM_Engine/src/Logic/Store/Store.java</url>
@@ -402,6 +427,11 @@
           <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/newOrderMenu/ChooseItemsView/ChooseFromEntireInventoryController.java</url>
           <line>87</line>
           <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMenuController.java</url>
+          <line>75</line>
+          <option name="timeStamp" value="41" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

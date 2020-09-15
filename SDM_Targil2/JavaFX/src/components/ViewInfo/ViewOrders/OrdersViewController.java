@@ -1,13 +1,22 @@
 package components.ViewInfo.ViewOrders;
 
+import Logic.Inventory.Inventory;
 import Logic.Inventory.InventoryItem;
 import Logic.Order.Order;
 import Logic.SDM.SDMManager;
+import components.ViewInfo.ViewOrders.SingleOrder.SingleOrderViewController;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 
+import java.io.IOException;
 import java.util.List;
 
 public class OrdersViewController {
@@ -17,20 +26,28 @@ public class OrdersViewController {
     @FXML
     private FlowPane orderHistoryFlowpane;
 
-    private SDMManager sdmManager;
+
+    private ObservableList<Order> orders;
 
 
-
-    private List<Order> storeOrders;
 
     public void initialize(){
-        sdmManager = SDMManager.getInstance();
 
         System.out.println("Inside OrderViewController");
-        for (int i=0; i<4; i++){
-            System.out.println("Creating rectangle " + (i+1));
-            String buttonStr = String.valueOf(i);
-            orderHistoryFlowpane.getChildren().add(new Button(buttonStr));
+        updateOrderHistoryView();
+    }
+
+    public void updateOrderHistoryView() {
+            try {
+                for (Order order: SDMManager.getInstance().getOrderHistory().getOrders()){
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/ViewInfo/ViewOrders/SingleOrder/SingleOrderView.fxml"));
+                Node n = loader.load();
+                SingleOrderViewController controller = loader.getController();
+                controller.setOrder(order);
+                orderHistoryFlowpane.getChildren().add(n);
+            }
+            }catch (IOException e) {
+                e.printStackTrace();
         }
     }
 }

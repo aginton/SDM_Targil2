@@ -1,31 +1,27 @@
 package components.newOrderMenu;
 
 import Logic.Customers.Customer;
+import Logic.Order.Cart;
+import Logic.Order.Order;
 import Logic.Order.eOrderType;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
 import components.newOrderMenu.ChooseItemsView.ChooseItemsController;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.time.ZoneId;
+import java.util.*;
 
 public class NewOrderContainerController {
 
@@ -113,21 +109,52 @@ public class NewOrderContainerController {
     private ObservableList<Customer> customers;
     private ChangeListener<Customer> customerChangeListener;
     private Customer selectedCustomer;
+
     private ChangeListener<LocalDate> orderDateChangeListener;
+    private LocalDate orderDate;
+
+    private ChangeListener<Toggle> orderTypeChangeListener;
     private eOrderType orderType;
-    private ObjectProperty<eOrderType> orderTypeObjectProperty;
-    private IntegerProperty activeLabelID = new SimpleIntegerProperty(0);
+
     private List<TitledPane> panes;
+
     private int openPaneNumber;
     private int numberOfPanes;
-    private ObjectProperty<TitledPane> openPane;
-    private ChangeListener<Toggle> orderTypeChangeListener;
-    private Store selectedStore;
-    private LocalDate orderDate;
-    private ScrollPane entireInventoryRef;
 
+
+    private Store selectedStore;
+    private Set<Store> storesBoughtFrom;
     private final ObservableList<Store> storeList = FXCollections.observableArrayList(Store.extractor);
     private ChangeListener<Store> storeChangeListener;
+
+    private ScrollPane entireInventoryRef;
+
+    private Cart currentCart;
+    ChooseItemsController chooseItemsController;
+    private BooleanProperty isOrderComplete;
+
+
+    public NewOrderContainerController(){
+        sdmManager = SDMManager.getInstance();
+        customers = FXCollections.observableArrayList(sdmManager.getCustomers().getCustomers());
+        storesBoughtFrom = new HashSet<>();
+        openPaneNumber = 0;
+        orderDate = LocalDate.now();
+        currentCart = new Cart();
+        isOrderComplete = new SimpleBooleanProperty(false);
+    }
+
+    public boolean getIsOrderComplete() {
+        return isOrderComplete.get();
+    }
+
+    public BooleanProperty isOrderCompleteProperty() {
+        return isOrderComplete;
+    }
+
+    public void setIsOrderComplete(boolean isOrderComplete) {
+        this.isOrderComplete.set(isOrderComplete);
+    }
 
     @FXML
     private void initialize(){
@@ -241,7 +268,22 @@ public class NewOrderContainerController {
 
     @FXML
     void confirmButtonAction(ActionEvent event) {
+        System.out.println("Confirm button pressed");
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        Date date = Date.from(orderDate.atStartOfDay(defaultZoneId).toInstant());
 
+        Order order = new Order(selectedCustomer.getCustomerLocation(),
+                date,
+                6,
+                currentCart,
+                storesBoughtFrom,
+                eOrderType.DYNAMIC_ORDER);
+
+        sdmManager.getOrderHistory().addOrder(order);
+        openPaneNumber = 0;
+        panes.get(openPaneNumber).setDisable(false);
+        accordion.setExpandedPane(panes.get(openPaneNumber));
+        setIsOrderComplete(true);
     }
 
 
@@ -261,14 +303,20 @@ public class NewOrderContainerController {
             }
         }
         if (panes.get(openPaneNumber)==storePane){
-            if (orderType == eOrderType.STATIC_ORDER)
+            if (orderType == eOrderType.STATIC_ORDER){
+                storesBoughtFrom.add(selectedStore);
                 loadItemsForStore(selectedStore);
+            }
         }
 
         if (panes.get(openPaneNumber)==itemsPane){
+            currentCart = chooseItemsController.getCurrentCart();
+            System.out.println("New Order container found :" + currentCart);
         }
         if (panes.get(openPaneNumber)==salesPane){
         }
+
+
 
         System.out.println("Next: orderType = " + orderType + ", selectedStore = " + (selectedStore==null?"not chosen": selectedStore.getStoreName()));
         panes.get(openPaneNumber).setDisable(true);
@@ -278,12 +326,12 @@ public class NewOrderContainerController {
 
     private void loadItemsForStore(Store selectedStore) {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/components/newOrderMenu/ChooseItemsView/ChooseItems.fxml"));
-            Parent gridPaneParent = loader.load();
+            FXMLLoader cartItemsLoader = new FXMLLoader();
+            cartItemsLoader.setLocation(getClass().getResource("/components/newOrderMenu/ChooseItemsView/ChooseItems.fxml"));
+            Parent gridPaneParent = cartItemsLoader.load();
             //After setting the scene, we can access the controller and call a method
-            ChooseItemsController controller = loader.getController();
-            controller.initData(selectedStore);
+            chooseItemsController = cartItemsLoader.getController();
+            chooseItemsController.initData(selectedStore);
 
             itemsAnchorPane.getChildren().clear();
             itemsAnchorPane.getChildren().add(gridPaneParent);
@@ -291,8 +339,6 @@ public class NewOrderContainerController {
             AnchorPane.setRightAnchor(gridPaneParent,0.0);
             AnchorPane.setLeftAnchor(gridPaneParent,0.0);
             AnchorPane.setBottomAnchor(gridPaneParent,0.0);
-
-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -315,88 +361,4 @@ public class NewOrderContainerController {
         }
     }
 
-
-    public NewOrderContainerController(){
-        sdmManager = SDMManager.getInstance();
-        customers = FXCollections.observableArrayList(sdmManager.getCustomers().getCustomers());
-        openPaneNumber = 0;
-    }
-
-    //https://stackoverflow.com/questions/51392203/what-does-initialize-mean-in-javafx
-
-
-
-//    public boolean isIsCustomerSelected() {
-//        return isCustomerSelected.get();
-//    }
-//
-//    public BooleanProperty isCustomerSelectedProperty() {
-//        return isCustomerSelected;
-//    }
-//
-//    public void setIsCustomerSelected(boolean isCustomerSelected) {
-//        this.isCustomerSelected.set(isCustomerSelected);
-//    }
-//
-//    public boolean isIsDateSelected() {
-//        return isDateSelected.get();
-//    }
-//
-//    public BooleanProperty isDateSelectedProperty() {
-//        return isDateSelected;
-//    }
-//
-//    public void setIsDateSelected(boolean isDateSelected) {
-//        this.isDateSelected.set(isDateSelected);
-//    }
-//
-//    public boolean isIsStoreSelected() {
-//        return isStoreSelected.get();
-//    }
-//
-//    public BooleanProperty isStoreSelectedProperty() {
-//        return isStoreSelected;
-//    }
-//
-//    public void setIsStoreSelected(boolean isStoreSelected) {
-//        this.isStoreSelected.set(isStoreSelected);
-//    }
-//
-//    public boolean isIsOrderTypeSelected() {
-//        return isOrderTypeSelected.get();
-//    }
-//
-//    public BooleanProperty isOrderTypeSelectedProperty() {
-//        return isOrderTypeSelected;
-//    }
-//
-//    public void setIsOrderTypeSelected(boolean isOrderTypeSelected) {
-//        this.isOrderTypeSelected.set(isOrderTypeSelected);
-//    }
-
-    //    private BooleanProperty isItemsSelected, isSalesSelected, isCustomerSelected, isDateSelected, isStoreSelected, isOrderTypeSelected;
-//
-//    public boolean isIsItemsSelected() {
-//        return isItemsSelected.get();
-//    }
-//
-//    public BooleanProperty isItemsSelectedProperty() {
-//        return isItemsSelected;
-//    }
-//
-//    public void setIsItemsSelected(boolean isItemsSelected) {
-//        this.isItemsSelected.set(isItemsSelected);
-//    }
-//
-//    public boolean isIsSalesSelected() {
-//        return isSalesSelected.get();
-//    }
-//
-//    public BooleanProperty isSalesSelectedProperty() {
-//        return isSalesSelected;
-//    }
-//
-//    public void setIsSalesSelected(boolean isSalesSelected) {
-//        this.isSalesSelected.set(isSalesSelected);
-//    }
 }

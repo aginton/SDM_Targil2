@@ -1,5 +1,6 @@
 package components.ViewInfo;
 
+import components.ViewInfo.ViewOrders.OrdersViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,6 +41,8 @@ public class ViewMenuController implements Initializable {
     private TableView itemsListRef;
     private SplitPane storeListRef;
 
+    private OrdersViewController ordersViewController;
+
 
     @FXML
     void viewCustomersAction(ActionEvent event) {
@@ -71,23 +74,25 @@ public class ViewMenuController implements Initializable {
     @FXML
     void viewOrdersAction(ActionEvent event) {
         System.out.println("Calling setCenterPane(orderHistoryRef):");
-        childAnchorPane.getChildren().clear();
-        childAnchorPane.getChildren().add(orderHistoryRef);
-        AnchorPane.setBottomAnchor(orderHistoryRef, 0.0);
-        AnchorPane.setLeftAnchor(orderHistoryRef, 0.0);
-        AnchorPane.setRightAnchor(orderHistoryRef, 0.0);
-        AnchorPane.setTopAnchor(orderHistoryRef, 0.0);
+        ordersViewController.updateOrderHistoryView();
+
+        loadNewPane(orderHistoryRef);
+
     }
 
     @FXML
     void viewStoresAction(ActionEvent event) {
         System.out.println("Calling setCenterPane(storeListRef):");
+        loadNewPane(viewStoresRef);
+    }
+
+    private void loadNewPane(AnchorPane paneToLoad) {
         childAnchorPane.getChildren().clear();
-        childAnchorPane.getChildren().add(viewStoresRef);
-        AnchorPane.setBottomAnchor(viewStoresRef, 0.0);
-        AnchorPane.setLeftAnchor(viewStoresRef, 0.0);
-        AnchorPane.setRightAnchor(viewStoresRef, 0.0);
-        AnchorPane.setTopAnchor(viewStoresRef, 0.0);
+        childAnchorPane.getChildren().add(paneToLoad);
+        AnchorPane.setBottomAnchor(paneToLoad, 0.0);
+        AnchorPane.setLeftAnchor(paneToLoad, 0.0);
+        AnchorPane.setRightAnchor(paneToLoad, 0.0);
+        AnchorPane.setTopAnchor(paneToLoad, 0.0);
     }
 
 
@@ -98,7 +103,11 @@ public class ViewMenuController implements Initializable {
             System.out.println("Inside MainAppController initialize().");
             viewStoresRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewStore/ViewStore.fxml"));
             itemsListRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewItems/ViewItems.fxml"));
-            orderHistoryRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewOrders/OrdersView.fxml"));
+
+            FXMLLoader ordersLoader = new FXMLLoader();
+            ordersLoader.setLocation(getClass().getResource("/components/ViewInfo/ViewOrders/OrdersView.fxml"));
+            orderHistoryRef = ordersLoader.load();
+            ordersViewController = ordersLoader.getController();
             mapRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewMap/MapView.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
