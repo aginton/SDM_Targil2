@@ -11,45 +11,37 @@ import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.util.Callback;
 
 import java.util.*;
 
 public class Store {
 
+    //Store fields/Properties
     private IntegerProperty storeId = new SimpleIntegerProperty(this, "storeId",0);
     private StringProperty storeName = new SimpleStringProperty(this, "storeName","");
     private IntegerProperty deliveryPpk = new SimpleIntegerProperty(this, "deliveryPpk",0);
     private FloatProperty totalDeliveryIncome = new SimpleFloatProperty(this, "totalDeliveryIncome", 0f);
     private List<Integer> storeLocation = FXCollections.observableArrayList();
 
-//    private final ObservableList<InventoryItem> inventoryItems = FXCollections.observableArrayList(InventoryItem.extractor);
+    private List<StoreChangeListener> listeners;
+
     private List<InventoryItem> inventoryItems = FXCollections.observableArrayList();
-//    private ObservableList<StoreItem> storeItems = FXCollections.observableArrayList();
     private List<StoreItem> storeItems = FXCollections.observableArrayList();
-
-    public List<StoreItem> getStoreItems() {
-        return storeItems;
-    }
-
-    public void setStoreItems(List<StoreItem> storeItems) {
-        this.storeItems = storeItems;
-    }
-
-    //    private int deliveryPpk;
     private HashMap<Integer, Float> mapItemsToAmountSold;
 
     private HashMap<Integer, Integer> mapItemToPrices;
-    private List<Order> orders;
+    private List<Order> storeOrders;
 
-
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Constructor
     public Store(){}
 
     public Store(SDMStore store) {
         setStoreId(store.getId());
         setStoreName(store.getName());
         setDeliveryPpk(store.getDeliveryPpk());
+        listeners = new ArrayList<>();
 
         storeLocation.add(store.getLocation().getX());
         storeLocation.add(store.getLocation().getY());
@@ -60,12 +52,17 @@ public class Store {
         for (SDMSell sell : store.getSDMPrices().getSDMSell()) {
             mapItemToPrices.put(sell.getItemId(), sell.getPrice());
             mapItemsToAmountSold.put(sell.getItemId(), (float) 0);
+
         }
 
-        this.orders = new ArrayList<>();
+        this.storeOrders = new ArrayList<>();
     }
 
     public Store(SDMStore store, Inventory inventory) {
+        this.mapItemsToAmountSold = new HashMap<>();
+        this.mapItemToPrices = new HashMap<>();
+        this.storeOrders = new ArrayList<>();
+
         setStoreId(store.getId());
         setStoreName(store.getName());
         setDeliveryPpk(store.getDeliveryPpk());
@@ -74,6 +71,9 @@ public class Store {
         storeLocation.add(store.getLocation().getY());
 
         for (SDMSell sell: store.getSDMPrices().getSDMSell()){
+            mapItemToPrices.put(sell.getItemId(), sell.getPrice());
+            mapItemsToAmountSold.put(sell.getItemId(), (float) 0);
+
             InventoryItem itemToAdd = inventory.getListInventoryItems().stream().filter(i->i.getInventoryItemId() == sell.getItemId()).findFirst().get();
             StoreItem storeItem = new StoreItem(itemToAdd, sell.getPrice());
             storeItems.add(storeItem);
@@ -82,8 +82,14 @@ public class Store {
 
     }
 
+
     //Getter and Setter
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public List<StoreItem> getStoreItems() { return storeItems; }
+    public void setStoreItems(List<StoreItem> storeItems) {
+        this.storeItems = storeItems;
+    }
 
     //storeID
     public int getStoreId() {
@@ -156,8 +162,6 @@ public class Store {
         this.inventoryItems = i_inventoryItems;
     }
 
-
-
     public HashMap<Integer, Float> getMapItemsToAmountSold() {
         if (mapItemsToAmountSold == null)
             mapItemsToAmountSold = new HashMap<>();
@@ -170,25 +174,47 @@ public class Store {
         return mapItemToPrices;
     }
 
+    public List<Order> getStoreOrders() {
+        if (storeOrders == null)
+            storeOrders = new ArrayList<Order>();
 
+        return storeOrders;
+    }
 
-
-
-
-
-    public List<Order> getOrders() {
-        if (orders == null)
-            orders = new ArrayList<Order>();
-
-        return orders;
+    public void addStoreChangeListener(StoreChangeListener listener){
+        listeners.add(listener);
+    }
+    public void notifyStoreWasChanged(){
+        for (StoreChangeListener storeChangeListener: listeners){
+            storeChangeListener.storeWasChanged(this);
+        }
     }
 
 
 
+
+    public float getDeliveryCost(List<Integer> userLocation) {
+        return getDeliveryPpk()* getDistance(userLocation);
+    }
+
+    public float getDistance(List<Integer> userLocation) {
+        if (userLocation.size() != 2 || storeLocation.size() != 2){
+            System.out.println("Error: Input lists must  contain 2 points!");
+            return -1;
+        }
+        int xDelta = userLocation.get(0) -storeLocation.get(0);
+        int yDelta = userLocation.get(1) -storeLocation.get(1);
+        return (float) Math.sqrt((xDelta*xDelta)+(yDelta*yDelta));
+    }
+
+
+
+
     public void addOrder(Order order) {
-        orders.add(order);
+        storeOrders.add(order);
         setTotalDeliveryIncome(order.getDeliveryCost()+this.getTotalDeliveryIncome());
         updateStoreInventory(order.getCartForThisOrder());
+        notifyStoreWasChanged();
     }
 
     private void updateStoreInventory(Cart cart) {
@@ -197,6 +223,7 @@ public class Store {
             float oldAmountSold = mapItemsToAmountSold.get(k);
             mapItemsToAmountSold.put(k, amountInCart + oldAmountSold);
         });
+        notifyStoreWasChanged();
     }
 
     public InventoryItem getInventoryItemById(int priceID) {
@@ -215,21 +242,11 @@ public class Store {
         Collections.sort(inventoryItems);
         mapItemsToAmountSold.put(item.getInventoryItemId(), 0f);
         mapItemToPrices.put(item.getInventoryItemId(), price);
+        notifyStoreWasChanged();
+
     }
 
-    public float getDeliveryCost(List<Integer> userLocation) {
-        return getDeliveryPpk()* getDistance(userLocation);
-    }
 
-    public float getDistance(List<Integer> userLocation) {
-        if (userLocation.size() != 2 || storeLocation.size() != 2){
-            System.out.println("Error: Input lists must  contain 2 points!");
-            return -1;
-        }
-        int xDelta = userLocation.get(0) -storeLocation.get(0);
-        int yDelta = userLocation.get(1) -storeLocation.get(1);
-        return (float) Math.sqrt((xDelta*xDelta)+(yDelta*yDelta));
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -255,8 +272,6 @@ public class Store {
 
     public static Callback<Store, Observable[]> extractor = p -> new Observable[]
             {p.storeIdProperty(), p.storeNameProperty()};
-
-
 
 
 }

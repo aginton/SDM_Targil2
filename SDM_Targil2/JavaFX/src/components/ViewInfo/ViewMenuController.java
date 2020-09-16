@@ -1,5 +1,7 @@
 package components.ViewInfo;
 
+import Logic.Order.Order;
+import Logic.Order.OrderChangeInterface;
 import components.ViewInfo.ViewOrders.OrdersViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,12 +12,13 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ViewMenuController implements Initializable {
+public class ViewMenuController implements Initializable, OrderChangeInterface {
     @FXML
     private GridPane rootGridpane;
 
@@ -37,12 +40,16 @@ public class ViewMenuController implements Initializable {
     @FXML
     private AnchorPane childAnchorPane;
 
-    private AnchorPane mapRef, orderHistoryRef, viewStoresRef;
-    private TableView itemsListRef;
-    private SplitPane storeListRef;
+    private AnchorPane mapRef, orderHistoryRef, viewStoresRef, itemsListRef, storesListRef;
+//    private TableView itemsListRef;
+    //private SplitPane storeListRef;
 
     private OrdersViewController ordersViewController;
 
+
+    public ViewMenuController() {
+
+    }
 
     @FXML
     void viewCustomersAction(ActionEvent event) {
@@ -74,7 +81,7 @@ public class ViewMenuController implements Initializable {
     @FXML
     void viewOrdersAction(ActionEvent event) {
         System.out.println("Calling setCenterPane(orderHistoryRef):");
-        ordersViewController.updateOrderHistoryView();
+        //ordersViewController.updateOrderHistoryView();
 
         loadNewPane(orderHistoryRef);
 
@@ -86,7 +93,7 @@ public class ViewMenuController implements Initializable {
         loadNewPane(viewStoresRef);
     }
 
-    private void loadNewPane(AnchorPane paneToLoad) {
+    private void loadNewPane(Pane paneToLoad) {
         childAnchorPane.getChildren().clear();
         childAnchorPane.getChildren().add(paneToLoad);
         AnchorPane.setBottomAnchor(paneToLoad, 0.0);
@@ -109,9 +116,16 @@ public class ViewMenuController implements Initializable {
             orderHistoryRef = ordersLoader.load();
             ordersViewController = ordersLoader.getController();
             mapRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewMap/MapView.fxml"));
+
+            loadNewPane(viewStoresRef);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    @Override
+    public void orderWasAdded(Order order) {
+        System.out.println("An order with id=" + order.getOrderId() + " was added!");
+    }
 }

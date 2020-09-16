@@ -1,11 +1,26 @@
 package Logic.Order;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Orders {
 
     private List<Order> orders;
+    private ObservableList<Order> ordersObservableList;
+    public List<OrderChangeInterface> listeners;
+
+    public Orders() {
+        orders = new ArrayList<>();
+        ordersObservableList = FXCollections.observableArrayList();
+        listeners = new ArrayList<>();
+    }
+
+    public void addOrdersChangeListener(OrderChangeInterface listener){
+        listeners.add(listener);
+    }
 
     public List<Order> getOrders(){
         if (orders == null){
@@ -15,9 +30,23 @@ public class Orders {
     }
 
     public void addOrder(Order order){
-        if (orders == null)
-            orders = new ArrayList<Order>();
-
         orders.add(order);
+        ordersObservableList.add(order);
+        notifyListenersOrderWasAdded(order);
+    }
+
+    private void notifyListenersOrderWasAdded(Order order) {
+        for (OrderChangeInterface listener: listeners){
+            listener.orderWasAdded(order);
+        }
+    }
+
+    public ObservableList<Order> getOrdersObservableList() {
+
+        return ordersObservableList;
+    }
+
+    public void setOrdersObservableList(ObservableList<Order> ordersObservableList) {
+        this.ordersObservableList = ordersObservableList;
     }
 }

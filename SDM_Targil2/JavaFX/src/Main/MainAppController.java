@@ -2,6 +2,7 @@ package Main;
 
 import Logic.SDM.SDMFileVerifier;
 import Logic.SDM.SDMManager;
+import components.ViewInfo.ViewMenuController;
 import components.newOrderMenu.NewOrderContainerController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -63,8 +64,10 @@ public class MainAppController {
     private BooleanProperty isFileSelected;
     private BooleanProperty isNewOrderComplete;
     private SimpleStringProperty selectedFileProperty;
+    private ViewMenuController viewMenuController;
     private NewOrderContainerController newOrderContainerController;
     private ChangeListener<Boolean> isNewOrderCompleteChangeListener;
+
 
     public MainAppController(){
         isFileSelected = new SimpleBooleanProperty(false);
@@ -131,10 +134,7 @@ public class MainAppController {
                 isFileSelected.set(true);
                 selectedFileProperty.set(file.getAbsolutePath());
                 sdmManager.loadNewSDMFile(sdmForChosenFile);
-                //file loaded successfully
-//                testLabel.setVisible(true);
-//                testLabel.setText(file.getName());
-//                testLabel.setTextFill(Color.GREEN);
+
                 errorMessageLabel.setText("");
                 loadXMLForOtherButtons();
             } else{
@@ -158,14 +158,20 @@ public class MainAppController {
     private void loadXMLForOtherButtons() {
         System.out.println("Going to try and store ref to viewMenu.fxml");
         try {
-            viewMenuRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewContainer.fxml"));
+            FXMLLoader viewLoader = new FXMLLoader();
+            viewLoader.setLocation(getClass().getResource("/components/ViewInfo/ViewContainer.fxml"));
+            viewMenuRef = viewLoader.load();
+            viewMenuController = viewLoader.getController();
+
             System.out.println("Going to try and store ref to orderMenu.fxml");
+
             FXMLLoader newOrderLoader = new FXMLLoader();
             newOrderLoader.setLocation(getClass().getResource("/components/newOrderMenu/NewOrderContainer.fxml"));
             orderMenuRef = newOrderLoader.load();
             newOrderContainerController = newOrderLoader.getController();
+
+            newOrderContainerController.bindIsCompleteOrder(isNewOrderComplete);
             isNewOrderComplete.bindBidirectional(newOrderContainerController.isOrderCompleteProperty());
-//            orderMenuRef = FXMLLoader.load(getClass().getResource("/components/newOrderMenu/NewOrderContainer.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

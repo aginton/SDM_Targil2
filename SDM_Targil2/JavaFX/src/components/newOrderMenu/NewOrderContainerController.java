@@ -133,15 +133,23 @@ public class NewOrderContainerController {
     ChooseItemsController chooseItemsController;
     private BooleanProperty isOrderComplete;
 
+    private int dummyVariable = 0;
+
+
 
     public NewOrderContainerController(){
+        System.out.println("Inside NewOrderContainerController Constructor...");
         sdmManager = SDMManager.getInstance();
         customers = FXCollections.observableArrayList(sdmManager.getCustomers().getCustomers());
         storesBoughtFrom = new HashSet<>();
         openPaneNumber = 0;
         orderDate = LocalDate.now();
         currentCart = new Cart();
-        isOrderComplete = new SimpleBooleanProperty(false);
+        isOrderComplete = new SimpleBooleanProperty(this,"isOrderComplete",false);
+
+        isOrderComplete.addListener(((observable, oldValue, newValue) -> {
+            System.out.println("NewOrderContainerController: isOrderComplete property changed");
+        }));
     }
 
     public boolean getIsOrderComplete() {
@@ -158,7 +166,7 @@ public class NewOrderContainerController {
 
     @FXML
     private void initialize(){
-        System.out.println("Inside OrderMenuController initialize() method!");
+        System.out.println("Inside NewOrderContainerController Initializer()...");
         chooseCustomerComboBox.getItems().addAll(customers);
         accordion.setExpandedPane(customerPane);
         panes = Arrays.asList(customerPane,datePane,orderTypePane,storePane,itemsPane,salesPane,confirmPane);
@@ -238,27 +246,13 @@ public class NewOrderContainerController {
 
     @FXML
     void backBtnAction(ActionEvent event) {
-        if (panes.get(openPaneNumber)==customerPane){
-//            setIsCustomerSelected(false);
-        }
-        if (panes.get(openPaneNumber)==datePane){
-//            setIsDateSelected(false);
-        }
-        if (panes.get(openPaneNumber)==orderTypePane){
-//            setIsOrderTypeSelected(false);
-        }
-        if (panes.get(openPaneNumber)==storePane){
-//            setIsStoreSelected(false);
-        }
+
         if (panes.get(openPaneNumber)==itemsPane){
             if (orderType == eOrderType.DYNAMIC_ORDER){
                 panes.get(openPaneNumber).setDisable(true);
                 panes.get(--openPaneNumber).setDisable(false);
                 accordion.setExpandedPane(panes.get(openPaneNumber));
             }
-        }
-        if (panes.get(openPaneNumber)==salesPane){
-//            setIsSalesSelected(false);
         }
 
         panes.get(openPaneNumber).setDisable(true);
@@ -277,9 +271,12 @@ public class NewOrderContainerController {
                 6,
                 currentCart,
                 storesBoughtFrom,
-                eOrderType.DYNAMIC_ORDER);
+                orderType);
 
-        sdmManager.getOrderHistory().addOrder(order);
+        //sdmManager.getOrderHistory().addOrder(order);
+        if (orderType == eOrderType.STATIC_ORDER)
+            sdmManager.addNewStaticOrder(selectedStore, order);
+
         openPaneNumber = 0;
         panes.get(openPaneNumber).setDisable(false);
         accordion.setExpandedPane(panes.get(openPaneNumber));
@@ -287,11 +284,13 @@ public class NewOrderContainerController {
     }
 
 
-
+    public void bindIsCompleteOrder(BooleanProperty otherBooleanProperty){
+        isOrderComplete.bindBidirectional(otherBooleanProperty);
+    }
 
     @FXML
     void nextBtnAction(ActionEvent event) {
-
+        System.out.println("DummyVariable=" + ++dummyVariable + ", isOrderCompleteProperty()=" + getIsOrderComplete());
 
         if (panes.get(openPaneNumber)==orderTypePane){
 
@@ -316,9 +315,6 @@ public class NewOrderContainerController {
         if (panes.get(openPaneNumber)==salesPane){
         }
 
-
-
-        System.out.println("Next: orderType = " + orderType + ", selectedStore = " + (selectedStore==null?"not chosen": selectedStore.getStoreName()));
         panes.get(openPaneNumber).setDisable(true);
         panes.get(++openPaneNumber).setDisable(false);
         accordion.setExpandedPane(panes.get(openPaneNumber));

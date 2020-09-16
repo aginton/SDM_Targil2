@@ -4,6 +4,7 @@ import Logic.Inventory.ePurchaseCategory;
 import Logic.Order.StoreItem;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
+import Logic.Store.StoreChangeListener;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -22,7 +23,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ViewStoreController implements Initializable {
+public class ViewStoreController implements Initializable, StoreChangeListener {
 
 
     @FXML
@@ -101,26 +102,27 @@ public class ViewStoreController implements Initializable {
     @FXML
     private ListView<Store> listview;
 
-    private SDMManager sdmManager;
     private Store selectedStore;
 
     // Observable objects returned by extractor (applied to each list element) are listened for changes and
     // transformed into "update" change of ListChangeListener.
-    private final ObservableList<Store> storeList = FXCollections.observableArrayList(Store.extractor);
-
-
-
+    private ObservableList<Store> observableStoresList;
     private ChangeListener<Store> storeChangeListener;
 
+    public ViewStoreController(){
+        observableStoresList = SDMManager.getInstance().getStoresObservableList();
+        for (Store store: SDMManager.getInstance().getStores())
+            store.addStoreChangeListener(this);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Inside StoreUIController initialize()");
-        sdmManager = SDMManager.getInstance();
-        sdmManager.fillSampleData(storeList);
+
+        SDMManager.getInstance().fillSampleData(observableStoresList);
 
         // Use a sorted list; sort by lastname; then by firstname
-        SortedList<Store> sortedList = new SortedList<>(storeList);
+        SortedList<Store> sortedList = new SortedList<>(observableStoresList);
 
         // sort by lastname first, then by firstname; ignore notes
         sortedList.setComparator((p1, p2) -> {
@@ -130,12 +132,6 @@ public class ViewStoreController implements Initializable {
                 return 1;
         });
         listview.setItems(sortedList);
-
-//        storeIDColumn.setCellValueFactory(new PropertyValueFactory<Store,Integer>("storeId"));
-//        storeNameColumn.setCellValueFactory(new PropertyValueFactory<Store,String>("storeName"));
-//        storeDeliveryIncomeColumn.setCellValueFactory(new PropertyValueFactory<Store,Float>("totalDeliveryIncome"));
-//        storePPKColumn.setCellValueFactory(new PropertyValueFactory<Store,Integer>("deliveryPpk"));
-//        storeLocationColumn.setCellValueFactory(new PropertyValueFactory<Store,List<Integer>>("storeLocation"));
 
         itemIDColumn.setCellValueFactory(new PropertyValueFactory<StoreItem,Integer>("inventoryItemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<StoreItem,String>("itemName"));
@@ -181,6 +177,11 @@ public class ViewStoreController implements Initializable {
         currentStore.add(selectedStore);
 
         return currentStore;
+    }
+
+    @Override
+    public void storeWasChanged(Store store) {
+        System.out.println("Store " + store.getStoreName() + " was changed!");
     }
 }
 

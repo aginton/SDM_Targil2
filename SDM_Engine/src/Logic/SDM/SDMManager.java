@@ -4,16 +4,16 @@ import Logic.Customers.Customer;
 import Logic.Customers.Customers;
 import Logic.Inventory.Inventory;
 import Logic.Inventory.InventoryItem;
-import Logic.Order.Order;
-import Logic.Order.Orders;
+import Logic.Order.*;
 import Logic.Store.Store;
 import Resources.Schema.JAXBGenerated.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 //https://dev.to/devtony101/javafx-3-ways-of-passing-information-between-scenes-1bm8
@@ -24,10 +24,12 @@ public class SDMManager extends SDMFileVerifier{
     //Members
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     private List<Store> stores;
-    private ObservableList<Store> stores2;
+    private ObservableList<Store> storesObservableList;
+
     private Inventory inventory;
     private Orders orderHistory;
     private Customers customers;
+
 
 
     //Constructor
@@ -75,12 +77,12 @@ public class SDMManager extends SDMFileVerifier{
         this.orderHistory = orderHistory;
     }
 
-    public ObservableList<Store> getStores2() {
-        return stores2;
+    public ObservableList<Store> getStoresObservableList() {
+        return storesObservableList;
     }
 
-    public void setStores2(ObservableList<Store> stores2) {
-        this.stores2 = stores2;
+    public void setStoresObservableList(ObservableList<Store> storesObservableList) {
+        this.storesObservableList = storesObservableList;
     }
 
     public Customers getCustomers() {
@@ -103,10 +105,14 @@ public class SDMManager extends SDMFileVerifier{
             setIsValidFile(true);
             setLoadingErrorMessage("");
             setSDMDescriptor(sdmForChosenFile.getSDMDescriptor());
+
             createCustomers(getSDMDescriptor());
+
             createInventory(getSDMDescriptor());
+
             createStores(getSDMDescriptor());
             Order.setNumOfOrders(0);
+
             inventory.updateStoresCarryingItems(stores);
             inventory.updateAvePrice();
             orderHistory = new Orders();
@@ -138,7 +144,7 @@ public class SDMManager extends SDMFileVerifier{
 
     public void createStores(SuperDuperMarketDescriptor sdm){
         stores = new ArrayList<Store>();
-        stores2 = FXCollections.observableArrayList();
+        storesObservableList = FXCollections.observableArrayList();
 
         for (SDMStore store: sdm.getSDMStores().getSDMStore()){
             List<Integer> storeLoc = new ArrayList<>();
@@ -146,19 +152,63 @@ public class SDMManager extends SDMFileVerifier{
             storeLoc.add(store.getLocation().getY());
 
             Store newStore = new Store(store);
-            Store newStore2 = new Store(store,inventory);
+            //Store newStore2 = new Store(store,inventory);
 
             for (SDMSell sell: store.getSDMPrices().getSDMSell()){
                 InventoryItem itemToAdd = inventory.getListInventoryItems().stream().filter(i->i.getInventoryItemId()==sell.getItemId()).findFirst().get();
                 if (itemToAdd != null){
                     newStore.getInventoryItems().add(itemToAdd);
-                    newStore2.getInventoryItems().add(itemToAdd);
+                    //newStore2.getInventoryItems().add(itemToAdd);
+
+                    StoreItem storeItem = new StoreItem(itemToAdd, sell.getPrice());
+                    newStore.getStoreItems().add(storeItem);
                 }
             }
 
             stores.add(newStore);
-            stores2.add(newStore2);
+            //storesObservableList.add(newStore);
+            //stores2.add(newStore2);
         }
+    }
+
+    public void addNewStaticOrder(Store storeChoice, Order order) {
+        storeChoice.addOrder(order);
+        orderHistory.addOrder(order);
+        inventory.updateSalesMap(order);
+    }
+
+    public void addNewDynamicOrder(Set<Store> storesBoughtFrom, Order order) {
+        addSplittedOrdersToStores(storesBoughtFrom, order);
+        orderHistory.addOrder(order);
+        inventory.updateSalesMap(order);
+    }
+
+    private void addSplittedOrdersToStores(Set<Store> storesBoughtFrom, Order order) {
+        storesBoughtFrom.forEach(store -> {
+            Cart cartForStore = ExtractCartForStore(store, order);
+            float deliveryCostForStore = store.getDeliveryCost(order.getUserLocation());
+
+            Set<Store> storeForThisSubOrder = new HashSet<Store>();
+            storeForThisSubOrder.add(store);
+            Order orderForStore = new Order(order.getUserLocation(),
+                    order.getOrderDate(),
+                    deliveryCostForStore,
+                    cartForStore,
+                    storeForThisSubOrder,
+                    eOrderType.SPLITTED_DYNAMIC_ORDER);
+            store.addOrder(orderForStore);
+        });
+    }
+
+    private Cart ExtractCartForStore(Store store, Order order) {
+        Cart cartForStore = new Cart();
+        order.getCartForThisOrder().getCart().forEach((key,cartItem) -> {
+            if (cartItem.getStoreBoughtFrom() == store) {
+                cartForStore.add(cartItem);
+            }
+        });
+
+        return cartForStore;
     }
 
 

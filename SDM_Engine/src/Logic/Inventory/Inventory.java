@@ -10,7 +10,7 @@ import Logic.Store.Store;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Inventory {
+public class Inventory  {
 
     private List<InventoryItem> listInventoryItems;
     private HashMap<InventoryItem, Float> mapItemsToTotalSold;
