@@ -13,8 +13,9 @@ import java.util.Observer;
 
 public class CartItem extends InventoryItem {
 
-    private FloatProperty pitemAmount = new SimpleFloatProperty(this, "pitemAmount", 0);
-    private float itemAmount;
+    //Using a property for the itemAmount lets the tableViews update automatically
+    private FloatProperty itemAmount = new SimpleFloatProperty(this, "itemAmount", 0);
+//    private float itemAmount;
     private int price;
     Store storeBoughtFrom;
 
@@ -26,28 +27,27 @@ public class CartItem extends InventoryItem {
         this.storeBoughtFrom = storeBoughtFrom;
     }
 
-
-
     public float getItemAmount() {
+        return itemAmount.get();
+    }
+
+    public FloatProperty itemAmountProperty() {
         return itemAmount;
     }
 
     public void setItemAmount(float itemAmount) {
-        this.itemAmount = itemAmount;
+        this.itemAmount.set(itemAmount);
     }
 
+    //
+//    public float getItemAmount() {
+//        return itemAmount;
+//    }
+//
+//    public void setItemAmount(float itemAmount) {
+//        this.itemAmount = itemAmount;
+//    }
 
-    public float getPitemAmount() {
-        return pitemAmount.get();
-    }
-
-    public FloatProperty pitemAmountProperty() {
-        return pitemAmount;
-    }
-
-    public void setPitemAmount(float pitemAmount) {
-        this.pitemAmount.set(pitemAmount);
-    }
 
     public int getPrice() {
         return price;

@@ -117,14 +117,11 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Inside StoreUIController initialize()");
-
         SDMManager.getInstance().fillSampleData(observableStoresList);
 
-        // Use a sorted list; sort by lastname; then by firstname
         SortedList<Store> sortedList = new SortedList<>(observableStoresList);
 
-        // sort by lastname first, then by firstname; ignore notes
+        // sort by store ID
         sortedList.setComparator((p1, p2) -> {
             if (p1.getStoreId() < p2.getStoreId())
                 return -1;
@@ -133,6 +130,7 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
         });
         listview.setItems(sortedList);
 
+        //Set columns for TableView
         itemIDColumn.setCellValueFactory(new PropertyValueFactory<StoreItem,Integer>("inventoryItemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<StoreItem,String>("itemName"));
         itemCategoryColumn.setCellValueFactory(new PropertyValueFactory<StoreItem, ObjectProperty<ePurchaseCategory>>("purchaseCategory"));
@@ -142,24 +140,18 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
 
         listview.getSelectionModel().selectedItemProperty().addListener(
                 storeChangeListener = (((observable, oldValue, newValue) -> {
-
-                    System.out.println("Selected item: " + newValue);
                     //newValue can be null if nothing is selected
                     selectedStore = newValue;
 
                     if (newValue != null){
-                        System.out.println("newVluae is " + newValue);
+                        System.out.println("Selected store: " + newValue);
                         updateBasicStoreInfo(newValue);
-//                        basicInfoTableView.setItems(getStore(newValue));
                         storeInventoryTableView.setItems(FXCollections.observableList(newValue.getStoreItems()));
-
-                        //populate controls with selected store information
-
-                        //storeIDColumn.set
                     }
                 }))
         );
 
+        //select first store in list as default
         listview.getSelectionModel().selectFirst();
     }
 
@@ -169,14 +161,6 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
         storeLocationLabel.setText(newValue.getStoreLocation().toString());
         storePPKLabel.setText(String.valueOf(newValue.getDeliveryPpk()));
         storeTotalDeliveryIncomeLabel.setText(String.valueOf(newValue.getTotalDeliveryIncome()));
-    }
-
-    private ObservableList<Store> getStore(Store selectedStore) {
-        ObservableList<Store> currentStore = FXCollections.observableArrayList();
-        currentStore.removeAll();
-        currentStore.add(selectedStore);
-
-        return currentStore;
     }
 
     @Override

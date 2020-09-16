@@ -38,12 +38,11 @@ public class ViewItemsController {
     private TableColumn<ItemWrapper, Float> totalAmountSoldColumn;
 
 
-
-
     private SDMManager sdmManager;
     private Inventory inventory;
     private ObservableList<ItemWrapper> itemWrappers = FXCollections.observableArrayList();
 
+    //This inner class is used to fill tableView columns for totalSold, averagePrice, etc.
     public class ItemWrapper extends InventoryItem {
         private Float averagePrice;
         private float totalSold;

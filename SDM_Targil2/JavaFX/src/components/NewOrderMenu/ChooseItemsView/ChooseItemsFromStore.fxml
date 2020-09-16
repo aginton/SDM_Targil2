@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+
+<GridPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.NewOrderMenu.ChooseItemsView.ChooseItemsFromStoreController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints vgrow="NEVER" />
+      <RowConstraints minHeight="10.0" vgrow="NEVER" />
+      <RowConstraints minHeight="10.0" percentHeight="2.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <ScrollPane GridPane.rowIndex="3">
+         <content>
+            <TableView fx:id="itemsTableView" prefHeight="200.0" prefWidth="477.0">
+              <columns>
+                <TableColumn fx:id="itemIdColumn" prefWidth="51.0" text="Item Id" />
+                <TableColumn fx:id="itemNameColumn" prefWidth="81.66665649414062" text="Item Name" />
+                  <TableColumn fx:id="categoryColumn" prefWidth="80.33331298828125" text="Category" />
+                  <TableColumn fx:id="priceColumn" prefWidth="62.66668701171875" text="Price" />
+                  <TableColumn fx:id="amountColumn" prefWidth="56.0" text="Amount" />
+                  <TableColumn fx:id="addButtonColumn" prefWidth="65.0" text="Add" />
+                  <TableColumn fx:id="removeButtonColumn" prefWidth="75.0" text="Remove" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+      <Label prefHeight="17.0" prefWidth="245.0" text="Add/Remove items to cart using +/- buttons,">
+         <padding>
+            <Insets bottom="5.0" left="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <Label text=" Or enter amount directly into cell" GridPane.rowIndex="1">
+         <padding>
+            <Insets bottom="5.0" left="5.0" top="5.0" />
+         </padding>
+      </Label>
+   </children>
+</GridPane>
