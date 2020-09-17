@@ -47,7 +47,7 @@ public class ViewMainController implements Initializable {
             viewStoresRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewStore/ViewStore.fxml"));
             viewInventoryItemsRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewItems/ViewItems.fxml"));
             viewOrderHistoryRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewOrders/ViewOrders.fxml"));
-            viewMapRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewMap/MapView.fxml"));
+            viewMapRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewMap/ViewMap.fxml"));
 
             loadNewPane(viewStoresRef);
 

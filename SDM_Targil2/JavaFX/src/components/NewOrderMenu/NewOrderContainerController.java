@@ -246,7 +246,7 @@ public class NewOrderContainerController {
         ZoneId defaultZoneId = ZoneId.systemDefault();
         Date date = Date.from(orderDate.atStartOfDay(defaultZoneId).toInstant());
 
-        Order order = new Order(selectedCustomer.getCustomerLocation(),
+        Order order = new Order(selectedCustomer.getLocation(),
                 date,
                 6,
                 currentCart,

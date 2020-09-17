@@ -158,7 +158,7 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
     private void updateBasicStoreInfo(Store newValue) {
         storeIdLabel.setText(String.valueOf(newValue.getStoreId()));
         storeNameLabel.setText(newValue.getStoreName());
-        storeLocationLabel.setText(newValue.getStoreLocation().toString());
+        storeLocationLabel.setText(newValue.getLocation().toString());
         storePPKLabel.setText(String.valueOf(newValue.getDeliveryPpk()));
         storeTotalDeliveryIncomeLabel.setText(String.valueOf(newValue.getTotalDeliveryIncome()));
     }

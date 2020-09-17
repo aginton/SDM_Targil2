@@ -5,6 +5,7 @@ import Logic.Inventory.InventoryItem;
 import Logic.Order.Cart;
 import Logic.Order.Order;
 import Logic.Order.StoreItem;
+import Logic.hasLocationInterface;
 import Resources.Schema.JAXBGenerated.SDMSell;
 import Resources.Schema.JAXBGenerated.SDMStore;
 import javafx.beans.Observable;
@@ -15,7 +16,7 @@ import javafx.util.Callback;
 
 import java.util.*;
 
-public class Store {
+public class Store implements hasLocationInterface {
 
     //Store fields/Properties
     private IntegerProperty storeId = new SimpleIntegerProperty(this, "storeId",0);
@@ -139,12 +140,34 @@ public class Store {
     }
 
     //storeLocation
-    public List<Integer> getStoreLocation() {
+    @Override
+    public List<Integer> getLocation() {
         return storeLocation;
     }
 
-    public void setStoreLocation(ObservableList<Integer> storeLocation) {
+    @Override
+    public void setLocation(List<Integer> storeLocation) {
         this.storeLocation = storeLocation;
+    }
+
+    @Override
+    public int getX() {
+        return storeLocation.get(0);
+    }
+
+    @Override
+    public int getY() {
+        return storeLocation.get(1);
+    }
+
+    @Override
+    public void setX(int x) {
+        storeLocation.set(0,x);
+    }
+
+    @Override
+    public void setY(int y) {
+        storeLocation.set(1,y);
     }
 
     //inventoryItems

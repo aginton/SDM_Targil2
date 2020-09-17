@@ -1,13 +1,17 @@
 package Logic.Customers;
 
+import Logic.Order.Order;
+import Logic.hasLocationInterface;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Customer {
+public class Customer implements hasLocationInterface {
     private int customerId;
     private String customerName;
     private List<Integer> customerLocation;
+    private List<Order> orders;
 
     public Customer(int id, String name, int xPosition, int yPosition){
         this.customerId = id;
@@ -15,6 +19,7 @@ public class Customer {
         customerLocation = new ArrayList<>();
         customerLocation.add(xPosition);
         customerLocation.add(yPosition);
+        orders = new ArrayList<>();
     }
 
     public int getCustomerId() {
@@ -33,12 +38,42 @@ public class Customer {
         this.customerName = customerName;
     }
 
-    public List<Integer> getCustomerLocation() {
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    @Override
+    public List<Integer> getLocation() {
         return customerLocation;
     }
 
-    public void setCustomerLocation(List<Integer> customerLocation) {
+    @Override
+    public void setLocation(List<Integer> customerLocation) {
         this.customerLocation = customerLocation;
+    }
+
+    @Override
+    public int getX() {
+        return customerLocation.get(0);
+    }
+
+    @Override
+    public int getY() {
+        return customerLocation.get(1);
+    }
+
+    @Override
+    public void setX(int x) {
+        customerLocation.set(0,x);
+    }
+
+    @Override
+    public void setY(int y) {
+        customerLocation.set(1,y);
     }
 
     @Override

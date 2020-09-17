@@ -2,8 +2,8 @@ package components.Main;
 
 import Logic.SDM.SDMFileVerifier;
 import Logic.SDM.SDMManager;
-import components.ViewInfo.ViewMainController;
 import components.NewOrderMenu.NewOrderContainerController;
+import components.ViewInfo.ViewMainController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,9 +11,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -22,41 +25,42 @@ import javafx.stage.Window;
 import java.io.File;
 import java.io.IOException;
 
-public class MainAppController {
+public class MainAppNController {
 
     @FXML
-    private GridPane mainGridPane;
+    private BorderPane mainBorderPane;
+
+    @FXML
+    private Label filePath;
+
+    @FXML
+    private ComboBox<?> themeComboBox;
+
+    @FXML
+    private Button homeButton;
 
     @FXML
     private Button loadButton;
 
     @FXML
-    private Button viewInfoButton;
+    private Button viewButton;
 
     @FXML
-    private Button newOrderButton;
+    private Button placeAnOrderButton;
 
     @FXML
     private Button updateButton;
 
     @FXML
-    private Label fileLabel;
+    private AnchorPane mainChildAnchorPane;
+
     @FXML
     private Label errorMessageLabel;
 
 
 
-    @FXML
-    private Label selectedFileName;
+    private Node orderMenuRef, viewMenuRef;
 
-    @FXML
-    private AnchorPane childAnchorPane;
-
-    @FXML
-    private GridPane orderMenuRef;
-
-    @FXML
-    private GridPane viewMenuRef;
 
 
     private SDMManager sdmManager;
@@ -69,7 +73,7 @@ public class MainAppController {
     private ChangeListener<Boolean> isNewOrderCompleteChangeListener;
 
 
-    public MainAppController(){
+    public MainAppNController(){
         isFileSelected = new SimpleBooleanProperty(false);
         isNewOrderComplete = new SimpleBooleanProperty(false);
         selectedFileProperty = new SimpleStringProperty("");
@@ -87,29 +91,17 @@ public class MainAppController {
     @FXML
     private void initialize(){
         System.out.println("Inside MainAppController initialize().");
-        selectedFileName.textProperty().bind(selectedFileProperty);
-        viewInfoButton.disableProperty().bind(isFileSelected.not());
-        newOrderButton.disableProperty().bind(isFileSelected.not());
+        filePath.textProperty().bind(selectedFileProperty);
+        viewButton.disableProperty().bind(isFileSelected.not());
+        placeAnOrderButton.disableProperty().bind(isFileSelected.not());
         updateButton.disableProperty().bind(isFileSelected.not());
-    }
-
-    public void setIsNewOrderComplete(boolean isNewOrderComplete) {
-        this.isNewOrderComplete.set(isNewOrderComplete);
-    }
-
-    public boolean isIsNewOrderComplete() {
-        return isNewOrderComplete.get();
-    }
-
-    public BooleanProperty isNewOrderCompleteProperty() {
-        return isNewOrderComplete;
     }
 
 
     @FXML
     void loadButtonAction(ActionEvent event) {
 
-        Window stage = mainGridPane.getScene().getWindow();
+        Window stage = mainBorderPane.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose SDM file");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("xml files", "*.xml"));
@@ -147,33 +139,13 @@ public class MainAppController {
     }
 
 
-    private void loadNewPane(GridPane paneToLoad) {
-        childAnchorPane.getChildren().clear();
-        childAnchorPane.getChildren().add(paneToLoad);
+    private void loadNewPane(Node paneToLoad) {
+        mainChildAnchorPane.getChildren().clear();
+        mainChildAnchorPane.getChildren().add(paneToLoad);
         AnchorPane.setBottomAnchor(paneToLoad, 0.0);
         AnchorPane.setLeftAnchor(paneToLoad, 0.0);
         AnchorPane.setRightAnchor(paneToLoad, 0.0);
         AnchorPane.setTopAnchor(paneToLoad, 0.0);
-    }
-
-
-    @FXML
-    void newOrderAction(ActionEvent event) {
-        //loadPage("/components/ordermenu/OrderMenu");
-        System.out.println("Calling setCenterPane(orderMenuRef):");
-        loadNewPane(orderMenuRef);
-    }
-
-    @FXML
-    void updateButtonAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void viewInfoButtonAction(ActionEvent event) {
-        //loadPage("/components/viewMenu/ViewMenu");
-        System.out.println("Calling setCenterPane(viewMenuRef):");
-        loadNewPane(viewMenuRef);
     }
 
     private void loadXMLForOtherButtons() {
@@ -196,6 +168,47 @@ public class MainAppController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    @FXML
+    void HomeButtonAction(ActionEvent event) {
+
+    }
+
+//    @FXML
+//    void LoadButtonAction(ActionEvent event) {
+//
+//    }
+
+    @FXML
+    void PlaceAnOrderAction(ActionEvent event) {
+        System.out.println("Calling setCenterPane(orderMenuRef):");
+        loadNewPane(orderMenuRef);
+    }
+
+    @FXML
+    void UpdateAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ViewButtonAction(ActionEvent event) {
+        //loadPage("/components/viewMenu/ViewMenu");
+        System.out.println("Calling setCenterPane(viewMenuRef):");
+        loadNewPane(viewMenuRef);
+    }
+
+    public void setIsNewOrderComplete(boolean isNewOrderComplete) {
+        this.isNewOrderComplete.set(isNewOrderComplete);
+    }
+
+    public boolean isIsNewOrderComplete() {
+        return isNewOrderComplete.get();
+    }
+
+    public BooleanProperty isNewOrderCompleteProperty() {
+        return isNewOrderComplete;
     }
 
 }
