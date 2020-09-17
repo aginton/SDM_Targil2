@@ -2,6 +2,7 @@ package Logic.Inventory;
 
 
 
+import Logic.Interfaces.inventoryChangeInterface;
 import Logic.Order.Cart;
 import Logic.Order.CartItem;
 import Logic.Order.Order;
@@ -16,13 +17,14 @@ public class Inventory  {
     private HashMap<InventoryItem, Float> mapItemsToTotalSold;
     private HashMap<InventoryItem, Float> mapItemsToAvePrice;
     private HashMap<InventoryItem, Set<Store>> mapItemsToStoresWithItem;
-
+    private List<inventoryChangeInterface> listeners;
 
     public Inventory() {
         this.listInventoryItems = new ArrayList<InventoryItem>();
         this.mapItemsToTotalSold = new HashMap<InventoryItem, Float>();
         this.mapItemsToAvePrice = new HashMap<InventoryItem, Float>();
         this.mapItemsToStoresWithItem = new HashMap<InventoryItem, Set<Store>>();
+        listeners = new ArrayList<>();
     }
 
 
@@ -64,6 +66,7 @@ public class Inventory  {
         InventoryItem item = getInventoryItemById(cartItem.getInventoryItemId());
         float oldAmount = mapItemsToTotalSold.get(item);
         mapItemsToTotalSold.put(item, oldAmount + cartItem.getItemAmount());
+        notifyListeners();
     }
 
     @Override
@@ -98,7 +101,7 @@ public class Inventory  {
             int size = setOStores.size();
             mapItemsToAvePrice.put(item, sum / size);
         }
-
+        notifyListeners();
     }
 
     public void updateStoresCarryingItems(List<Store> stores) {
@@ -120,5 +123,13 @@ public class Inventory  {
 
     public List<InventoryItem> getListOfItemsNotSoldByStore(Store store){
         return listInventoryItems.stream().filter( item-> !mapItemsToStoresWithItem.get(item).contains(store)).collect(Collectors.toList());
+    }
+
+    public void addListener(inventoryChangeInterface listener){
+        listeners.add(listener);
+    }
+    private void notifyListeners(){
+        for (inventoryChangeInterface listener: listeners)
+            listener.onInventoryChanged();
     }
 }

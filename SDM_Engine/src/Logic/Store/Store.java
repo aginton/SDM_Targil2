@@ -5,7 +5,7 @@ import Logic.Inventory.InventoryItem;
 import Logic.Order.Cart;
 import Logic.Order.Order;
 import Logic.Order.StoreItem;
-import Logic.hasLocationInterface;
+import Logic.Interfaces.hasLocationInterface;
 import Resources.Schema.JAXBGenerated.SDMSell;
 import Resources.Schema.JAXBGenerated.SDMStore;
 import javafx.beans.Observable;

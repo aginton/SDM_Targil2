@@ -1,7 +1,7 @@
 package Logic.Customers;
 
 import Logic.Order.Order;
-import Logic.hasLocationInterface;
+import Logic.Interfaces.hasLocationInterface;
 
 import java.util.ArrayList;
 import java.util.List;

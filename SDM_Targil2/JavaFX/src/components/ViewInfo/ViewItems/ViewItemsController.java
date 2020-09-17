@@ -1,8 +1,10 @@
 package components.ViewInfo.ViewItems;
 
+import Logic.Interfaces.inventoryChangeInterface;
 import Logic.Inventory.Inventory;
 import Logic.Inventory.InventoryItem;
 import Logic.Inventory.ePurchaseCategory;
+import Logic.Order.CartItem;
 import Logic.Order.StoreItem;
 import Logic.SDM.SDMManager;
 import javafx.beans.property.ObjectProperty;
@@ -10,89 +12,153 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class ViewItemsController {
+public class ViewItemsController implements inventoryChangeInterface {
 
     @FXML
-    private TableView<ItemWrapper> itemsTableView;
+    private TableView<InventoryItem> itemsTableView;
 
     @FXML
-    private TableColumn<ItemWrapper, Integer> itemIdColumn;
+    private TableColumn<InventoryItem, Integer> itemIdColumn;
 
     @FXML
-    private TableColumn<ItemWrapper, String> itemNameColumn;
+    private TableColumn<InventoryItem, String> itemNameColumn;
 
     @FXML
-    private TableColumn<ItemWrapper, ObjectProperty<ePurchaseCategory>> itemCategoryColumn;
+    private TableColumn<InventoryItem, ObjectProperty<ePurchaseCategory>> itemCategoryColumn;
 
     @FXML
-    private TableColumn<ItemWrapper, Integer> numCarryingStoresColumn;
+    private TableColumn<InventoryItem, Integer> numCarryingStoresColumn;
 
     @FXML
-    private TableColumn<ItemWrapper, Float> avePriceColumn;
+    private TableColumn<InventoryItem, Float> avePriceColumn;
 
     @FXML
-    private TableColumn<ItemWrapper, Float> totalAmountSoldColumn;
+    private TableColumn<InventoryItem, Float> totalAmountSoldColumn;
 
 
     private SDMManager sdmManager;
     private Inventory inventory;
-    private ObservableList<ItemWrapper> itemWrappers = FXCollections.observableArrayList();
+    private ObservableList<InventoryItem> items;
 
-    //This inner class is used to fill tableView columns for totalSold, averagePrice, etc.
-    public class ItemWrapper extends InventoryItem {
-        private Float averagePrice;
-        private float totalSold;
-        private int numberCarryingStores;
-
-        public ItemWrapper(InventoryItem item, float avePrice, float totalSold, int numberCarryingStores){
-            super(item);
-            this.averagePrice = avePrice;
-            this.totalSold=totalSold;
-            this.numberCarryingStores = numberCarryingStores;
-        }
-
-        public Float getAveragePrice() {
-            return averagePrice;
-        }
-
-        public float getTotalSold() {
-            return totalSold;
-        }
-
-        public int getNumberCarryingStores() {
-            return numberCarryingStores;
-        }
+    @Override
+    public void onInventoryChanged() {
+        System.out.println("ViewItemsController: Refreshing itemsTableView");
+        itemsTableView.refresh();
     }
+
 
     public ViewItemsController(){
         sdmManager = SDMManager.getInstance();
         inventory = sdmManager.getInventory();
-
-        for (InventoryItem item: inventory.getListInventoryItems()){
-            Float avePrice = inventory.getMapItemsToAvePrice().get(item);
-            Float totalSold = inventory.getMapItemsToTotalSold().get(item);
-            int numberCarryingStores = inventory.getMapItemsToStoresWithItem().get(item).size();
-            System.out.printf("Creating item for item %d (%s), with ave price = %.2f, total sold = %.2f, and num carrying stores = %d\n",
-                    item.getInventoryItemId(), item.getItemName(), avePrice, totalSold, numberCarryingStores);
-            itemWrappers.add(new ItemWrapper(item, avePrice, totalSold,numberCarryingStores));
-        }
+        inventory.addListener(this);
+        items = FXCollections.observableArrayList(inventory.getListInventoryItems());
     }
 
     public void initialize(){
+        itemIdColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem,Integer>("inventoryItemId"));
+        itemNameColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem,String>("itemName"));
+        itemCategoryColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem, ObjectProperty<ePurchaseCategory>>("purchaseCategory"));
+        setUpAvePriceCol();
+        setUpTotalSoldCol();
+        setUpNumberCarryingStoresCol();
 
-        itemIdColumn.setCellValueFactory(new PropertyValueFactory<ItemWrapper,Integer>("inventoryItemId"));
-        itemNameColumn.setCellValueFactory(new PropertyValueFactory<ItemWrapper,String>("itemName"));
-        itemCategoryColumn.setCellValueFactory(new PropertyValueFactory<ItemWrapper, ObjectProperty<ePurchaseCategory>>("purchaseCategory"));
-        avePriceColumn.setCellValueFactory(new PropertyValueFactory<ItemWrapper, Float>("averagePrice"));
-        totalAmountSoldColumn.setCellValueFactory(new PropertyValueFactory<ItemWrapper, Float>("totalSold"));
-        numCarryingStoresColumn.setCellValueFactory(new PropertyValueFactory<ItemWrapper, Integer>("numberCarryingStores"));
-
-        itemsTableView.setItems(itemWrappers);
+        itemsTableView.setItems(items);
     }
 
+    private void setUpNumberCarryingStoresCol() {
+        numCarryingStoresColumn.setCellFactory(col->{
+            TableCell<InventoryItem, Integer> cell = new TableCell<InventoryItem,Integer>(){
+                @Override
+                protected void updateItem(Integer item, boolean empty) {
+                    super.updateItem(item, empty);
+                    this.setText(null);
+                    if (!isEmpty()){
+                        int rowIndex = this.getTableRow().getIndex();
+                        InventoryItem inventoryItem = this.getTableView().getItems().get(rowIndex);
+                        int numberCarryingStores = inventory.getMapItemsToStoresWithItem().get(inventoryItem).size();
+                        this.setText(String.valueOf(numberCarryingStores));
+                    }
+                }
+            };
+            return cell;
+        });
+    }
+
+    private void setUpTotalSoldCol() {
+        totalAmountSoldColumn.setCellFactory(col->{
+            TableCell<InventoryItem, Float> cell = new TableCell<InventoryItem,Float>(){
+                @Override
+                protected void updateItem(Float item, boolean empty) {
+                    super.updateItem(item, empty);
+                    this.setText(null);
+                    if (!isEmpty()){
+                        int rowIndex = this.getTableRow().getIndex();
+                        InventoryItem inventoryItem = this.getTableView().getItems().get(rowIndex);
+                        float totalAmountSold = inventory.getMapItemsToTotalSold().get(inventoryItem);
+                        this.setText(String.valueOf(totalAmountSold));
+                    }
+                }
+            };
+            return cell;
+        });
+    }
+
+
+    private void setUpAvePriceCol() {
+        avePriceColumn.setCellFactory(col->{
+            TableCell<InventoryItem, Float> cell = new TableCell<InventoryItem,Float>(){
+                @Override
+                protected void updateItem(Float item, boolean empty) {
+                    super.updateItem(item, empty);
+                    this.setText(null);
+                    if (!isEmpty()){
+                        int rowIndex = this.getTableRow().getIndex();
+                        InventoryItem inventoryItem = this.getTableView().getItems().get(rowIndex);
+                        float avePrice = inventory.getMapItemsToAvePrice().get(inventoryItem);
+                        this.setText(String.valueOf(avePrice));
+                    }
+                }
+            };
+            return cell;
+        });
+
+//        avePriceColumn.setCellFactory(col->{
+//            TableCell<CartItem, Void> cell = new TableCell<CartItem,Void>(){
+//                @Override
+//                protected void updateItem(Void item, boolean empty) {
+//                    super.updateItem(item, empty);
+//
+//                    //Clean up cell before populating it
+//                    this.setText(null);
+//                    this.setGraphic(null);
+//                    if (!empty){
+//                        Button addButton = new Button("add");
+//                        addButton.setOnAction(e->{
+//                            int rowIndex = this.getTableRow().getIndex();
+//                            CartItem cartItem = this.getTableView().getItems().get(rowIndex);
+//                            float oldAmount = cartItem.getItemAmount();
+//
+//                            cartItem.setItemAmount(oldAmount+1);
+//
+//                            if (oldAmount == 0.0){
+//                                currentCart.add(cartItem);
+//                            }
+//
+//                            System.out.println("Updated Cart: " + currentCart);
+////                            cartItem.increaseAmount(1);
+//                            //itemsTableView.refresh();
+//                        });
+//                        this.setGraphic(addButton);
+//                    }
+//                }
+//            };
+//            return cell;
+//        });
+    }
 
 }

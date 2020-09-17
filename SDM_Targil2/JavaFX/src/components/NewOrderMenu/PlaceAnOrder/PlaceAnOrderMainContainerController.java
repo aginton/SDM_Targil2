@@ -14,8 +14,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -176,7 +180,16 @@ public class PlaceAnOrderMainContainerController implements Initializable {
                 orderType);
 
         SDMManager.getInstance().addNewStaticOrder(selectedStore, order);
-        resetFields();
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/components/NewOrderMenu/PlaceAnOrder/SuccessPopUp.fxml"));
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            resetFields();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

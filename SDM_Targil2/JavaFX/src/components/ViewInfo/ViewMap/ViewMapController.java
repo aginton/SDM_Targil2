@@ -3,7 +3,7 @@ package components.ViewInfo.ViewMap;
 import Logic.Customers.Customer;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
-import Logic.hasLocationInterface;
+import Logic.Interfaces.hasLocationInterface;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -14,12 +14,10 @@ import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.fxml.FXML;
 
 import java.net.URL;
 import java.util.List;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 
