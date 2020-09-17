@@ -1,3 +1,7 @@
+.head-background
+{
+    -fx-background-color: linear-gradient(to left, #fff, #795AF3);
+}
 .gridpane-borders{
     -fx-border-color: #912344;
     -fx-border-radius: 2;

@@ -159,7 +159,8 @@ public class MainAppNController {
             System.out.println("Going to try and store ref to orderMenu.fxml");
 
             FXMLLoader newOrderLoader = new FXMLLoader();
-            newOrderLoader.setLocation(getClass().getResource("/components/NewOrderMenu/NewOrderContainer.fxml"));
+//            newOrderLoader.setLocation(getClass().getResource("/components/NewOrderMenu/NewOrderContainer.fxml"));
+            newOrderLoader.setLocation(getClass().getResource("/components/NewOrderMenu/PlaceAnOrder/PlaceAnOrder.fxml"));
             orderMenuRef = newOrderLoader.load();
             newOrderContainerController = newOrderLoader.getController();
 
@@ -175,11 +176,6 @@ public class MainAppNController {
     void HomeButtonAction(ActionEvent event) {
 
     }
-
-//    @FXML
-//    void LoadButtonAction(ActionEvent event) {
-//
-//    }
 
     @FXML
     void PlaceAnOrderAction(ActionEvent event) {

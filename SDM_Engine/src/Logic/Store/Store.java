@@ -231,8 +231,6 @@ public class Store implements hasLocationInterface {
     }
 
 
-
-
     public void addOrder(Order order) {
         storeOrders.add(order);
         setTotalDeliveryIncome(order.getDeliveryCost()+this.getTotalDeliveryIncome());
