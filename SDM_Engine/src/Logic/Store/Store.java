@@ -197,6 +197,8 @@ public class Store implements hasLocationInterface {
         return mapItemToPrices;
     }
 
+
+
     public List<Order> getStoreOrders() {
         if (storeOrders == null)
             storeOrders = new ArrayList<Order>();
@@ -243,8 +245,18 @@ public class Store implements hasLocationInterface {
             float amountInCart = v.getItemAmount();
             float oldAmountSold = mapItemsToAmountSold.get(k);
             mapItemsToAmountSold.put(k, amountInCart + oldAmountSold);
+            StoreItem storeItem = getStoreItemById(k);
+            storeItem.increaseTotalAmountSold(v.getItemAmount());
         });
-        notifyStoreWasChanged();
+        //notifyStoreWasChanged();
+    }
+
+    private StoreItem getStoreItemById(int id){
+        for (StoreItem storeItem: storeItems){
+            if (storeItem.getInventoryItemId() == id)
+                return storeItem;
+        }
+        return null;
     }
 
     public InventoryItem getInventoryItemById(int priceID) {

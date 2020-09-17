@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="559.0" prefWidth="730.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.NewOrderMenu.PlaceAnOrder.PlaceAnOrderController">
+<AnchorPane fx:id="mainPane" prefHeight="559.0" prefWidth="730.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.NewOrderMenu.PlaceAnOrder.OrderBasicInfoController">
    <children>
       <Label layoutX="184.0" layoutY="97.0" text="Place an order" textFill="#4d4c4c">
          <font>
@@ -45,6 +45,6 @@
             <ToggleGroup fx:id="orderTypeGroup" />
          </toggleGroup></RadioButton>
       <RadioButton fx:id="radioDynamicOrder" layoutX="201.0" layoutY="453.0" text="Dynamic order" toggleGroup="$orderTypeGroup" />
-      <Button fx:id="nextButton" layoutX="641.0" layoutY="520.0" onAction="#nextButtonAction" prefHeight="25.0" prefWidth="64.0" text="Next" />
+      <Button fx:id="nextButton" disable="true" layoutX="641.0" layoutY="520.0" onAction="#nextButtonAction" prefHeight="25.0" prefWidth="64.0" text="Next" />
    </children>
 </AnchorPane>

@@ -91,7 +91,8 @@ public class ChoosingItemsController implements Initializable {
     }
 
 
-    public void setDataForStore(Store selectedStore, Customer customer, eOrderType orderType, LocalDate orderDate, BooleanProperty isOrderComplete) {
+    public void setDataForStaticOrder(Store selectedStore, Customer customer, eOrderType orderType, LocalDate orderDate) {
+        itemsTableView.getItems().clear();
         store = selectedStore;
         for (InventoryItem item: selectedStore.getInventoryItems()){
             storeItems.add(new CartItem(item, 0,store.getMapItemToPrices().get(item.getInventoryItemId()), selectedStore));
@@ -116,14 +117,6 @@ public class ChoosingItemsController implements Initializable {
         setUpAddButtonColumn();
         setUpRemoveButtonColumn();
 
-
-//        itemsTableView.getSelectionModel().selectedItemProperty().addListener(
-//                storeItemChangeListener = (((observable, oldValue, newValue) -> {
-//                    selectedStoreItem = newValue;
-//                    if (newValue != null){
-//                    }
-//                }))
-//        );
 
         setTableEditable();
     }
@@ -252,7 +245,7 @@ public class ChoosingItemsController implements Initializable {
     private void updateAmountOfItemInCart(CartItem selectedItem, Float value) {
         if (!currentCart.getCart().containsKey(selectedItem.getInventoryItemId())){
             currentCart.add(selectedItem);
-            System.out.println("Updated Cart: " + currentCart);
+            System.out.println("Updated Cart:\n " + currentCart);
             return;
         }
         currentCart.updateItemAmount(selectedItem,value);
@@ -285,6 +278,10 @@ public class ChoosingItemsController implements Initializable {
         final TablePosition<CartItem, ?> focusedCell = itemsTableView
                 .focusModelProperty().get().focusedCellProperty().get();
         itemsTableView.edit(focusedCell.getRow(), focusedCell.getTableColumn());
+    }
+
+    public void emptyCart(){
+        currentCart = new Cart();
     }
 
 
@@ -335,10 +332,5 @@ public class ChoosingItemsController implements Initializable {
         isOrderComplete.bindBidirectional(otherBooleanProperty);
     }
 
-    public void setCurrentOrderData(Customer selectedCustomer, eOrderType orderType, LocalDate orderDate, BooleanProperty isOrderComplete) {
-        this.customer = selectedCustomer;
-        this.orderType = orderType;
-        this.orderDate = orderDate;
-        this.isOrderComplete = isOrderComplete;
-    }
+
 }

@@ -17,7 +17,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -160,7 +159,7 @@ public class MainAppNController {
 
             FXMLLoader newOrderLoader = new FXMLLoader();
 //            newOrderLoader.setLocation(getClass().getResource("/components/NewOrderMenu/NewOrderContainer.fxml"));
-            newOrderLoader.setLocation(getClass().getResource("/components/NewOrderMenu/PlaceAnOrder/PlaceAnOrder.fxml"));
+            newOrderLoader.setLocation(getClass().getResource("/components/NewOrderMenu/PlaceAnOrder/PlaceAnOrderMainContainer.fxml"));
             orderMenuRef = newOrderLoader.load();
             newOrderContainerController = newOrderLoader.getController();
 

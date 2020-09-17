@@ -24,7 +24,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class PlaceAStaticOrderController implements Initializable {
+public class OrderChooseStoreController implements Initializable {
 
     @FXML
     private AnchorPane placeAStaticOrderRootPane;
@@ -59,7 +59,7 @@ public class PlaceAStaticOrderController implements Initializable {
 
 
 
-    public PlaceAStaticOrderController(){
+    public OrderChooseStoreController(){
         stores = FXCollections.observableArrayList(SDMManager.getInstance().getStores());
     }
 
@@ -106,42 +106,32 @@ public class PlaceAStaticOrderController implements Initializable {
 
     @FXML
     void nextButtonAction(ActionEvent event) {
-
-        placeAStaticOrderRootPane.getChildren().clear();
-        System.out.println("going to choose items");
-
-        try {
-            FXMLLoader cartItemsLoader = new FXMLLoader();
-            cartItemsLoader.setLocation(getClass().getResource("/components/NewOrderMenu/PlaceAnOrder/ChoosingItems.fxml"));
-            Node parent = cartItemsLoader.load();
-            //After setting the scene, we can access the controller and call a method
-            choosingItemsController = cartItemsLoader.getController();
-            choosingItemsController.setDataForStore(selectedStore, customer, orderType, orderDate, isOrderComplete);
-
-            placeAStaticOrderRootPane.getChildren().add(parent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 //
-//    private void loadItemsForStore(Store selectedStore) {
+//        placeAStaticOrderRootPane.getChildren().clear();
+//        System.out.println("going to choose items");
+//
 //        try {
 //            FXMLLoader cartItemsLoader = new FXMLLoader();
 //            cartItemsLoader.setLocation(getClass().getResource("/components/NewOrderMenu/PlaceAnOrder/ChoosingItems.fxml"));
-//            Parent parent = cartItemsLoader.load();
+//            Node parent = cartItemsLoader.load();
 //            //After setting the scene, we can access the controller and call a method
 //            choosingItemsController = cartItemsLoader.getController();
-//            choosingItemsController.initData(selectedStore);
+//            choosingItemsController.setDataForStaticOrder(selectedStore, customer, orderType, orderDate);
 //
-//            itemsAnchorPane.getChildren().clear();
-//            itemsAnchorPane.getChildren().add(parent);
-//            AnchorPane.setTopAnchor(parent,0.0);
-//            AnchorPane.setRightAnchor(parent,0.0);
-//            AnchorPane.setLeftAnchor(parent,0.0);
-//            AnchorPane.setBottomAnchor(parent,0.0);
-//
+//            placeAStaticOrderRootPane.getChildren().add(parent);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-//    }
+    }
+
+    public void setCurrentOrderData(Customer customer, eOrderType orderType, LocalDate orderDate) {
+        this.customer = customer;
+        this.orderType = orderType;
+        this.orderDate = orderDate;
+        updateStoreBasicInfo(selectedStore);
+    }
+
+    public Store getSelectedStore() {
+        return selectedStore;
+    }
 }

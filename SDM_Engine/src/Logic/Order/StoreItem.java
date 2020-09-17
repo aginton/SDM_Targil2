@@ -29,6 +29,11 @@ public class StoreItem extends InventoryItem {
         this.totalAmountSoldAtStore = totalAmountSoldAtStore;
     }
 
+    public void increaseTotalAmountSold(float amountToIncreaseBy){
+        float oldAmount = getTotalAmountSoldAtStore();
+        setTotalAmountSoldAtStore(oldAmount+amountToIncreaseBy);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null)

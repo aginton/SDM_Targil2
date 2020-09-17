@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class PlaceAnOrderController {
+public class OrderBasicInfoController {
 
     @FXML
     private AnchorPane mainPane;
@@ -72,7 +72,7 @@ public class PlaceAnOrderController {
     private ScrollPane entireInventoryRef;
 
     private Node staticOrderRef, dynamicOrderRef;
-    private PlaceAStaticOrderController staticOrderController;
+    private OrderChooseStoreController staticOrderController;
     private ChoosingItemsController choosingItemsController;
     private BooleanProperty isOrderComplete;
 
@@ -80,7 +80,7 @@ public class PlaceAnOrderController {
     private int dummyVariable = 0;
 
 
-    public PlaceAnOrderController(){
+    public OrderBasicInfoController(){
         System.out.println("Inside NewOrderContainerController Constructor...");
         sdmManager = SDMManager.getInstance();
         customers = FXCollections.observableArrayList(sdmManager.getCustomers().getCustomers());
@@ -92,7 +92,7 @@ public class PlaceAnOrderController {
 
         try {
             FXMLLoader staticOrderLoader = new FXMLLoader();
-            staticOrderLoader.setLocation(getClass().getResource("/components/NewOrderMenu/PlaceAnOrder/PlaceAStaticOrder.fxml"));
+            staticOrderLoader.setLocation(getClass().getResource("/components/NewOrderMenu/PlaceAnOrder/OrderChooseStore.fxml"));
             staticOrderRef = staticOrderLoader.load();
             staticOrderController = staticOrderLoader.getController();
 
@@ -147,19 +147,40 @@ public class PlaceAnOrderController {
     @FXML
     void nextButtonAction(ActionEvent event) {
 
-        mainPane.getChildren().clear();
-
-        if (orderType == eOrderType.STATIC_ORDER){
-            staticOrderController.setCurrentOrderData(selectedCustomer, orderType, orderDate, isOrderComplete);
-            mainPane.getChildren().add(staticOrderRef);
-        }
-
-        else if (orderType == eOrderType.DYNAMIC_ORDER){
-            choosingItemsController.setCurrentOrderData(selectedCustomer, orderType, orderDate, isOrderComplete);
-            mainPane.getChildren().add(dynamicOrderRef);
-        }
+//        mainPane.getChildren().clear();
+//
+//        if (orderType == eOrderType.STATIC_ORDER){
+//            //staticOrderController.setCurrentOrderData(selectedCustomer, orderType, orderDate);
+//            mainPane.getChildren().add(staticOrderRef);
+//        }
+//
+//        else if (orderType == eOrderType.DYNAMIC_ORDER){
+//            //choosingItemsController.setCurrentOrderData(selectedCustomer, orderType, orderDate);
+//            mainPane.getChildren().add(dynamicOrderRef);
+//        }
     }
 
+    public eOrderType getOrderType() {
+        return orderType;
+    }
 
+    public void setOrderType(eOrderType orderType) {
+        this.orderType = orderType;
+    }
 
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public Customer getSelectedCustomer() {
+        return selectedCustomer;
+    }
+
+    public void setSelectedCustomer(Customer selectedCustomer) {
+        this.selectedCustomer = selectedCustomer;
+    }
 }
