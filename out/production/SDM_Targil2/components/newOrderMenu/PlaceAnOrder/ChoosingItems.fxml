@@ -95,8 +95,8 @@
       </Label>
       <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
          <children>
-            <Button fx:id="cancelButton" onAction="#cancelAction" text="Back" />
-            <Button fx:id="conformButton" onAction="#confirmAction" text="Confirm" />
+            <Button fx:id="cancelButton" disable="true" onAction="#cancelAction" text="Back" />
+            <Button fx:id="conformButton" disable="true" onAction="#confirmAction" text="Confirm" />
          </children>
       </HBox>
    </children>

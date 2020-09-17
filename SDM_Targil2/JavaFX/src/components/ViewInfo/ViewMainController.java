@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -37,7 +38,7 @@ public class ViewMainController implements Initializable {
     @FXML
     private AnchorPane childAnchorPane;
 
-    private AnchorPane viewMapRef, viewOrderHistoryRef, viewStoresRef, viewInventoryItemsRef, storesListRef;
+    private Node viewMapRef, viewOrderHistoryRef, viewStoresRef, viewInventoryItemsRef, storesListRef;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -81,7 +82,7 @@ public class ViewMainController implements Initializable {
         loadNewPane(viewStoresRef);
     }
 
-    private void loadNewPane(Pane paneToLoad) {
+    private void loadNewPane(Node paneToLoad) {
         childAnchorPane.getChildren().clear();
         childAnchorPane.getChildren().add(paneToLoad);
         AnchorPane.setBottomAnchor(paneToLoad, 0.0);

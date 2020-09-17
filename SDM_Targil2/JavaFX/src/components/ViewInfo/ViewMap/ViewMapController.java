@@ -15,6 +15,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.fxml.FXML;
+import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
 import java.util.List;
@@ -24,6 +25,10 @@ import java.util.ResourceBundle;
 //https://stackoverflow.com/questions/31095954/how-to-get-gridpane-row-and-column-ids-on-mouse-entered-in-each-cell-of-grid-in
 //https://www.google.com/search?q=javafx+add+label+gridpane+x+y+coordinates&rlz=1C1EKKP_enUS760IL760&sxsrf=ALeKk03VOboLNwLYypm-xRPIlKQqjKveNA:1600323798318&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiIsZjcxu_rAhVO_aQKHbtoBZYQ_AUoAXoECBoQAw&biw=1920&bih=1007#imgrc=_t2oQARJUl4BiM&imgdii=bIACUuTGBnmNbM
 
+
+//READ
+//https://stackoverflow.com/questions/25403267/how-to-maintain-gridpanes-fixed-size-after-adding-elemnts-dynamically
+
 public class ViewMapController implements Initializable {
 
 //    @FXML
@@ -31,6 +36,7 @@ public class ViewMapController implements Initializable {
 
     @FXML
     private ScrollPane scrollp;
+
 
     private List<Customer> customers;
     private List<Store> stores;
@@ -53,7 +59,6 @@ public class ViewMapController implements Initializable {
     private Group tileGroup = new Group();
     private Group pieceGroup = new Group();
     Color[] colors = {Color.GRAY, Color.BLUE, Color.GREEN, Color.RED};
-    private Tile[][] board;
 
     //https://stackoverflow.com/questions/55602778/how-to-add-objects-in-grid-from-bottom-up
 
@@ -66,24 +71,37 @@ public class ViewMapController implements Initializable {
         updateMaxXandY(stores);
         WIDTH = maxYValue;
         HEIGHT = maxXValue;
-        board = new Tile[WIDTH][HEIGHT];
         grid = new GridPane();
-        grid.setPrefSize(WIDTH*TILE_SIZE, HEIGHT*TILE_SIZE);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        //grid.getChildren().addAll(tileGroup,pieceGroup);
-
+        grid.setPrefSize(WIDTH*TILE_SIZE, HEIGHT*TILE_SIZE);
         System.out.println("List of stores locations:");
         stores.forEach(i-> System.out.println(i.getLocation()));
 
-        prepareMap();
+        //prepareMap();
+        createBoard();
 
         addStoresToGrid();
         addCustomersToGrid();
         scrollp.setContent(grid);
+    }
+
+    private void createBoard() {
+        for (int row = 0; row < maxYValue; row++) {
+            for (int col = 0; col < maxXValue; col++) {
+                Tile tile = new Tile(col, row);
+                Color color;
+                if ((row + col) % 2 == 0) color = Color.WHITE;
+                else color = Color.BLACK;
+                tile.setFill(color);
+
+                grid.add(tile, col, row);
+                tile.getRectangle().widthProperty().bind(grid.widthProperty().divide(ELEMENT_SIZE));
+                tile.getRectangle().heightProperty().bind(grid.heightProperty().divide(ELEMENT_SIZE));
+            }
+        }
     }
 
 
@@ -93,9 +111,8 @@ public class ViewMapController implements Initializable {
             int y = customer.getY();
 
             Piece piece = new Piece(customer);
-            Tile n = (Tile) getNodeByRowColumnIndex(y-1,x-1,grid);
-            n.setPiece(piece);
-            //pieceGroup.getChildren().add(piece);
+            Tile n = (Tile) getNodeByRowColumnIndex(y-1,x-1, grid);
+            n.getChildren().add(piece);
         }
     }
 
@@ -105,12 +122,12 @@ public class ViewMapController implements Initializable {
             int x = store.getX();
             int y = store.getY();
             Piece piece = new Piece(store);
-            Tile n = (Tile) getNodeByRowColumnIndex(y-1,x-1,grid);
+            Tile n = (Tile) getNodeByRowColumnIndex(y-1,x-1, grid);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Piece.fxml"));
             n.getChildren().add(piece);
 
-            n.setFill(Color.RED);
+            //n.setFill(Color.RED);
         }
     }
 
@@ -136,6 +153,8 @@ public class ViewMapController implements Initializable {
     }
 
 
+
+
     //This method updates maxXValue and maxYValue if there are positions in input list that are larger than current max values
     public void updateMaxXandY(List<? extends hasLocationInterface> listToGoThrough){
         for (hasLocationInterface obj: listToGoThrough){
@@ -155,7 +174,7 @@ public class ViewMapController implements Initializable {
 
         for (int y=0; y < maxYValue+1; y++){
             for (int x = 0; x < maxXValue+1; x++){
-                Tile tile = new Tile((x+y)%2 == 0, x,y);
+                Tile tile = new Tile(x,y);
                 //board[x][y]=tile;
 
                 GridPane.setRowIndex(tile, y);

@@ -9,13 +9,14 @@ public class Tile extends StackPane {
     private Piece piece;
     private Rectangle rectangle;
 
-    public Tile(boolean light, int x, int y){
+
+    public Tile(int x, int y){
         rectangle = new Rectangle();
         rectangle.setWidth(ViewMapController.WIDTH);
         rectangle.setHeight(ViewMapController.HEIGHT);
 
         relocate(x*ViewMapController.TILE_SIZE, y*ViewMapController.TILE_SIZE);
-        rectangle.setFill(light? Color.AQUA: Color.CORAL);
+        rectangle.setFill(Color.CORAL);
         getChildren().add(rectangle);
     }
 
