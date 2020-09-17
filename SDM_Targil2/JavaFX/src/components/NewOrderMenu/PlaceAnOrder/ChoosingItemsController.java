@@ -1,11 +1,16 @@
 package components.NewOrderMenu.PlaceAnOrder;
 
+import Logic.Customers.Customer;
 import Logic.Inventory.InventoryItem;
 import Logic.Inventory.ePurchaseCategory;
 import Logic.Order.Cart;
 import Logic.Order.CartItem;
+import Logic.Order.Order;
+import Logic.Order.eOrderType;
+import Logic.SDM.SDMManager;
 import Logic.Store.Store;
 import Utilities.MyFloatStringConverter;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleFloatProperty;
@@ -21,7 +26,12 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class ChoosingItemsController implements Initializable {
 
@@ -62,10 +72,16 @@ public class ChoosingItemsController implements Initializable {
     private Button conformButton;
 
     private Store store;
+    Set<Store> storeOfThisOrder = new HashSet<Store>();
     private ObservableList<CartItem> storeItems;
     private ChangeListener<CartItem> storeItemChangeListener;
     private FloatProperty selectedItemAmountProperty;
     private Cart currentCart;
+
+    private Customer customer;
+    private eOrderType orderType;
+    private LocalDate orderDate;
+    private BooleanProperty isOrderComplete;
 
 
     public ChoosingItemsController(){
@@ -75,12 +91,17 @@ public class ChoosingItemsController implements Initializable {
     }
 
 
-    public void initData(Store selectedStore) {
+    public void setDataForStore(Store selectedStore, Customer customer, eOrderType orderType, LocalDate orderDate, BooleanProperty isOrderComplete) {
         store = selectedStore;
         for (InventoryItem item: selectedStore.getInventoryItems()){
             storeItems.add(new CartItem(item, 0,store.getMapItemToPrices().get(item.getInventoryItemId()), selectedStore));
         }
         itemsTableView.setItems(storeItems);
+
+        this.customer = customer;
+        this.orderType = orderType;
+        this.orderDate = orderDate;
+        this.isOrderComplete = isOrderComplete;
     }
 
 
@@ -279,7 +300,45 @@ public class ChoosingItemsController implements Initializable {
 
     @FXML
     void confirmAction(ActionEvent event) {
+        System.out.println("Confirm button pressed");
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        Date date = Date.from(orderDate.atStartOfDay(defaultZoneId).toInstant());
 
+        if (orderType == eOrderType.STATIC_ORDER){
+            storeOfThisOrder.add(store);
+        }
+
+        Order order = new Order(customer.getLocation(),
+                date,
+                6,
+                currentCart,
+                storeOfThisOrder,
+                orderType);
+
+        SDMManager.getInstance().addNewStaticOrder(store, order);
+        setIsOrderComplete(true);
     }
 
+    public boolean getIsOrderComplete() {
+        return isOrderComplete.get();
+    }
+
+    public BooleanProperty isOrderCompleteProperty() {
+        return isOrderComplete;
+    }
+
+    public void setIsOrderComplete(boolean isOrderComplete) {
+        this.isOrderComplete.set(isOrderComplete);
+    }
+
+    public void bindIsCompleteOrder(BooleanProperty otherBooleanProperty){
+        isOrderComplete.bindBidirectional(otherBooleanProperty);
+    }
+
+    public void setCurrentOrderData(Customer selectedCustomer, eOrderType orderType, LocalDate orderDate, BooleanProperty isOrderComplete) {
+        this.customer = selectedCustomer;
+        this.orderType = orderType;
+        this.orderDate = orderDate;
+        this.isOrderComplete = isOrderComplete;
+    }
 }

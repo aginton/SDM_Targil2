@@ -6,7 +6,6 @@ import Logic.Order.Cart;
 import Logic.Order.eOrderType;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
-import components.NewOrderMenu.ChooseItemsView.ChooseItemsFromStoreController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -21,7 +20,6 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -75,6 +73,7 @@ public class PlaceAnOrderController {
 
     private Node staticOrderRef, dynamicOrderRef;
     private PlaceAStaticOrderController staticOrderController;
+    private ChoosingItemsController choosingItemsController;
     private BooleanProperty isOrderComplete;
 
     private Cart currentCart;
@@ -97,7 +96,10 @@ public class PlaceAnOrderController {
             staticOrderRef = staticOrderLoader.load();
             staticOrderController = staticOrderLoader.getController();
 
-            dynamicOrderRef = FXMLLoader.load(getClass().getResource("/components/NewOrderMenu/PlaceAnOrder/ChoosingItems.fxml"));
+            FXMLLoader chooseItemsLoader = new FXMLLoader();
+            chooseItemsLoader.setLocation(getClass().getResource("/components/NewOrderMenu/PlaceAnOrder/ChoosingItems.fxml"));
+            dynamicOrderRef = chooseItemsLoader.load();
+            choosingItemsController = chooseItemsLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -148,28 +150,16 @@ public class PlaceAnOrderController {
         mainPane.getChildren().clear();
 
         if (orderType == eOrderType.STATIC_ORDER){
-            staticOrderController.setCustomer(selectedCustomer);
+            staticOrderController.setCurrentOrderData(selectedCustomer, orderType, orderDate, isOrderComplete);
             mainPane.getChildren().add(staticOrderRef);
         }
 
-        else if (orderType == eOrderType.DYNAMIC_ORDER)
+        else if (orderType == eOrderType.DYNAMIC_ORDER){
+            choosingItemsController.setCurrentOrderData(selectedCustomer, orderType, orderDate, isOrderComplete);
             mainPane.getChildren().add(dynamicOrderRef);
+        }
     }
 
-    public boolean getIsOrderComplete() {
-        return isOrderComplete.get();
-    }
 
-    public BooleanProperty isOrderCompleteProperty() {
-        return isOrderComplete;
-    }
-
-    public void setIsOrderComplete(boolean isOrderComplete) {
-        this.isOrderComplete.set(isOrderComplete);
-    }
-
-    public void bindIsCompleteOrder(BooleanProperty otherBooleanProperty){
-        isOrderComplete.bindBidirectional(otherBooleanProperty);
-    }
 
 }

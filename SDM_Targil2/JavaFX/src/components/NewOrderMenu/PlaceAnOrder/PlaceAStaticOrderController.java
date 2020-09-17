@@ -2,12 +2,11 @@ package components.NewOrderMenu.PlaceAnOrder;
 
 
 import Logic.Customers.Customer;
+import Logic.Order.eOrderType;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableObjectValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -23,7 +21,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class PlaceAStaticOrderController implements Initializable {
@@ -54,8 +52,11 @@ public class PlaceAStaticOrderController implements Initializable {
     private ChangeListener<Store> storeChangeListener;
     private Store selectedStore;
     private ChoosingItemsController choosingItemsController;
-
     private Customer customer;
+    private eOrderType orderType;
+    private LocalDate orderDate;
+    private BooleanProperty isOrderComplete;
+
 
 
     public PlaceAStaticOrderController(){
@@ -63,8 +64,12 @@ public class PlaceAStaticOrderController implements Initializable {
     }
 
 
-    public void setCustomer(Customer c){
-        customer = c;
+
+    public void setCurrentOrderData(Customer c, eOrderType orderType, LocalDate orderDate, BooleanProperty isOrderComplete){
+        this.customer = c;
+        this.orderType = orderType;
+        this.orderDate = orderDate;
+        this.isOrderComplete = isOrderComplete;
         updateStoreBasicInfo(selectedStore);
     }
 
@@ -111,7 +116,7 @@ public class PlaceAStaticOrderController implements Initializable {
             Node parent = cartItemsLoader.load();
             //After setting the scene, we can access the controller and call a method
             choosingItemsController = cartItemsLoader.getController();
-            choosingItemsController.initData(selectedStore);
+            choosingItemsController.setDataForStore(selectedStore, customer, orderType, orderDate, isOrderComplete);
 
             placeAStaticOrderRootPane.getChildren().add(parent);
         } catch (IOException e) {
