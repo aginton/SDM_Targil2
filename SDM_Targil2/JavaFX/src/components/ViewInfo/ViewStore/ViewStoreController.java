@@ -131,7 +131,7 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
         listview.setItems(sortedList);
 
         //Set columns for TableView
-        itemIDColumn.setCellValueFactory(new PropertyValueFactory<StoreItem,Integer>("inventoryItemId"));
+        itemIDColumn.setCellValueFactory(new PropertyValueFactory<StoreItem,Integer>("itemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<StoreItem,String>("itemName"));
         itemCategoryColumn.setCellValueFactory(new PropertyValueFactory<StoreItem, ObjectProperty<ePurchaseCategory>>("purchaseCategory"));
         itemPriceColumn.setCellValueFactory(new PropertyValueFactory<StoreItem, Integer>("normalPrice"));

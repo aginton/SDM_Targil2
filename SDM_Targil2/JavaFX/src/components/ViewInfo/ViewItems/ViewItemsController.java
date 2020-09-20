@@ -60,7 +60,7 @@ public class ViewItemsController implements inventoryChangeInterface {
     }
 
     public void initialize(){
-        itemIdColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem,Integer>("inventoryItemId"));
+        itemIdColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem,Integer>("itemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem,String>("itemName"));
         itemCategoryColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem, ObjectProperty<ePurchaseCategory>>("purchaseCategory"));
         setUpAvePriceCol();

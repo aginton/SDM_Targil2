@@ -66,6 +66,6 @@
             </ImageView>
          </graphic>
       </Button>
-      <AnchorPane fx:id="childAnchorPane" prefHeight="85.0" prefWidth="593.0" GridPane.columnIndex="1" GridPane.rowSpan="5" />
+      <AnchorPane fx:id="childAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="85.0" prefWidth="593.0" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowSpan="5" GridPane.vgrow="ALWAYS" />
    </children>
 </GridPane>

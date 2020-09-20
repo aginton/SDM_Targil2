@@ -76,7 +76,7 @@ public class SingleOrderViewController  {
     private void setOrderTable(Order order) {
         order.getCartForThisOrder().getCart().values().forEach(i->items.add(i));
         itemTableView.setItems(items);
-        itemIdColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Integer>("inventoryItemId"));
+        itemIdColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Integer>("itemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<CartItem,String>("itemName"));
         amountColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Float>("itemAmount"));
         unitPriceColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Integer>("price"));

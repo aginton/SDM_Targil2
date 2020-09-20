@@ -2,26 +2,25 @@ package Logic.Inventory;
 
 import Resources.Schema.JAXBGenerated.SDMItem;
 import javafx.beans.property.*;
-import javafx.scene.paint.Color;
 
 import java.util.Objects;
 
 public class InventoryItem implements Comparable<InventoryItem>, InventoryItemInterface {
 
-    private IntegerProperty inventoryItemId = new SimpleIntegerProperty(this, "inventoryItemId", 0);
+    private IntegerProperty itemId = new SimpleIntegerProperty(this, "itemId", 0);
     private StringProperty itemName = new SimpleStringProperty(this, "itemName", "");
     private ObjectProperty<ePurchaseCategory> purchaseCategory = new SimpleObjectProperty<ePurchaseCategory>(this, "purchaseCategory", ePurchaseCategory.QUANTITY);
 
 
     public InventoryItem(SDMItem item) {
-        setInventoryItemId(item.getId());
+        setItemId(item.getId());
         setItemName(item.getName());
         setPurchaseCategory(ePurchaseCategory.valueOf(item.getPurchaseCategory().toUpperCase()));
     }
 
     public InventoryItem(InventoryItem item){
-        this.inventoryItemId = item.inventoryItemIdProperty();
-        setInventoryItemId(item.getInventoryItemId());
+        this.itemId = item.itemIdProperty();
+        setItemId(item.getItemId());
 
         setItemName(item.getItemName());
         this.itemName = item.itemNameProperty();
@@ -31,16 +30,16 @@ public class InventoryItem implements Comparable<InventoryItem>, InventoryItemIn
     }
 
     @Override
-    public int getInventoryItemId() {
-        return inventoryItemId.get();
+    public int getItemId() {
+        return itemId.get();
     }
 
-    public IntegerProperty inventoryItemIdProperty() {
-        return inventoryItemId;
+    public IntegerProperty itemIdProperty() {
+        return itemId;
     }
 
-    public void setInventoryItemId(int inventoryItemId) {
-        this.inventoryItemId.set(inventoryItemId);
+    public void setItemId(int itemId) {
+        this.itemId.set(itemId);
     }
 
     public StringProperty itemNameProperty() {
@@ -76,7 +75,7 @@ public class InventoryItem implements Comparable<InventoryItem>, InventoryItemIn
 
         if (o instanceof InventoryItem){
             InventoryItem oitem = (InventoryItem) o;
-            return getInventoryItemId() == oitem.getInventoryItemId() && itemName.equals(oitem.itemName) && purchaseCategory.equals(oitem.purchaseCategory);
+            return getItemId() == oitem.getItemId() && itemName.equals(oitem.itemName) && purchaseCategory.equals(oitem.purchaseCategory);
         } else{
             return false;
         }
@@ -84,12 +83,19 @@ public class InventoryItem implements Comparable<InventoryItem>, InventoryItemIn
 
     @Override
     public int hashCode() {
-        return Objects.hash(inventoryItemId, itemName, purchaseCategory);
+        return Objects.hash(itemId, itemName, purchaseCategory);
     }
 
     @Override
     public int compareTo(InventoryItem o) {
-        return this.getInventoryItemId() - o.getInventoryItemId();
+        return this.getItemId() - o.getItemId();
     }
 
+    @Override
+    public String toString() {
+        return "InventoryItem{" +
+                "itemId=" + itemId +
+                ", itemName=" + itemName +
+                '}';
+    }
 }

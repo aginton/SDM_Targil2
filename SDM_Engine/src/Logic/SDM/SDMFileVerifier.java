@@ -98,7 +98,7 @@ public class SDMFileVerifier {
     public boolean isSDMValidAppWise(SuperDuperMarketDescriptor sdm) {
         boolean areItemIdsUnique,areStoreIdsUnique,isStoreUsingUniqueItemIds,
                 isStoreUsingExistingItemIds, isEachExistingItemSoldSomewhere,
-                areLocationsLegal, areCustomerIdsUnique;
+                areLocationsLegal, areCustomerIdsUnique, areItemsOnSaleSoldAtStore;
 
         List<SDMStore> sdmStores = sdm.getSDMStores().getSDMStore();
 
@@ -126,12 +126,86 @@ public class SDMFileVerifier {
         //areLocationsLegal = checkLocationsAreAllowed(sdmStores);
         areLocationsLegal = checkLocationsAreAllowed(listOfStoreLocations, listOfCustomerLocations);
 
-
         areCustomerIdsUnique = checkListOfIntsUnique(listOfCustomerIds, "SDMCustomer");
 
-        return (areItemIdsUnique && areStoreIdsUnique && areCustomerIdsUnique && isStoreUsingExistingItemIds && isStoreUsingUniqueItemIds && isEachExistingItemSoldSomewhere && areLocationsLegal);
+        areItemsOnSaleSoldAtStore = checkIfItemsOnSaleAreSoldAtStores(sdmStores);
+
+        return (areItemIdsUnique && areStoreIdsUnique && areCustomerIdsUnique &&
+                isStoreUsingExistingItemIds && isStoreUsingUniqueItemIds &&
+                isEachExistingItemSoldSomewhere && areLocationsLegal && areItemsOnSaleSoldAtStore);
     }
 
+    private boolean checkIfItemsOnSaleAreSoldAtStores(List<SDMStore> sdmStores) {
+        boolean res = true;
+        for (SDMStore store: sdmStores){
+
+            if (checkIfStoreHasDiscounts(store)){
+
+                if (!checkIfDiscountItemsAtStoreAreLegal(store)){
+                    res = false;
+                }
+
+            }
+        }
+        return res;
+    }
+
+    public static boolean checkIfStoreHasDiscounts(SDMStore store) {
+        try{
+         return store.getSDMDiscounts().getSDMDiscount().size()>0;
+        } catch (NullPointerException npe){
+            return false;
+        }
+    }
+
+    private boolean checkIfDiscountItemsAtStoreAreLegal(SDMStore store) {
+        boolean res = true;
+        Set<Integer> setOfItemIds = getSetOfItemIdsAtStore(store);
+        StringBuilder sb1 = new StringBuilder("Store " + store.getName() + " has following item-ids: {");
+        for (Integer i: setOfItemIds){
+            sb1.append(String.valueOf(i)).append(",");
+        }
+        sb1.append("}\n");
+        System.out.println(sb1.toString());
+
+
+        List<Integer> listOfIfYouBuyIds = getListOfIfYouBuyIdsAtStore(store);
+
+        StringBuilder sb2 = new StringBuilder("Store " + store.getName() + " has following if-you-buy-ids: {");
+        for (Integer i: listOfIfYouBuyIds){
+            sb2.append(String.valueOf(i)).append(",");
+        }
+        sb2.append("}\n");
+        System.out.println(sb2.toString());
+
+        List<Integer> listThenYouGetIDs = getListOfThenYouGetIdsAtStore(store);
+        StringBuilder sb3 = new StringBuilder("Store " + store.getName() + " has following then-you-get-ids: {");
+        for (Integer i: listThenYouGetIDs){
+            sb3.append(String.valueOf(i)).append(",");
+        }
+        sb3.append("}\n");
+        System.out.println(sb3.toString());
+
+        for (Integer i: listOfIfYouBuyIds){
+            if (setOfItemIds.add(i)){
+                loadingErrorMessage = loadingErrorMessage.concat(
+                        String.format("Store %d has if-you-buy for item id=%d, but no such item id found in store inventory!\n",store.getId(),i)
+                );
+                res =false;
+            }
+        }
+
+        for (Integer i: listThenYouGetIDs){
+            if (setOfItemIds.add(i)){
+                loadingErrorMessage = loadingErrorMessage.concat(
+                        String.format("Store %d has then-you-get for item id=%d, but no such item id found in store inventory!\n",store.getId(),i)
+                );
+                res =false;
+            }
+        }
+
+        return res;
+    }
 
 
     private List<Integer> getListOfCustomerIds(SDMCustomers sdmCustomers) {
@@ -142,6 +216,38 @@ public class SDMFileVerifier {
         List<List<Integer>> res = new ArrayList<>();
         for (SDMCustomer customer: sdmCustomers){
             res.add(getCustomerLocation(customer));
+        }
+        return res;
+    }
+
+    public List<Integer> getListOfItemIdsAtStore(SDMStore store){
+        List<Integer> res = new ArrayList<>();
+        for (SDMSell sdmSell: store.getSDMPrices().getSDMSell()){
+            res.add(sdmSell.getItemId());
+        }
+        return res;
+    }
+    public Set<Integer> getSetOfItemIdsAtStore(SDMStore store){
+        Set<Integer> res = new HashSet<>();
+        for (SDMSell sdmSell: store.getSDMPrices().getSDMSell()){
+            res.add(sdmSell.getItemId());
+        }
+        return res;
+    }
+    public List<Integer> getListOfIfYouBuyIdsAtStore(SDMStore store){
+        List<Integer> res = new ArrayList<>();
+        for (SDMDiscount discount: store.getSDMDiscounts().getSDMDiscount()){
+            res.add(discount.getIfYouBuy().getItemId());
+        }
+        return res;
+    }
+
+    public List<Integer> getListOfThenYouGetIdsAtStore(SDMStore store){
+        List<Integer> res = new ArrayList<>();
+        for (SDMDiscount discount: store.getSDMDiscounts().getSDMDiscount()){
+            for (SDMOffer offer: discount.getThenYouGet().getSDMOffer()){
+                res.add(offer.getItemId());
+            }
         }
         return res;
     }

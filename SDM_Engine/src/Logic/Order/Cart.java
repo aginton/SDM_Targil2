@@ -50,7 +50,7 @@ public class Cart {
     }
 
     public void add(CartItem cartItem) {
-        int id = cartItem.getInventoryItemId();
+        int id = cartItem.getItemId();
         cartTotalPrice += cartItem.getPrice()*cartItem.getItemAmount();
 
         if (cart.containsKey(id)) {
@@ -70,18 +70,18 @@ public class Cart {
     }
 
     public void updateItemAmount(CartItem selectedItem, Float value) {
-        if (!cart.containsKey(selectedItem.getInventoryItemId())){
+        if (!cart.containsKey(selectedItem.getItemId())){
             return;
         }
-        CartItem existingItem = cart.get(selectedItem.getInventoryItemId());
+        CartItem existingItem = cart.get(selectedItem.getItemId());
         existingItem.setItemAmount(value);
     }
 
     public void removeItemFromCart(CartItem selectedItem) {
-        if (!cart.containsKey(selectedItem.getInventoryItemId()))
+        if (!cart.containsKey(selectedItem.getItemId()))
             return;
         else
-            cart.remove(selectedItem.getInventoryItemId());
+            cart.remove(selectedItem.getItemId());
     }
 
     @Override
@@ -91,7 +91,7 @@ public class Cart {
 
         StringBuilder sb = new StringBuilder( "Cart {");
         cart.forEach((k,v)->{
-            sb.append("\n\titem " + v.getInventoryItemId() + ", amount= ");
+            sb.append("\n\titem " + v.getItemId() + ", amount= ");
             sb.append(String.valueOf(v.getItemAmount()));
         });
         sb.append("}");

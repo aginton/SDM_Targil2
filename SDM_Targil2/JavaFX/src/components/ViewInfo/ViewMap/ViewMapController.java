@@ -37,6 +37,9 @@ public class ViewMapController implements Initializable {
     @FXML
     private ScrollPane scrollp;
 
+    @FXML
+    private GridPane gridpane;
+
 
     private List<Customer> customers;
     private List<Store> stores;
@@ -113,6 +116,8 @@ public class ViewMapController implements Initializable {
             Piece piece = new Piece(customer);
             Tile n = (Tile) getNodeByRowColumnIndex(y-1,x-1, grid);
             n.getChildren().add(piece);
+            //n.setOnMouseClicked(e->n.showInfo());
+            piece.setOnMouseClicked(e->piece.showInfo());
         }
     }
 
@@ -123,6 +128,7 @@ public class ViewMapController implements Initializable {
             int y = store.getY();
             Piece piece = new Piece(store);
             Tile n = (Tile) getNodeByRowColumnIndex(y-1,x-1, grid);
+            piece.setOnMouseClicked(e->piece.showInfo());
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Piece.fxml"));
             n.getChildren().add(piece);
@@ -175,6 +181,8 @@ public class ViewMapController implements Initializable {
         for (int y=0; y < maxYValue+1; y++){
             for (int x = 0; x < maxXValue+1; x++){
                 Tile tile = new Tile(x,y);
+
+
                 //board[x][y]=tile;
 
                 GridPane.setRowIndex(tile, y);

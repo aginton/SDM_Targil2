@@ -2,7 +2,6 @@ package components.Main;
 
 import Logic.SDM.SDMFileVerifier;
 import Logic.SDM.SDMManager;
-import components.NewOrderMenu.NewOrderContainerController;
 import components.ViewInfo.ViewMainController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -68,7 +67,6 @@ public class MainAppNController {
     private BooleanProperty isNewOrderComplete;
     private SimpleStringProperty selectedFileProperty;
     private ViewMainController viewMainController;
-    private NewOrderContainerController newOrderContainerController;
     private ChangeListener<Boolean> isNewOrderCompleteChangeListener;
 
 
@@ -158,13 +156,10 @@ public class MainAppNController {
             System.out.println("Going to try and store ref to orderMenu.fxml");
 
             FXMLLoader newOrderLoader = new FXMLLoader();
-//            newOrderLoader.setLocation(getClass().getResource("/components/NewOrderMenu/NewOrderContainer.fxml"));
-            newOrderLoader.setLocation(getClass().getResource("/components/NewOrderMenu/PlaceAnOrder/PlaceAnOrderMainContainer.fxml"));
+//            newOrderLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/PlaceAnOrderMain/PlaceAnOrderMainContainer.fxml"));
+            newOrderLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainer.fxml"));
             orderMenuRef = newOrderLoader.load();
-            newOrderContainerController = newOrderLoader.getController();
 
-            newOrderContainerController.bindIsCompleteOrder(isNewOrderComplete);
-            isNewOrderComplete.bindBidirectional(newOrderContainerController.isOrderCompleteProperty());
         } catch (IOException e) {
             e.printStackTrace();
         }

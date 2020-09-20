@@ -6,6 +6,9 @@ import Logic.Order.Cart;
 import Logic.Order.Order;
 import Logic.Order.StoreItem;
 import Logic.Interfaces.hasLocationInterface;
+import Logic.SDM.SDMFileVerifier;
+import Logic.SDM.SDMManager;
+import Resources.Schema.JAXBGenerated.SDMDiscount;
 import Resources.Schema.JAXBGenerated.SDMSell;
 import Resources.Schema.JAXBGenerated.SDMStore;
 import javafx.beans.Observable;
@@ -33,16 +36,41 @@ public class Store implements hasLocationInterface {
 
     private HashMap<Integer, Integer> mapItemToPrices;
     private List<Order> storeOrders;
+    private List<StoreDiscount> storeDiscounts;
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Constructor
     public Store(){}
 
-    public Store(SDMStore store) {
+//    public Store(SDMStore store) {
+//        setStoreId(store.getId());
+//        setStoreName(store.getName());
+//        setDeliveryPpk(store.getDeliveryPpk());
+//        listeners = new ArrayList<>();
+//        storeDiscounts = new ArrayList<>();
+//        this.storeOrders = new ArrayList<>();
+//
+//
+//        storeLocation.add(store.getLocation().getX());
+//        storeLocation.add(store.getLocation().getY());
+//
+//        this.mapItemsToAmountSold = new HashMap<>();
+//        this.mapItemToPrices = new HashMap<>();
+//
+//        for (SDMSell sell : store.getSDMPrices().getSDMSell()) {
+//            mapItemToPrices.put(sell.getItemId(), sell.getPrice());
+//            mapItemsToAmountSold.put(sell.getItemId(), (float) 0);
+//
+//        }
+//    }
+
+    public Store(SDMStore store, SDMManager sdmManager){
         setStoreId(store.getId());
         setStoreName(store.getName());
         setDeliveryPpk(store.getDeliveryPpk());
         listeners = new ArrayList<>();
+        storeDiscounts = new ArrayList<>();
+        this.storeOrders = new ArrayList<>();
 
         storeLocation.add(store.getLocation().getX());
         storeLocation.add(store.getLocation().getY());
@@ -56,7 +84,20 @@ public class Store implements hasLocationInterface {
 
         }
 
-        this.storeOrders = new ArrayList<>();
+        for (SDMSell sell: store.getSDMPrices().getSDMSell()){
+            InventoryItem itemToAdd = sdmManager.getInventory().getListInventoryItems().stream().filter(i->i.getItemId()==sell.getItemId()).findFirst().get();
+            if (itemToAdd != null){
+                inventoryItems.add(itemToAdd);
+
+                StoreItem storeItem = new StoreItem(itemToAdd, sell.getPrice());
+                storeItems.add(storeItem);
+            }
+        }
+        if (SDMFileVerifier.checkIfStoreHasDiscounts(store)){
+            for (SDMDiscount sdmDiscount: store.getSDMDiscounts().getSDMDiscount()){
+                storeDiscounts.add(new StoreDiscount(sdmDiscount, this));
+            }
+        }
     }
 
     public Store(SDMStore store, Inventory inventory) {
@@ -75,13 +116,13 @@ public class Store implements hasLocationInterface {
             mapItemToPrices.put(sell.getItemId(), sell.getPrice());
             mapItemsToAmountSold.put(sell.getItemId(), (float) 0);
 
-            InventoryItem itemToAdd = inventory.getListInventoryItems().stream().filter(i->i.getInventoryItemId() == sell.getItemId()).findFirst().get();
+            InventoryItem itemToAdd = inventory.getListInventoryItems().stream().filter(i->i.getItemId() == sell.getItemId()).findFirst().get();
             StoreItem storeItem = new StoreItem(itemToAdd, sell.getPrice());
             storeItems.add(storeItem);
         }
-
-
     }
+
+
 
 
     //Getter and Setter
@@ -185,6 +226,14 @@ public class Store implements hasLocationInterface {
         this.inventoryItems = i_inventoryItems;
     }
 
+    public List<StoreDiscount> getStoreDiscounts() {
+        return storeDiscounts;
+    }
+
+    public void setStoreDiscounts(List<StoreDiscount> storeDiscounts) {
+        this.storeDiscounts = storeDiscounts;
+    }
+
     public HashMap<Integer, Float> getMapItemsToAmountSold() {
         if (mapItemsToAmountSold == null)
             mapItemsToAmountSold = new HashMap<>();
@@ -216,7 +265,13 @@ public class Store implements hasLocationInterface {
     }
 
 
-
+    public String getNameById(int id){
+        for (StoreItem item: storeItems){
+            if (item.getItemId() ==id)
+                return item.getItemName();
+        }
+        return "";
+    }
 
     public float getDeliveryCost(List<Integer> userLocation) {
         return getDeliveryPpk()* getDistance(userLocation);
@@ -253,7 +308,7 @@ public class Store implements hasLocationInterface {
 
     private StoreItem getStoreItemById(int id){
         for (StoreItem storeItem: storeItems){
-            if (storeItem.getInventoryItemId() == id)
+            if (storeItem.getItemId() == id)
                 return storeItem;
         }
         return null;
@@ -261,7 +316,7 @@ public class Store implements hasLocationInterface {
 
     public InventoryItem getInventoryItemById(int priceID) {
         for (InventoryItem item : inventoryItems) {
-            if (item.getInventoryItemId() == priceID)
+            if (item.getItemId() == priceID)
                 return item;
         }
         return null;
@@ -273,8 +328,8 @@ public class Store implements hasLocationInterface {
         }
         inventoryItems.add(item);
         Collections.sort(inventoryItems);
-        mapItemsToAmountSold.put(item.getInventoryItemId(), 0f);
-        mapItemToPrices.put(item.getInventoryItemId(), price);
+        mapItemsToAmountSold.put(item.getItemId(), 0f);
+        mapItemToPrices.put(item.getItemId(), price);
         notifyStoreWasChanged();
 
     }
@@ -307,4 +362,16 @@ public class Store implements hasLocationInterface {
             {p.storeIdProperty(), p.storeNameProperty()};
 
 
+
+
+    public Map<StoreDiscount, Integer> getListOfDiscountsForCart(Cart cart){
+        Map<StoreDiscount,Integer> res = new HashMap<>();
+        for (StoreDiscount discount: this.storeDiscounts){
+            int timesConditionIsMet = discount.countTimesConditionIsMet(cart);
+            if (timesConditionIsMet>0){
+                res.put(discount, timesConditionIsMet);
+            }
+        }
+        return res;
+    }
 }

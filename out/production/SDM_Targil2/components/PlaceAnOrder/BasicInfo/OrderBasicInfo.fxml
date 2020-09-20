@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainPane" prefHeight="559.0" prefWidth="730.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.PlaceAnOrder.BasicInfo.OrderBasicInfoController">
+   <children>
+      <Label layoutX="184.0" layoutY="97.0" text="Place an order" textFill="#4d4c4c">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="87.0" fitWidth="90.0" layoutX="87.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/resources/placeanorder.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="184.0" layoutY="158.0" text="CHOOSE CUSTOMER" textFill="#aeacac">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="184.0" layoutY="270.0" text="DATE" textFill="#aeacac">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="184.0" layoutY="391.0" text="ORDER TYPE" textFill="#aeacac">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="chooseCustomerCB" layoutX="184.0" layoutY="189.0" prefHeight="25.0" prefWidth="158.0" />
+      <DatePicker fx:id="chooseDateDP" layoutX="184.0" layoutY="307.0" />
+      <RadioButton fx:id="radioStaticOrder" layoutX="201.0" layoutY="429.0" text="Static order">
+         <toggleGroup>
+            <ToggleGroup fx:id="orderTypeGroup" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="radioDynamicOrder" layoutX="201.0" layoutY="453.0" text="Dynamic order" toggleGroup="$orderTypeGroup" />
+      <Button fx:id="nextButton" disable="true" layoutX="641.0" layoutY="520.0" onAction="#nextButtonAction" prefHeight="25.0" prefWidth="64.0" text="Next" />
+   </children>
+</AnchorPane>

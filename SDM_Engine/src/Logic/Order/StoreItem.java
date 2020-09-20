@@ -43,7 +43,7 @@ public class StoreItem extends InventoryItem {
         if (getClass() != obj.getClass())
             return false;
         else{
-            boolean sameName = this.getInventoryItemId()==((InventoryItem) obj).getInventoryItemId();
+            boolean sameName = this.getItemId()==((InventoryItem) obj).getItemId();
             boolean sameId = this.getItemName()==((InventoryItem) obj).getItemName();
             boolean sameCategory = this.getPurchaseCategory()==((InventoryItem) obj).getPurchaseCategory();
 

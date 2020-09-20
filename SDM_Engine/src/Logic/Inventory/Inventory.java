@@ -38,7 +38,7 @@ public class Inventory  {
 
     public InventoryItem getInventoryItemById(int id) {
         for (InventoryItem item : listInventoryItems) {
-            if (item.getInventoryItemId() == id)
+            if (item.getItemId() == id)
                 return item;
         }
         return null;
@@ -63,7 +63,7 @@ public class Inventory  {
     }
 
     private void updateSalesMap(CartItem cartItem) {
-        InventoryItem item = getInventoryItemById(cartItem.getInventoryItemId());
+        InventoryItem item = getInventoryItemById(cartItem.getItemId());
         float oldAmount = mapItemsToTotalSold.get(item);
         mapItemsToTotalSold.put(item, oldAmount + cartItem.getItemAmount());
         notifyListeners();
@@ -96,7 +96,7 @@ public class Inventory  {
             Set<Store> setOStores = mapItemsToStoresWithItem.get(item);
             float sum = 0;
             for (Store store : setOStores) {
-                sum += store.getMapItemToPrices().get(item.getInventoryItemId());
+                sum += store.getMapItemToPrices().get(item.getItemId());
             }
             int size = setOStores.size();
             mapItemsToAvePrice.put(item, sum / size);
@@ -118,7 +118,7 @@ public class Inventory  {
 
 
     public List<Integer> getListOfInventoryItemIds(){
-        return listInventoryItems.stream().map(item-> item.getInventoryItemId()).collect(Collectors.toList());
+        return listInventoryItems.stream().map(item-> item.getItemId()).collect(Collectors.toList());
     }
 
     public List<InventoryItem> getListOfItemsNotSoldByStore(Store store){

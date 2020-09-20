@@ -6,6 +6,7 @@ import Logic.Inventory.Inventory;
 import Logic.Inventory.InventoryItem;
 import Logic.Order.*;
 import Logic.Store.Store;
+import Logic.Store.StoreDiscount;
 import Resources.Schema.JAXBGenerated.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -130,6 +131,7 @@ public class SDMManager extends SDMFileVerifier{
                     new Customer(customer.getId(), customer.getName(), customer.getLocation().getX(), customer.getLocation().getY());
 
             customers.add(newCustomer);
+            System.out.println("Created following customer: " + newCustomer);
         }
     }
 
@@ -151,23 +153,16 @@ public class SDMManager extends SDMFileVerifier{
             storeLoc.add(store.getLocation().getX());
             storeLoc.add(store.getLocation().getY());
 
-            Store newStore = new Store(store);
-            //Store newStore2 = new Store(store,inventory);
-
-            for (SDMSell sell: store.getSDMPrices().getSDMSell()){
-                InventoryItem itemToAdd = inventory.getListInventoryItems().stream().filter(i->i.getInventoryItemId()==sell.getItemId()).findFirst().get();
-                if (itemToAdd != null){
-                    newStore.getInventoryItems().add(itemToAdd);
-                    //newStore2.getInventoryItems().add(itemToAdd);
-
-                    StoreItem storeItem = new StoreItem(itemToAdd, sell.getPrice());
-                    newStore.getStoreItems().add(storeItem);
-                }
-            }
+            Store newStore = new Store(store,this);
 
             stores.add(newStore);
-            //storesObservableList.add(newStore);
-            //stores2.add(newStore2);
+            System.out.println("Created following store: " + newStore);
+            StringBuilder discountsStringBuilder = new StringBuilder("Discounts:");
+            for (StoreDiscount storeDiscount: newStore.getStoreDiscounts()){
+                discountsStringBuilder.append("\n\t"+storeDiscount);
+            }
+            String discountString = discountsStringBuilder.append("\n").toString();
+            System.out.println(discountString);
         }
     }
 
@@ -175,6 +170,14 @@ public class SDMManager extends SDMFileVerifier{
         storeChoice.addOrder(order);
         orderHistory.addOrder(order);
         inventory.updateSalesMap(order);
+    }
+
+    private String getItemNameById(int id){
+        for (InventoryItem item: inventory.getListInventoryItems()){
+            if (item.getItemId() == id)
+                return item.getItemName();
+        }
+        return "";
     }
 
     public void addNewDynamicOrder(Set<Store> storesBoughtFrom, Order order) {
