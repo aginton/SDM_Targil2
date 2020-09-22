@@ -85,10 +85,9 @@ public class NewOrderMainContainerController implements Initializable {
             chooseItemsLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ChooseItems/ChooseItems.fxml"));
             chooseItemsRef = chooseItemsLoader.load();
             chooseItemsController = chooseItemsLoader.getController();
-            chooseItemsController.getAddToCartButton().setOnAction(e->{
-                currentCart = chooseItemsController.getCurrentCart();
-                System.out.println("NewOrderMain received cart: " + currentCart);
-            });
+            currentCart = chooseItemsController.getDummyCart();
+                //System.out.println("NewOrderMain received cart: " + currentCart);
+
 
             //4. choose discounts
             FXMLLoader chooseDiscountsLoader = new FXMLLoader();
@@ -121,7 +120,7 @@ public class NewOrderMainContainerController implements Initializable {
             sb.append(", ");
         }
 
-        currentCart = chooseItemsController.getCurrentCart();
+//        currentCart = chooseItemsController.getDummyCart();
 
         System.out.printf("Order details: " +
                 "\n\tCustomer: %s" +
@@ -159,7 +158,7 @@ public class NewOrderMainContainerController implements Initializable {
         orderDate = null;
         customer = null;
         currentCart = null;
-        chooseItemsController.emptyCurrentCart();
+        //chooseItemsController.emptyCurrentCart();
     }
 
 
@@ -179,10 +178,7 @@ public class NewOrderMainContainerController implements Initializable {
         }
 
         if (newOrderCurrentPage.getChildren().get(0) == chooseItemsRef && orderType == eOrderType.STATIC_ORDER){
-            boolean ans = ConfirmBox.display("Go Back?", "Are you sure you want to go back?");
-            if (ans){
-                swapCurrentPage(chooseStoresRef);
-            }
+            swapCurrentPage(chooseStoresRef);
 
             return;
         }
@@ -267,7 +263,7 @@ public class NewOrderMainContainerController implements Initializable {
                     deliveryFee +"}");
         }
         if (newOrderCurrentPage.getChildren().get(0) == chooseItemsRef){
-            this.currentCart = chooseItemsController.getCurrentCart();
+            this.currentCart = chooseItemsController.getDummyCart();
             System.out.println("getInformationFromCurrentPage() returned: {currentCart=" + currentCart +"}");
         }
 

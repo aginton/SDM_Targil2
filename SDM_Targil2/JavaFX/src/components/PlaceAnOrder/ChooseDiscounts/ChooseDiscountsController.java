@@ -54,8 +54,8 @@ public class ChooseDiscountsController implements Initializable {
     @FXML
     private TableColumn<DiscountOffer, Integer> forAdditionalCoumn;
 
-    @FXML
-    private Label remainingTimesLabel;
+//    @FXML
+//    private Label remainingTimesLabel;
 
     @FXML
     private Button addButton;
@@ -104,7 +104,7 @@ public class ChooseDiscountsController implements Initializable {
                 discountWrapper.setTimesDiscountCanBeApplied(val);
                 setIsDiscountApplicable(selectedDiscountWrapper.getTimesDiscountCanBeApplied()>0);
 //                updateOfferDetails();
-                remainingTimesLabel.setText("This offer can be applied " + selectedDiscountWrapper.getTimesDiscountCanBeApplied() + " times");
+                //remainingTimesLabel.setText("This offer can be applied " + selectedDiscountWrapper.getTimesDiscountCanBeApplied() + " times");
             }
         }
     }
@@ -229,7 +229,7 @@ public class ChooseDiscountsController implements Initializable {
                         System.out.println("isDiscountApplicable will be set to: " + (newValue.getTimesDiscountCanBeApplied() >0));
                         setIsDiscountApplicable(selectedDiscountWrapper.getTimesDiscountCanBeApplied()>0);
                         updateOfferDetails();
-                        remainingTimesLabel.setText("This offer can be applied " + selectedDiscountWrapper.getTimesDiscountCanBeApplied() + " times");
+                        //remainingTimesLabel.setText("This offer can be applied " + selectedDiscountWrapper.getTimesDiscountCanBeApplied() + " times");
                     }
                 }))
         );
@@ -242,7 +242,7 @@ public class ChooseDiscountsController implements Initializable {
         discountsListView.getItems().clear();
         discountWrappers.clear();
         offersTableView.getItems().clear();
-        remainingTimesLabel.setText("");
+        //remainingTimesLabel.setText("");
     }
 
     private void createDummyCart(Cart inputCart) {
@@ -283,9 +283,8 @@ public class ChooseDiscountsController implements Initializable {
 
         @Override
         public String toString() {
-            return storeDiscount.getName();
+            return storeDiscount.getName() + "x (" + getTimesDiscountCanBeApplied() + ")";
         }
-
 
     }
 
