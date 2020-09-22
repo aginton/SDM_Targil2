@@ -5,8 +5,12 @@ import Logic.Store.Store;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Observable;
 import java.util.Set;
 
 public class Cart {
@@ -63,6 +67,7 @@ public class Cart {
                 CartItem existingItem = discountCart.get(id);
                 double amountInCart = existingItem.getItemAmount();
                 existingItem.setItemAmount(amountInCart + cartItem.getItemAmount());
+
                 return;
             }
             discountCart.put(id, cartItem);
@@ -82,7 +87,9 @@ public class Cart {
     }
 
     public double getCartTotalPrice() {
-        return cartTotalPrice.get();
+        double val = cartTotalPrice.get();
+        BigDecimal bd = new BigDecimal(val).setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     public DoubleProperty cartTotalPriceProperty() {
@@ -127,10 +134,17 @@ public class Cart {
         if (cart.isEmpty())
             return "empty cart";
 
-        StringBuilder sb = new StringBuilder( "Cart {");
+        StringBuilder sb = new StringBuilder( "Cart:\n\t cartTotalPrice=" + getCartTotalPrice());
+        sb.append("\n\titems={");
         cart.forEach((k,v)->{
-            sb.append("\n\titem " + v.getItemId() + ", amount= ");
-            sb.append(String.valueOf(v.getItemAmount()));
+            sb.append("{item " + v.getItemId() + ", amount= ");
+            sb.append(String.valueOf(v.getItemAmount())).append("},");
+        });
+        sb.append("}");
+        sb.append("\n\tdiscount-items={");
+        discountCart.forEach((k,v)->{
+            sb.append("{item " + v.getItemId() + ", amount= ");
+            sb.append(String.valueOf(v.getItemAmount())).append("},");
         });
         sb.append("}");
         return sb.toString();

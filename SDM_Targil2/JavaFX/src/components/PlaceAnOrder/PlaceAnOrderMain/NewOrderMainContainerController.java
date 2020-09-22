@@ -12,7 +12,8 @@ import components.PlaceAnOrder.ChooseDiscounts.ChooseDiscountsController;
 import components.PlaceAnOrder.ChooseItems.ChooseItemsController;
 import components.PlaceAnOrder.ChooseStores.ChooseStoreController;
 import components.PlaceAnOrder.ConfirmOrder.ConfirmOrderController;
-import components.PlaceAnOrder.SuccessOrError.ConfirmBox;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +36,8 @@ import java.util.*;
 public class NewOrderMainContainerController implements Initializable {
 
     @FXML
+    private Button backButton;
+    @FXML
     private AnchorPane newOrderCurrentPage;
 
     @FXML
@@ -47,7 +50,8 @@ public class NewOrderMainContainerController implements Initializable {
     private AnchorPane orderSummaryAnchorPane;
 
 
-    private Node basicInfoRef, chooseStoresRef, chooseItemsRef, chooseDiscountsRef, confirmOrderRef;
+    private Node basicInfoRef, chooseStoresRef, chooseItemsRef, chooseItemsDynamicRef, chooseDiscountsRef, confirmOrderRef;
+    private ObjectProperty<Node> currentNode;
     private OrderBasicInfoController basicInfoController;
     private ChooseStoreController chooseStoreController;
     private ChooseItemsController chooseItemsController;
@@ -63,9 +67,11 @@ public class NewOrderMainContainerController implements Initializable {
     private float deliveryFee;
 
 
+
     public NewOrderMainContainerController(){
         currentCart = new Cart();
         setOfStores = new HashSet<>();
+        currentNode = new SimpleObjectProperty<>(this, "currentNode",basicInfoRef);
 
         try {
             //1. choose basic info (customer, order type, date)
@@ -85,10 +91,13 @@ public class NewOrderMainContainerController implements Initializable {
             chooseItemsLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ChooseItems/ChooseItems.fxml"));
             chooseItemsRef = chooseItemsLoader.load();
             chooseItemsController = chooseItemsLoader.getController();
-            chooseItemsController.getAddToCartButton().setOnAction(e->{
-                currentCart = chooseItemsController.getCurrentCart();
-                System.out.println("NewOrderMain received cart: " + currentCart);
-            });
+            //currentCart = chooseItemsController.getDummyCart();
+
+
+            FXMLLoader chooseItemsDynamicLoader = new FXMLLoader();
+            chooseItemsDynamicLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrder.fxml"));
+            chooseItemsDynamicRef = chooseItemsDynamicLoader.load();
+
 
             //4. choose discounts
             FXMLLoader chooseDiscountsLoader = new FXMLLoader();
@@ -105,53 +114,6 @@ public class NewOrderMainContainerController implements Initializable {
         }
     }
 
-    void confirmAction() {
-
-        if (orderType == eOrderType.STATIC_ORDER){
-            setOfStores.add(selectedStore);
-        }
-
-        ZoneId defaultZoneId = ZoneId.systemDefault();
-        Date date = Date.from(orderDate.atStartOfDay(defaultZoneId).toInstant());
-
-        String dateStr = new SimpleDateFormat("dd/MM\tHH:mm").format(date);
-        StringBuilder sb = new StringBuilder();
-        for (Store store: setOfStores){
-            sb.append(store.getStoreName());
-            sb.append(", ");
-        }
-
-        currentCart = chooseItemsController.getCurrentCart();
-
-        System.out.printf("Order details: " +
-                "\n\tCustomer: %s" +
-                "\n\tDate: %s" +
-                "\n\torderType: $%s" +
-                "\n\tStore: " +
-                "\n\tCart: %s", customer.getCustomerName(),dateStr, orderType, sb.toString(), currentCart);
-
-
-
-        Order order = new Order(customer.getLocation(),
-                date,
-                6,
-                currentCart,
-                setOfStores,
-                orderType);
-
-        SDMManager.getInstance().addNewStaticOrder(selectedStore, order);
-        try {
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/components/PlaceAnOrder/SuccessOrError/SuccessPopUp.fxml"));
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-            resetFields();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     private void resetFields() {
         setOfStores.clear();
@@ -159,14 +121,17 @@ public class NewOrderMainContainerController implements Initializable {
         orderDate = null;
         customer = null;
         currentCart = null;
-        chooseItemsController.emptyCurrentCart();
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        backButton.disableProperty().bind(currentNode.isEqualTo(basicInfoRef));
         newOrderCurrentPage.getChildren().clear();
         newOrderCurrentPage.getChildren().add(basicInfoRef);
+        nextButton.disableProperty().bind(currentNode.isEqualTo(confirmOrderRef));
+        confirmButton.visibleProperty().bind(currentNode.isEqualTo(confirmOrderRef));
+        confirmButton.disableProperty().bind(currentNode.isNotEqualTo(confirmOrderRef));
     }
 
 
@@ -179,10 +144,7 @@ public class NewOrderMainContainerController implements Initializable {
         }
 
         if (newOrderCurrentPage.getChildren().get(0) == chooseItemsRef && orderType == eOrderType.STATIC_ORDER){
-            boolean ans = ConfirmBox.display("Go Back?", "Are you sure you want to go back?");
-            if (ans){
-                swapCurrentPage(chooseStoresRef);
-            }
+            swapCurrentPage(chooseStoresRef);
 
             return;
         }
@@ -202,8 +164,21 @@ public class NewOrderMainContainerController implements Initializable {
     }
 
     private void swapCurrentPage(Node newCurrentNode) {
+        setCurrentNode(newCurrentNode);
         newOrderCurrentPage.getChildren().clear();
         newOrderCurrentPage.getChildren().add(newCurrentNode);
+    }
+
+    public Node getCurrentNode() {
+        return currentNode.get();
+    }
+
+    public ObjectProperty<Node> currentNodeProperty() {
+        return currentNode;
+    }
+
+    public void setCurrentNode(Node currentNode) {
+        this.currentNode.set(currentNode);
     }
 
     @FXML
@@ -216,34 +191,33 @@ public class NewOrderMainContainerController implements Initializable {
 
     private void goToNextPage() {
         if (newOrderCurrentPage.getChildren().get(0)==basicInfoRef){
-            newOrderCurrentPage.getChildren().clear();
             if (orderType == eOrderType.DYNAMIC_ORDER){
                 chooseItemsController.setDataForDynamicOrder();
-                newOrderCurrentPage.getChildren().add(chooseItemsRef);
+                swapCurrentPage(chooseItemsDynamicRef);
             } else if (orderType == eOrderType.STATIC_ORDER){
                 chooseStoreController.setCustomer(customer);
-                newOrderCurrentPage.getChildren().add(chooseStoresRef);
+                swapCurrentPage(chooseStoresRef);
             }
             return;
         }
 
         if (newOrderCurrentPage.getChildren().get(0) == chooseStoresRef){
-            newOrderCurrentPage.getChildren().clear();
             chooseItemsController.setDataForStaticOrder(selectedStore);
+            chooseItemsController.fillCustomerData(customer);
             chooseItemsController.setDeliveryFeeProperty(deliveryFee);
-            newOrderCurrentPage.getChildren().add(chooseItemsRef);
+            swapCurrentPage(chooseItemsRef);
             return;
         }
         if (newOrderCurrentPage.getChildren().get(0) == chooseItemsRef && orderType == eOrderType.STATIC_ORDER){
-            newOrderCurrentPage.getChildren().clear();
             chooseDiscountsController.fillViewsBasedOnStoreAndCart(selectedStore, currentCart);
-            newOrderCurrentPage.getChildren().add(chooseDiscountsRef);
+            chooseDiscountsController.fillCustomerLabels(customer);
+            chooseDiscountsController.fillOrderLabels(currentCart.getCartTotalPrice(), deliveryFee);
+            swapCurrentPage(chooseDiscountsRef);
             return;
         }
         if (newOrderCurrentPage.getChildren().get(0) == chooseDiscountsRef){
-            newOrderCurrentPage.getChildren().clear();
             confirmOrderController.fillViewsForData(customer,orderDate, orderType,setOfStores,currentCart,deliveryFee);
-            newOrderCurrentPage.getChildren().add(confirmOrderRef);
+            swapCurrentPage(confirmOrderRef);
             return;
         }
 
@@ -267,7 +241,7 @@ public class NewOrderMainContainerController implements Initializable {
                     deliveryFee +"}");
         }
         if (newOrderCurrentPage.getChildren().get(0) == chooseItemsRef){
-            this.currentCart = chooseItemsController.getCurrentCart();
+            this.currentCart = chooseItemsController.getDummyCart();
             System.out.println("getInformationFromCurrentPage() returned: {currentCart=" + currentCart +"}");
         }
 
@@ -280,7 +254,7 @@ public class NewOrderMainContainerController implements Initializable {
         }
 
         if (newOrderCurrentPage.getChildren().get(0)==chooseDiscountsRef){
-            HashMap<Integer, CartItem> discountItemsToAddToCart = chooseDiscountsController.getDiscountItemsToAddToCart();
+            HashMap<Integer, CartItem> discountItemsToAddToCart = chooseDiscountsController.getMapIdsToDiscountCartItems();
             discountItemsToAddToCart.forEach((k,v)->{
                 currentCart.add(v);
             });
@@ -310,4 +284,48 @@ public class NewOrderMainContainerController implements Initializable {
     }
 
 
+    public void confirmButtonAction(ActionEvent actionEvent) {
+
+        if (orderType == eOrderType.STATIC_ORDER){
+            setOfStores.add(selectedStore);
+        }
+
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        Date date = Date.from(orderDate.atStartOfDay(defaultZoneId).toInstant());
+
+        String dateStr = new SimpleDateFormat("dd/MM\tHH:mm").format(date);
+        StringBuilder sb = new StringBuilder();
+        for (Store store: setOfStores){
+            sb.append(store.getStoreName());
+            sb.append(", ");
+        }
+
+
+        System.out.printf("Order details: " +
+                "\n\tCustomer: %s" +
+                "\n\tDate: %s" +
+                "\n\torderType: $%s" +
+                "\n\tStore: " +
+                "\n\tCart: %s", customer.getCustomerName(),dateStr, orderType, sb.toString(), currentCart);
+
+        Order order = new Order(customer.getLocation(),
+                date,
+                6,
+                currentCart,
+                setOfStores,
+                orderType);
+
+        SDMManager.getInstance().addNewStaticOrder(selectedStore, order);
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/components/PlaceAnOrder/SuccessOrError/SuccessPopUp.fxml"));
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            resetFields();
+            swapCurrentPage(basicInfoRef);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

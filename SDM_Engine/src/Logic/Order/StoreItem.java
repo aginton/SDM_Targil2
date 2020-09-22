@@ -13,6 +13,12 @@ public class StoreItem extends InventoryItem {
         totalAmountSoldAtStore = 0;
     }
 
+    public StoreItem(StoreItem item) {
+        super((InventoryItem) item);
+        this.normalPrice = item.getNormalPrice();
+        this.totalAmountSoldAtStore = item.getTotalAmountSoldAtStore();
+    }
+
     public int getNormalPrice() {
         return normalPrice;
     }

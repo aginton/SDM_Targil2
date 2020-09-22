@@ -17,6 +17,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Callback;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Store implements hasLocationInterface {
@@ -274,7 +277,9 @@ public class Store implements hasLocationInterface {
     }
 
     public float getDeliveryCost(List<Integer> userLocation) {
-        return getDeliveryPpk()* getDistance(userLocation);
+        float val = getDeliveryPpk()* getDistance(userLocation);
+        BigDecimal bd = new BigDecimal(val).setScale(2, RoundingMode.HALF_UP);
+        return bd.floatValue();
     }
 
     public float getDistance(List<Integer> userLocation) {

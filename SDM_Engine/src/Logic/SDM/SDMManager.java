@@ -220,5 +220,25 @@ public class SDMManager extends SDMFileVerifier{
 
 
     public Cart findCheapestCartForUser(HashMap<InventoryItem, Double> mapItemsChosenToAmount) {
+        Cart cart = new Cart();
+
+        mapItemsChosenToAmount.forEach((item,amount) -> {
+            Store cheapestStore = findCheapestStoreForItem(item);
+            int cheapestPrice = cheapestStore.getMapItemToPrices().get(item.getItemId());
+            CartItem cartItem = new CartItem(item, amount, cheapestPrice, cheapestStore);
+            cart.add(cartItem);
+        });
+
+        return cart;
     }
+
+    public Store findCheapestStoreForItem(InventoryItem item) {
+        Comparator<Store> comparator = (store1, store2) -> store1.getMapItemToPrices()
+                .get(item.getItemId()).compareTo(store2.getMapItemToPrices().get(item.getItemId()));
+        Set<Store> storesWithItem = inventory.getMapItemsToStoresWithItem().get(item);
+        Store cheapestStore = Collections.min(storesWithItem, comparator);
+
+        return cheapestStore;
+    }
+
 }

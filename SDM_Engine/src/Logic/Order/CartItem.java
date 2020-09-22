@@ -19,6 +19,7 @@ public class CartItem extends InventoryItem {
     Store storeBoughtFrom;
     private BooleanProperty isOnSale = new SimpleBooleanProperty(this, "isOnSale",false);
     private String discountName;
+    private DoubleProperty cost = new SimpleDoubleProperty(this, "cost", 0);
 
     public CartItem(InventoryItem item, double amount, int price, Store storeBoughtFrom){
         super(item);
@@ -26,6 +27,7 @@ public class CartItem extends InventoryItem {
         this.price = price;
         this.storeBoughtFrom = storeBoughtFrom;
         this.discountName = "";
+        cost.bind(itemAmountProperty().multiply(price));
     }
 
     public CartItem(InventoryItem offerItem, double quantity, int forAdditional, boolean isOnSale, String discountName) {
@@ -34,7 +36,9 @@ public class CartItem extends InventoryItem {
         this.price = forAdditional;
         this.discountName = discountName;
         setIsOnSale(isOnSale);
+        cost.bind(itemAmountProperty().multiply(price));
     }
+
 
     public double getItemAmount() {
         return itemAmount.get();
@@ -65,19 +69,41 @@ public class CartItem extends InventoryItem {
         return storeBoughtFrom;
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        if (!super.equals(o)) return false;
+//        CartItem cartItem = (CartItem) o;
+//        return Double.compare(cartItem.getItemAmount(), getItemAmount()) == 0 &&
+//                price == cartItem.price;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(super.hashCode(), itemAmount, price);
+//    }
+
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        CartItem cartItem = (CartItem) o;
-        return Double.compare(cartItem.getItemAmount(), getItemAmount()) == 0 &&
-                price == cartItem.price;
+//        if (this == o) return true;
+//        if (!(o instanceof CartItem)) return false;
+
+        return (this.getItemId()==((CartItem) o).getItemId()) && (this.getItemName()==((CartItem) o).getItemName())
+                && this.getPrice()==((CartItem) o).getPrice() && this.isOnSale==((CartItem) o).isOnSale
+                && this.getDiscountName()==((CartItem) o).getDiscountName();
+//        if (!super.equals(o)) return false;
+//        CartItem cartItem = (CartItem) o;
+//        return price == cartItem.price &&
+//                Objects.equals(storeBoughtFrom, cartItem.storeBoughtFrom) &&
+//                Objects.equals(isOnSale, cartItem.isOnSale) &&
+//                Objects.equals(discountName, cartItem.discountName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), itemAmount, price);
+        return Objects.hash(super.hashCode(), price, storeBoughtFrom, isOnSale, discountName);
     }
 
     public void increaseAmount(float i) {
@@ -94,7 +120,8 @@ public class CartItem extends InventoryItem {
         DecimalFormat df = new DecimalFormat("#.##");
         String amountString = df.format(getItemAmount());
         return "CartItem{" +
-                "itemAmount=" + amountString +
+                "itemId=" + this.getItemId() +
+                ", itemAmount=" + amountString +
                 '}';
     }
 
@@ -116,5 +143,13 @@ public class CartItem extends InventoryItem {
 
     public void setDiscountName(String discountName) {
         this.discountName = discountName;
+    }
+
+    public double getCost() {
+        return cost.get();
+    }
+
+    public DoubleProperty costProperty() {
+        return cost;
     }
 }
