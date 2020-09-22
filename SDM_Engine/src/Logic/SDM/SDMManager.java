@@ -11,10 +11,7 @@ import Resources.Schema.JAXBGenerated.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 //https://dev.to/devtony101/javafx-3-ways-of-passing-information-between-scenes-1bm8
@@ -222,5 +219,6 @@ public class SDMManager extends SDMFileVerifier{
     }
 
 
-
+    public Cart findCheapestCartForUser(HashMap<InventoryItem, Double> mapItemsChosenToAmount) {
+    }
 }
