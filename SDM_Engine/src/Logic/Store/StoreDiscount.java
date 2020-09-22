@@ -5,6 +5,8 @@ import Logic.Order.Cart;
 import Logic.Order.CartItem;
 import Resources.Schema.JAXBGenerated.SDMDiscount;
 
+import java.util.HashMap;
+
 public class StoreDiscount {
     protected String name;
     protected DiscountCondition discountCondition;
@@ -62,7 +64,18 @@ public class StoreDiscount {
     public int countTimesConditionIsMet(Cart cart){
         CartItem item = cart.getCart().get(discountCondition.getIfYouBuyItem().getItemId());
         if (item != null){
-            double quotient = (discountCondition.getQuantity()) / (item.getItemAmount());
+            double quotient = (item.getItemAmount())/ (discountCondition.getQuantity());
+            return (int) Math.floor(quotient);
+        } else{
+            return 0;
+        }
+    }
+
+    public int countTimesConditionIsMet(HashMap<Integer, Double> cartRepresentation){
+        int conditionID = discountCondition.getIfYouBuyItem().getItemId();
+
+        if (cartRepresentation.get(conditionID) != null){
+            double quotient = (cartRepresentation.get(conditionID))/ (discountCondition.getQuantity());
             return (int) Math.floor(quotient);
         } else{
             return 0;

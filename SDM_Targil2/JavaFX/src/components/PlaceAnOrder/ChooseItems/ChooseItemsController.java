@@ -1,19 +1,13 @@
 package components.PlaceAnOrder.ChooseItems;
 
-import Logic.Customers.Customer;
 import Logic.Inventory.InventoryItem;
 import Logic.Inventory.ePurchaseCategory;
 import Logic.Order.Cart;
 import Logic.Order.CartItem;
-import Logic.Order.Order;
 import Logic.Order.eOrderType;
-import Logic.SDM.SDMManager;
 import Logic.Store.Store;
-import Utilities.MyFloatStringConverter;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleFloatProperty;
+import Utilities.MyDoubleStringConverter;
+import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,14 +20,20 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 public class ChooseItemsController implements Initializable {
+
+    @FXML
+    private Label cartSubtotalLabel;
+
+    @FXML
+    private Label deliveryFeeLabel;
+
+    @FXML
+    private Label totalCostLabel;
 
     @FXML
     private TableView<CartItem> itemsTableView;
@@ -51,7 +51,7 @@ public class ChooseItemsController implements Initializable {
     private TableColumn<CartItem, Integer> priceColumn;
 
     @FXML
-    private TableColumn<CartItem, Float> amountColumn;
+    private TableColumn<CartItem, Double> amountColumn;
 
     @FXML
     private TableColumn<CartItem, Void> addButtonColumn;
@@ -69,39 +69,31 @@ public class ChooseItemsController implements Initializable {
     Set<Store> storeOfThisOrder = new HashSet<Store>();
     private ObservableList<CartItem> storeItems;
     private ChangeListener<CartItem> storeItemChangeListener;
-    private FloatProperty selectedItemAmountProperty;
+    private DoubleProperty selectedItemAmountProperty;
     private Cart currentCart;
 
-    private Customer customer;
-    private eOrderType orderType;
-    private LocalDate orderDate;
     private BooleanProperty isOrderComplete;
+    private eOrderType orderType;
+    private DoubleProperty deliveryFeeProperty;
+    private DoubleProperty totalCost;
 
 
     public ChooseItemsController(){
         storeItems = FXCollections.observableArrayList();
-        selectedItemAmountProperty = new SimpleFloatProperty(0);
         currentCart = new Cart();
-    }
-
-
-    public void setDataForStaticOrder(Store selectedStore, Customer customer, eOrderType orderType, LocalDate orderDate) {
-        itemsTableView.getItems().clear();
-        store = selectedStore;
-        for (InventoryItem item: selectedStore.getInventoryItems()){
-            storeItems.add(new CartItem(item, 0,store.getMapItemToPrices().get(item.getItemId()), selectedStore));
-        }
-        itemsTableView.setItems(storeItems);
-
-        this.customer = customer;
-        this.orderType = orderType;
-        this.orderDate = orderDate;
-        this.isOrderComplete = isOrderComplete;
+        deliveryFeeProperty= new SimpleDoubleProperty(0);
+        selectedItemAmountProperty = new SimpleDoubleProperty(0);
+        totalCost = new SimpleDoubleProperty(0);
+        totalCost.bind(deliveryFeeProperty.add(currentCart.cartTotalPriceProperty()));
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        deliveryFeeLabel.textProperty().bind(deliveryFeeProperty.asString());
+        cartSubtotalLabel.textProperty().bind(currentCart.cartTotalPriceProperty().asString());
+        totalCostLabel.textProperty().bind(totalCost.asString());
+
         itemIdColumn.setCellValueFactory(new PropertyValueFactory<CartItem, Integer>("itemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<CartItem,String>("itemName"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<CartItem, ObjectProperty<ePurchaseCategory>>("purchaseCategory"));
@@ -128,7 +120,7 @@ public class ChooseItemsController implements Initializable {
                         addButton.setOnAction(e->{
                             int rowIndex = this.getTableRow().getIndex();
                             CartItem cartItem = this.getTableView().getItems().get(rowIndex);
-                            float oldAmount = cartItem.getItemAmount();
+                            double oldAmount = cartItem.getItemAmount();
 
                             cartItem.setItemAmount(oldAmount+1);
 
@@ -137,8 +129,6 @@ public class ChooseItemsController implements Initializable {
                             }
 
                             System.out.println("Updated Cart: " + currentCart);
-//                            cartItem.increaseAmount(1);
-                            //itemsTableView.refresh();
                         });
                         this.setGraphic(addButton);
                     }
@@ -154,7 +144,6 @@ public class ChooseItemsController implements Initializable {
                 @Override
                 protected void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);
-
                     //Clean up cell before populating it
                     this.setText(null);
                     this.setGraphic(null);
@@ -163,7 +152,7 @@ public class ChooseItemsController implements Initializable {
                         removeButton.setOnAction(e->{
                             int rowIndex = this.getTableRow().getIndex();
                             CartItem cartItem = this.getTableView().getItems().get(rowIndex);
-                            float oldAmount = cartItem.getItemAmount();
+                            double oldAmount = cartItem.getItemAmount();
                             if (oldAmount-1 <= 0){
                                 cartItem.setItemAmount(0);
                                 currentCart.removeItemFromCart(cartItem);
@@ -172,7 +161,6 @@ public class ChooseItemsController implements Initializable {
                                 cartItem.setItemAmount(oldAmount-1);
                             }
                             System.out.println("Updated Cart: " + currentCart);
-                            //itemsTableView.refresh();
                         });
                         this.setGraphic(removeButton);
                     }
@@ -187,12 +175,12 @@ public class ChooseItemsController implements Initializable {
     }
 
     private void setUpAmountColumn() {
-        amountColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Float>("itemAmount"));
+        amountColumn.setCellValueFactory(new PropertyValueFactory<CartItem, Double>("itemAmount"));
 
-        amountColumn.setCellFactory(TextFieldTableCell.forTableColumn(new MyFloatStringConverter()));
+        amountColumn.setCellFactory(TextFieldTableCell.forTableColumn(new MyDoubleStringConverter()));
 
         amountColumn.setOnEditCommit(event -> {
-            Float value = event.getOldValue();
+            Double value = event.getOldValue();
             CartItem selectedItem = ((CartItem) event.getTableView().getItems().get(event.getTablePosition().getRow()));
             Boolean isValidNewAmount = true;
 
@@ -231,10 +219,10 @@ public class ChooseItemsController implements Initializable {
     private void removeSelectedItemFromCart(CartItem selectedItem) {
         System.out.println("Calling removeSelectedItemFromCart()");
         currentCart.removeItemFromCart(selectedItem);
-        System.out.println("Updated Cart: " + currentCart);
+        //System.out.println("Updated Cart: " + currentCart);
     }
 
-    private void updateAmountOfItemInCart(CartItem selectedItem, Float value) {
+    private void updateAmountOfItemInCart(CartItem selectedItem, Double value) {
         if (!currentCart.getCart().containsKey(selectedItem.getItemId())){
             currentCart.add(selectedItem);
             System.out.println("Updated Cart:\n " + currentCart);
@@ -272,7 +260,7 @@ public class ChooseItemsController implements Initializable {
         itemsTableView.edit(focusedCell.getRow(), focusedCell.getTableColumn());
     }
 
-    public void emptyCart(){
+    public void emptyCurrentCart(){
         currentCart = new Cart();
     }
 
@@ -282,31 +270,26 @@ public class ChooseItemsController implements Initializable {
 
     }
 
-    @FXML
-    void cancelAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void confirmAction(ActionEvent event) {
-        System.out.println("Confirm button pressed");
-        ZoneId defaultZoneId = ZoneId.systemDefault();
-        Date date = Date.from(orderDate.atStartOfDay(defaultZoneId).toInstant());
-
-        if (orderType == eOrderType.STATIC_ORDER){
-            storeOfThisOrder.add(store);
-        }
-
-        Order order = new Order(customer.getLocation(),
-                date,
-                6,
-                currentCart,
-                storeOfThisOrder,
-                orderType);
-
-        SDMManager.getInstance().addNewStaticOrder(store, order);
-        setIsOrderComplete(true);
-    }
+//    @FXML
+//    void confirmAction(ActionEvent event) {
+//        System.out.println("Confirm button pressed");
+//        ZoneId defaultZoneId = ZoneId.systemDefault();
+//        Date date = Date.from(orderDate.atStartOfDay(defaultZoneId).toInstant());
+//
+//        if (orderType == eOrderType.STATIC_ORDER){
+//            storeOfThisOrder.add(store);
+//        }
+//
+//        Order order = new Order(customer.getLocation(),
+//                date,
+//                6,
+//                currentCart,
+//                storeOfThisOrder,
+//                orderType);
+//
+//        SDMManager.getInstance().addNewStaticOrder(store, order);
+//        setIsOrderComplete(true);
+//    }
 
     public boolean getIsOrderComplete() {
         return isOrderComplete.get();
@@ -324,16 +307,39 @@ public class ChooseItemsController implements Initializable {
         isOrderComplete.bindBidirectional(otherBooleanProperty);
     }
 
-
     public void setDataForDynamicOrder() {
 
     }
 
     public void setDataForStaticOrder(Store selectedStore) {
-        store = selectedStore;
-        for (InventoryItem item: selectedStore.getInventoryItems()){
-            storeItems.add(new CartItem(item, 0,store.getMapItemToPrices().get(item.getItemId()), selectedStore));
+        if (this.store != selectedStore){
+            emptyCurrentCart();
+            itemsTableView.getItems().clear();
+            store = selectedStore;
+            for (InventoryItem item: selectedStore.getInventoryItems()){
+                storeItems.add(new CartItem(item, 0,store.getMapItemToPrices().get(item.getItemId()), selectedStore));
+            }
+            itemsTableView.setItems(storeItems);
         }
-        itemsTableView.setItems(storeItems);
+    }
+
+    public void setDeliveryFeeValue(float val){
+        setDeliveryFeeProperty(val);
+    }
+
+    public double getDeliveryFeeProperty() {
+        return deliveryFeeProperty.get();
+    }
+
+    public DoubleProperty deliveryFeePropertyProperty() {
+        return deliveryFeeProperty;
+    }
+
+    public void setDeliveryFeeProperty(float deliveryFeeProperty) {
+        this.deliveryFeeProperty.set(deliveryFeeProperty);
+    }
+
+    public Button getAddToCartButton() {
+        return addToCartButton;
     }
 }

@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 public class Inventory  {
 
     private List<InventoryItem> listInventoryItems;
-    private HashMap<InventoryItem, Float> mapItemsToTotalSold;
+    private HashMap<InventoryItem, Double> mapItemsToTotalSold;
     private HashMap<InventoryItem, Float> mapItemsToAvePrice;
     private HashMap<InventoryItem, Set<Store>> mapItemsToStoresWithItem;
     private List<inventoryChangeInterface> listeners;
 
     public Inventory() {
         this.listInventoryItems = new ArrayList<InventoryItem>();
-        this.mapItemsToTotalSold = new HashMap<InventoryItem, Float>();
+        this.mapItemsToTotalSold = new HashMap<InventoryItem, Double>();
         this.mapItemsToAvePrice = new HashMap<InventoryItem, Float>();
         this.mapItemsToStoresWithItem = new HashMap<InventoryItem, Set<Store>>();
         listeners = new ArrayList<>();
@@ -30,7 +30,7 @@ public class Inventory  {
 
     public void addNewItemToInventory(InventoryItem item) {
         listInventoryItems.add(item);
-        mapItemsToTotalSold.put(item, 0f);
+        mapItemsToTotalSold.put(item, 0.0);
         mapItemsToAvePrice.put(item, 0f);
         mapItemsToStoresWithItem.put(item, new HashSet<Store>());
     }
@@ -45,7 +45,7 @@ public class Inventory  {
     }
 
 
-    public HashMap<InventoryItem, Float> getMapItemsToTotalSold() {
+    public HashMap<InventoryItem, Double> getMapItemsToTotalSold() {
         return mapItemsToTotalSold;
     }
 
@@ -64,7 +64,7 @@ public class Inventory  {
 
     private void updateSalesMap(CartItem cartItem) {
         InventoryItem item = getInventoryItemById(cartItem.getItemId());
-        float oldAmount = mapItemsToTotalSold.get(item);
+        Double oldAmount = mapItemsToTotalSold.get(item);
         mapItemsToTotalSold.put(item, oldAmount + cartItem.getItemAmount());
         notifyListeners();
     }

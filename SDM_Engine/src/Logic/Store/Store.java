@@ -32,7 +32,7 @@ public class Store implements hasLocationInterface {
 
     private List<InventoryItem> inventoryItems = FXCollections.observableArrayList();
     private List<StoreItem> storeItems = FXCollections.observableArrayList();
-    private HashMap<Integer, Float> mapItemsToAmountSold;
+    private HashMap<Integer, Double> mapItemsToAmountSold;
 
     private HashMap<Integer, Integer> mapItemToPrices;
     private List<Order> storeOrders;
@@ -75,12 +75,12 @@ public class Store implements hasLocationInterface {
         storeLocation.add(store.getLocation().getX());
         storeLocation.add(store.getLocation().getY());
 
-        this.mapItemsToAmountSold = new HashMap<>();
+        this.mapItemsToAmountSold = new HashMap<Integer, Double>();
         this.mapItemToPrices = new HashMap<>();
 
         for (SDMSell sell : store.getSDMPrices().getSDMSell()) {
             mapItemToPrices.put(sell.getItemId(), sell.getPrice());
-            mapItemsToAmountSold.put(sell.getItemId(), (float) 0);
+            mapItemsToAmountSold.put(sell.getItemId(), (double) 0);
 
         }
 
@@ -101,7 +101,7 @@ public class Store implements hasLocationInterface {
     }
 
     public Store(SDMStore store, Inventory inventory) {
-        this.mapItemsToAmountSold = new HashMap<>();
+        this.mapItemsToAmountSold = new HashMap<Integer, Double>();
         this.mapItemToPrices = new HashMap<>();
         this.storeOrders = new ArrayList<>();
 
@@ -114,7 +114,7 @@ public class Store implements hasLocationInterface {
 
         for (SDMSell sell: store.getSDMPrices().getSDMSell()){
             mapItemToPrices.put(sell.getItemId(), sell.getPrice());
-            mapItemsToAmountSold.put(sell.getItemId(), (float) 0);
+            mapItemsToAmountSold.put(sell.getItemId(), (double) 0);
 
             InventoryItem itemToAdd = inventory.getListInventoryItems().stream().filter(i->i.getItemId() == sell.getItemId()).findFirst().get();
             StoreItem storeItem = new StoreItem(itemToAdd, sell.getPrice());
@@ -234,9 +234,9 @@ public class Store implements hasLocationInterface {
         this.storeDiscounts = storeDiscounts;
     }
 
-    public HashMap<Integer, Float> getMapItemsToAmountSold() {
+    public HashMap<Integer, Double> getMapItemsToAmountSold() {
         if (mapItemsToAmountSold == null)
-            mapItemsToAmountSold = new HashMap<>();
+            mapItemsToAmountSold = new HashMap<Integer, Double>();
         return mapItemsToAmountSold;
     }
 
@@ -297,8 +297,8 @@ public class Store implements hasLocationInterface {
 
     private void updateStoreInventory(Cart cart) {
         cart.getCart().forEach((k, v) -> {
-            float amountInCart = v.getItemAmount();
-            float oldAmountSold = mapItemsToAmountSold.get(k);
+            double amountInCart = v.getItemAmount();
+            Double oldAmountSold = mapItemsToAmountSold.get(k);
             mapItemsToAmountSold.put(k, amountInCart + oldAmountSold);
             StoreItem storeItem = getStoreItemById(k);
             storeItem.increaseTotalAmountSold(v.getItemAmount());
@@ -328,7 +328,7 @@ public class Store implements hasLocationInterface {
         }
         inventoryItems.add(item);
         Collections.sort(inventoryItems);
-        mapItemsToAmountSold.put(item.getItemId(), 0f);
+        mapItemsToAmountSold.put(item.getItemId(), 0.0);
         mapItemToPrices.put(item.getItemId(), price);
         notifyStoreWasChanged();
 

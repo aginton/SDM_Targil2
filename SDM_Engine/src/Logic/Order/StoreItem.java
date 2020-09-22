@@ -5,7 +5,7 @@ import Logic.Inventory.InventoryItem;
 public class StoreItem extends InventoryItem {
 
     private int normalPrice;
-    private float totalAmountSoldAtStore;
+    private double totalAmountSoldAtStore;
 
     public StoreItem(InventoryItem inventoryItem, int normalPrice){
         super(inventoryItem);
@@ -21,16 +21,16 @@ public class StoreItem extends InventoryItem {
         this.normalPrice = normalPrice;
     }
 
-    public float getTotalAmountSoldAtStore() {
+    public double getTotalAmountSoldAtStore() {
         return totalAmountSoldAtStore;
     }
 
-    public void setTotalAmountSoldAtStore(float totalAmountSoldAtStore) {
+    public void setTotalAmountSoldAtStore(double totalAmountSoldAtStore) {
         this.totalAmountSoldAtStore = totalAmountSoldAtStore;
     }
 
-    public void increaseTotalAmountSold(float amountToIncreaseBy){
-        float oldAmount = getTotalAmountSoldAtStore();
+    public void increaseTotalAmountSold(double amountToIncreaseBy){
+        double oldAmount = getTotalAmountSoldAtStore();
         setTotalAmountSoldAtStore(oldAmount+amountToIncreaseBy);
     }
 

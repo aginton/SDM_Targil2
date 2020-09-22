@@ -2,51 +2,56 @@ package Logic.Order;
 
 import Logic.Inventory.InventoryItem;
 import Logic.Store.Store;
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DecimalFormat;
 import java.util.Objects;
-import java.util.Observer;
 
 public class CartItem extends InventoryItem {
 
     //Using a property for the itemAmount lets the tableViews update automatically
-    private FloatProperty itemAmount = new SimpleFloatProperty(this, "itemAmount", 0);
-//    private float itemAmount;
+    private DoubleProperty itemAmount = new SimpleDoubleProperty(this, "itemAmount", 0);
     private int price;
     Store storeBoughtFrom;
+    private BooleanProperty isOnSale = new SimpleBooleanProperty(this, "isOnSale",false);
+    private String discountName;
 
-    public CartItem(InventoryItem item, float amount, int price, Store storeBoughtFrom){
+    public CartItem(InventoryItem item, double amount, int price, Store storeBoughtFrom){
         super(item);
         setItemAmount(amount);
-//        this.itemAmount = amount;
         this.price = price;
         this.storeBoughtFrom = storeBoughtFrom;
+        this.discountName = "";
     }
 
-    public float getItemAmount() {
+    public CartItem(InventoryItem offerItem, double quantity, int forAdditional, boolean isOnSale, String discountName) {
+        super(offerItem);
+        setItemAmount(quantity);
+        this.price = forAdditional;
+        this.discountName = discountName;
+        setIsOnSale(isOnSale);
+    }
+
+    public double getItemAmount() {
         return itemAmount.get();
     }
 
-    public FloatProperty itemAmountProperty() {
+    public DoubleProperty itemAmountProperty() {
         return itemAmount;
     }
 
-    public void setItemAmount(float itemAmount) {
+    public void setItemAmount(double itemAmount) {
         this.itemAmount.set(itemAmount);
     }
 
-    //
-//    public float getItemAmount() {
-//        return itemAmount;
-//    }
-//
-//    public void setItemAmount(float itemAmount) {
-//        this.itemAmount = itemAmount;
-//    }
+    public void addToItemAmount(double amountToAdd){
+        double oldAmount = getItemAmount();
+        setItemAmount(oldAmount+amountToAdd);
+    }
 
 
     public int getPrice() {
@@ -66,7 +71,7 @@ public class CartItem extends InventoryItem {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         CartItem cartItem = (CartItem) o;
-        return Float.compare(cartItem.getItemAmount(), getItemAmount()) == 0 &&
+        return Double.compare(cartItem.getItemAmount(), getItemAmount()) == 0 &&
                 price == cartItem.price;
     }
 
@@ -86,8 +91,30 @@ public class CartItem extends InventoryItem {
 
     @Override
     public String toString() {
+        DecimalFormat df = new DecimalFormat("#.##");
+        String amountString = df.format(getItemAmount());
         return "CartItem{" +
-                "itemAmount=" + itemAmount +
+                "itemAmount=" + amountString +
                 '}';
+    }
+
+    public boolean isIsOnSale() {
+        return isOnSale.get();
+    }
+
+    public BooleanProperty isOnSaleProperty() {
+        return isOnSale;
+    }
+
+    public void setIsOnSale(boolean isOnSale) {
+        this.isOnSale.set(isOnSale);
+    }
+
+    public String getDiscountName() {
+        return discountName;
+    }
+
+    public void setDiscountName(String discountName) {
+        this.discountName = discountName;
     }
 }

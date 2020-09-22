@@ -67,6 +67,7 @@
                               <Button fx:id="addButton" mnemonicParsing="false" onAction="#addButtonAction" text="Add Item(s)" />
                            </children>
                         </HBox>
+                        <Label fx:id="discountTypeLabel" text="Label" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>

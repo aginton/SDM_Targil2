@@ -1,10 +1,11 @@
 package Utilities;
 
+import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.FloatStringConverter;
 
-public class MyFloatStringConverter extends FloatStringConverter {
+public class MyDoubleStringConverter extends DoubleStringConverter {
     @Override
-    public Float fromString(final String value) {
+    public Double fromString(final String value) {
         return value.isEmpty() || !isNumber(value) ? null
                 : super.fromString(value);
     }
@@ -12,8 +13,8 @@ public class MyFloatStringConverter extends FloatStringConverter {
     public boolean isNumber(String value) {
 
         try{
-            Float parsedFloat = Float.parseFloat(value);
-            return parsedFloat>=0;
+            Double parsedDouble = Double.parseDouble(value);
+            return parsedDouble>=0;
 
         } catch(NumberFormatException nfe){
             System.out.println("Threw Number Format Exception");

@@ -117,7 +117,7 @@ public class PlaceAnOrderMainContainerController implements Initializable {
 
                 if (canContinueFromBasicInfo()){
                     System.out.println("Customer " + customer.getCustomerName() + " needs to choose store for " + orderType + " on date " + orderDate);
-                    chooseStoreController.setCurrentOrderData(customer,orderType,orderDate);
+                    //chooseStoreController.setDeliveryCost();
                     mainAnchorPane.getChildren().add(chooseStoresRef);
                 }
                 else{
@@ -135,7 +135,7 @@ public class PlaceAnOrderMainContainerController implements Initializable {
             selectedStore = chooseStoreController.getSelectedStore();
             System.out.println("Customer " + customer.getCustomerName() + " chose store "+selectedStore.getStoreName() + " for " + orderType + " on date " + orderDate);
             setOfStores.add(selectedStore);
-            chooseItemsController.setDataForStaticOrder(selectedStore,customer,orderType,orderDate);
+            //chooseItemsController.setDataForStaticOrder(selectedStore,customer,orderType,orderDate);
             mainAnchorPane.getChildren().add(chooseItemsRef);
         }
         if (getCurrentNode() == chooseItemsRef){
@@ -224,7 +224,7 @@ public class PlaceAnOrderMainContainerController implements Initializable {
         orderDate = null;
         customer = null;
         currentCart = null;
-        chooseItemsController.emptyCart();
+        chooseItemsController.emptyCurrentCart();
     }
 
     @FXML

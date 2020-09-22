@@ -1,13 +1,11 @@
 package components.ViewInfo.ViewOrders.SingleOrder;
 
-import Logic.Order.Cart;
 import Logic.Order.CartItem;
 import Logic.Order.Order;
 import Logic.Store.Store;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

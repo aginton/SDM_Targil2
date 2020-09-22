@@ -4,14 +4,11 @@ import Logic.Interfaces.inventoryChangeInterface;
 import Logic.Inventory.Inventory;
 import Logic.Inventory.InventoryItem;
 import Logic.Inventory.ePurchaseCategory;
-import Logic.Order.CartItem;
-import Logic.Order.StoreItem;
 import Logic.SDM.SDMManager;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -99,7 +96,7 @@ public class ViewItemsController implements inventoryChangeInterface {
                     if (!isEmpty()){
                         int rowIndex = this.getTableRow().getIndex();
                         InventoryItem inventoryItem = this.getTableView().getItems().get(rowIndex);
-                        float totalAmountSold = inventory.getMapItemsToTotalSold().get(inventoryItem);
+                        Double totalAmountSold = inventory.getMapItemsToTotalSold().get(inventoryItem);
                         this.setText(String.valueOf(totalAmountSold));
                     }
                 }

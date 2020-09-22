@@ -43,8 +43,6 @@ public class OrderBasicInfoController {
     @FXML
     private RadioButton radioDynamicOrder;
 
-    @FXML
-    private Button nextButton;
 
     @FXML
     private ToggleGroup orderTypeGroup;

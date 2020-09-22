@@ -1,6 +1,5 @@
 package Logic.Order;
 
-import Logic.Inventory.InventoryItem;
 import Logic.Inventory.ePurchaseCategory;
 import Logic.Store.Store;
 
@@ -20,7 +19,7 @@ public class Order {
     private float deliveryCost;
     Set<Store> storesBoughtFrom;
     eOrderType orderType;
-    private int numberOfItemsInOrder;
+    private double numberOfItemsInOrder;
 
     public Order(List<Integer> userLocation,
                  Date orderDate,
@@ -49,12 +48,12 @@ public class Order {
         numberOfItemsInOrder = calculateNumberOfItemsInOrder(cart);
     }
 
-    public int getNumberOfItemsInOrder() {
+    public double getNumberOfItemsInOrder() {
         return numberOfItemsInOrder;
     }
 
-    private int calculateNumberOfItemsInOrder(Cart cart) {
-        int res = 0;
+    private double calculateNumberOfItemsInOrder(Cart cart) {
+        double res = 0;
         for (CartItem item: cart.getCart().values()){
             if (item.getPurchaseCategory()==ePurchaseCategory.QUANTITY)
                 res += item.getItemAmount();
@@ -83,7 +82,7 @@ public class Order {
         return orderType;
     }
 
-    public float getCartTotal() {return cart.getCartTotalPrice();}
+    public double getCartTotal() {return cart.getCartTotalPrice();}
 
     public float getDeliveryCost(){return deliveryCost;}
     public Date getOrderDate(){return orderDate;}

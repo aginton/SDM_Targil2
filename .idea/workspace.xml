@@ -16,116 +16,49 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12079fe1-433f-4321-8686-68adaa6eba3a" name="Default Changelist" comment="made map look nicer">
+    <list default="true" id="12079fe1-433f-4321-8686-68adaa6eba3a" name="Default Changelist" comment="started rewriting place An Order stages">
+      <change afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/PlaceAnOrderMainContainer.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/SuccessOrError/SuccessPopUp.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/Inventory/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/Inventory/Inventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/Inventory/InventoryItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/Inventory/InventoryItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/Inventory/InventoryItemInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/Inventory/InventoryItemInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/Order/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/Order/Cart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/Order/CartItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/Order/CartItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/Order/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/Order/Order.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/Order/StoreItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/Order/StoreItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/SDM/SDMFileVerifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/SDM/SDMFileVerifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/SDM/SDMManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/SDM/SDMManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/Store/Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/Store/Store.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/BackupIgnore/MainApp.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/BackupIgnore/MainAppController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/BackupIgnore/SDMApp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/BackupIgnore/StoreUI.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/BackupIgnore/ViewMenu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppNController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppNController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainContainer.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ChooseCustomerView/ChooseCustomer.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ChooseCustomerView/ChooseCustomerController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ChooseDateView/ChooseDate.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ChooseDateView/ChooseDateController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ChooseItemsView/ChooseFromEntireInventory.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ChooseItemsView/ChooseFromEntireInventoryController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ChooseItemsView/ChooseItemsFromStore.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ChooseItemsView/ChooseItemsFromStoreController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ChooseOrderTypeView/OrderType.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ChooseOrderTypeView/OrderTypeController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ChooseSalesView/SalesView.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ChooseSalesView/SalesViewController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ChooseStoreView/ChooseStore.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ChooseStoreView/ChooseStoreController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ConfirmOrderView/ConfirmOrder.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/ConfirmOrderView/ConfirmOrderController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/NewOrderContainer.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/NewOrderContainerController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/PlaceAnOrder/ChoosingItems.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/ChooseItems.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/PlaceAnOrder/ChoosingItemsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/ChooseItemsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/PlaceAnOrder/OrderBasicInfo.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/BasicInfo/OrderBasicInfo.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/PlaceAnOrder/OrderBasicInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/BasicInfo/OrderBasicInfoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/PlaceAnOrder/OrderChooseStore.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseStores/ChooseStore.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/PlaceAnOrder/OrderChooseStoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseStores/ChooseStoreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/PlaceAnOrder/PlaceAnOrderMainContainer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/PlaceAnOrderMainContainer.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/PlaceAnOrder/PlaceAnOrderMainContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/PlaceAnOrderMainContainerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/PlaceAnOrder/SuccessPopUp.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/SuccessOrError/SuccessPopUp.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/NewOrderMenu/PlaceAnOrder/SuccessPopUpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/SuccessOrError/SuccessPopUpController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/Store/StoreDiscount.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/Store/StoreDiscount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/Utilities/MyFloatStringConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/Utilities/MyDoubleStringConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppN.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppN.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/BasicInfo/OrderBasicInfo.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/BasicInfo/OrderBasicInfo.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/BasicInfo/OrderBasicInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/BasicInfo/OrderBasicInfoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscounts.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscounts.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/ChooseItems.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/ChooseItems.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/ChooseItemsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/ChooseItemsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseStores/ChooseStore.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseStores/ChooseStore.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseStores/ChooseStoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseStores/ChooseStoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ConfirmOrder/ConfirmOrder.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ConfirmOrder/ConfirmOrder.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ConfirmOrder/ConfirmOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ConfirmOrder/ConfirmOrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainer.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/PlaceAnOrderMainContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/PlaceAnOrderMainContainerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewItems/ViewItemsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewItems/ViewItemsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMainContainer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMainContainer.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMap/Piece.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMap/Piece.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMap/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMap/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMap/ViewMap.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMap/ViewMap.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMap/ViewMapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMap/ViewMapController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewOrders/SingleOrder/SingleOrderViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewOrders/SingleOrder/SingleOrderViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewStore/ViewStoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewStore/ViewStoreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/out/production/JavaFX/components/ordermenu/OrderMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/out/production/JavaFX/components/ordermenu/OrderMenu.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Inventory/Inventory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Inventory/Inventory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Inventory/InventoryItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Inventory/InventoryItem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Inventory/InventoryItemInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Inventory/InventoryItemInterface.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Order/Cart.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Order/Cart.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Order/CartItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Order/CartItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Order/Order.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Order/Order.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Order/StoreItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Order/StoreItem.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/SDM/SDMFileVerifier.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/SDM/SDMFileVerifier.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/SDM/SDMManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/SDM/SDMManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Store/Store.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Store/Store.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/BackupIgnore/MainApp.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/BackupIgnore/StoreUI.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/BackupIgnore/ViewMenu.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/MainAppController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/MainAppNController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/MainAppNController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/MainContainer.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Store/StoreDiscount.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Store/StoreDiscount.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscounts.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscounts.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/PlaceAnOrderMain/PlaceAnOrderMainContainerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/PlaceAnOrderMain/PlaceAnOrderMainContainerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewItems/ViewItemsController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewItems/ViewItemsController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewItems/ViewItemsController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewItems/ViewItemsController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewItems/ViewItemsController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewItems/ViewItemsController$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewItems/ViewItemsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewItems/ViewItemsController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMainContainer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMainContainer.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMap/Piece.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMap/Piece.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMap/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMap/Tile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMap/ViewMap.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMap/ViewMap.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMap/ViewMapController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMap/ViewMapController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewOrders/SingleOrder/SingleOrderViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewOrders/SingleOrder/SingleOrderViewController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewStore/ViewStoreController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewStore/ViewStoreController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseCustomerView/ChooseCustomer.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseCustomerView/ChooseCustomerController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseDateView/ChooseDate.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseDateView/ChooseDateController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseItemsView/ChooseFromEntireInventory.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseItemsView/ChooseFromEntireInventoryController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseItemsView/ChooseFromEntireInventoryController$2$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseItemsView/ChooseFromEntireInventoryController$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseItemsView/ChooseFromEntireInventoryController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseItemsView/ChooseItemsFromStore.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseItemsView/ChooseItemsFromStoreController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseItemsView/ChooseItemsFromStoreController$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseItemsView/ChooseItemsFromStoreController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseOrderTypeView/OrderType.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseOrderTypeView/OrderTypeController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseSalesView/SalesView.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseSalesView/SalesViewController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseStoreView/ChooseStore.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ChooseStoreView/ChooseStoreController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ConfirmOrderView/ConfirmOrder.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/ConfirmOrderView/ConfirmOrderController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/NewOrderContainer.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/NewOrderContainerController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/PlaceAnOrder/ChoosingItems.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/PlaceAnOrder/ChoosingItemsController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/PlaceAnOrder/ChoosingItemsController$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/PlaceAnOrder/ChoosingItemsController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/PlaceAnOrder/OrderBasicInfo.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/PlaceAnOrder/OrderBasicInfoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/PlaceAnOrder/OrderChooseStore.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/PlaceAnOrder/OrderChooseStoreController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/PlaceAnOrder/PlaceAnOrderMainContainer.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/newOrderMenu/PlaceAnOrder/PlaceAnOrderMainContainerController.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,15 +146,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -254,7 +185,8 @@
       <workItem from="1600146330004" duration="40367000" />
       <workItem from="1600244252218" duration="64879000" />
       <workItem from="1600434251662" duration="20090000" />
-      <workItem from="1600524821060" duration="35047000" />
+      <workItem from="1600524821060" duration="36305000" />
+      <workItem from="1600684394292" duration="30754000" />
     </task>
     <task id="LOCAL-00001" summary="started trying to implement tableView, began changing class fields to properties">
       <created>1599565972508</created>
@@ -389,7 +321,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600367619999</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="started rewriting place An Order stages">
+      <created>1600625408147</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1600625408147</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -438,37 +377,38 @@
     <MESSAGE value="updates amount sold for store" />
     <MESSAGE value="InventoryView now updates after staticOrder" />
     <MESSAGE value="made map look nicer" />
-    <option name="LAST_COMMIT_MESSAGE" value="made map look nicer" />
+    <MESSAGE value="started rewriting place An Order stages" />
+    <option name="LAST_COMMIT_MESSAGE" value="started rewriting place An Order stages" />
   </component>
   <component name="WindowStateProjectService">
     <state x="578" y="183" key="#Inspections" timestamp="1599386944020">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="578" y="183" key="#Inspections/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1599386944020" />
-    <state x="1056" y="135" key="#com.intellij.ide.util.MemberChooser" timestamp="1600613230835">
+    <state x="1056" y="135" key="#com.intellij.ide.util.MemberChooser" timestamp="1600712520677">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="1056" y="135" key="#com.intellij.ide.util.MemberChooser/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600613230835" />
+    <state x="1056" y="135" key="#com.intellij.ide.util.MemberChooser/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600712520677" />
     <state x="389" y="430" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1600244333455">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="389" y="430" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600244333455" />
-    <state x="125" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1600613054239">
+    <state x="125" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1600705924631">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="125" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600613054239" />
+    <state x="125" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600705924631" />
     <state x="559" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1600525519336">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="559" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600525519336" />
-    <state x="559" y="162" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1600454507652">
+    <state x="559" y="162" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1600706800177">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="559" y="162" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600454507652" />
-    <state x="596" y="97" key="#xdebugger.evaluate" timestamp="1599562783834">
+    <state x="559" y="162" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600706800177" />
+    <state x="596" y="97" key="#xdebugger.evaluate" timestamp="1600691191088">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="596" y="97" key="#xdebugger.evaluate/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1599562783833" />
+    <state x="596" y="97" key="#xdebugger.evaluate/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600691191088" />
     <state x="574" y="304" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1600537129530">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -477,50 +417,50 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="92" y="92" width="1736" height="896" key="DiffContextDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600148388685" />
-    <state x="634" y="174" key="FileChooserDialogImpl" timestamp="1600536530065">
+    <state x="634" y="174" key="FileChooserDialogImpl" timestamp="1600691375777">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="634" y="174" key="FileChooserDialogImpl/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600536530065" />
+    <state x="634" y="174" key="FileChooserDialogImpl/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600691375777" />
     <state x="423" y="0" key="FileChooserDialogImpl/0.0.1280.720@0.0.1280.720" timestamp="1599735782305" />
-    <state width="1850" height="230" key="GridCell.Tab.0.bottom" timestamp="1600624797347">
+    <state width="1853" height="226" key="GridCell.Tab.0.bottom" timestamp="1600753928890">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1850" height="230" key="GridCell.Tab.0.bottom/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600624797347" />
+    <state width="1853" height="226" key="GridCell.Tab.0.bottom/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600753928890" />
     <state width="1213" height="146" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1599754459453" />
-    <state width="1850" height="230" key="GridCell.Tab.0.center" timestamp="1600624797347">
+    <state width="1853" height="226" key="GridCell.Tab.0.center" timestamp="1600753928890">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1850" height="230" key="GridCell.Tab.0.center/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600624797347" />
+    <state width="1853" height="226" key="GridCell.Tab.0.center/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600753928890" />
     <state width="1213" height="146" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1599754459453" />
-    <state width="1850" height="230" key="GridCell.Tab.0.left" timestamp="1600624797347">
+    <state width="1853" height="226" key="GridCell.Tab.0.left" timestamp="1600753928889">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1850" height="230" key="GridCell.Tab.0.left/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600624797347" />
+    <state width="1853" height="226" key="GridCell.Tab.0.left/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600753928889" />
     <state width="1213" height="146" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1599754459452" />
-    <state width="1850" height="230" key="GridCell.Tab.0.right" timestamp="1600624797347">
+    <state width="1853" height="226" key="GridCell.Tab.0.right" timestamp="1600753928890">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1850" height="230" key="GridCell.Tab.0.right/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600624797347" />
+    <state width="1853" height="226" key="GridCell.Tab.0.right/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600753928890" />
     <state width="1213" height="146" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1599754459453" />
-    <state width="1850" height="276" key="GridCell.Tab.1.bottom" timestamp="1600622403425">
+    <state width="1853" height="272" key="GridCell.Tab.1.bottom" timestamp="1600693181989">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1850" height="276" key="GridCell.Tab.1.bottom/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600622403425" />
+    <state width="1853" height="272" key="GridCell.Tab.1.bottom/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600693181989" />
     <state width="1213" height="111" key="GridCell.Tab.1.bottom/0.0.1280.720@0.0.1280.720" timestamp="1599547133147" />
-    <state width="1850" height="276" key="GridCell.Tab.1.center" timestamp="1600622403425">
+    <state width="1853" height="272" key="GridCell.Tab.1.center" timestamp="1600693181988">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1850" height="276" key="GridCell.Tab.1.center/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600622403425" />
+    <state width="1853" height="272" key="GridCell.Tab.1.center/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600693181988" />
     <state width="1213" height="111" key="GridCell.Tab.1.center/0.0.1280.720@0.0.1280.720" timestamp="1599547133147" />
-    <state width="1850" height="276" key="GridCell.Tab.1.left" timestamp="1600622403425">
+    <state width="1853" height="272" key="GridCell.Tab.1.left" timestamp="1600693181988">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1850" height="276" key="GridCell.Tab.1.left/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600622403425" />
+    <state width="1853" height="272" key="GridCell.Tab.1.left/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600693181988" />
     <state width="1213" height="111" key="GridCell.Tab.1.left/0.0.1280.720@0.0.1280.720" timestamp="1599547133147" />
-    <state width="1850" height="276" key="GridCell.Tab.1.right" timestamp="1600622403425">
+    <state width="1853" height="272" key="GridCell.Tab.1.right" timestamp="1600693181988">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1850" height="276" key="GridCell.Tab.1.right/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600622403425" />
+    <state width="1853" height="272" key="GridCell.Tab.1.right/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600693181988" />
     <state width="1213" height="111" key="GridCell.Tab.1.right/0.0.1280.720@0.0.1280.720" timestamp="1599547133147" />
     <state x="468" y="106" key="NewModule_or_Project.wizard" timestamp="1600150626535">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -564,10 +504,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="220" y="136" width="1480" height="858" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600082341257" />
-    <state x="717" y="158" width="968" height="844" key="find.popup" timestamp="1600624968883">
+    <state x="717" y="158" width="968" height="844" key="find.popup" timestamp="1600702469704">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="717" y="158" width="968" height="844" key="find.popup/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600624968883" />
+    <state x="717" y="158" width="968" height="844" key="find.popup/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600702469704" />
     <state x="365" y="0" width="915" height="720" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1599744459388" />
     <state x="234" y="209" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1599732367479">
       <screen x="0" y="0" width="1280" height="720" />
@@ -577,10 +517,18 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="500" y="0" key="new project wizard/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600333579983" />
-    <state x="453" y="-2" width="1009" height="1470" key="search.everywhere.popup" timestamp="1600528361685">
+    <state x="622" y="210" key="refactoring.ChangeSignatureDialog" timestamp="1600687733852">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="453" y="-2" width="1009" height="1470" key="search.everywhere.popup/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600528361685" />
+    <state x="622" y="210" key="refactoring.ChangeSignatureDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600687733852" />
+    <state x="448" y="242" key="run.anything.popup" timestamp="1600707307393">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="448" y="242" key="run.anything.popup/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600707307393" />
+    <state x="453" y="-2" width="1009" height="1470" key="search.everywhere.popup" timestamp="1600692242817">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="453" y="-2" width="1009" height="1470" key="search.everywhere.popup/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600692242817" />
     <state x="302" y="-1" width="1009" height="980" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1599545842686" />
   </component>
   <component name="XDebuggerManager">
@@ -604,7 +552,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewOrders/SingleOrder/SingleOrderViewController.java</url>
-          <line>68</line>
+          <line>66</line>
           <properties class="components.ViewInfo.ViewOrders.SingleOrder.SingleOrderViewController" method="setOrder">
             <option name="EMULATED" value="true" />
           </properties>
@@ -657,38 +605,6 @@
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="69" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainerController.java</url>
-          <line>165</line>
-          <properties class="components.PlaceAnOrder.PlaceAnOrderMain.NewOrderMainContainerController" method="checkIfCanContinue">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="71" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainerController.java</url>
-          <line>110</line>
-          <properties class="components.PlaceAnOrder.PlaceAnOrderMain.NewOrderMainContainerController" method="goToNextPage">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="72" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainerController.java</url>
-          <line>103</line>
-          <properties class="components.PlaceAnOrder.PlaceAnOrderMain.NewOrderMainContainerController" method="nextButtonAction">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="73" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainerController.java</url>
-          <line>150</line>
-          <properties class="components.PlaceAnOrder.PlaceAnOrderMain.NewOrderMainContainerController" method="getInformationFromCurrentPage">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="74" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/SDM_Engine/src/Logic/Store/Store.java</url>
@@ -744,12 +660,6 @@
           <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/PlaceAnOrderMainContainerController.java</url>
           <line>187</line>
           <option name="timeStamp" value="61" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-field">
-          <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainerController.java</url>
-          <line>44</line>
-          <properties field="purchaseCategory" class="components.PlaceAnOrder.PlaceAnOrderMain.NewOrderMainContainerController" />
-          <option name="timeStamp" value="70" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
