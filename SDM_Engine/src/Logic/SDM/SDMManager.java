@@ -22,7 +22,6 @@ public class SDMManager extends SDMFileVerifier{
     //Members
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     private List<Store> stores;
-    private ObservableList<Store> storesObservableList;
 
     private Inventory inventory;
     private Orders orderHistory;
@@ -75,13 +74,7 @@ public class SDMManager extends SDMFileVerifier{
         this.orderHistory = orderHistory;
     }
 
-    public ObservableList<Store> getStoresObservableList() {
-        return storesObservableList;
-    }
 
-    public void setStoresObservableList(ObservableList<Store> storesObservableList) {
-        this.storesObservableList = storesObservableList;
-    }
 
     public Customers getCustomers() {
         return customers;
@@ -110,7 +103,6 @@ public class SDMManager extends SDMFileVerifier{
 
             createStores(getSDMDescriptor());
             Order.setNumOfOrders(0);
-
             inventory.updateStoresCarryingItems(stores);
             inventory.updateAvePrice();
             orderHistory = new Orders();
@@ -143,7 +135,6 @@ public class SDMManager extends SDMFileVerifier{
 
     public void createStores(SuperDuperMarketDescriptor sdm){
         stores = new ArrayList<Store>();
-        storesObservableList = FXCollections.observableArrayList();
 
         for (SDMStore store: sdm.getSDMStores().getSDMStore()){
             List<Integer> storeLoc = new ArrayList<>();
@@ -153,6 +144,8 @@ public class SDMManager extends SDMFileVerifier{
             Store newStore = new Store(store,this);
 
             stores.add(newStore);
+
+
             System.out.println("Created following store: " + newStore);
             StringBuilder discountsStringBuilder = new StringBuilder("Discounts:");
             for (StoreDiscount storeDiscount: newStore.getStoreDiscounts()){
@@ -233,8 +226,8 @@ public class SDMManager extends SDMFileVerifier{
     }
 
     public Store findCheapestStoreForItem(InventoryItem item) {
-        Comparator<Store> comparator = (store1, store2) -> store1.getMapItemToPrices()
-                .get(item.getItemId()).compareTo(store2.getMapItemToPrices().get(item.getItemId()));
+        Comparator<Store> comparator = (store1, store2) -> store1.getMapItemToPrices().get(item.getItemId())
+                .compareTo(store2.getMapItemToPrices().get(item.getItemId()));
         Set<Store> storesWithItem = inventory.getMapItemsToStoresWithItem().get(item);
         Store cheapestStore = Collections.min(storesWithItem, comparator);
 

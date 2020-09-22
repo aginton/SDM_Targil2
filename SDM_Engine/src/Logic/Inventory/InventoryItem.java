@@ -67,6 +67,10 @@ public class InventoryItem implements Comparable<InventoryItem>, InventoryItemIn
         this.purchaseCategory.set(purchaseCategory);
     }
 
+    public InventoryItem getInventoryItem(){
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -94,8 +98,8 @@ public class InventoryItem implements Comparable<InventoryItem>, InventoryItemIn
     @Override
     public String toString() {
         return "InventoryItem{" +
-                "itemId=" + itemId +
-                ", itemName=" + itemName +
+                "itemId=" + getItemId() +
+                ", itemName=" + getItemName() +
                 '}';
     }
 }

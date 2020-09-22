@@ -110,7 +110,8 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
     private ChangeListener<Store> storeChangeListener;
 
     public ViewStoreController(){
-        observableStoresList = SDMManager.getInstance().getStoresObservableList();
+        //observableStoresList = FXCollections.observableList(SDMManager.getInstance().getStores());
+        observableStoresList = FXCollections.observableArrayList();
         for (Store store: SDMManager.getInstance().getStores())
             store.addStoreChangeListener(this);
     }

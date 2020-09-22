@@ -184,7 +184,7 @@ public class ChooseItemsDynamicOrderController implements Initializable {
     }
 
     private void addItemToMap(InventoryItemWrapper selectedItem) {
-        InventoryItem item = (InventoryItem) selectedItem;
+        InventoryItem item = SDMManager.getInstance().getInventory().getInventoryItemById(selectedItem.getItemId());
         if (mapItemsChosenToAmount.containsKey(item)){
             double amount = mapItemsChosenToAmount.get(item);
             amount += selectedItem.getAmount();
@@ -193,6 +193,13 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         } else{
             mapItemsChosenToAmount.put(item, selectedItem.getAmount());
         }
+    }
+
+    private void resestWrappers() {
+        itemWrappers.forEach(i->{
+            i.setAmount(0);
+        });
+        storesBoughtFrom.clear();
     }
 
     private void setUpAddButtonColumn() {
@@ -301,5 +308,4 @@ public class ChooseItemsDynamicOrderController implements Initializable {
             this.amount.set(amount);
         }
     }
-
 }

@@ -74,12 +74,10 @@ public class Store implements hasLocationInterface {
         listeners = new ArrayList<>();
         storeDiscounts = new ArrayList<>();
         this.storeOrders = new ArrayList<>();
-
-        storeLocation.add(store.getLocation().getX());
-        storeLocation.add(store.getLocation().getY());
-
         this.mapItemsToAmountSold = new HashMap<Integer, Double>();
         this.mapItemToPrices = new HashMap<>();
+        storeLocation.add(store.getLocation().getX());
+        storeLocation.add(store.getLocation().getY());
 
         for (SDMSell sell : store.getSDMPrices().getSDMSell()) {
             mapItemToPrices.put(sell.getItemId(), sell.getPrice());
@@ -103,27 +101,27 @@ public class Store implements hasLocationInterface {
         }
     }
 
-    public Store(SDMStore store, Inventory inventory) {
-        this.mapItemsToAmountSold = new HashMap<Integer, Double>();
-        this.mapItemToPrices = new HashMap<>();
-        this.storeOrders = new ArrayList<>();
-
-        setStoreId(store.getId());
-        setStoreName(store.getName());
-        setDeliveryPpk(store.getDeliveryPpk());
-
-        storeLocation.add(store.getLocation().getX());
-        storeLocation.add(store.getLocation().getY());
-
-        for (SDMSell sell: store.getSDMPrices().getSDMSell()){
-            mapItemToPrices.put(sell.getItemId(), sell.getPrice());
-            mapItemsToAmountSold.put(sell.getItemId(), (double) 0);
-
-            InventoryItem itemToAdd = inventory.getListInventoryItems().stream().filter(i->i.getItemId() == sell.getItemId()).findFirst().get();
-            StoreItem storeItem = new StoreItem(itemToAdd, sell.getPrice());
-            storeItems.add(storeItem);
-        }
-    }
+//    public Store(SDMStore store, Inventory inventory) {
+//        this.mapItemsToAmountSold = new HashMap<Integer, Double>();
+//        this.mapItemToPrices = new HashMap<>();
+//        this.storeOrders = new ArrayList<>();
+//
+//        setStoreId(store.getId());
+//        setStoreName(store.getName());
+//        setDeliveryPpk(store.getDeliveryPpk());
+//
+//        storeLocation.add(store.getLocation().getX());
+//        storeLocation.add(store.getLocation().getY());
+//
+//        for (SDMSell sell: store.getSDMPrices().getSDMSell()){
+//            mapItemToPrices.put(sell.getItemId(), sell.getPrice());
+//            mapItemsToAmountSold.put(sell.getItemId(), (double) 0);
+//
+//            InventoryItem itemToAdd = inventory.getListInventoryItems().stream().filter(i->i.getItemId() == sell.getItemId()).findFirst().get();
+//            StoreItem storeItem = new StoreItem(itemToAdd, sell.getPrice());
+//            storeItems.add(storeItem);
+//        }
+//    }
 
 
 

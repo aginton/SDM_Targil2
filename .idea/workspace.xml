@@ -16,24 +16,26 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12079fe1-433f-4321-8686-68adaa6eba3a" name="Default Changelist" comment="CartSubtotal updates on chooseItems Page">
+    <list default="true" id="12079fe1-433f-4321-8686-68adaa6eba3a" name="Default Changelist" comment="fixed conflicts in workspace">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscounts.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscounts.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/ChooseItems.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/ChooseItems.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/ChooseItemsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/ChooseItemsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/Inventory/InventoryItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/Inventory/InventoryItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/SDM/SDMManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/SDM/SDMManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/Store/Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/Store/Store.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrder.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrder.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/DynamicOrder/DynamicSubOrder.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseItems/DynamicOrder/DynamicSubOrder.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainer.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscounts.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscounts.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsController$DiscountWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsController$DiscountWrapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItems.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItems.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsController$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsController$ItemWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsController$ItemWrapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewStore/ViewStoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewStore/ViewStoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Inventory/InventoryItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Inventory/InventoryItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/SDM/SDMManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/SDM/SDMManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Store/Store.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/Store/Store.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrder.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrder.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController$InventoryItemWrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController$InventoryItemWrapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainer.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewStore/ViewStoreController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewStore/ViewStoreController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -322,7 +324,21 @@
       <option name="project" value="LOCAL" />
       <updated>1600780826778</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="fixed conflicts in workspace">
+      <created>1600793187637</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1600793187637</updated>
+    </task>
+    <task id="LOCAL-00024" summary="fixed conflicts in workspace">
+      <created>1600793202231</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1600793202231</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -374,7 +390,8 @@
     <MESSAGE value="started rewriting place An Order stages" />
     <MESSAGE value="got rid of summary on NewOrderMainContainer.fxml" />
     <MESSAGE value="CartSubtotal updates on chooseItems Page" />
-    <option name="LAST_COMMIT_MESSAGE" value="CartSubtotal updates on chooseItems Page" />
+    <MESSAGE value="fixed conflicts in workspace" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed conflicts in workspace" />
   </component>
   <component name="WindowStateProjectService">
     <state x="578" y="183" key="#Inspections" timestamp="1599386944020">
@@ -409,54 +426,54 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="574" y="304" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600537129530" />
-    <state x="92" y="92" width="1736" height="896" key="DiffContextDialog" timestamp="1600767356686">
+    <state x="92" y="92" width="1736" height="896" key="DiffContextDialog" timestamp="1600793112036">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="92" y="92" width="1736" height="896" key="DiffContextDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600767356686" />
+    <state x="92" y="92" width="1736" height="896" key="DiffContextDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600793112036" />
     <state x="634" y="174" key="FileChooserDialogImpl" timestamp="1600691375777">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="634" y="174" key="FileChooserDialogImpl/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600691375777" />
     <state x="423" y="0" key="FileChooserDialogImpl/0.0.1280.720@0.0.1280.720" timestamp="1599735782305" />
-    <state width="1853" height="226" key="GridCell.Tab.0.bottom" timestamp="1600783972329">
+    <state width="1853" height="226" key="GridCell.Tab.0.bottom" timestamp="1600800536355">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="226" key="GridCell.Tab.0.bottom/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600783972329" />
+    <state width="1853" height="226" key="GridCell.Tab.0.bottom/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600800536355" />
     <state width="1213" height="146" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1599754459453" />
-    <state width="1853" height="226" key="GridCell.Tab.0.center" timestamp="1600783972329">
+    <state width="1853" height="226" key="GridCell.Tab.0.center" timestamp="1600800536355">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="226" key="GridCell.Tab.0.center/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600783972329" />
+    <state width="1853" height="226" key="GridCell.Tab.0.center/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600800536355" />
     <state width="1213" height="146" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1599754459453" />
-    <state width="1853" height="226" key="GridCell.Tab.0.left" timestamp="1600783972329">
+    <state width="1853" height="226" key="GridCell.Tab.0.left" timestamp="1600800536355">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="226" key="GridCell.Tab.0.left/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600783972329" />
+    <state width="1853" height="226" key="GridCell.Tab.0.left/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600800536355" />
     <state width="1213" height="146" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1599754459452" />
-    <state width="1853" height="226" key="GridCell.Tab.0.right" timestamp="1600783972329">
+    <state width="1853" height="226" key="GridCell.Tab.0.right" timestamp="1600800536355">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="226" key="GridCell.Tab.0.right/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600783972329" />
+    <state width="1853" height="226" key="GridCell.Tab.0.right/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600800536355" />
     <state width="1213" height="146" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1599754459453" />
-    <state width="1853" height="272" key="GridCell.Tab.1.bottom" timestamp="1600780702015">
+    <state width="1853" height="272" key="GridCell.Tab.1.bottom" timestamp="1600799903629">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="272" key="GridCell.Tab.1.bottom/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600780702015" />
+    <state width="1853" height="272" key="GridCell.Tab.1.bottom/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600799903629" />
     <state width="1213" height="111" key="GridCell.Tab.1.bottom/0.0.1280.720@0.0.1280.720" timestamp="1599547133147" />
-    <state width="1853" height="272" key="GridCell.Tab.1.center" timestamp="1600780702015">
+    <state width="1853" height="272" key="GridCell.Tab.1.center" timestamp="1600799903628">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="272" key="GridCell.Tab.1.center/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600780702015" />
+    <state width="1853" height="272" key="GridCell.Tab.1.center/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600799903628" />
     <state width="1213" height="111" key="GridCell.Tab.1.center/0.0.1280.720@0.0.1280.720" timestamp="1599547133147" />
-    <state width="1853" height="272" key="GridCell.Tab.1.left" timestamp="1600780702015">
+    <state width="1853" height="272" key="GridCell.Tab.1.left" timestamp="1600799903628">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="272" key="GridCell.Tab.1.left/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600780702015" />
+    <state width="1853" height="272" key="GridCell.Tab.1.left/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600799903628" />
     <state width="1213" height="111" key="GridCell.Tab.1.left/0.0.1280.720@0.0.1280.720" timestamp="1599547133147" />
-    <state width="1853" height="272" key="GridCell.Tab.1.right" timestamp="1600780702015">
+    <state width="1853" height="272" key="GridCell.Tab.1.right" timestamp="1600799903629">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="272" key="GridCell.Tab.1.right/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600780702015" />
+    <state width="1853" height="272" key="GridCell.Tab.1.right/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600799903629" />
     <state width="1213" height="111" key="GridCell.Tab.1.right/0.0.1280.720@0.0.1280.720" timestamp="1599547133147" />
     <state x="468" y="106" key="NewModule_or_Project.wizard" timestamp="1600150626535">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -471,15 +488,15 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="545" y="154" width="810" height="786" key="StructurePopup/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600528704528" />
-    <state x="50" y="0" key="Vcs.Push.Dialog.v2" timestamp="1600780099747">
+    <state x="50" y="0" key="Vcs.Push.Dialog.v2" timestamp="1600793204731">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="50" y="0" key="Vcs.Push.Dialog.v2/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600780099747" />
+    <state x="50" y="0" key="Vcs.Push.Dialog.v2/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600793204731" />
     <state x="33" y="0" key="Vcs.Push.Dialog.v2/0.0.1280.720@0.0.1280.720" timestamp="1599732580066" />
-    <state x="370" y="143" key="VcsDiffUtil.ChangesDialog" timestamp="1600767147937">
+    <state x="514" y="143" key="VcsDiffUtil.ChangesDialog" timestamp="1600793162697">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="370" y="143" key="VcsDiffUtil.ChangesDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600767147937" />
+    <state x="514" y="143" key="VcsDiffUtil.ChangesDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600793162697" />
     <state x="680" y="282" key="chooseDestDirectoryDialog" timestamp="1599398127334">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -500,23 +517,23 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="220" y="136" width="1480" height="858" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600082341257" />
-    <state x="717" y="158" width="968" height="844" key="find.popup" timestamp="1600769534008">
+    <state x="717" y="158" width="1036" height="844" key="find.popup" timestamp="1600798160134">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="717" y="158" width="968" height="844" key="find.popup/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600769534008" />
+    <state x="717" y="158" width="1036" height="844" key="find.popup/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600798160134" />
     <state x="365" y="0" width="915" height="720" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1599744459388" />
     <state x="234" y="209" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1599732367479">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="234" y="209" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1280.720@0.0.1280.720" timestamp="1599732367479" />
-    <state x="500" y="0" key="new project wizard" timestamp="1600333579983">
+    <state x="500" y="0" key="new project wizard" timestamp="1600797935354">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="500" y="0" key="new project wizard/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600333579983" />
-    <state x="622" y="210" key="refactoring.ChangeSignatureDialog" timestamp="1600687733852">
+    <state x="500" y="0" key="new project wizard/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600797935354" />
+    <state x="622" y="210" key="refactoring.ChangeSignatureDialog" timestamp="1600799281672">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="622" y="210" key="refactoring.ChangeSignatureDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600687733852" />
+    <state x="622" y="210" key="refactoring.ChangeSignatureDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600799281672" />
     <state x="448" y="242" key="run.anything.popup" timestamp="1600766447828">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -532,7 +549,7 @@
       <breakpoints>
         <line-breakpoint type="java-method">
           <url>file://$PROJECT_DIR$/SDM_Engine/src/Logic/SDM/SDMManager.java</url>
-          <line>217</line>
+          <line>210</line>
           <properties class="Logic.SDM.SDMManager">
             <option name="EMULATED" value="true" />
           </properties>
@@ -572,7 +589,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/SDM_Engine/src/Logic/Store/Store.java</url>
-          <line>295</line>
+          <line>293</line>
           <properties class="Logic.Store.Store" method="addOrder">
             <option name="EMULATED" value="true" />
           </properties>
@@ -580,7 +597,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/SDM_Engine/src/Logic/Store/Store.java</url>
-          <line>263</line>
+          <line>261</line>
           <properties class="Logic.Store.Store" method="notifyStoreWasChanged">
             <option name="EMULATED" value="true" />
           </properties>
@@ -602,9 +619,33 @@
           </properties>
           <option name="timeStamp" value="69" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/SDM_Engine/src/Logic/SDM/SDMManager.java</url>
+          <line>214</line>
+          <properties class="Logic.SDM.SDMManager" method="findCheapestCartForUser">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="93" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/SDM_Engine/src/Logic/SDM/SDMManager.java</url>
+          <line>227</line>
+          <properties class="Logic.SDM.SDMManager" method="findCheapestStoreForItem">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/SDM_Engine/src/Logic/Inventory/Inventory.java</url>
+          <line>55</line>
+          <properties class="Logic.Inventory.Inventory" method="getMapItemsToStoresWithItem">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="96" />
+        </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/SDM_Engine/src/Logic/Store/Store.java</url>
-          <line>366</line>
+          <line>364</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
@@ -629,7 +670,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/SDM_Engine/src/Logic/Store/Store.java</url>
-          <line>298</line>
+          <line>296</line>
           <option name="timeStamp" value="51" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
