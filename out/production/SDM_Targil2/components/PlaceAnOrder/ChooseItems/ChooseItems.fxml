@@ -43,7 +43,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label alignment="TOP_LEFT" text="Customer:" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <Label fx:id="customerLabel" alignment="TOP_LEFT" text="Customer:" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <opaqueInsets>
             <Insets left="50.0" />
          </opaqueInsets>
@@ -51,7 +51,7 @@
             <Insets left="40.0" />
          </GridPane.margin>
       </Label>
-      <Label text="Customer location:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <Label fx:id="customerLocationLabel" text="Customer location:" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="40.0" />
          </GridPane.margin>

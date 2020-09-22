@@ -12,9 +12,9 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="64.0" prefWidth="605.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
             <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButtonAction" text="Next" />
-            <Button fx:id="confirmButton" mnemonicParsing="false" text="Button" />
+            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmButtonAction" text="Confirm" />
          </children>
       </HBox>
    </bottom>

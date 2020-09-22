@@ -46,7 +46,7 @@
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label alignment="TOP_LEFT" text="Customer:" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Label fx:id="customerLabel" alignment="TOP_LEFT" text="Customer:" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <opaqueInsets>
                 <Insets left="50.0" />
             </opaqueInsets>
@@ -54,7 +54,7 @@
                 <Insets left="40.0" />
             </GridPane.margin>
         </Label>
-        <Label text="Customer location:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <Label fx:id="customerLocationLabel" text="Customer location:" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <GridPane.margin>
                 <Insets left="40.0" />
             </GridPane.margin>
@@ -64,7 +64,15 @@
                 <Insets bottom="10.0" top="10.0" />
             </GridPane.margin>
         </Button>
-        <TableView fx:id="cartTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <TableView fx:id="cartTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+         <columns>
+            <TableColumn fx:id="cartDiscountNameColumn" prefWidth="75.0" text="Discount" />
+            <TableColumn fx:id="cartItemIdColumn" prefWidth="75.0" text="Item-ID" />
+            <TableColumn fx:id="cartItemNameColumn" prefWidth="75.0" text="Item-Name" />
+            <TableColumn fx:id="cartQuantityColumn" prefWidth="75.0" text="Quantity" />
+            <TableColumn fx:id="cartForAdditionalColumn" prefWidth="100.0" text="For Additional" />
+            <TableColumn fx:id="costColumn" prefWidth="75.0" text="Cost" />
+         </columns></TableView>
         <GridPane GridPane.columnIndex="3" GridPane.rowIndex="3">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

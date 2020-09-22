@@ -1,5 +1,6 @@
 package components.PlaceAnOrder.ChooseItems;
 
+import Logic.Customers.Customer;
 import Logic.Inventory.InventoryItem;
 import Logic.Inventory.ePurchaseCategory;
 import Logic.Order.Cart;
@@ -27,6 +28,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChooseItemsController implements Initializable{
+
+    @FXML
+    private Label customerLabel;
+
+    @FXML
+    private Label customerLocationLabel;
 
     @FXML
     private Label cartSubtotalLabel;
@@ -91,7 +98,6 @@ public class ChooseItemsController implements Initializable{
     private HashMap<Integer, ItemWrapper> mapItemWrappersToAddToCart;
 
 
-    private ObservableSet<CartItem> observableSet;
     private ObservableList<CartItem> cartItems;
 
     private DoubleProperty cartSubtotal;
@@ -103,7 +109,6 @@ public class ChooseItemsController implements Initializable{
 
     public ChooseItemsController(){
         dummyCart=new Cart();
-        observableSet = FXCollections.observableSet();
         mapItemWrappersToAddToCart = new HashMap<>();
         storeItems = FXCollections.observableArrayList();
         cartItems = FXCollections.observableArrayList();
@@ -381,6 +386,11 @@ public class ChooseItemsController implements Initializable{
 
     public Button getAddToCartButton() {
         return addToCartButton;
+    }
+
+    public void fillCustomerData(Customer customer) {
+        customerLabel.setText("Customer: "+customer.getCustomerName());
+        customerLocationLabel.setText("Customer Location: " + customer.getLocation());
     }
 
 
