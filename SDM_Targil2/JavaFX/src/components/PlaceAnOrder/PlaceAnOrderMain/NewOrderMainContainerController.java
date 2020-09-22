@@ -50,7 +50,7 @@ public class NewOrderMainContainerController implements Initializable {
     private AnchorPane orderSummaryAnchorPane;
 
 
-    private Node basicInfoRef, chooseStoresRef, chooseItemsRef, chooseDiscountsRef, confirmOrderRef;
+    private Node basicInfoRef, chooseStoresRef, chooseItemsRef, chooseItemsDynamicRef, chooseDiscountsRef, confirmOrderRef;
     private ObjectProperty<Node> currentNode;
     private OrderBasicInfoController basicInfoController;
     private ChooseStoreController chooseStoreController;
@@ -91,8 +91,12 @@ public class NewOrderMainContainerController implements Initializable {
             chooseItemsLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ChooseItems/ChooseItems.fxml"));
             chooseItemsRef = chooseItemsLoader.load();
             chooseItemsController = chooseItemsLoader.getController();
-            currentCart = chooseItemsController.getDummyCart();
-                //System.out.println("NewOrderMain received cart: " + currentCart);
+            //currentCart = chooseItemsController.getDummyCart();
+
+
+            FXMLLoader chooseItemsDynamicLoader = new FXMLLoader();
+            chooseItemsDynamicLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrder.fxml"));
+            chooseItemsDynamicRef = chooseItemsDynamicLoader.load();
 
 
             //4. choose discounts
@@ -122,7 +126,7 @@ public class NewOrderMainContainerController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        backButton.disableProperty().bind(currentNode.isNotEqualTo(basicInfoRef));
+        backButton.disableProperty().bind(currentNode.isEqualTo(basicInfoRef));
         newOrderCurrentPage.getChildren().clear();
         newOrderCurrentPage.getChildren().add(basicInfoRef);
         nextButton.disableProperty().bind(currentNode.isEqualTo(confirmOrderRef));
@@ -189,7 +193,7 @@ public class NewOrderMainContainerController implements Initializable {
         if (newOrderCurrentPage.getChildren().get(0)==basicInfoRef){
             if (orderType == eOrderType.DYNAMIC_ORDER){
                 chooseItemsController.setDataForDynamicOrder();
-                swapCurrentPage(chooseItemsRef);
+                swapCurrentPage(chooseItemsDynamicRef);
             } else if (orderType == eOrderType.STATIC_ORDER){
                 chooseStoreController.setCustomer(customer);
                 swapCurrentPage(chooseStoresRef);

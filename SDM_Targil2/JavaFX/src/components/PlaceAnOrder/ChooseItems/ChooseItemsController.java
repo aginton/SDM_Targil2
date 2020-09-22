@@ -353,6 +353,7 @@ public class ChooseItemsController implements Initializable{
 
     public void setDataForDynamicOrder() {
 
+
     }
 
     public void setDataForStaticOrder(Store selectedStore) {
@@ -444,7 +445,6 @@ public class ChooseItemsController implements Initializable{
         public ePurchaseCategory getPurchaseCategory(){
             return storeItem.getPurchaseCategory();
         }
-
 
     }
 }
