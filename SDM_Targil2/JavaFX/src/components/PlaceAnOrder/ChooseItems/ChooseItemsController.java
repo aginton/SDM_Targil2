@@ -104,7 +104,6 @@ public class ChooseItemsController implements Initializable{
     private FloatProperty deliveryFeeProperty;
     private DoubleProperty totalCost;
 
-    private HashSet<CartItem> testSet;
 
 
     public ChooseItemsController(){
@@ -323,11 +322,9 @@ public class ChooseItemsController implements Initializable{
             CartItem ITEM = cartItems.stream().filter(i->i.getItemId()==item.getItemId()).findFirst().orElse(null);
 
             if (ITEM!=null){
-                System.out.println("Item " + item.getItemId() + " is already in testSet!");
                 double oldAmount = ITEM.getItemAmount();
                 ITEM.setItemAmount(oldAmount+v.getItemAmount());
             } else{
-                System.out.println("Item " + item.getItemId() + " is NOT in testSet!");
                 CartItem newCartItem = new CartItem((InventoryItem) item,
                         v.getItemAmount(),
                         v.getPrice(),v.getStoreBoughtFrom());
@@ -392,6 +389,16 @@ public class ChooseItemsController implements Initializable{
     public void fillCustomerData(Customer customer) {
         customerLabel.setText("Customer: "+customer.getCustomerName());
         customerLocationLabel.setText("Customer Location: " + customer.getLocation());
+    }
+
+    public void setUpCustomerBinding(ObjectProperty<Customer> customerObjectProperty) {
+    }
+
+    public void resetFields(){
+        cartTable.getItems().clear();
+        itemsTableView.getItems().clear();
+        cartItems = FXCollections.observableArrayList();
+        mapItemWrappersToAddToCart.clear();
     }
 
 

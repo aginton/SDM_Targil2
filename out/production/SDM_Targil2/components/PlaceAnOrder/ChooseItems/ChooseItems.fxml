@@ -3,117 +3,130 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane hgap="5.0" prefHeight="515.0" prefWidth="784.0" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.PlaceAnOrder.ChooseItems.ChooseItemsController">
-  <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="649.0" minWidth="10.0" prefWidth="61.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="712.0" minWidth="10.0" prefWidth="595.0" />
-      <ColumnConstraints hgrow="NEVER" maxWidth="712.0" minWidth="10.0" prefWidth="85.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="516.0" minWidth="10.0" prefWidth="319.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints maxHeight="164.0" minHeight="7.0" prefHeight="48.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="228.0" minHeight="5.0" prefHeight="27.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="228.0" minHeight="1.0" prefHeight="27.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="281.0" minHeight="10.0" prefHeight="206.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="427.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="427.0" minHeight="10.0" prefHeight="191.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <Label text="Your order" GridPane.columnIndex="1">
-         <font>
-            <Font size="16.0" />
-         </font>
-         <GridPane.margin>
-            <Insets left="40.0" />
-         </GridPane.margin>
-      </Label>
-      <Label alignment="TOP_CENTER" text="Order summary" GridPane.columnIndex="3">
-         <opaqueInsets>
-            <Insets left="50.0" />
-         </opaqueInsets>
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="customerLabel" alignment="TOP_LEFT" text="Customer:" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <opaqueInsets>
-            <Insets left="50.0" />
-         </opaqueInsets>
-         <GridPane.margin>
-            <Insets left="40.0" />
-         </GridPane.margin>
-      </Label>
-      <Label fx:id="customerLocationLabel" text="Customer location:" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <GridPane.margin>
-            <Insets left="40.0" />
-         </GridPane.margin>
-      </Label>
-       <TableView fx:id="itemsTableView" prefHeight="200.0" prefWidth="477.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-           <columns>
-               <TableColumn fx:id="itemIdColumn" prefWidth="51.0" text="Item Id" />
-               <TableColumn fx:id="itemNameColumn" prefWidth="81.66665649414062" text="Item Name" />
-               <TableColumn fx:id="categoryColumn" prefWidth="80.33331298828125" text="Category" />
-               <TableColumn fx:id="priceColumn" prefWidth="62.66668701171875" text="Price" />
-               <TableColumn fx:id="amountColumn" prefWidth="56.0" text="Amount" />
-               <TableColumn fx:id="addButtonColumn" prefWidth="65.0" text="Add" />
-               <TableColumn fx:id="removeButtonColumn" prefWidth="75.0" text="Remove" />
-           </columns>
-         <GridPane.margin>
-            <Insets bottom="10.0" />
-         </GridPane.margin>
-       </TableView>
-      <Button fx:id="addToCartButton" onAction="#addToCartAction" text="Add to cart" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-         <GridPane.margin>
-            <Insets bottom="10.0" top="10.0" />
-         </GridPane.margin>
-      </Button>
-      <TableView fx:id="cartTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-        <columns>
-          <TableColumn fx:id="cartItemIdCol" prefWidth="51.0" text="Item id" />
-          <TableColumn fx:id="cartItemNameCol" prefWidth="91.0" text="Item name" />
-            <TableColumn fx:id="cartUnitPriceCol" prefWidth="141.0" text="Unit price" />
-            <TableColumn fx:id="cartItemAmountCol" prefWidth="132.0" text="Amount" />
-            <TableColumn fx:id="cartItemCostCol" prefWidth="157.0" text="Cost" />
-        </columns>
-      </TableView>
-      <GridPane GridPane.columnIndex="3" GridPane.rowIndex="3">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+
+<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.PlaceAnOrder.ChooseItems.ChooseItemsController">
+   <content>
+      <AnchorPane>
          <children>
-            <Label text="Cart subtotal:" GridPane.valignment="TOP" />
-            <Label text="Delivery fee:" GridPane.rowIndex="1" GridPane.valignment="TOP">
-               <GridPane.margin>
+            <GridPane hgap="5.0" prefHeight="515.0" prefWidth="784.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="649.0" minWidth="10.0" prefWidth="61.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="712.0" minWidth="10.0" prefWidth="595.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="712.0" minWidth="10.0" prefWidth="85.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="516.0" minWidth="10.0" prefWidth="319.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="164.0" minHeight="7.0" prefHeight="48.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="228.0" minHeight="5.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="228.0" minHeight="1.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="281.0" minHeight="10.0" prefHeight="206.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="427.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="427.0" minHeight="10.0" prefHeight="191.0" vgrow="ALWAYS" />
+              </rowConstraints>
+               <children>
+                  <Label text="Your order" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="TOP_CENTER" text="Order summary" GridPane.columnIndex="3">
+                     <opaqueInsets>
+                        <Insets left="50.0" />
+                     </opaqueInsets>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="customerLabel" alignment="TOP_LEFT" text="Customer:" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <opaqueInsets>
+                        <Insets left="50.0" />
+                     </opaqueInsets>
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="customerLocationLabel" text="Customer location:" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="40.0" />
+                     </GridPane.margin>
+                  </Label>
+                   <TableView fx:id="itemsTableView" prefHeight="200.0" prefWidth="477.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                       <columns>
+                           <TableColumn fx:id="itemIdColumn" prefWidth="51.0" text="Item Id" />
+                           <TableColumn fx:id="itemNameColumn" prefWidth="81.66665649414062" text="Item Name" />
+                           <TableColumn fx:id="categoryColumn" prefWidth="80.33331298828125" text="Category" />
+                           <TableColumn fx:id="priceColumn" prefWidth="62.66668701171875" text="Price" />
+                           <TableColumn fx:id="amountColumn" prefWidth="56.0" text="Amount" />
+                           <TableColumn fx:id="addButtonColumn" prefWidth="65.0" text="Add" />
+                           <TableColumn fx:id="removeButtonColumn" prefWidth="75.0" text="Remove" />
+                       </columns>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" />
+                     </GridPane.margin>
+                   </TableView>
+                  <Button fx:id="addToCartButton" onAction="#addToCartAction" text="Add to cart" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <TableView fx:id="cartTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn fx:id="cartItemIdCol" prefWidth="51.0" text="Item id" />
+                      <TableColumn fx:id="cartItemNameCol" prefWidth="91.0" text="Item name" />
+                        <TableColumn fx:id="cartUnitPriceCol" prefWidth="141.0" text="Unit price" />
+                        <TableColumn fx:id="cartItemAmountCol" prefWidth="132.0" text="Amount" />
+                        <TableColumn fx:id="cartItemCostCol" prefWidth="157.0" text="Cost" />
+                    </columns>
+                     <GridPane.margin>
+                        <Insets bottom="5.0" />
+                     </GridPane.margin>
+                  </TableView>
+                  <GridPane GridPane.columnIndex="3" GridPane.rowIndex="3">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Cart subtotal:" GridPane.valignment="TOP" />
+                        <Label text="Delivery fee:" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Total:" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="cartSubtotalLabel" text="Label" GridPane.columnIndex="1" GridPane.valignment="TOP" />
+                        <Label fx:id="deliveryFeeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                        <Label fx:id="totalCostLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                     </children>
+                  </GridPane>
+               </children>
+               <opaqueInsets>
                   <Insets />
-               </GridPane.margin>
-            </Label>
-            <Label text="Total:" GridPane.rowIndex="2" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </Label>
-            <Label fx:id="cartSubtotalLabel" text="Label" GridPane.columnIndex="1" GridPane.valignment="TOP" />
-            <Label fx:id="deliveryFeeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-            <Label fx:id="totalCostLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+               </opaqueInsets>
+            </GridPane>
          </children>
-      </GridPane>
-   </children>
-   <opaqueInsets>
-      <Insets />
-   </opaqueInsets>
-</GridPane>
+      </AnchorPane>
+   </content>
+</ScrollPane>

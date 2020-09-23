@@ -167,6 +167,10 @@ public class NewOrderMainContainerController implements Initializable {
         setCurrentNode(newCurrentNode);
         newOrderCurrentPage.getChildren().clear();
         newOrderCurrentPage.getChildren().add(newCurrentNode);
+        AnchorPane.setBottomAnchor(newCurrentNode, 0.0);
+        AnchorPane.setLeftAnchor(newCurrentNode, 0.0);
+        AnchorPane.setRightAnchor(newCurrentNode, 0.0);
+        AnchorPane.setTopAnchor(newCurrentNode, 0.0);
     }
 
     public Node getCurrentNode() {

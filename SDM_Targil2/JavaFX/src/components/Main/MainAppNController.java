@@ -2,6 +2,7 @@ package components.Main;
 
 import Logic.SDM.SDMFileVerifier;
 import Logic.SDM.SDMManager;
+import components.UpdateInventory.UpdateInventoryContainerController;
 import components.ViewInfo.ViewMainController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -57,8 +58,8 @@ public class MainAppNController {
 
 
 
-    private Node orderMenuRef, viewMenuRef;
-
+    private Node orderMenuRef, viewMenuRef, updateRef;
+    private UpdateInventoryContainerController updateController;
 
 
     private SDMManager sdmManager;
@@ -156,9 +157,13 @@ public class MainAppNController {
             System.out.println("Going to try and store ref to orderMenu.fxml");
 
             FXMLLoader newOrderLoader = new FXMLLoader();
-//            newOrderLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/PlaceAnOrderMain/PlaceAnOrderMainContainer.fxml"));
-            newOrderLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderMainContainer.fxml"));
+            newOrderLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderAccordianContainer.fxml"));
             orderMenuRef = newOrderLoader.load();
+
+            FXMLLoader updateLoader = new FXMLLoader();
+            updateLoader.setLocation(getClass().getResource("/components/UpdateInventory/UpdateInventoryContainer.fxml"));
+            updateRef = updateLoader.load();
+            updateController = updateLoader.getController();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -179,7 +184,7 @@ public class MainAppNController {
 
     @FXML
     void UpdateAction(ActionEvent event) {
-
+        loadNewPane(updateRef);
     }
 
     @FXML

@@ -287,6 +287,14 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         itemsTableView.edit(focusedCell.getRow(), focusedCell.getTableColumn());
     }
 
+    public Cart getCart() {
+        return cart;
+    }
+
+    public Set<Store> getStoresBoughtFrom() {
+        return storesBoughtFrom;
+    }
+
 
     public class InventoryItemWrapper extends InventoryItem{
         private DoubleProperty amount;

@@ -3,7 +3,9 @@ package components.PlaceAnOrder.PlaceAnOrderMain;
 import Logic.Customers.Customer;
 import Logic.Order.Cart;
 import Logic.Order.CartItem;
+import Logic.Order.Order;
 import Logic.Order.eOrderType;
+import Logic.SDM.SDMManager;
 import Logic.Store.Store;
 import components.PlaceAnOrder.BasicInfo.OrderBasicInfoController;
 import components.PlaceAnOrder.ChooseDiscounts.ChooseDiscountsController;
@@ -18,16 +20,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.time.ZoneId;
+import java.util.*;
 
 public class NewOrderAccordianContainerController implements Initializable {
     @FXML
@@ -170,8 +175,19 @@ public class NewOrderAccordianContainerController implements Initializable {
         chooseDiscountsAnchorPane.getChildren().clear();
         chooseDiscountsAnchorPane.getChildren().add(chooseDiscountsRef);
 
+        AnchorPane.setBottomAnchor(chooseDiscountsRef, 0.0);
+        AnchorPane.setLeftAnchor(chooseDiscountsRef, 0.0);
+        AnchorPane.setRightAnchor(chooseDiscountsRef, 0.0);
+        AnchorPane.setTopAnchor(chooseDiscountsRef, 0.0);
+
         confirmAnchorPane.getChildren().clear();
         confirmAnchorPane.getChildren().add(confirmOrderRef);
+
+        AnchorPane.setBottomAnchor(confirmOrderRef, 0.0);
+        AnchorPane.setLeftAnchor(confirmOrderRef, 0.0);
+        AnchorPane.setRightAnchor(confirmOrderRef, 0.0);
+        AnchorPane.setTopAnchor(confirmOrderRef, 0.0);
+
     }
 
     @FXML
@@ -181,6 +197,7 @@ public class NewOrderAccordianContainerController implements Initializable {
             openNextTitledPane();
         }
     }
+
 
 
     private void getInformationFromCurrentPage() {
@@ -218,7 +235,6 @@ public class NewOrderAccordianContainerController implements Initializable {
             discountItemsToAddToCart.forEach((k,v)->{
                 currentCart.add(v);
             });
-
         }
     }
 
@@ -245,57 +261,167 @@ public class NewOrderAccordianContainerController implements Initializable {
     }
 
     private void openNextTitledPane() {
-        if (currentNode.equals(basicInfoRef) && orderType == eOrderType.DYNAMIC_ORDER) {
-            chooseItemsController.setDataForDynamicOrder();
-            chooseItemsTitledPane.setExpanded(true);
+        if (currentNode.equals(confirmOrderRef)){
+            System.out.println("Do something on confirm order...");
+
+            return;
         }
 
-        if (currentNode.equals(basicInfoRef) && orderType == eOrderType.STATIC_ORDER) {
-            chooseStoreController.setCustomer(customer);
-            chooseStoreController.bindCustomer(customerObjectProperty);
-            chooseStoresTitledPane.setExpanded(true);
+        if (currentNode.equals(chooseDiscountsRef)){
+            confirmOrderController.fillViewsForData(customer,orderDate, orderType,setOfStores,currentCart,deliveryFee);
+            currentNode = confirmOrderRef;
+            accordian.setExpandedPane(confirmTitledPane);
+            nextButton.setDisable(true);
+            confirmButton.setVisible(true);
+            confirmButton.setDisable(false);
+            return;
+        }
+
+        if (currentNode.equals(chooseItemsStaticOrderRef)){
+            chooseDiscountsController.fillViewsBasedOnStoreAndCart(selectedStore, currentCart);
+            chooseDiscountsController.fillCustomerLabels(customer);
+            chooseDiscountsController.fillOrderLabels(currentCart.getCartTotalPrice(), deliveryFee);
+            accordian.setExpandedPane(chooseDiscountsTitledPane);
+            currentNode = chooseDiscountsRef;
+            return;
         }
 
         if (currentNode.equals(chooseStoresRef)){
-//            chooseItemsController.setDataForStaticOrder(selectedStore, customerObjectProperty);
+            chooseItemsController.setDataForStaticOrder(selectedStore);
             chooseItemsController.fillCustomerData(customer);
             chooseItemsController.setDeliveryFeeProperty(deliveryFee);
 
             chooseItemsAnchorPane.getChildren().clear();
             chooseItemsAnchorPane.getChildren().add(chooseItemsStaticOrderRef);
+            AnchorPane.setBottomAnchor(chooseItemsStaticOrderRef, 0.0);
+            AnchorPane.setLeftAnchor(chooseItemsStaticOrderRef, 0.0);
+            AnchorPane.setRightAnchor(chooseItemsStaticOrderRef, 0.0);
+            AnchorPane.setTopAnchor(chooseItemsStaticOrderRef, 0.0);
 
-            chooseItemsTitledPane.setExpanded(true);
-            return;
-        }
-        if (currentNode.equals(chooseItemsStaticOrderRef)){
-            chooseDiscountsController.fillViewsBasedOnStoreAndCart(selectedStore, currentCart);
-            chooseDiscountsController.fillCustomerLabels(customer);
-            chooseDiscountsController.fillOrderLabels(currentCart.getCartTotalPrice(), deliveryFee);
-            chooseDiscountsTitledPane.setExpanded(true);
+            currentNode = chooseItemsStaticOrderRef;
+            accordian.setExpandedPane(chooseItemsTitledPane);
             return;
         }
 
 
-        if (currentNode.equals(chooseDiscountsRef)){
-            confirmOrderController.fillViewsForData(customer,orderDate, orderType,setOfStores,currentCart,deliveryFee);
-            confirmTitledPane.setExpanded(true);
-            return;
+        if (currentNode.equals(basicInfoRef)){
+            backButton.setDisable(false);
+            if (orderType == eOrderType.STATIC_ORDER) {
+                chooseStoreController.setCustomer(customer);
+                chooseStoreController.bindCustomer(customerObjectProperty);
+                accordian.setExpandedPane(chooseStoresTitledPane);
+                currentNode = chooseStoresRef;
+                return;
+            }
+
+            if (orderType == eOrderType.DYNAMIC_ORDER) {
+                chooseItemsController.setDataForDynamicOrder();
+                accordian.setExpandedPane(chooseItemsTitledPane);
+                currentNode = chooseItemsDynamicRef;
+                return;
+            }
         }
 
-        if (currentNode.equals(confirmOrderRef)){
-            System.out.println("Do something on confirm order...");
-            return;
-        }
     }
 
     @FXML
     void backButtonAction(ActionEvent event) {
+        if (currentNode.equals(confirmOrderRef)){
+            confirmButton.setDisable(true);
+            currentNode = basicInfoRef;
+            accordian.setExpandedPane(chooseDiscountsTitledPane);
+            return;
+        }
 
+        if (currentNode.equals(chooseDiscountsRef)){
+            if (orderType == eOrderType.DYNAMIC_ORDER){
+                currentNode = chooseItemsStaticOrderRef;
+            } else{
+                currentNode = chooseItemsDynamicRef;
+            }
+            accordian.setExpandedPane(chooseItemsTitledPane);
+            return;
+        }
+
+        if (currentNode.equals(chooseItemsStaticOrderRef)){
+            currentNode = chooseStoresRef;
+            accordian.setExpandedPane(chooseStoresTitledPane);
+            return;
+        }
+        if (currentNode.equals(chooseItemsDynamicRef)){
+            backButton.setDisable(true);
+            currentNode = basicInfoRef;
+            accordian.setExpandedPane(basicInfoTitledPane);
+            return;
+        }
+
+        if (currentNode.equals(chooseStoresRef)){
+            backButton.setDisable(true);
+            currentNode = basicInfoRef;
+            accordian.setExpandedPane(basicInfoTitledPane);
+            return;
+        }
     }
 
     @FXML
     void confirmButtonAction(ActionEvent event) {
 
+        if (orderType == eOrderType.STATIC_ORDER){
+            setOfStores.add(selectedStore);
+        }
+
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        Date date = Date.from(orderDate.atStartOfDay(defaultZoneId).toInstant());
+
+        String dateStr = new SimpleDateFormat("dd/MM\tHH:mm").format(date);
+        StringBuilder sb = new StringBuilder();
+        for (Store store: setOfStores){
+            sb.append(store.getStoreName());
+            sb.append(", ");
+        }
+
+
+        System.out.printf("Order details: " +
+                "\n\tCustomer: %s" +
+                "\n\tDate: %s" +
+                "\n\torderType: $%s" +
+                "\n\tStore: " +
+                "\n\tCart: %s", customer.getCustomerName(),dateStr, orderType, sb.toString(), currentCart);
+
+        Order order = new Order(customer.getLocation(),
+                date,
+                6,
+                currentCart,
+                setOfStores,
+                orderType);
+
+        SDMManager.getInstance().addNewStaticOrder(selectedStore, order);
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/components/PlaceAnOrder/SuccessOrError/SuccessPopUp.fxml"));
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            resetFields();
+
+
+            nextButton.setDisable(false);
+            confirmButton.setDisable(true);
+            confirmButton.setVisible(false);
+            currentNode = basicInfoRef;
+            chooseItemsController.resetFields();
+            accordian.setExpandedPane(basicInfoTitledPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void resetFields() {
+        setOfStores.clear();
+        selectedStore = null;
+        orderDate = null;
+        customer = null;
+        currentCart = null;
     }
 
 }

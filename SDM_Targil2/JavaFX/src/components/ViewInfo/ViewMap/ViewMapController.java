@@ -12,6 +12,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.fxml.FXML;
@@ -34,6 +35,8 @@ public class ViewMapController implements Initializable {
 //    @FXML
 //    private GridPane gridpane;
 
+    @FXML
+    private AnchorPane scrollpChildAnchorPane;
     @FXML
     private ScrollPane scrollp;
 
@@ -80,6 +83,15 @@ public class ViewMapController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         grid.setPrefSize(WIDTH*TILE_SIZE, HEIGHT*TILE_SIZE);
+
+        scrollpChildAnchorPane.getChildren().clear();
+        scrollpChildAnchorPane.getChildren().add(grid);
+        AnchorPane.setBottomAnchor(grid, 0.0);
+        AnchorPane.setLeftAnchor(grid, 0.0);
+        AnchorPane.setRightAnchor(grid, 0.0);
+        AnchorPane.setTopAnchor(grid, 0.0);
+
+
         System.out.println("List of stores locations:");
         stores.forEach(i-> System.out.println(i.getLocation()));
 

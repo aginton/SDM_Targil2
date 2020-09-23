@@ -20,6 +20,8 @@ public class Order {
     Set<Store> storesBoughtFrom;
     eOrderType orderType;
     private double numberOfItemsInOrder;
+    private double totalOrderCost;
+    private int numberItemsByType;
 
     public Order(List<Integer> userLocation,
                  Date orderDate,
@@ -46,6 +48,8 @@ public class Order {
         this.storesBoughtFrom = storesBoughtFrom;
         this.orderType = orderType;
         numberOfItemsInOrder = calculateNumberOfItemsInOrder(cart);
+        totalOrderCost = cart.getCartTotalPrice()+deliveryCost;
+        numberItemsByType=cart.getNumberOfTypesOfItemsInCart();
     }
 
     public double getNumberOfItemsInOrder() {
@@ -108,5 +112,11 @@ public class Order {
         return Objects.hash(orderId, userLocation, orderDate, deliveryCost, cart);
     }
 
+    public double getTotalOrderCost() {
+        return totalOrderCost;
+    }
 
+    public void setTotalOrderCost(double totalOrderCost) {
+        this.totalOrderCost = totalOrderCost;
+    }
 }

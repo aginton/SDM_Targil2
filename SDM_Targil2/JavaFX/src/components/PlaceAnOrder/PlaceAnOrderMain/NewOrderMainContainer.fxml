@@ -7,19 +7,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<GridPane hgap="5.0" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.PlaceAnOrder.PlaceAnOrderMain.NewOrderMainContainerController">
+<GridPane prefHeight="572.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.PlaceAnOrder.PlaceAnOrderMain.NewOrderMainContainerController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints minHeight="10.0" percentHeight="90.0" vgrow="ALWAYS" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" vgrow="NEVER" />
+      <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
       <AnchorPane fx:id="newOrderCurrentPage" prefHeight="525.0" prefWidth="605.0" GridPane.vgrow="ALWAYS" />
-      <HBox alignment="CENTER" prefHeight="64.0" prefWidth="605.0" spacing="15.0" GridPane.rowIndex="1">
+      <HBox alignment="CENTER" fillHeight="false" prefHeight="27.0" prefWidth="605.0" spacing="15.0" GridPane.rowIndex="1">
          <children>
             <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
             <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButtonAction" text="Next" />

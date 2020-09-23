@@ -6,6 +6,7 @@ import Logic.SDM.SDMManager;
 import Logic.Store.Store;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.FloatProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -79,5 +80,8 @@ public class ChooseStoreController implements Initializable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public void bindCustomer(ObjectProperty<Customer> customerObjectProperty) {
     }
 }

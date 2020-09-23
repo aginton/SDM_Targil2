@@ -234,4 +234,10 @@ public class SDMManager extends SDMFileVerifier{
         return cheapestStore;
     }
 
+    public void addInventoryItemToStore(InventoryItem item, Store store, int price){
+        store.addItemToStoreInventory(item, price);
+        inventory.updateStoresCarryingItems(stores);
+        inventory.updateAvePrice();
+    }
+
 }

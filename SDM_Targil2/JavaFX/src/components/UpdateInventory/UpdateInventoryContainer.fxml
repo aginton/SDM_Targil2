@@ -36,7 +36,7 @@
                   <Button fx:id="removeButton" mnemonicParsing="false" onAction="#onRemoveButtonAction" text="Remove" />
                </children>
             </StackPane>
-            <AnchorPane fx:id="UpdateInventoryChildAnchorPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowSpan="3" />
+            <AnchorPane fx:id="childAnchorPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowSpan="3" />
          </children>
       </GridPane>
    </children>

@@ -1,6 +1,8 @@
 package components.ViewInfo.ViewStore;
 
 import Logic.Inventory.ePurchaseCategory;
+import Logic.Order.Order;
+import Logic.Order.OrderId;
 import Logic.Order.StoreItem;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
@@ -82,22 +84,22 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
     private TableView storeOrdersTableView;
 
     @FXML
-    private TableColumn<Store, LocalDate> orderDateColumn;
+    private TableColumn<Order, LocalDate> orderDateColumn;
 
     @FXML
-    private TableColumn<Store, String> orderIDColumn;
+    private TableColumn<Order, ObjectProperty<OrderId>> orderIDColumn;
 
     @FXML
-    private TableColumn<Store, Integer> numItemsInCartColumn;
+    private TableColumn<Order, Integer> numItemsInCartColumn;
 
     @FXML
-    private TableColumn<Store, Float> cartSubtotalColumn;
+    private TableColumn<Order, Double> cartSubtotalColumn;
 
     @FXML
-    private TableColumn<Store, Float> deliveryFeeColumn;
+    private TableColumn<Order, Float> deliveryFeeColumn;
 
     @FXML
-    private TableColumn<Store, Float> orderTotalColumn;
+    private TableColumn<Order, Double> orderTotalColumn;
 
     @FXML
     private ListView<Store> listview;
@@ -108,6 +110,8 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
     // transformed into "update" change of ListChangeListener.
     private ObservableList<Store> observableStoresList;
     private ChangeListener<Store> storeChangeListener;
+
+    private ObservableList<Order> storeOrders;
 
     public ViewStoreController(){
         //observableStoresList = FXCollections.observableList(SDMManager.getInstance().getStores());
@@ -138,7 +142,6 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
         itemPriceColumn.setCellValueFactory(new PropertyValueFactory<StoreItem, Integer>("normalPrice"));
         itemAmountSoldColumn.setCellValueFactory(new PropertyValueFactory<StoreItem, Float>("totalAmountSoldAtStore"));
 
-
         listview.getSelectionModel().selectedItemProperty().addListener(
                 storeChangeListener = (((observable, oldValue, newValue) -> {
                     //newValue can be null if nothing is selected
@@ -148,12 +151,22 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
                         System.out.println("Selected store: " + newValue);
                         updateBasicStoreInfo(newValue);
                         storeInventoryTableView.setItems(FXCollections.observableList(newValue.getStoreItems()));
+                        storeOrders = FXCollections.observableArrayList(newValue.getStoreOrders());
+                        storeOrdersTableView.getItems().clear();
+                        storeOrdersTableView.setItems(storeOrders);
                     }
                 }))
         );
 
         //select first store in list as default
         listview.getSelectionModel().selectFirst();
+
+        orderIDColumn.setCellValueFactory(new PropertyValueFactory<Order,ObjectProperty<OrderId>>("orderId"));
+        orderDateColumn.setCellValueFactory(new PropertyValueFactory<Order,LocalDate>("orderDate"));
+        orderTotalColumn.setCellValueFactory(new PropertyValueFactory<Order, Double>("OrderTotalCost"));
+        deliveryFeeColumn.setCellValueFactory(new PropertyValueFactory<Order,Float>("DeliveryCost"));
+        numItemsInCartColumn.setCellValueFactory(new PropertyValueFactory<Order,Integer>("numberItemsByType"));
+        cartSubtotalColumn.setCellValueFactory(new PropertyValueFactory<Order,Double>("CartTotal"));
     }
 
     private void updateBasicStoreInfo(Store newValue) {
@@ -167,6 +180,11 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
     @Override
     public void storeWasChanged(Store store) {
         System.out.println("Store " + store.getStoreName() + " was changed!");
+        if (selectedStore == store){
+            updateBasicStoreInfo(selectedStore);
+            storeInventoryTableView.refresh();
+            storeOrdersTableView.refresh();
+        }
     }
 }
 
