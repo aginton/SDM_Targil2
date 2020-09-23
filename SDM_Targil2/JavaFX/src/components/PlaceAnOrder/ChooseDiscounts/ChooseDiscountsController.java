@@ -5,6 +5,7 @@ import Logic.Inventory.InventoryItem;
 import Logic.Inventory.ePurchaseCategory;
 import Logic.Order.Cart;
 import Logic.Order.CartItem;
+import Logic.Order.eOrderType;
 import Logic.Store.*;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
@@ -99,12 +100,15 @@ public class ChooseDiscountsController implements Initializable {
     private BooleanProperty isDiscountApplicable = new SimpleBooleanProperty(false);
     private Store selectedStore;
     private HashMap<Integer, Double> dummyCart;
+    private HashMap<Store, HashMap<Integer,Double>> dummyCarts;
+
     private HashMap<Integer, CartItem> mapIdsToDiscountCartItems;
     TableView.TableViewSelectionModel<DiscountOffer> defaultSelectionModel;
     private DoubleProperty subtotal;
     private FloatProperty deliveryFee;
     private DoubleProperty total;
     private ObservableList<CartItem> cartItems;
+    private eOrderType orderType;
 
 
 
@@ -116,7 +120,12 @@ public class ChooseDiscountsController implements Initializable {
             DiscountOffer selectedOffer = offersTableView.getSelectionModel().getSelectedItem();
             System.out.println("Adding " + selectedOffer.getItemName() + "to chosenDiscountOffers");
             addSelectedOfferToMap(selectedOffer);
-            updateDummyCartAfterUsingDiscount(selectedDiscountWrapper.getStoreDiscount().getDiscountCondition());
+            if (orderType==eOrderType.STATIC_ORDER){
+                updateDummyCartAfterUsingDiscount(selectedDiscountWrapper.getStoreDiscount().getDiscountCondition());
+            } else if (orderType == eOrderType.DYNAMIC_ORDER){
+                updateDummyCartAfterUsingDiscount(selectedDiscountWrapper.getStoreDiscount().getDiscountCondition(),selectedDiscountWrapper.store);
+            }
+
             updateDiscountWrappers();
         }
 
@@ -133,7 +142,12 @@ public class ChooseDiscountsController implements Initializable {
 
     private void updateDiscountWrappers() {
         for (DiscountWrapper discountWrapper: discountsListView.getItems()){
-            int val = discountWrapper.getStoreDiscount().countTimesConditionIsMet(dummyCart);
+            int val =0;
+            if (orderType == eOrderType.DYNAMIC_ORDER)
+                val = discountWrapper.getStoreDiscount().countTimesConditionIsMet(dummyCarts.get(discountWrapper.store));
+            else if (orderType==eOrderType.STATIC_ORDER)
+                val = discountWrapper.getStoreDiscount().countTimesConditionIsMet(dummyCart);
+
             if (selectedDiscountWrapper == discountWrapper){
                 discountWrapper.setTimesDiscountCanBeApplied(val);
                 setIsDiscountApplicable(selectedDiscountWrapper.getTimesDiscountCanBeApplied()>0);
@@ -141,6 +155,14 @@ public class ChooseDiscountsController implements Initializable {
                 //remainingTimesLabel.setText("This offer can be applied " + selectedDiscountWrapper.getTimesDiscountCanBeApplied() + " times");
             }
         }
+    }
+
+    private void updateDummyCartAfterUsingDiscount(DiscountCondition discountCondition, Store store) {
+        Double oldAmount = dummyCarts.get(store).get(discountCondition.getIfYouBuyItem().getItemId());
+        double amountToSubtract = discountCondition.getQuantity();
+        Double newAmount = (oldAmount - amountToSubtract);
+        dummyCarts.get(store).put(discountCondition.getIfYouBuyItem().getItemId(), newAmount);
+        System.out.println("New dummy cart for store:" + store.getStoreName() +":" + dummyCarts.get(store));
     }
 
     private void updateDummyCartAfterUsingDiscount(DiscountCondition discountCondition) {
@@ -218,6 +240,7 @@ public class ChooseDiscountsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cartItems = FXCollections.observableArrayList();
+        dummyCarts = new HashMap<>();
 
         subtotal = new SimpleDoubleProperty(this, "subtotal",0);
         cartSubtotalLabel.textProperty().bind(subtotal.asString("%.2f"));
@@ -243,8 +266,46 @@ public class ChooseDiscountsController implements Initializable {
         cartTable.setItems(cartItems);
     }
 
+    public void fillViewsBasedOnDynamicOrder(HashMap<Store, Cart> mapStoresToCarts) {
+        System.out.println("Filling info based on dynamic order");
+        orderType = eOrderType.DYNAMIC_ORDER;
+        mapStoresToCarts.forEach((k,v)->{
+            dummyCarts.put(k,createDummyCart(v));
+        });
+        mapIdsToDiscountCartItems = new HashMap<>();
+
+        boolean atLeastOneSale = false;
+        for (Store store: dummyCarts.keySet()){
+            if (store.getStoreDiscounts().size()==0){
+                System.out.println("Store " + store.getStoreName() + " has no discounts!");
+            } else{
+                System.out.println("Store " + store.getStoreName() + " has following discounts: " + store.getStoreDiscounts());
+                atLeastOneSale=true;
+            }
+        }
+        if (!atLeastOneSale)
+            setIsDiscountApplicable(false);
+
+
+        dummyCarts.keySet().forEach(store->{
+            System.out.println("");
+            store.getStoreDiscounts().forEach(discount-> discountWrappers.add(new DiscountWrapper(discount)));
+        });
+
+        for (DiscountWrapper discountWrapper : discountWrappers){
+            StoreDiscount discount = discountWrapper.getStoreDiscount();
+            Store store = discountWrapper.store;
+            int timesDiscountCanBeApplied = discount.countTimesConditionIsMet(dummyCarts.get(store));
+            System.out.println("Based on current cart, discount: " + discount.getName() + " can be applied " + timesDiscountCanBeApplied + " times");
+            discountWrapper.setTimesDiscountCanBeApplied(timesDiscountCanBeApplied);
+        }
+        setUpDiscountsListView();
+    }
+
     public void fillViewsBasedOnStoreAndCart(Store selectedStore, Cart inputCart) {
-        createDummyCart(inputCart);
+        orderType = eOrderType.STATIC_ORDER;
+        System.out.println("Filling info based on static order");
+        dummyCart = createDummyCart(inputCart);
         mapIdsToDiscountCartItems = new HashMap<>();
         this.selectedStore = selectedStore;
         clearItemsFromScreen();
@@ -253,10 +314,8 @@ public class ChooseDiscountsController implements Initializable {
         if (selectedStore.getStoreDiscounts().size()==0){
             System.out.println("This store has no discounts!");
             setIsDiscountApplicable(false);
-
             return;
         }
-
 
         selectedStore.getStoreDiscounts().forEach(discount-> discountWrappers.add(new DiscountWrapper(discount)));
         for (DiscountWrapper discountWrapper : discountWrappers){
@@ -266,6 +325,10 @@ public class ChooseDiscountsController implements Initializable {
             discountWrapper.setTimesDiscountCanBeApplied(timesDiscountCanBeApplied);
         }
 
+        setUpDiscountsListView();
+    }
+
+    private void setUpDiscountsListView() {
         discountsListView.setItems(discountWrappers);
         discountsListView.getSelectionModel().selectedItemProperty().addListener(
                 discountWrapperChangeListener = (((observable, oldValue, newValue) -> {
@@ -280,8 +343,6 @@ public class ChooseDiscountsController implements Initializable {
                 }))
         );
         discountsListView.getSelectionModel().selectFirst();
-
-
     }
 
     private void clearItemsFromScreen() {
@@ -291,12 +352,15 @@ public class ChooseDiscountsController implements Initializable {
         //remainingTimesLabel.setText("");
     }
 
-    private void createDummyCart(Cart inputCart) {
-        dummyCart = new HashMap<Integer, Double>();
+    private HashMap<Integer, Double> createDummyCart(Cart inputCart) {
+        HashMap res = new HashMap<Integer, Double>();
         for (CartItem cartItem: inputCart.getCart().values()){
-            dummyCart.put(cartItem.getItemId(), cartItem.getItemAmount());
+            res.put(cartItem.getItemId(), cartItem.getItemAmount());
         }
+        return res;
     }
+
+
 
     public HashMap<Integer, CartItem> getMapIdsToDiscountCartItems() {
         return mapIdsToDiscountCartItems;
@@ -336,13 +400,17 @@ public class ChooseDiscountsController implements Initializable {
         this.deliveryFee.set(deliveryFee);
     }
 
+
+
     private class DiscountWrapper {
+        private Store store;
         private StoreDiscount storeDiscount;
         private IntegerProperty timesDiscountCanBeApplied;
 
         public DiscountWrapper(StoreDiscount discount){
             this.storeDiscount = discount;
             timesDiscountCanBeApplied = new SimpleIntegerProperty(0);
+            this.store = discount.getStore();
         }
 
         public IntegerProperty timesDiscountCanBeAppliedProperty() {

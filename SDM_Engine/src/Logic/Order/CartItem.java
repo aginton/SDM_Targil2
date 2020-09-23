@@ -125,6 +125,10 @@ public class CartItem extends InventoryItem {
                 '}';
     }
 
+    public void setStoreBoughtFrom(Store storeBoughtFrom) {
+        this.storeBoughtFrom = storeBoughtFrom;
+    }
+
     public boolean isIsOnSale() {
         return isOnSale.get();
     }

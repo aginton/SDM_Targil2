@@ -94,6 +94,7 @@ public class NewOrderAccordianContainerController implements Initializable {
     private Set<Store> setOfStores;
     private Store selectedStore;
     private Cart currentCart;
+    private HashMap<Store,Cart> mapStoresToCarts;
     private float deliveryFee;
 
 
@@ -217,9 +218,9 @@ public class NewOrderAccordianContainerController implements Initializable {
         }
 
         if (currentNode.equals(chooseItemsDynamicRef)){
-            this.currentCart = chooseItemsDynamicController.getCart();
-            this.setOfStores = chooseItemsDynamicController.getStoresBoughtFrom();
-            System.out.println("chooseItemsDynamicRef returned: {currentCart=" + currentCart +"}, setOfStores=" + setOfStores);
+            this.mapStoresToCarts = chooseItemsDynamicController.getMapStoresToCarts();
+            System.out.println("chooseItemsDynamicRef returned: " + mapStoresToCarts);
+            //this.setOfStores = chooseItemsDynamicController.getStoresBoughtFrom();
         }
 
         if (currentNode.equals(basicInfoRef)){
@@ -251,6 +252,12 @@ public class NewOrderAccordianContainerController implements Initializable {
                 return false;
             }
         }
+        if (currentNode.equals(chooseItemsDynamicRef) && orderType == eOrderType.DYNAMIC_ORDER){
+            if (mapStoresToCarts.values().size() == 0){
+                System.out.println("Did you order anything?");
+                return false;
+            }
+        }
         if (currentNode.equals(chooseItemsStaticOrderRef)){
             if (currentCart.getCart().size()==0){
                 System.out.println("Cart can't be empty!");
@@ -278,9 +285,17 @@ public class NewOrderAccordianContainerController implements Initializable {
         }
 
         if (currentNode.equals(chooseItemsStaticOrderRef)){
-            chooseDiscountsController.fillViewsBasedOnStoreAndCart(selectedStore, currentCart);
-            chooseDiscountsController.fillCustomerLabels(customer);
-            chooseDiscountsController.fillOrderLabels(currentCart.getCartTotalPrice(), deliveryFee);
+            if (orderType == eOrderType.STATIC_ORDER){
+                chooseDiscountsController.fillViewsBasedOnStoreAndCart(selectedStore, currentCart);
+                chooseDiscountsController.fillCustomerLabels(customer);
+                chooseDiscountsController.fillOrderLabels(currentCart.getCartTotalPrice(), deliveryFee);
+            }
+            accordian.setExpandedPane(chooseDiscountsTitledPane);
+            currentNode = chooseDiscountsRef;
+            return;
+        }
+        if (currentNode.equals(chooseItemsDynamicRef)){
+            chooseDiscountsController.fillViewsBasedOnDynamicOrder(mapStoresToCarts);
             accordian.setExpandedPane(chooseDiscountsTitledPane);
             currentNode = chooseDiscountsRef;
             return;
@@ -316,6 +331,14 @@ public class NewOrderAccordianContainerController implements Initializable {
 
             if (orderType == eOrderType.DYNAMIC_ORDER) {
                 chooseItemsController.setDataForDynamicOrder();
+
+                chooseItemsAnchorPane.getChildren().clear();
+                chooseItemsAnchorPane.getChildren().add(chooseItemsDynamicRef);
+                AnchorPane.setBottomAnchor(chooseItemsDynamicRef, 0.0);
+                AnchorPane.setLeftAnchor(chooseItemsDynamicRef, 0.0);
+                AnchorPane.setRightAnchor(chooseItemsDynamicRef, 0.0);
+                AnchorPane.setTopAnchor(chooseItemsDynamicRef, 0.0);
+
                 accordian.setExpandedPane(chooseItemsTitledPane);
                 currentNode = chooseItemsDynamicRef;
                 return;

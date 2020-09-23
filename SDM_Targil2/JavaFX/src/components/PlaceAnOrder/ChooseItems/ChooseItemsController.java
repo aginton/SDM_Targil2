@@ -314,7 +314,6 @@ public class ChooseItemsController implements Initializable{
             subtotal += (v.getItemAmount()*v.getPrice());
             setCartSubtotal(subtotal);
 
-
             StoreItem item = v.getStoreItem();
 
             System.out.println("Adding itemId=" + item.getItemId() + ", itemAmount=" + v.getItemAmount());
@@ -401,9 +400,6 @@ public class ChooseItemsController implements Initializable{
         mapItemWrappersToAddToCart.clear();
     }
 
-
-//    public Cart getDummyCart() {
-//    }
 
 
     public class ItemWrapper {

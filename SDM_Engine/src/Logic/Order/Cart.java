@@ -7,18 +7,14 @@ import javafx.beans.property.SimpleDoubleProperty;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Observable;
-import java.util.Set;
+import java.util.*;
 
 public class Cart {
 
     private HashMap<Integer,CartItem> cart;
     private HashMap<Integer,CartItem> discountCart;
     private DoubleProperty cartTotalPrice;
-//    private float cartTotalPrice = 0;
+
 
     public Cart() {
         this.cart = new HashMap<Integer,CartItem>();
@@ -55,19 +51,17 @@ public class Cart {
     }
 
 
-    //TODO: Should change data structure from map of items to set of items
     public void add(CartItem cartItem) {
         int id = cartItem.getItemId();
         double cartOldTotal = getCartTotalPrice();
-        double amountToAdd = cartItem.getPrice()*cartItem.getItemAmount();
-        setCartTotalPrice(cartOldTotal+amountToAdd);
+        double addToCartTotal = cartItem.getPrice()*cartItem.getItemAmount();
+        setCartTotalPrice(cartOldTotal+addToCartTotal);
 
         if (cartItem.isIsOnSale()){
             if (discountCart.containsKey(id)) {
                 CartItem existingItem = discountCart.get(id);
                 double amountInCart = existingItem.getItemAmount();
                 existingItem.setItemAmount(amountInCart + cartItem.getItemAmount());
-
                 return;
             }
             discountCart.put(id, cartItem);
@@ -80,7 +74,36 @@ public class Cart {
             }
             cart.put(id, cartItem);
         }
+
+        System.out.println("At end of addOperation:");
+        System.out.println("\tHashMap<Integer,CartItem> cart=" + cart);
+        System.out.println("\tHashMap<Integer,CartItem> discountCart=" + discountCart);
     }
+
+    private CartItem getCartItemFromCart(CartItem cartItem) {
+        CartItem res = null;
+
+        if (!cartItem.isIsOnSale()) {
+            for (CartItem item : cart.values()) {
+                if (item.getItemId() == cartItem.getItemId() && item.getItemName().equals(cartItem.getItemName())) {
+                    res = item;
+                    break;
+                }
+            }
+        }
+        else if (cartItem.isIsOnSale()) {
+            for (CartItem item : cart.values()) {
+                if (item.getItemId() == cartItem.getItemId() && item.getItemName().equals(cartItem.getItemName())
+                        && item.getDiscountName().equals(cartItem.getDiscountName())) {
+                    res = item;
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+
+
 
     public HashMap<Integer, CartItem> getDiscountCart() {
         return discountCart;
@@ -150,4 +173,12 @@ public class Cart {
         return sb.toString();
     }
 
+    public void addCartToCart(Cart v) {
+        for (CartItem item: v.getCart().values()){
+            add(item);
+        }
+        for (CartItem item: v.getDiscountCart().values()){
+            add(item);
+        }
+    }
 }

@@ -116,6 +116,9 @@ public class Inventory  {
         }
     }
 
+    public Set<Store> getStoresCarryingItem(InventoryItem item){
+        return mapItemsToStoresWithItem.get(item);
+    }
 
     public List<Integer> getListOfInventoryItemIds(){
         return listInventoryItems.stream().map(item-> item.getItemId()).collect(Collectors.toList());

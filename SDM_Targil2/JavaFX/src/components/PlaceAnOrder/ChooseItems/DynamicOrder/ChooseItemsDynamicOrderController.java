@@ -1,17 +1,19 @@
 package components.PlaceAnOrder.ChooseItems.DynamicOrder;
 
+import Logic.Inventory.Inventory;
 import Logic.Inventory.InventoryItem;
 import Logic.Inventory.ePurchaseCategory;
 import Logic.Order.Cart;
+import Logic.Order.CartItem;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
 import Utilities.MyDoubleStringConverter;
-import components.ViewInfo.ViewOrders.SingleOrder.SingleOrderViewController;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +28,7 @@ import javafx.scene.layout.FlowPane;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -74,16 +77,23 @@ public class ChooseItemsDynamicOrderController implements Initializable {
     @FXML
     private FlowPane flowpane;
 
+
+    private Inventory inventory = SDMManager.getInstance().getInventory();
     private HashMap<InventoryItem, Double> mapItemsChosenToAmount;
     private ObservableList<InventoryItemWrapper> itemWrappers;
+    private ObservableMap<Store, List<CartItem>> mapStoreToCartItems;
     private Cart cart;
     private Set<Store> storesBoughtFrom;
+    private HashMap<Store,Cart> mapStoreToCart;
+
+    private DoubleProperty cartsSubtotal;
 
     public ChooseItemsDynamicOrderController(){
         mapItemsChosenToAmount = new HashMap<>();
+        mapStoreToCart = new HashMap<>();
+        mapStoreToCartItems=FXCollections.observableHashMap();
         itemWrappers = FXCollections.observableArrayList();
-
-
+        cartsSubtotal = new SimpleDoubleProperty(0);
         SDMManager.getInstance().getInventory().getListInventoryItems().forEach(item->{
             itemWrappers.add(new InventoryItemWrapper(item));
         });
@@ -92,6 +102,7 @@ public class ChooseItemsDynamicOrderController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        cartSubtotalLabel.textProperty().bind(cartsSubtotal.asString("%.2f"));
         itemIdColumn.setCellValueFactory(new PropertyValueFactory<InventoryItemWrapper,Integer>("ItemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<InventoryItemWrapper,String>("ItemName"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<InventoryItemWrapper, ObjectProperty<ePurchaseCategory>>("PurchaseCategory"));
@@ -105,32 +116,66 @@ public class ChooseItemsDynamicOrderController implements Initializable {
 
     @FXML
     void addToCartAction(ActionEvent event) {
-        cart = SDMManager.getInstance().findCheapestCartForUser(mapItemsChosenToAmount);
-        storesBoughtFrom = cart.getStoresBoughtFrom();
+        HashMap<InventoryItem, Double> dummyMap = new HashMap<>();
+        for (InventoryItemWrapper wrapper: itemsTableView.getItems()){
+            if (wrapper.getAmount()>0){
+                InventoryItem item = inventory.getInventoryItemById(wrapper.getItemId());
+                dummyMap.put(item, wrapper.getAmount());
+            }
+        }
+
+        //cart = SDMManager.getInstance().findCheapestCartForUser(mapItemsChosenToAmount);
+        HashMap<Store,Cart> dummyMapStoreToCart = SDMManager.getInstance().findCheapestStoresForItems(dummyMap);
+        dummyMapStoreToCart.forEach((k,v)->{
+            if (mapStoreToCart.get(k)==null){
+                mapStoreToCart.put(k,v);
+            } else{
+                mapStoreToCart.get(k).addCartToCart(v);
+            }
+        });
+
         updateFlowPane();
+        resetCells();
+        //storesBoughtFrom = cart.getStoresBoughtFrom();
+    }
+
+    private void resetCells() {
+        for (InventoryItemWrapper wrapper: itemWrappers){
+            wrapper.setAmount(0);
+        }
     }
 
     private void updateFlowPane() {
-        HashMap<Store,Cart> mapCartsToStore = new HashMap<>();
-        storesBoughtFrom.forEach(s->{
-            mapCartsToStore.put(s,new Cart());
-        });
+        flowpane.getChildren().clear();
+        setCartsSubtotal(0);
 
-        cart.getCart().forEach((k,v)->{
-            mapCartsToStore.get(v.getStoreBoughtFrom()).add(v);
-        });
-
-        mapCartsToStore.forEach((k,v)->{
+        mapStoreToCart.forEach((k,v)->{
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/PlaceAnOrder/ChooseItems/DynamicOrder/DynamicSubOrder.fxml"));
                 Node n = loader.load();
                 DynamicSubOrderController controller = loader.getController();
-                controller.setData(v);
+                controller.setData(k,v);
                 flowpane.getChildren().add(n);
+                double oldTotal = cartsSubtotal.getValue();
+                oldTotal+= v.getCartTotalPrice();
+                setCartsSubtotal(oldTotal);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
+    }
+
+    public double getCartsSubtotal() {
+        return cartsSubtotal.get();
+    }
+
+    public DoubleProperty cartsSubtotalProperty() {
+        return cartsSubtotal;
+    }
+
+    public void setCartsSubtotal(double cartsSubtotal) {
+        this.cartsSubtotal.set(cartsSubtotal);
     }
 
     private void setUpAmountColumn() {
@@ -178,13 +223,13 @@ public class ChooseItemsDynamicOrderController implements Initializable {
     }
 
     private void removeSelectedItemIfNecessary(InventoryItemWrapper selectedItem) {
-        if (mapItemsChosenToAmount.containsKey((InventoryItem)selectedItem)){
-            mapItemsChosenToAmount.remove((InventoryItem)selectedItem);
+        if (mapItemsChosenToAmount.containsKey(inventory.getInventoryItemById(selectedItem.getItemId()))){
+            mapItemsChosenToAmount.remove(inventory.getInventoryItemById(selectedItem.getItemId()));
         }
     }
 
     private void addItemToMap(InventoryItemWrapper selectedItem) {
-        InventoryItem item = SDMManager.getInstance().getInventory().getInventoryItemById(selectedItem.getItemId());
+        InventoryItem item = inventory.getInventoryItemById(selectedItem.getItemId());
         if (mapItemsChosenToAmount.containsKey(item)){
             double amount = mapItemsChosenToAmount.get(item);
             amount += selectedItem.getAmount();
@@ -219,7 +264,9 @@ public class ChooseItemsDynamicOrderController implements Initializable {
                             InventoryItemWrapper selectedItem = this.getTableView().getItems().get(rowIndex);
                             double oldAmount = selectedItem.getAmount();
                             selectedItem.setAmount(oldAmount+1);
-                            addItemToMap(selectedItem);
+                            //InventoryItem inventoryItem = inventory.getInventoryItemById(selectedItem.getItemId());
+                            //mapItemsChosenToAmount.put(inventoryItem,selectedItem.getAmount());
+                            //addItemToMap(selectedItem);
                         });
                         this.setGraphic(addButton);
                     }
@@ -287,8 +334,8 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         itemsTableView.edit(focusedCell.getRow(), focusedCell.getTableColumn());
     }
 
-    public Cart getCart() {
-        return cart;
+    public HashMap<Store, Cart> getMapStoresToCarts() {
+        return mapStoreToCart;
     }
 
     public Set<Store> getStoresBoughtFrom() {

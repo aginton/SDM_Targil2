@@ -54,8 +54,7 @@ public class DynamicSubOrderController implements Initializable {
     private Label cartSubtotalLabel;
 
 
-    public void setData(Cart cart){
-        Store store = cart.getCart().entrySet().iterator().next().getValue().getStoreBoughtFrom();
+    public void setData(Store store, Cart cart){
         storeIDValueLabel.setText(String.valueOf(store.getStoreId()));
         storeNameValueLabel.setText(store.getStoreName());
         storeLocationValueLabel.setText(String.valueOf(store.getLocation()));

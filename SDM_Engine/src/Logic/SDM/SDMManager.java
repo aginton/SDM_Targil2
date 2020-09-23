@@ -240,4 +240,41 @@ public class SDMManager extends SDMFileVerifier{
         inventory.updateAvePrice();
     }
 
+    public HashMap<Store, Cart> findCheapestStoresForItems(HashMap<InventoryItem, Double> mapItemsChosenToAmount) {
+        HashMap<Store,Cart> res = new HashMap<>();
+
+        mapItemsChosenToAmount.forEach((k,v)->{
+            Store cheapestStore = findCheapestCarryingStore(k);
+            int price = cheapestStore.getNormalPriceForItem(k);
+            Cart cart = res.get(cheapestStore);
+
+            //if cart==null, store hasn't yet been added to res
+            if (cart==null){
+                cart = new Cart();
+                cart.add(new CartItem(k,v,price,cheapestStore));
+                res.put(cheapestStore,cart);
+            } else{
+                res.get(cheapestStore).add(new CartItem(k,v,price, cheapestStore));
+            }
+        });
+    return res;
+    }
+
+    private Store findCheapestCarryingStore(InventoryItem k) {
+        Store res = null;
+        int currentMin=Integer.MAX_VALUE;
+        int cur;
+        for (Store store: inventory.getStoresCarryingItem(k)){
+            if (res == null){
+                res = store;
+                currentMin = store.getNormalPriceForItem(k);
+            } else{
+                if ((cur=store.getNormalPriceForItem(k))< currentMin){
+                    res = store;
+                    currentMin= cur;
+                }
+            }
+        }
+    return res;
+    }
 }
