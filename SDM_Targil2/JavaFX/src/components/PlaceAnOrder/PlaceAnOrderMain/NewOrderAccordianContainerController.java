@@ -335,9 +335,9 @@ public class NewOrderAccordianContainerController implements Initializable {
 
         if (currentNode.equals(chooseDiscountsRef)){
             if (orderType == eOrderType.DYNAMIC_ORDER){
-                currentNode = chooseItemsStaticOrderRef;
+                currentNode =chooseItemsDynamicRef ;
             } else{
-                currentNode = chooseItemsDynamicRef;
+                currentNode = chooseItemsStaticOrderRef;
             }
             accordian.setExpandedPane(chooseItemsTitledPane);
             return;

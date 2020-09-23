@@ -5,9 +5,11 @@ import Logic.Order.Order;
 import Logic.Order.OrderId;
 import Logic.Order.StoreItem;
 import Logic.SDM.SDMManager;
+import Logic.Store.DiscountOffer;
 import Logic.Store.Store;
 import Logic.Store.StoreChangeListener;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -90,16 +92,16 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
     private TableColumn<Order, ObjectProperty<OrderId>> orderIDColumn;
 
     @FXML
-    private TableColumn<Order, Integer> numItemsInCartColumn;
+    private TableColumn<Order, String> numItemsInCartColumn;
 
     @FXML
-    private TableColumn<Order, Double> cartSubtotalColumn;
+    private TableColumn<Order, String> cartSubtotalColumn;
 
     @FXML
     private TableColumn<Order, Float> deliveryFeeColumn;
 
     @FXML
-    private TableColumn<Order, Double> orderTotalColumn;
+    private TableColumn<Order, String> orderTotalColumn;
 
     @FXML
     private ListView<Store> listview;
@@ -163,10 +165,26 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
 
         orderIDColumn.setCellValueFactory(new PropertyValueFactory<Order,ObjectProperty<OrderId>>("orderId"));
         orderDateColumn.setCellValueFactory(new PropertyValueFactory<Order,LocalDate>("orderDate"));
-        orderTotalColumn.setCellValueFactory(new PropertyValueFactory<Order, Double>("OrderTotalCost"));
         deliveryFeeColumn.setCellValueFactory(new PropertyValueFactory<Order,Float>("DeliveryCost"));
-        numItemsInCartColumn.setCellValueFactory(new PropertyValueFactory<Order,Integer>("numberItemsByType"));
-        cartSubtotalColumn.setCellValueFactory(new PropertyValueFactory<Order,Double>("CartTotal"));
+
+        numItemsInCartColumn.setCellValueFactory(cellData->{
+            Order order = cellData.getValue();
+            String res = String.valueOf(order.getCartForThisOrder().getNumberOfTypesOfItemsInCart());
+            return new ReadOnlyStringWrapper(res);
+        });
+
+
+        cartSubtotalColumn.setCellValueFactory(cellData->{
+            Order order = cellData.getValue();
+            String res = String.valueOf(order.getCartTotal());
+            return new ReadOnlyStringWrapper(res);
+        });
+
+        orderTotalColumn.setCellValueFactory(cellData->{
+            Order order = cellData.getValue();
+            String res = String.valueOf(order.getCartTotal()+order.getDeliveryCost());
+            return new ReadOnlyStringWrapper(res);
+        });
     }
 
     private void updateBasicStoreInfo(Store newValue) {
@@ -181,9 +199,11 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
     public void storeWasChanged(Store store) {
         System.out.println("Store " + store.getStoreName() + " was changed!");
         if (selectedStore == store){
+            storeOrders = FXCollections.observableArrayList(selectedStore.getStoreOrders());
+            storeOrdersTableView.getItems().clear();
+            storeOrdersTableView.setItems(storeOrders);
             updateBasicStoreInfo(selectedStore);
             storeInventoryTableView.refresh();
-            storeOrdersTableView.refresh();
         }
     }
 }
