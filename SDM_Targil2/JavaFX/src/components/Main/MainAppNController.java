@@ -157,7 +157,7 @@ public class MainAppNController {
             System.out.println("Going to try and store ref to orderMenu.fxml");
 
             FXMLLoader newOrderLoader = new FXMLLoader();
-            newOrderLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderAccordianContainer.fxml"));
+            newOrderLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderContainer.fxml"));
             orderMenuRef = newOrderLoader.load();
 
             FXMLLoader updateLoader = new FXMLLoader();

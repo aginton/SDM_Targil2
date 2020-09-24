@@ -190,4 +190,7 @@ public class ConfirmOrderController implements Initializable {
     }
 
 
+    public void resetFields() {
+
+    }
 }

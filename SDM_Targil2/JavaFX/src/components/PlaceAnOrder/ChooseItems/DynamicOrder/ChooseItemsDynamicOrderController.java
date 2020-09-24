@@ -396,6 +396,13 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         this.deliveryFeeTotal.set(deliveryFeeTotal);
     }
 
+    public void resetFields() {
+        mapItemsChosenToAmount.clear();
+        mapStoreToCartItems.clear();
+        mapStoreToCart.clear();
+        cartsSubtotal.setValue(0);
+    }
+
     public class InventoryItemWrapper extends InventoryItem{
         private DoubleProperty amount;
 

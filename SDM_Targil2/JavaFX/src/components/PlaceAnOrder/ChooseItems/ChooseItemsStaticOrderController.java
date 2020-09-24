@@ -413,6 +413,7 @@ public class ChooseItemsStaticOrderController implements Initializable{
         itemsTableView.getItems().clear();
         cartItems = FXCollections.observableArrayList();
         mapItemWrappersToAddToCart.clear();
+        cartSubtotal.setValue(0);
     }
 
 

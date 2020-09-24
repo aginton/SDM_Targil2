@@ -175,30 +175,11 @@ public class NewOrderAccordianContainerController implements Initializable {
         AnchorPane.setTopAnchor(basicInfoRef, 0.0);
 
         basicInfoTitledPane.setExpanded(true);
+        setNodeForPane(chooseStoresAnchorPane,chooseStoresRef);
 
-        chooseStoresAnchorPane.getChildren().clear();
-        chooseStoresAnchorPane.getChildren().add(chooseStoresRef);
+        setNodeForPane(chooseDiscountsAnchorPane,chooseDiscountsRef);
 
-        AnchorPane.setBottomAnchor(chooseStoresRef, 0.0);
-        AnchorPane.setLeftAnchor(chooseStoresRef, 0.0);
-        AnchorPane.setRightAnchor(chooseStoresRef, 0.0);
-        AnchorPane.setTopAnchor(chooseStoresRef, 0.0);
-
-        chooseDiscountsAnchorPane.getChildren().clear();
-        chooseDiscountsAnchorPane.getChildren().add(chooseDiscountsRef);
-
-        AnchorPane.setBottomAnchor(chooseDiscountsRef, 0.0);
-        AnchorPane.setLeftAnchor(chooseDiscountsRef, 0.0);
-        AnchorPane.setRightAnchor(chooseDiscountsRef, 0.0);
-        AnchorPane.setTopAnchor(chooseDiscountsRef, 0.0);
-
-        confirmAnchorPane.getChildren().clear();
-        confirmAnchorPane.getChildren().add(confirmOrderRef);
-
-        AnchorPane.setBottomAnchor(confirmOrderRef, 0.0);
-        AnchorPane.setLeftAnchor(confirmOrderRef, 0.0);
-        AnchorPane.setRightAnchor(confirmOrderRef, 0.0);
-        AnchorPane.setTopAnchor(confirmOrderRef, 0.0);
+        setNodeForPane(confirmAnchorPane,confirmOrderRef);
 
     }
 
@@ -297,24 +278,24 @@ public class NewOrderAccordianContainerController implements Initializable {
     private void openNextTitledPane() {
 
         if (currentNode.equals(basicInfoRef)){
+            basicInfoTitledPane.setCollapsible(true);
             backButton.setDisable(false);
             if (orderType == eOrderType.STATIC_ORDER) {
+
                 chooseStoreController.setCustomer(customer);
 
                 accordian.setExpandedPane(chooseStoresTitledPane);
                 currentNode = chooseStoresRef;
+                basicInfoTitledPane.setCollapsible(false);
                 return;
             }
 
             if (orderType == eOrderType.DYNAMIC_ORDER) {
                 chooseItemsStaticOrderController.setDataForDynamicOrder();
-                chooseItemsAnchorPane.getChildren().clear();
-                chooseItemsAnchorPane.getChildren().add(chooseItemsDynamicRef);
+
+                setNodeForPane(chooseItemsAnchorPane, chooseItemsDynamicRef);
                 chooseItemsDynamicController.bindCustomer(this.customerObjectProperty);
-                AnchorPane.setBottomAnchor(chooseItemsDynamicRef, 0.0);
-                AnchorPane.setLeftAnchor(chooseItemsDynamicRef, 0.0);
-                AnchorPane.setRightAnchor(chooseItemsDynamicRef, 0.0);
-                AnchorPane.setTopAnchor(chooseItemsDynamicRef, 0.0);
+
 
                 accordian.setExpandedPane(chooseItemsTitledPane);
                 currentNode = chooseItemsDynamicRef;
@@ -379,6 +360,15 @@ public class NewOrderAccordianContainerController implements Initializable {
             System.out.println("Do something on confirm order...");
             return;
         }
+    }
+
+    private void setNodeForPane(AnchorPane anchorPane, Node node) {
+        anchorPane.getChildren().clear();
+        anchorPane.getChildren().add(node);
+        AnchorPane.setBottomAnchor(node, 0.0);
+        AnchorPane.setLeftAnchor(chooseItemsDynamicRef, 0.0);
+        AnchorPane.setRightAnchor(chooseItemsDynamicRef, 0.0);
+        AnchorPane.setTopAnchor(chooseItemsDynamicRef, 0.0);
     }
 
     @FXML
@@ -484,6 +474,11 @@ public class NewOrderAccordianContainerController implements Initializable {
         orderDate = null;
         customer = null;
         currentCart = null;
+        if (orderType == eOrderType.DYNAMIC_ORDER)
+            chooseItemsDynamicController.resetFields();
+        else
+            chooseItemsStaticOrderController.resetFields();
+        confirmOrderController.resetFields();
     }
 
 
