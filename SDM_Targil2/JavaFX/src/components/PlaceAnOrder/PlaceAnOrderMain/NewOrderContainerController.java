@@ -13,9 +13,7 @@ import components.PlaceAnOrder.ChooseItems.ChooseItemsStaticOrderController;
 import components.PlaceAnOrder.ChooseItems.DynamicOrder.ChooseItemsDynamicOrderController;
 import components.PlaceAnOrder.ChooseStores.ChooseStoreController;
 import components.PlaceAnOrder.ConfirmOrder.ConfirmOrderController;
-import javafx.beans.property.FloatProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -78,6 +76,7 @@ public class NewOrderContainerController implements Initializable {
         setOfStores = new HashSet<>();
         customerObjectProperty = new SimpleObjectProperty<>();
         dateObjectProperty = new SimpleObjectProperty<>();
+        mapStoresToCarts = new HashMap<>();
 
         try {
             //1. choose basic info (customer, order type, date)
@@ -148,9 +147,9 @@ public class NewOrderContainerController implements Initializable {
         newOrderCurrentStep.getChildren().clear();
         newOrderCurrentStep.getChildren().add(node);
         AnchorPane.setBottomAnchor(node, 0.0);
-        AnchorPane.setLeftAnchor(chooseItemsDynamicRef, 0.0);
-        AnchorPane.setRightAnchor(chooseItemsDynamicRef, 0.0);
-        AnchorPane.setTopAnchor(chooseItemsDynamicRef, 0.0);
+        AnchorPane.setLeftAnchor(node, 0.0);
+        AnchorPane.setRightAnchor(node, 0.0);
+        AnchorPane.setTopAnchor(node, 0.0);
     }
 
     @FXML
@@ -159,21 +158,26 @@ public class NewOrderContainerController implements Initializable {
             confirmButton.setDisable(true);
             nextButton.setDisable(false);
             currentNode = basicInfoRef;
+            titleLabel.setText("Choose Discounts");
             setNodeForPane(chooseDiscountsRef);
             return;
         }
 
         if (currentNode.equals(chooseDiscountsRef)){
+            titleLabel.setText("Choose Items");
             if (orderType == eOrderType.DYNAMIC_ORDER){
                 currentNode =chooseItemsDynamicRef;
-            } else{
+                setNodeForPane(chooseItemsDynamicRef);
+                return;
+            } else if (orderType == eOrderType.STATIC_ORDER){
                 currentNode = chooseItemsStaticOrderRef;
+                setNodeForPane(chooseItemsStaticOrderRef);
+                return;
             }
-            setNodeForPane(currentNode);
-            return;
         }
 
         if (currentNode.equals(chooseItemsStaticOrderRef)){
+            titleLabel.setText("Choose Store");
             currentNode = chooseStoresRef;
             setNodeForPane(chooseStoresRef);
             return;
@@ -181,6 +185,7 @@ public class NewOrderContainerController implements Initializable {
         if (currentNode.equals(chooseItemsDynamicRef)){
             backButton.setDisable(true);
             currentNode = basicInfoRef;
+            titleLabel.setText("Basic Info");
             setNodeForPane(basicInfoRef);
             return;
         }
@@ -188,6 +193,7 @@ public class NewOrderContainerController implements Initializable {
         if (currentNode.equals(chooseStoresRef)){
             backButton.setDisable(true);
             currentNode = basicInfoRef;
+            titleLabel.setText("Basic Info");
             setNodeForPane(basicInfoRef);
             return;
         }
@@ -210,13 +216,13 @@ public class NewOrderContainerController implements Initializable {
             sb.append(", ");
         }
 
-
-        System.out.printf("Order details: " +
-                "\n\tCustomer: %s" +
-                "\n\tDate: %s" +
-                "\n\torderType: $%s" +
-                "\n\tStore: " +
-                "\n\tCart: %s", customer.getCustomerName(),dateStr, orderType, sb.toString(), currentCart);
+//
+//        System.out.printf("Order details: " +
+//                "\n\tCustomer: %s" +
+//                "\n\tDate: %s" +
+//                "\n\torderType: $%s" +
+//                "\n\tStore: " +
+//                "\n\tCart: %s", customer.getCustomerName(),dateStr, orderType, sb.toString(), currentCart);
 
         Order order = new Order(customer.getLocation(),
                 date,
@@ -230,6 +236,10 @@ public class NewOrderContainerController implements Initializable {
 
         if (orderType==eOrderType.DYNAMIC_ORDER)
             SDMManager.getInstance().addNewDynamicOrder(mapStoresToCarts.keySet(), order);
+
+
+        resetInfo();
+
         try {
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("/components/PlaceAnOrder/SuccessOrError/SuccessPopUp.fxml"));
@@ -242,17 +252,37 @@ public class NewOrderContainerController implements Initializable {
             confirmButton.setDisable(true);
             confirmButton.setVisible(false);
             currentNode = basicInfoRef;
-            chooseItemsStaticOrderController.resetFields();
+
+
+            titleLabel.setText("Basic Info");
             setNodeForPane(basicInfoRef);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private void resetInfo() {
+        if (orderType == eOrderType.STATIC_ORDER){
+            chooseStoreController.resetAllFields();
+            chooseItemsStaticOrderController.resetFields();
+        } else{
+            chooseItemsDynamicController.resetFields();
+        }
+        chooseDiscountsController.resetFields();
+
+        customer = null;
+        orderDate = null;
+        mapStoresToCarts.clear();
+        deliveryFee = 0;
+        selectedStore = null;
+
+    }
+
     @FXML
     void onNextButtonAction(ActionEvent event) {
-        getInformationFromCurrentPage();
+
         if (checkIfCanContinue()){
+            getInformationFromCurrentPage();
             openNextTitledPane();
         }
     }
@@ -272,8 +302,9 @@ public class NewOrderContainerController implements Initializable {
         }
 
         if (currentNode.equals(chooseItemsStaticOrderRef)){
-            this.currentCart = chooseItemsStaticOrderController.getDummyCart();
-            System.out.println("chooseItemsRef returned: {currentCart=" + currentCart +"}");
+            //this.currentCart = chooseItemsStaticOrderController.getDummyCart();
+            mapStoresToCarts.put(selectedStore,chooseItemsStaticOrderController.getDummyCart());
+//            System.out.println("chooseItemsRef returned: {currentCart=" + currentCart +"}");
         }
 
         if (currentNode.equals(chooseItemsDynamicRef)){
@@ -298,7 +329,8 @@ public class NewOrderContainerController implements Initializable {
             if (orderType == eOrderType.STATIC_ORDER){
                 HashMap<Integer, CartItem> discountItemsToAddToCart = chooseDiscountsController.getMapIdsToDiscountCartItems();
                 discountItemsToAddToCart.forEach((k,v)->{
-                    currentCart.add(v);
+//                    currentCart.add(v);
+                    mapStoresToCarts.get(selectedStore).add(v);
                 });
             }
             if (orderType == eOrderType.DYNAMIC_ORDER){
@@ -315,25 +347,25 @@ public class NewOrderContainerController implements Initializable {
 
     private boolean checkIfCanContinue() {
         if (currentNode.equals(basicInfoRef)){
-            if (orderDate==null){
+            if (basicInfoController.getDateObjectProperty()==null){
                 System.out.println("You must supply an Order date!");
                 return false;
             }
         }
         if (currentNode.equals(chooseStoresRef) && orderType == eOrderType.STATIC_ORDER){
-            if (selectedStore==null){
+            if (chooseStoreController.getSelectedStore() == null){
                 System.out.println("You must select a store!");
                 return false;
             }
         }
         if (currentNode.equals(chooseItemsDynamicRef) && orderType == eOrderType.DYNAMIC_ORDER){
-            if (mapStoresToCarts.values().size() == 0){
+            if (chooseItemsDynamicController.getMapStoresToCarts().size() == 0){
                 System.out.println("Did you order anything?");
                 return false;
             }
         }
         if (currentNode.equals(chooseItemsStaticOrderRef)){
-            if (currentCart.getCart().size()==0){
+            if (chooseItemsStaticOrderController.getDummyCart().getCart().size()==0){
                 System.out.println("Cart can't be empty!");
                 return false;
             }
@@ -348,13 +380,17 @@ public class NewOrderContainerController implements Initializable {
             if (orderType == eOrderType.STATIC_ORDER) {
                 chooseStoreController.setCustomer(customer);
                 currentNode = chooseStoresRef;
-                setNodeForPane(chooseItemsStaticOrderRef);
+                titleLabel.setText("Choose Store");
+                setNodeForPane(chooseStoresRef);
                 return;
             }
 
             if (orderType == eOrderType.DYNAMIC_ORDER) {
-                chooseItemsStaticOrderController.setDataForDynamicOrder();
+                chooseItemsDynamicController.setCustomer(customer);
+
+
                 currentNode = chooseItemsDynamicRef;
+                titleLabel.setText("Choose Items - Dynamic Order");
                 setNodeForPane(chooseItemsDynamicRef);
                 return;
             }
@@ -371,9 +407,13 @@ public class NewOrderContainerController implements Initializable {
 
         if (currentNode.equals(chooseItemsStaticOrderRef)){
             if (orderType == eOrderType.STATIC_ORDER){
-                chooseDiscountsController.fillViewsBasedOnStoreAndCart(selectedStore, currentCart);
+//                chooseDiscountsController.fillViewsBasedOnStoreAndCart(selectedStore, currentCart);
+                chooseDiscountsController.fillViewsBasedOnStoreAndCart(selectedStore, mapStoresToCarts.get(selectedStore));
                 chooseDiscountsController.fillCustomerLabels(customer);
-                chooseDiscountsController.fillOrderLabels(currentCart.getCartTotalPrice(), deliveryFee);
+//                chooseDiscountsController.fillOrderLabels(currentCart.getCartTotalPrice(), deliveryFee);
+                chooseDiscountsController.fillOrderLabels(mapStoresToCarts.get(selectedStore).getCartTotalPrice(), deliveryFee);
+
+                titleLabel.setText("Choose Discounts");
                 setNodeForPane(chooseDiscountsRef);
                 currentNode = chooseDiscountsRef;
                 return;
@@ -382,24 +422,20 @@ public class NewOrderContainerController implements Initializable {
         if (currentNode.equals(chooseItemsDynamicRef)){
             chooseDiscountsController.fillViewsBasedOnDynamicOrder(mapStoresToCarts);
             currentNode = chooseDiscountsRef;
+            titleLabel.setText("Choose Discounts");
             setNodeForPane(chooseDiscountsRef);
             return;
         }
 
         if (currentNode.equals(chooseDiscountsRef)){
-            if (orderType == eOrderType.STATIC_ORDER){
-//                confirmOrderController.fillViewsForData(customer,orderDate, orderType,setOfStores,currentCart,deliveryFee);
-                confirmOrderController.fillViewsForData(customer,orderDate, orderType,selectedStore,currentCart,deliveryFee);
 
-            }
-            if (orderType == eOrderType.DYNAMIC_ORDER){
-                confirmOrderController.fillViewsForDynamicData(customer, orderDate, mapStoresToCarts, deliveryFee);
-            }
+            confirmOrderController.fillViews(customer, mapStoresToCarts);
             currentNode = confirmOrderRef;
             nextButton.setDisable(true);
             confirmButton.setVisible(true);
             confirmButton.setDisable(false);
             setNodeForPane(confirmOrderRef);
+            titleLabel.setText("Confirm");
             return;
         }
     }

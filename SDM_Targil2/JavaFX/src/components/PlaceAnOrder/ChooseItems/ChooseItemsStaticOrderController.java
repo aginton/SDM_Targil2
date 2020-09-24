@@ -90,16 +90,13 @@ public class ChooseItemsStaticOrderController implements Initializable{
     private TableColumn<CartItem, Double> cartItemCostCol;
 
     private Store store;
-    private Cart dummyCart;
-    Set<Store> storeOfThisOrder = new HashSet<Store>();
     private ObservableList<ItemWrapper> storeItems;
-    private ChangeListener<ItemWrapper> storeItemChangeListener;
     private DoubleProperty selectedItemAmountProperty;
     private HashMap<Integer, ItemWrapper> mapItemWrappersToAddToCart;
     private ObservableList<CartItem> cartItems;
 
-    private ObjectProperty<Customer> customerObjectProperty;
 
+    private ObjectProperty<Customer> customerObjectProperty;
     private DoubleProperty cartSubtotal;
     private FloatProperty deliveryFeeProperty;
     private DoubleProperty totalCost;
@@ -107,7 +104,6 @@ public class ChooseItemsStaticOrderController implements Initializable{
 
 
     public ChooseItemsStaticOrderController(){
-        dummyCart=new Cart();
         mapItemWrappersToAddToCart = new HashMap<>();
         storeItems = FXCollections.observableArrayList();
         cartItems = FXCollections.observableArrayList();
@@ -127,6 +123,16 @@ public class ChooseItemsStaticOrderController implements Initializable{
         deliveryFeeLabel.textProperty().bind(deliveryFeeProperty.asString());
         totalCostLabel.textProperty().bind(totalCost.asString("%.2f"));
         cartSubtotalLabel.textProperty().bind(cartSubtotal.asString("%.2f"));
+        setUpTableColumns();
+
+        customerObjectProperty.addListener(((observable, oldValue, newValue) -> {
+            System.out.println("ChooseItemsController customer change listener called!");
+            if (newValue!=null)
+                setDeliveryFeeProperty(store.getDeliveryCost(newValue.getLocation()));
+        }));
+    }
+
+    public void setUpTableColumns(){
 
         itemIdColumn.setCellValueFactory(new PropertyValueFactory<ItemWrapper,Integer>("ItemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<ItemWrapper,String>("ItemName"));
@@ -145,12 +151,6 @@ public class ChooseItemsStaticOrderController implements Initializable{
         setUpAddButtonColumn();
         setUpRemoveButtonColumn();
         setTableEditable();
-
-        customerObjectProperty.addListener(((observable, oldValue, newValue) -> {
-            System.out.println("ChooseItemsController customer change listener called!");
-            if (newValue!=null)
-                setDeliveryFeeProperty(store.getDeliveryCost(newValue.getLocation()));
-        }));
     }
 
     private void setUpAddButtonColumn() {
@@ -266,14 +266,6 @@ public class ChooseItemsStaticOrderController implements Initializable{
     }
 
 
-    public void emptyDummyCart(){
-        for (ItemWrapper item: mapItemWrappersToAddToCart.values()){
-            item.setItemAmount(0);
-            mapItemWrappersToAddToCart.remove(item.getStoreItem().getItemId());
-        }
-    }
-
-
     private void setTableEditable() {
         itemsTableView.setEditable(true);
 
@@ -354,10 +346,7 @@ public class ChooseItemsStaticOrderController implements Initializable{
     }
 
 
-    public void setDataForDynamicOrder() {
 
-
-    }
 
     public void setDataForStaticOrder(Store selectedStore) {
         if (this.store != selectedStore){
@@ -407,13 +396,22 @@ public class ChooseItemsStaticOrderController implements Initializable{
     }
 
 
-
     public void resetFields(){
+        store = null;
+        storeItems.clear();
+        mapItemWrappersToAddToCart.clear();
+        cartItems.clear();
         cartTable.getItems().clear();
         itemsTableView.getItems().clear();
-        cartItems = FXCollections.observableArrayList();
-        mapItemWrappersToAddToCart.clear();
+
+
         cartSubtotal.setValue(0);
+        setCartSubtotal(0);
+        setDeliveryFeeValue(0);
+
+        storeItems = FXCollections.observableArrayList();
+        cartItems = FXCollections.observableArrayList();
+        setUpTableColumns();
     }
 
 

@@ -86,7 +86,7 @@ public class ChooseItemsDynamicOrderController implements Initializable {
     private HashMap<Store,Cart> mapStoreToCart;
     private DoubleProperty cartsSubtotal;
     private FloatProperty deliveryFeeTotal;
-    private ObjectProperty<Customer> customerObjectProperty;
+    private Customer customer;
 
     public ChooseItemsDynamicOrderController(){
         mapItemsChosenToAmount = new HashMap<>();
@@ -95,7 +95,6 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         itemWrappers = FXCollections.observableArrayList();
         cartsSubtotal = new SimpleDoubleProperty(0);
         deliveryFeeTotal = new SimpleFloatProperty(0f);
-        customerObjectProperty = new SimpleObjectProperty<>();
         SDMManager.getInstance().getInventory().getListInventoryItems().forEach(item->{
             itemWrappers.add(new InventoryItemWrapper(item));
         });
@@ -117,13 +116,7 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         setTableEditable();
         itemsTableView.setItems(itemWrappers);
 
-        customerObjectProperty.addListener(((observable, oldValue, newValue) -> {
-            System.out.println("ChooseItemsDynamicOrder Customer change listener called!");
-            if (newValue!=null){
-                deliveryFeeLabel.textProperty().bind(deliveryFeeTotal.asString("%.2f"));
-                updateDeliveryFeeTotal();
-            }
-        }));
+
     }
 
     @FXML
@@ -154,32 +147,18 @@ public class ChooseItemsDynamicOrderController implements Initializable {
     private void updateDeliveryFeeTotal() {
         setDeliveryFeeTotal(0);
 
-        if (customerObjectProperty.getValue().getLocation() == null){
+        if (customer == null){
             System.out.println("ChooseItemsDynamicOrder customer is null!");
             return;
         }
-        List<Integer> customerLocation = customerObjectProperty.getValue().getLocation();
+        List<Integer> customerLocation = customer.getLocation();
         mapStoreToCart.keySet().forEach(store -> {
              float total = getDeliveryFeeTotal();
              setDeliveryFeeTotal(store.getDeliveryCost(customerLocation)+total);
         });
     }
 
-    public void bindCustomer(ObjectProperty<Customer> outsideCustomer){
-        this.customerObjectProperty.bind(outsideCustomer);
-    }
 
-    public Customer getCustomerObjectProperty() {
-        return customerObjectProperty.get();
-    }
-
-    public ObjectProperty<Customer> customerObjectPropertyProperty() {
-        return customerObjectProperty;
-    }
-//
-//    public void setCustomerObjectProperty(Customer customerObjectProperty) {
-//        this.customerObjectProperty.set(customerObjectProperty);
-//    }
 
     private void resetCells() {
         for (InventoryItemWrapper wrapper: itemWrappers){
@@ -401,6 +380,10 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         mapStoreToCartItems.clear();
         mapStoreToCart.clear();
         cartsSubtotal.setValue(0);
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public class InventoryItemWrapper extends InventoryItem{

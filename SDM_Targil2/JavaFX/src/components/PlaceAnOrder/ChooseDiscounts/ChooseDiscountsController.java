@@ -446,6 +446,17 @@ public class ChooseDiscountsController implements Initializable {
         this.deliveryFee.set(deliveryFee);
     }
 
+    public void resetFields() {
+        cartItems.clear();
+        cartTable.getItems().clear();
+        setDeliveryFee(0);
+        setSubtotal(0);
+        mapOfMapIdsToDiscountItem.clear();
+        mapIdsToDiscountCartItems.clear();
+        discountsListView.getItems().clear();
+        discountOffersObservableList.clear();
+        discountWrappers.clear();
+    }
 
 
     private class DiscountWrapper {

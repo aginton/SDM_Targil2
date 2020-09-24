@@ -36,6 +36,9 @@ public class ChooseStoreController implements Initializable {
     @FXML
     private Label ppkLabel;
 
+    @FXML
+    private Label selectedStoreLabel;
+
 
     private ObservableList<Store> stores;
     private ChangeListener<Store> storeChangeListener;
@@ -62,13 +65,16 @@ public class ChooseStoreController implements Initializable {
                     selectedStore = newValue;
                     if (customer != null){
                         deliveryFeeLabel.setText(String.valueOf(selectedStore.getDeliveryCost(customer.getLocation())));
+                        selectedStoreLabel.setText(selectedStore.getStoreName());
+                        storeLocationLabel.setText(selectedStore.getLocation().toString());
+                        ppkLabel.setText(String.valueOf(selectedStore.getDeliveryPpk()));
                     }
                 }))
         );
-        chooseStoreCB.getSelectionModel().selectFirst();
+//        chooseStoreCB.getSelectionModel().selectFirst();
 
-        storeLocationLabel.setText(selectedStore.getLocation().toString());
-        ppkLabel.setText(String.valueOf(selectedStore.getDeliveryPpk()));
+
+
 
         customerObjectProperty.addListener(((observable, oldValue, newValue) -> {
             System.out.println("ChooseStoreController customerChangeListener called!");
@@ -88,7 +94,13 @@ public class ChooseStoreController implements Initializable {
         this.customer = customer;
     }
 
-    public void bindCustomer(ObjectProperty<Customer> customerObjectProperty) {
-        customerObjectProperty.bind(customerObjectProperty);
+    public void resetAllFields(){
+        this.customer = null;
+        this.selectedStore = null;
+        selectedStoreLabel.setText("(no store selected)");
+        chooseStoreCB.getSelectionModel().clearSelection();
+
     }
+
+
 }

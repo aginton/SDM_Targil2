@@ -7,6 +7,8 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.PlaceAnOrder.PlaceAnOrderMain.NewOrderContainerController">
@@ -17,21 +19,29 @@
           <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints fillHeight="false" maxHeight="93.0" minHeight="0.0" percentHeight="10.0" prefHeight="0.0" vgrow="NEVER" />
-          <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="200.0" vgrow="ALWAYS" />
-          <RowConstraints maxHeight="147.0" minHeight="10.0" prefHeight="147.0" vgrow="ALWAYS" />
-            <RowConstraints fillHeight="false" maxHeight="71.0" minHeight="6.0" percentHeight="10.0" prefHeight="6.0" vgrow="NEVER" />
+          <RowConstraints maxHeight="93.0" minHeight="0.0" percentHeight="10.0" prefHeight="0.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="ALWAYS" />
+          <RowConstraints minHeight="10.0" prefHeight="147.0" vgrow="ALWAYS" />
+            <RowConstraints minHeight="6.0" percentHeight="10.0" prefHeight="6.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="titleLabel" text="TITLE" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+            <Label fx:id="titleLabel" text="TITLE" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="Arial Black" size="18.0" />
+               </font>
+            </Label>
             <AnchorPane fx:id="newOrderCurrentStep" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <StackPane GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <children>
-                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackButtonAction" text="Back" />
-                  <Button fx:id="nextButton" mnemonicParsing="false" onAction="#onNextButtonAction" text="Next" />
-                  <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirmButtonAction" text="Confirm" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackButtonAction" text="Back" />
+                        <Button fx:id="nextButton" mnemonicParsing="false" onAction="#onNextButtonAction" text="Next" />
+                        <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#onConfirmButtonAction" text="Confirm" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </StackPane>
          </children>
       </GridPane>
    </children>

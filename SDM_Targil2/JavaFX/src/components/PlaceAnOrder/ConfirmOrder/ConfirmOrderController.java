@@ -17,6 +17,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -79,61 +81,49 @@ public class ConfirmOrderController implements Initializable {
     private ObservableMap<Store, ObservableList<CartItem>> mapStoreToCartItems;
     private ObjectProperty<Customer> customerObjectProperty;
     private ObjectProperty<LocalDate> localDateObjectProperty;
-    private FloatProperty deliveryFee;
+    private float deliveryFee;
+    private double cartsSubtotal;
+    private double orderTotal;
 
     public ConfirmOrderController(){
         cartItems = FXCollections.observableArrayList();
         mapStoreToCartItems = FXCollections.observableHashMap();
         customerObjectProperty = new SimpleObjectProperty<>();
         localDateObjectProperty = new SimpleObjectProperty<>();
-        deliveryFee = new SimpleFloatProperty(0);
-    }
-
-    public void bindCustomer(ObjectProperty<Customer> outsideCustomer){
-        this.customerObjectProperty.bind(outsideCustomer);
-    }
-
-    public void bindDate(ObjectProperty<LocalDate> outsideDate){
-        this.localDateObjectProperty.bind(outsideDate);
-    }
-
-    public void bindDeliveryFee(FloatProperty outsideDeliveryFee){
-        this.deliveryFee.bind(outsideDeliveryFee);
     }
 
 
-    public void fillViewsForData(Customer customer, LocalDate date, eOrderType orderType, Set<Store> storeSet, Cart cart, float deliveryFee){
+
+    public void fillViews(Customer customer, HashMap<Store, Cart> mapStoresToCarts) {
         customerNameValueLabel.setText(customer.getCustomerName());
-        orderDateValueLabel.setText(date.toString());
-        if (storeSet.size()==1){
-            storesValueLabel.setText(storeSet.stream().findFirst().get().getStoreName());
+        deliveryFee = 0;
+        cartsSubtotal = 0;
+
+        if (mapStoresToCarts.keySet().size()>1){
+            storesValueLabel.setVisible(false);
+            addStoreColumn();
+            fillCartTableForDynamicOrder(mapStoresToCarts);
+
+            mapStoresToCarts.forEach((store,cart)->{
+                deliveryFee+=store.getDeliveryCost(customer.getLocation());
+                cartsSubtotal+=cart.getCartTotalPrice();
+            });
+
         } else{
-            storesValueLabel.setText("");
+            Store store = mapStoresToCarts.keySet().stream().findFirst().orElse(null);
+            if (store!=null){
+                fillTableViewForCartStaticCart(mapStoresToCarts.get(store));
+                storesValueLabel.setText(store.getStoreName());
+                deliveryFee = store.getDeliveryCost(customer.getLocation());
+                cartsSubtotal = mapStoresToCarts.get(store).getCartTotalPrice();
+            }
         }
-        fillTableViewForCartStaticCart(cart);
-        cartSubtotalValueLabel.setText(String.valueOf(cart.getCartTotalPrice()));
-        deliveryFeeValueLabel.setText(String.valueOf(deliveryFee));
-        totalValueLabel.setText(String.valueOf(cart.getCartTotalPrice()+deliveryFee));
-    }
-
-    public void fillViewsForData(Customer customer, LocalDate date, eOrderType orderType, Store selectedStore, Cart cart, float deliveryFee){
-        customerNameValueLabel.setText(customer.getCustomerName());
-        orderDateValueLabel.setText(date.toString());
-        storesValueLabel.setText(selectedStore.getStoreName());
-
-        fillTableViewForCartStaticCart(cart);
-        cartSubtotalValueLabel.setText(String.valueOf(cart.getCartTotalPrice()));
-        deliveryFeeValueLabel.setText(String.valueOf(deliveryFee));
-        totalValueLabel.setText(String.valueOf(cart.getCartTotalPrice()+deliveryFee));
-    }
-
-    public void fillViewsForDynamicData(Customer customer, LocalDate orderDate, HashMap<Store, Cart> mapStoresToCarts, float deliveryFee) {
-
-        customerNameValueLabel.setText(customer.getCustomerName());
-        orderDateValueLabel.setText(orderDate.toString());
-        storesValueLabel.setText("(Multiple Stores");
-        addStoreColumn();
-        fillCartTableForDynamicOrder(mapStoresToCarts);
+        deliveryFeeValueLabel.setText(String.format(String.valueOf(deliveryFee), "%.2f"));
+        cartSubtotalValueLabel.setText(String.format(String.valueOf(cartsSubtotal), "%.2f"));
+        double total = deliveryFee + cartsSubtotal;
+        BigDecimal bd = new BigDecimal(total).setScale(2, RoundingMode.HALF_UP);
+        double shortedVal = bd.doubleValue();
+        totalValueLabel.setText(String.valueOf(shortedVal));
     }
 
     private void addStoreColumn() {
@@ -175,8 +165,6 @@ public class ConfirmOrderController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
         discountCol.setCellValueFactory(new PropertyValueFactory<CartItem,String>("discountName"));
         itemIdColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Integer>("itemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<CartItem,String>("itemName"));
@@ -191,6 +179,11 @@ public class ConfirmOrderController implements Initializable {
 
 
     public void resetFields() {
-
+        deliveryFee = 0;
+        orderTotal = 0;
+        cartsSubtotal = 0;
+        cartItems.clear();
     }
+
+
 }
