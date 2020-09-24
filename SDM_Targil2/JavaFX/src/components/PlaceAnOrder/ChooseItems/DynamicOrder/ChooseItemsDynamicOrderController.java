@@ -1,5 +1,6 @@
 package components.PlaceAnOrder.ChooseItems.DynamicOrder;
 
+import Logic.Customers.Customer;
 import Logic.Inventory.Inventory;
 import Logic.Inventory.InventoryItem;
 import Logic.Inventory.ePurchaseCategory;
@@ -8,9 +9,7 @@ import Logic.Order.CartItem;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
 import Utilities.MyDoubleStringConverter;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -85,8 +84,9 @@ public class ChooseItemsDynamicOrderController implements Initializable {
     private Cart cart;
     private Set<Store> storesBoughtFrom;
     private HashMap<Store,Cart> mapStoreToCart;
-
     private DoubleProperty cartsSubtotal;
+    private FloatProperty deliveryFeeTotal;
+    private ObjectProperty<Customer> customerObjectProperty;
 
     public ChooseItemsDynamicOrderController(){
         mapItemsChosenToAmount = new HashMap<>();
@@ -94,14 +94,18 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         mapStoreToCartItems=FXCollections.observableHashMap();
         itemWrappers = FXCollections.observableArrayList();
         cartsSubtotal = new SimpleDoubleProperty(0);
+        deliveryFeeTotal = new SimpleFloatProperty(0f);
+        customerObjectProperty = new SimpleObjectProperty<>();
         SDMManager.getInstance().getInventory().getListInventoryItems().forEach(item->{
             itemWrappers.add(new InventoryItemWrapper(item));
         });
+
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        deliveryFeeLabel.setText("???");
         cartSubtotalLabel.textProperty().bind(cartsSubtotal.asString("%.2f"));
         itemIdColumn.setCellValueFactory(new PropertyValueFactory<InventoryItemWrapper,Integer>("ItemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<InventoryItemWrapper,String>("ItemName"));
@@ -112,6 +116,14 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         setUpRemoveButtonColumn();
         setTableEditable();
         itemsTableView.setItems(itemWrappers);
+
+        customerObjectProperty.addListener(((observable, oldValue, newValue) -> {
+            System.out.println("ChooseItemsDynamicOrder Customer change listener called!");
+            if (newValue!=null){
+                deliveryFeeLabel.textProperty().bind(deliveryFeeTotal.asString("%.2f"));
+                updateDeliveryFeeTotal();
+            }
+        }));
     }
 
     @FXML
@@ -134,10 +146,40 @@ public class ChooseItemsDynamicOrderController implements Initializable {
             }
         });
 
+        updateDeliveryFeeTotal();
         updateFlowPane();
         resetCells();
-        //storesBoughtFrom = cart.getStoresBoughtFrom();
     }
+
+    private void updateDeliveryFeeTotal() {
+        setDeliveryFeeTotal(0);
+
+        if (customerObjectProperty.getValue().getLocation() == null){
+            System.out.println("ChooseItemsDynamicOrder customer is null!");
+            return;
+        }
+        List<Integer> customerLocation = customerObjectProperty.getValue().getLocation();
+        mapStoreToCart.keySet().forEach(store -> {
+             float total = getDeliveryFeeTotal();
+             setDeliveryFeeTotal(store.getDeliveryCost(customerLocation)+total);
+        });
+    }
+
+    public void bindCustomer(ObjectProperty<Customer> outsideCustomer){
+        this.customerObjectProperty.bind(outsideCustomer);
+    }
+
+    public Customer getCustomerObjectProperty() {
+        return customerObjectProperty.get();
+    }
+
+    public ObjectProperty<Customer> customerObjectPropertyProperty() {
+        return customerObjectProperty;
+    }
+//
+//    public void setCustomerObjectProperty(Customer customerObjectProperty) {
+//        this.customerObjectProperty.set(customerObjectProperty);
+//    }
 
     private void resetCells() {
         for (InventoryItemWrapper wrapper: itemWrappers){
@@ -342,6 +384,17 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         return storesBoughtFrom;
     }
 
+    public float getDeliveryFeeTotal() {
+        return deliveryFeeTotal.get();
+    }
+
+    public FloatProperty deliveryFeeTotalProperty() {
+        return deliveryFeeTotal;
+    }
+
+    public void setDeliveryFeeTotal(float deliveryFeeTotal) {
+        this.deliveryFeeTotal.set(deliveryFeeTotal);
+    }
 
     public class InventoryItemWrapper extends InventoryItem{
         private DoubleProperty amount;

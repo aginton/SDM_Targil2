@@ -19,24 +19,24 @@ public class CartItem extends InventoryItem {
     Store storeBoughtFrom;
     private BooleanProperty isOnSale = new SimpleBooleanProperty(this, "isOnSale",false);
     private String discountName;
-    private DoubleProperty cost = new SimpleDoubleProperty(this, "cost", 0);
 
-    public CartItem(InventoryItem item, double amount, int price, Store storeBoughtFrom){
+    public CartItem(InventoryItem item, double amount, int price, boolean isOnSale, String discountName, Store storeBoughtFrom){
         super(item);
         setItemAmount(amount);
         this.price = price;
+        setIsOnSale(isOnSale);
+        this.discountName = discountName;
         this.storeBoughtFrom = storeBoughtFrom;
-        this.discountName = "";
-        cost.bind(itemAmountProperty().multiply(price));
     }
 
-    public CartItem(InventoryItem offerItem, double quantity, int forAdditional, boolean isOnSale, String discountName) {
-        super(offerItem);
-        setItemAmount(quantity);
-        this.price = forAdditional;
-        this.discountName = discountName;
-        setIsOnSale(isOnSale);
-        cost.bind(itemAmountProperty().multiply(price));
+
+    public CartItem(InventoryItem item, Double amount, int price, Store store) {
+        super(item);
+        setItemAmount(amount);
+        this.price = price;
+        this.storeBoughtFrom = store;
+        setIsOnSale(false);
+        this.discountName="";
     }
 
 
@@ -149,11 +149,4 @@ public class CartItem extends InventoryItem {
         this.discountName = discountName;
     }
 
-    public double getCost() {
-        return cost.get();
-    }
-
-    public DoubleProperty costProperty() {
-        return cost;
-    }
 }

@@ -6,10 +6,12 @@ import Logic.Order.Cart;
 import Logic.Order.eOrderType;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
-import components.PlaceAnOrder.ChooseItems.ChooseItemsController;
+import components.PlaceAnOrder.ChooseItems.ChooseItemsStaticOrderController;
 import components.PlaceAnOrder.ChooseStores.ChooseStoreController;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -73,8 +75,11 @@ public class OrderBasicInfoController {
 
     private Node staticOrderRef, dynamicOrderRef;
     private ChooseStoreController staticOrderController;
-    private ChooseItemsController chooseItemsController;
+    private ChooseItemsStaticOrderController chooseItemsStaticOrderController;
     private BooleanProperty isOrderComplete;
+
+    private ObjectProperty<Customer> customerObjectProperty;
+    private ObjectProperty<LocalDate> dateObjectProperty;
 
     private Cart currentCart;
     private int dummyVariable = 0;
@@ -82,6 +87,8 @@ public class OrderBasicInfoController {
 
     public OrderBasicInfoController(){
         System.out.println("Inside NewOrderContainerController Constructor...");
+        customerObjectProperty = new SimpleObjectProperty<>();
+        dateObjectProperty = new SimpleObjectProperty<>();
         sdmManager = SDMManager.getInstance();
         customers = FXCollections.observableArrayList(sdmManager.getCustomers().getCustomers());
         storesBoughtFrom = new HashSet<>();
@@ -99,7 +106,7 @@ public class OrderBasicInfoController {
             FXMLLoader chooseItemsLoader = new FXMLLoader();
             chooseItemsLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ChooseItems/ChooseItems.fxml"));
             dynamicOrderRef = chooseItemsLoader.load();
-            chooseItemsController = chooseItemsLoader.getController();
+            chooseItemsStaticOrderController = chooseItemsLoader.getController();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -130,6 +137,7 @@ public class OrderBasicInfoController {
                 customerChangeListener = (((observable, oldValue, newValue) -> {
                     System.out.println("Selected customer is " + newValue);
                     selectedCustomer = newValue;
+                    setCustomerObjectProperty(newValue);
                 }))
         );
         chooseCustomerCB.getSelectionModel().selectFirst();
@@ -138,29 +146,27 @@ public class OrderBasicInfoController {
                 orderDateChangeListener = (((observable, oldValue, newValue) -> {
                     System.out.println("Selected date: " + newValue);
                     orderDate = newValue;
+                    setDateObjectProperty(newValue);
                 }))
         );
+    }
+
+    public Customer getCustomerObjectProperty() {
+        return customerObjectProperty.get();
+    }
+
+    public ObjectProperty<Customer> customerObjectPropertyProperty() {
+        return customerObjectProperty;
+    }
+
+    public void setCustomerObjectProperty(Customer customerObjectProperty) {
+        this.customerObjectProperty.set(customerObjectProperty);
     }
 
     public DatePicker getChooseDateDP() {
         return chooseDateDP;
     }
 
-    @FXML
-    void nextButtonAction(ActionEvent event) {
-
-//        mainPane.getChildren().clear();
-//
-//        if (orderType == eOrderType.STATIC_ORDER){
-//            //staticOrderController.setCurrentOrderData(selectedCustomer, orderType, orderDate);
-//            mainPane.getChildren().add(staticOrderRef);
-//        }
-//
-//        else if (orderType == eOrderType.DYNAMIC_ORDER){
-//            //choosingItemsController.setCurrentOrderData(selectedCustomer, orderType, orderDate);
-//            mainPane.getChildren().add(dynamicOrderRef);
-//        }
-    }
 
     public eOrderType getOrderType() {
         return orderType;
@@ -184,5 +190,19 @@ public class OrderBasicInfoController {
 
     public void setSelectedCustomer(Customer selectedCustomer) {
         this.selectedCustomer = selectedCustomer;
+    }
+
+
+
+    public LocalDate getDateObjectProperty() {
+        return dateObjectProperty.get();
+    }
+
+    public ObjectProperty<LocalDate> dateObjectPropertyProperty() {
+        return dateObjectProperty;
+    }
+
+    public void setDateObjectProperty(LocalDate dateObjectProperty) {
+        this.dateObjectProperty.set(dateObjectProperty);
     }
 }

@@ -4,10 +4,7 @@ package components.PlaceAnOrder.ChooseStores;
 import Logic.Customers.Customer;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,11 +41,13 @@ public class ChooseStoreController implements Initializable {
     private ChangeListener<Store> storeChangeListener;
     private Store selectedStore;
 
+    private ObjectProperty<Customer> customerObjectProperty;
     private Customer customer;
 
 
     public ChooseStoreController(){
         stores = FXCollections.observableArrayList(SDMManager.getInstance().getStores());
+        customerObjectProperty = new SimpleObjectProperty<>();
     }
 
 
@@ -70,6 +69,13 @@ public class ChooseStoreController implements Initializable {
 
         storeLocationLabel.setText(selectedStore.getLocation().toString());
         ppkLabel.setText(String.valueOf(selectedStore.getDeliveryPpk()));
+
+        customerObjectProperty.addListener(((observable, oldValue, newValue) -> {
+            System.out.println("ChooseStoreController customerChangeListener called!");
+            if (newValue != null){
+                deliveryFeeLabel.setText(String.valueOf(selectedStore.getDeliveryCost(newValue.getLocation())));
+            }
+        }));
     }
 
 
@@ -83,5 +89,6 @@ public class ChooseStoreController implements Initializable {
     }
 
     public void bindCustomer(ObjectProperty<Customer> customerObjectProperty) {
+        customerObjectProperty.bind(customerObjectProperty);
     }
 }

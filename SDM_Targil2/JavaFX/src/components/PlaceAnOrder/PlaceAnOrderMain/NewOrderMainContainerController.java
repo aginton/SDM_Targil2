@@ -9,7 +9,7 @@ import Logic.SDM.SDMManager;
 import Logic.Store.Store;
 import components.PlaceAnOrder.BasicInfo.OrderBasicInfoController;
 import components.PlaceAnOrder.ChooseDiscounts.ChooseDiscountsController;
-import components.PlaceAnOrder.ChooseItems.ChooseItemsController;
+import components.PlaceAnOrder.ChooseItems.ChooseItemsStaticOrderController;
 import components.PlaceAnOrder.ChooseStores.ChooseStoreController;
 import components.PlaceAnOrder.ConfirmOrder.ConfirmOrderController;
 import javafx.beans.property.ObjectProperty;
@@ -54,7 +54,7 @@ public class NewOrderMainContainerController implements Initializable {
     private ObjectProperty<Node> currentNode;
     private OrderBasicInfoController basicInfoController;
     private ChooseStoreController chooseStoreController;
-    private ChooseItemsController chooseItemsController;
+    private ChooseItemsStaticOrderController chooseItemsStaticOrderController;
     private ChooseDiscountsController chooseDiscountsController;
     private ConfirmOrderController confirmOrderController;
 
@@ -90,7 +90,7 @@ public class NewOrderMainContainerController implements Initializable {
             FXMLLoader chooseItemsLoader = new FXMLLoader();
             chooseItemsLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ChooseItems/ChooseItems.fxml"));
             chooseItemsRef = chooseItemsLoader.load();
-            chooseItemsController = chooseItemsLoader.getController();
+            chooseItemsStaticOrderController = chooseItemsLoader.getController();
             //currentCart = chooseItemsController.getDummyCart();
 
 
@@ -196,7 +196,7 @@ public class NewOrderMainContainerController implements Initializable {
     private void goToNextPage() {
         if (newOrderCurrentPage.getChildren().get(0)==basicInfoRef){
             if (orderType == eOrderType.DYNAMIC_ORDER){
-                chooseItemsController.setDataForDynamicOrder();
+                chooseItemsStaticOrderController.setDataForDynamicOrder();
                 swapCurrentPage(chooseItemsDynamicRef);
             } else if (orderType == eOrderType.STATIC_ORDER){
                 chooseStoreController.setCustomer(customer);
@@ -206,9 +206,9 @@ public class NewOrderMainContainerController implements Initializable {
         }
 
         if (newOrderCurrentPage.getChildren().get(0) == chooseStoresRef){
-            chooseItemsController.setDataForStaticOrder(selectedStore);
-            chooseItemsController.fillCustomerData(customer);
-            chooseItemsController.setDeliveryFeeProperty(deliveryFee);
+            chooseItemsStaticOrderController.setDataForStaticOrder(selectedStore);
+            chooseItemsStaticOrderController.fillCustomerData(customer);
+            chooseItemsStaticOrderController.setDeliveryFeeProperty(deliveryFee);
             swapCurrentPage(chooseItemsRef);
             return;
         }
@@ -245,7 +245,7 @@ public class NewOrderMainContainerController implements Initializable {
                     deliveryFee +"}");
         }
         if (newOrderCurrentPage.getChildren().get(0) == chooseItemsRef){
-            this.currentCart = chooseItemsController.getDummyCart();
+            this.currentCart = chooseItemsStaticOrderController.getDummyCart();
             System.out.println("getInformationFromCurrentPage() returned: {currentCart=" + currentCart +"}");
         }
 

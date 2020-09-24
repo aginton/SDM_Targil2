@@ -27,7 +27,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ChooseItemsController implements Initializable{
+public class ChooseItemsStaticOrderController implements Initializable{
 
     @FXML
     private Label customerLabel;
@@ -96,9 +96,9 @@ public class ChooseItemsController implements Initializable{
     private ChangeListener<ItemWrapper> storeItemChangeListener;
     private DoubleProperty selectedItemAmountProperty;
     private HashMap<Integer, ItemWrapper> mapItemWrappersToAddToCart;
-
-
     private ObservableList<CartItem> cartItems;
+
+    private ObjectProperty<Customer> customerObjectProperty;
 
     private DoubleProperty cartSubtotal;
     private FloatProperty deliveryFeeProperty;
@@ -106,11 +106,12 @@ public class ChooseItemsController implements Initializable{
 
 
 
-    public ChooseItemsController(){
+    public ChooseItemsStaticOrderController(){
         dummyCart=new Cart();
         mapItemWrappersToAddToCart = new HashMap<>();
         storeItems = FXCollections.observableArrayList();
         cartItems = FXCollections.observableArrayList();
+        customerObjectProperty = new SimpleObjectProperty<>();
 
         cartSubtotal = new SimpleDoubleProperty(this, "cartSubtotal",0);
 
@@ -144,6 +145,12 @@ public class ChooseItemsController implements Initializable{
         setUpAddButtonColumn();
         setUpRemoveButtonColumn();
         setTableEditable();
+
+        customerObjectProperty.addListener(((observable, oldValue, newValue) -> {
+            System.out.println("ChooseItemsController customer change listener called!");
+            if (newValue!=null)
+                setDeliveryFeeProperty(store.getDeliveryCost(newValue.getLocation()));
+        }));
     }
 
     private void setUpAddButtonColumn() {
@@ -362,7 +369,12 @@ public class ChooseItemsController implements Initializable{
             }
             itemsTableView.setItems(storeItems);
         }
+
+        Customer c = customerObjectProperty.getValue();
+        if (c!= null)
+            setDeliveryFeeProperty(store.getDeliveryCost(c.getLocation()));
     }
+
 
 
     public void setDeliveryFeeValue(float val){
@@ -391,7 +403,10 @@ public class ChooseItemsController implements Initializable{
     }
 
     public void setUpCustomerBinding(ObjectProperty<Customer> customerObjectProperty) {
+        this.customerObjectProperty.bind(customerObjectProperty);
     }
+
+
 
     public void resetFields(){
         cartTable.getItems().clear();

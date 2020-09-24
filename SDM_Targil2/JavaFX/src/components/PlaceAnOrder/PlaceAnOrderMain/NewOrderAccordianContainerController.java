@@ -9,11 +9,13 @@ import Logic.SDM.SDMManager;
 import Logic.Store.Store;
 import components.PlaceAnOrder.BasicInfo.OrderBasicInfoController;
 import components.PlaceAnOrder.ChooseDiscounts.ChooseDiscountsController;
-import components.PlaceAnOrder.ChooseItems.ChooseItemsController;
+import components.PlaceAnOrder.ChooseItems.ChooseItemsStaticOrderController;
 import components.PlaceAnOrder.ChooseItems.DynamicOrder.ChooseItemsDynamicOrderController;
 import components.PlaceAnOrder.ChooseStores.ChooseStoreController;
 import components.PlaceAnOrder.ConfirmOrder.ConfirmOrderController;
+import javafx.beans.property.FloatProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -82,7 +84,7 @@ public class NewOrderAccordianContainerController implements Initializable {
     private Node basicInfoRef, chooseStoresRef, chooseItemsStaticOrderRef, chooseItemsDynamicRef, chooseDiscountsRef, confirmOrderRef, currentNode;
     private OrderBasicInfoController basicInfoController;
     private ChooseStoreController chooseStoreController;
-    private ChooseItemsController chooseItemsController;
+    private ChooseItemsStaticOrderController chooseItemsStaticOrderController;
     private ChooseItemsDynamicOrderController chooseItemsDynamicController;
     private ChooseDiscountsController chooseDiscountsController;
     private ConfirmOrderController confirmOrderController;
@@ -90,6 +92,8 @@ public class NewOrderAccordianContainerController implements Initializable {
     private LocalDate orderDate;
     private Customer customer;
     private ObjectProperty<Customer> customerObjectProperty;
+    private ObjectProperty<LocalDate> dateObjectProperty;
+    private FloatProperty deliveryFeeTotal;
     private eOrderType orderType;
     private Set<Store> setOfStores;
     private Store selectedStore;
@@ -102,6 +106,8 @@ public class NewOrderAccordianContainerController implements Initializable {
         currentCart = new Cart();
         setOfStores = new HashSet<>();
         customerObjectProperty = new SimpleObjectProperty<>();
+        dateObjectProperty = new SimpleObjectProperty<>();
+        deliveryFeeTotal = new SimpleFloatProperty(0);
 
         try {
             //1. choose basic info (customer, order type, date)
@@ -109,6 +115,8 @@ public class NewOrderAccordianContainerController implements Initializable {
             basicInfoLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/BasicInfo/OrderBasicInfo.fxml"));
             basicInfoRef = basicInfoLoader.load();
             basicInfoController = basicInfoLoader.getController();
+            this.customerObjectProperty.bind(basicInfoController.customerObjectPropertyProperty());
+            this.dateObjectProperty.bind(basicInfoController.dateObjectPropertyProperty());
 
 
             //2. if static order, choose store
@@ -121,8 +129,8 @@ public class NewOrderAccordianContainerController implements Initializable {
             FXMLLoader chooseItemsLoader = new FXMLLoader();
             chooseItemsLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ChooseItems/ChooseItems.fxml"));
             chooseItemsStaticOrderRef = chooseItemsLoader.load();
-            chooseItemsController = chooseItemsLoader.getController();
-            chooseItemsController.setUpCustomerBinding(this.customerObjectProperty);
+            chooseItemsStaticOrderController = chooseItemsLoader.getController();
+
             //currentCart = chooseItemsController.getDummyCart();
 
 
@@ -130,6 +138,7 @@ public class NewOrderAccordianContainerController implements Initializable {
             chooseItemsDynamicLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrder.fxml"));
             chooseItemsDynamicRef = chooseItemsDynamicLoader.load();
             chooseItemsDynamicController = chooseItemsDynamicLoader.getController();
+
 
 
             //4. choose discounts
@@ -142,6 +151,8 @@ public class NewOrderAccordianContainerController implements Initializable {
             confirmOrderLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ConfirmOrder/ConfirmOrder.fxml"));
             confirmOrderRef = confirmOrderLoader.load();
             confirmOrderController = confirmOrderLoader.getController();
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -207,18 +218,23 @@ public class NewOrderAccordianContainerController implements Initializable {
             this.selectedStore = chooseStoreController.getSelectedStore();
             setOfStores.clear();
             setOfStores.add(selectedStore);
-            this.deliveryFee = selectedStore.getDeliveryCost(customer.getLocation());
+//            this.deliveryFee = selectedStore.getDeliveryCost(customer.getLocation());
+            setDeliveryFeeTotal(selectedStore.getDeliveryCost(customer.getLocation()));
+
             System.out.println("chooseStoresRef returned: {selectedStore=" + selectedStore + ", deliveryCost=" +
-                    deliveryFee +"}");
+                    deliveryFeeTotal.get() +"}");
         }
 
         if (currentNode.equals(chooseItemsStaticOrderRef)){
-            this.currentCart = chooseItemsController.getDummyCart();
+            this.currentCart = chooseItemsStaticOrderController.getDummyCart();
             System.out.println("chooseItemsRef returned: {currentCart=" + currentCart +"}");
         }
 
         if (currentNode.equals(chooseItemsDynamicRef)){
             this.mapStoresToCarts = chooseItemsDynamicController.getMapStoresToCarts();
+//            this.deliveryFee = chooseItemsDynamicController.getDeliveryFeeTotal();
+            setDeliveryFeeTotal(selectedStore.getDeliveryCost(customerObjectProperty.getValue().getLocation()));
+
             System.out.println("chooseItemsDynamicRef returned: " + mapStoresToCarts);
             //this.setOfStores = chooseItemsDynamicController.getStoresBoughtFrom();
         }
@@ -232,10 +248,21 @@ public class NewOrderAccordianContainerController implements Initializable {
         }
 
         if (currentNode.equals(chooseDiscountsRef)){
-            HashMap<Integer, CartItem> discountItemsToAddToCart = chooseDiscountsController.getMapIdsToDiscountCartItems();
-            discountItemsToAddToCart.forEach((k,v)->{
-                currentCart.add(v);
-            });
+            if (orderType == eOrderType.STATIC_ORDER){
+                HashMap<Integer, CartItem> discountItemsToAddToCart = chooseDiscountsController.getMapIdsToDiscountCartItems();
+                discountItemsToAddToCart.forEach((k,v)->{
+                    currentCart.add(v);
+                });
+            }
+            if (orderType == eOrderType.DYNAMIC_ORDER){
+                HashMap<Store,HashMap<Integer,CartItem>> discountItemsToAdd = chooseDiscountsController.getMapIdsToDiscountCartItemsDynamic();
+
+                discountItemsToAdd.forEach((store,map)->{
+                    map.forEach((itemId,cartItem)->{
+                        mapStoresToCarts.get(store).add(cartItem);
+                    });
+                });
+            }
         }
     }
 
@@ -268,43 +295,37 @@ public class NewOrderAccordianContainerController implements Initializable {
     }
 
     private void openNextTitledPane() {
-        if (currentNode.equals(confirmOrderRef)){
-            System.out.println("Do something on confirm order...");
 
-            return;
-        }
+        if (currentNode.equals(basicInfoRef)){
+            backButton.setDisable(false);
+            if (orderType == eOrderType.STATIC_ORDER) {
+                chooseStoreController.setCustomer(customer);
 
-        if (currentNode.equals(chooseDiscountsRef)){
-            confirmOrderController.fillViewsForData(customer,orderDate, orderType,setOfStores,currentCart,deliveryFee);
-            currentNode = confirmOrderRef;
-            accordian.setExpandedPane(confirmTitledPane);
-            nextButton.setDisable(true);
-            confirmButton.setVisible(true);
-            confirmButton.setDisable(false);
-            return;
-        }
-
-        if (currentNode.equals(chooseItemsStaticOrderRef)){
-            if (orderType == eOrderType.STATIC_ORDER){
-                chooseDiscountsController.fillViewsBasedOnStoreAndCart(selectedStore, currentCart);
-                chooseDiscountsController.fillCustomerLabels(customer);
-                chooseDiscountsController.fillOrderLabels(currentCart.getCartTotalPrice(), deliveryFee);
+                accordian.setExpandedPane(chooseStoresTitledPane);
+                currentNode = chooseStoresRef;
+                return;
             }
-            accordian.setExpandedPane(chooseDiscountsTitledPane);
-            currentNode = chooseDiscountsRef;
-            return;
-        }
-        if (currentNode.equals(chooseItemsDynamicRef)){
-            chooseDiscountsController.fillViewsBasedOnDynamicOrder(mapStoresToCarts);
-            accordian.setExpandedPane(chooseDiscountsTitledPane);
-            currentNode = chooseDiscountsRef;
-            return;
+
+            if (orderType == eOrderType.DYNAMIC_ORDER) {
+                chooseItemsStaticOrderController.setDataForDynamicOrder();
+                chooseItemsAnchorPane.getChildren().clear();
+                chooseItemsAnchorPane.getChildren().add(chooseItemsDynamicRef);
+                chooseItemsDynamicController.bindCustomer(this.customerObjectProperty);
+                AnchorPane.setBottomAnchor(chooseItemsDynamicRef, 0.0);
+                AnchorPane.setLeftAnchor(chooseItemsDynamicRef, 0.0);
+                AnchorPane.setRightAnchor(chooseItemsDynamicRef, 0.0);
+                AnchorPane.setTopAnchor(chooseItemsDynamicRef, 0.0);
+
+                accordian.setExpandedPane(chooseItemsTitledPane);
+                currentNode = chooseItemsDynamicRef;
+                return;
+            }
         }
 
         if (currentNode.equals(chooseStoresRef)){
-            chooseItemsController.setDataForStaticOrder(selectedStore);
-            chooseItemsController.fillCustomerData(customer);
-            chooseItemsController.setDeliveryFeeProperty(deliveryFee);
+            chooseItemsStaticOrderController.setDataForStaticOrder(selectedStore);
+            chooseItemsStaticOrderController.fillCustomerData(customer);
+            chooseItemsStaticOrderController.setDeliveryFeeProperty(getDeliveryFeeTotal());
 
             chooseItemsAnchorPane.getChildren().clear();
             chooseItemsAnchorPane.getChildren().add(chooseItemsStaticOrderRef);
@@ -318,39 +339,53 @@ public class NewOrderAccordianContainerController implements Initializable {
             return;
         }
 
-
-        if (currentNode.equals(basicInfoRef)){
-            backButton.setDisable(false);
-            if (orderType == eOrderType.STATIC_ORDER) {
-                chooseStoreController.setCustomer(customer);
-                chooseStoreController.bindCustomer(customerObjectProperty);
-                accordian.setExpandedPane(chooseStoresTitledPane);
-                currentNode = chooseStoresRef;
-                return;
+        if (currentNode.equals(chooseItemsStaticOrderRef)){
+            if (orderType == eOrderType.STATIC_ORDER){
+                chooseDiscountsController.fillViewsBasedOnStoreAndCart(selectedStore, currentCart);
+                chooseDiscountsController.fillCustomerLabels(customer);
+                chooseDiscountsController.fillOrderLabels(currentCart.getCartTotalPrice(), getDeliveryFeeTotal());
             }
-
-            if (orderType == eOrderType.DYNAMIC_ORDER) {
-                chooseItemsController.setDataForDynamicOrder();
-
-                chooseItemsAnchorPane.getChildren().clear();
-                chooseItemsAnchorPane.getChildren().add(chooseItemsDynamicRef);
-                AnchorPane.setBottomAnchor(chooseItemsDynamicRef, 0.0);
-                AnchorPane.setLeftAnchor(chooseItemsDynamicRef, 0.0);
-                AnchorPane.setRightAnchor(chooseItemsDynamicRef, 0.0);
-                AnchorPane.setTopAnchor(chooseItemsDynamicRef, 0.0);
-
-                accordian.setExpandedPane(chooseItemsTitledPane);
-                currentNode = chooseItemsDynamicRef;
-                return;
-            }
+            accordian.setExpandedPane(chooseDiscountsTitledPane);
+            currentNode = chooseDiscountsRef;
+            return;
+        }
+        if (currentNode.equals(chooseItemsDynamicRef)){
+            chooseDiscountsController.fillViewsBasedOnDynamicOrder(mapStoresToCarts);
+            accordian.setExpandedPane(chooseDiscountsTitledPane);
+            currentNode = chooseDiscountsRef;
+            return;
         }
 
+        if (currentNode.equals(chooseDiscountsRef)){
+            if (orderType == eOrderType.STATIC_ORDER){
+//                confirmOrderController.fillViewsForData(customer,orderDate, orderType,setOfStores,currentCart,deliveryFee);
+                confirmOrderController.fillViewsForData(customer,orderDate, orderType,selectedStore,currentCart,getDeliveryFeeTotal());
+
+            }
+            if (orderType == eOrderType.DYNAMIC_ORDER){
+                confirmOrderController.fillViewsForDynamicData(customer, orderDate, mapStoresToCarts, getDeliveryFeeTotal());
+            }
+            currentNode = confirmOrderRef;
+            accordian.setExpandedPane(confirmTitledPane);
+            nextButton.setDisable(true);
+            confirmButton.setVisible(true);
+            confirmButton.setDisable(false);
+            return;
+        }
+
+        if (currentNode.equals(confirmOrderRef)){
+            confirmOrderController.bindCustomer(customerObjectProperty);
+            confirmOrderController.bindDate(dateObjectProperty);
+            System.out.println("Do something on confirm order...");
+            return;
+        }
     }
 
     @FXML
     void backButtonAction(ActionEvent event) {
         if (currentNode.equals(confirmOrderRef)){
             confirmButton.setDisable(true);
+            nextButton.setDisable(false);
             currentNode = basicInfoRef;
             accordian.setExpandedPane(chooseDiscountsTitledPane);
             return;
@@ -418,7 +453,11 @@ public class NewOrderAccordianContainerController implements Initializable {
                 setOfStores,
                 orderType);
 
-        SDMManager.getInstance().addNewStaticOrder(selectedStore, order);
+        if (orderType==eOrderType.STATIC_ORDER)
+            SDMManager.getInstance().addNewStaticOrder(selectedStore, order);
+
+        if (orderType==eOrderType.DYNAMIC_ORDER)
+            SDMManager.getInstance().addNewDynamicOrder(mapStoresToCarts.keySet(), order);
         try {
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("/components/PlaceAnOrder/SuccessOrError/SuccessPopUp.fxml"));
@@ -432,7 +471,7 @@ public class NewOrderAccordianContainerController implements Initializable {
             confirmButton.setDisable(true);
             confirmButton.setVisible(false);
             currentNode = basicInfoRef;
-            chooseItemsController.resetFields();
+            chooseItemsStaticOrderController.resetFields();
             accordian.setExpandedPane(basicInfoTitledPane);
         } catch (IOException e) {
             e.printStackTrace();
@@ -447,4 +486,28 @@ public class NewOrderAccordianContainerController implements Initializable {
         currentCart = null;
     }
 
+
+    public LocalDate getDateObjectProperty() {
+        return dateObjectProperty.get();
+    }
+
+    public ObjectProperty<LocalDate> dateObjectPropertyProperty() {
+        return dateObjectProperty;
+    }
+
+    public void setDateObjectProperty(LocalDate dateObjectProperty) {
+        this.dateObjectProperty.set(dateObjectProperty);
+    }
+
+    public float getDeliveryFeeTotal() {
+        return deliveryFeeTotal.get();
+    }
+
+    public FloatProperty deliveryFeeTotalProperty() {
+        return deliveryFeeTotal;
+    }
+
+    public void setDeliveryFeeTotal(float deliveryFeeTotal) {
+        this.deliveryFeeTotal.set(deliveryFeeTotal);
+    }
 }
