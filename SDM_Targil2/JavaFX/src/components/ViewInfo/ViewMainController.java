@@ -1,7 +1,5 @@
 package components.ViewInfo;
 
-import Logic.Order.Order;
-import Logic.Order.OrderChangeInterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,7 +45,10 @@ public class ViewMainController implements Initializable {
             viewStoresRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewStore/ViewStore.fxml"));
             viewInventoryItemsRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewItems/ViewItems.fxml"));
             viewOrderHistoryRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewOrders/ViewOrders.fxml"));
-            viewMapRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewMap/ViewMap.fxml"));
+            viewMapRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewMap/Map.fxml"));
+//            viewMapRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewMap/TilePaneMap.fxml"));
+
+
 
             loadNewPane(viewStoresRef);
 

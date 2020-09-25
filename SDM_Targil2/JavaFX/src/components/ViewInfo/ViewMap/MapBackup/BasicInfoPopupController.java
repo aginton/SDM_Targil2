@@ -1,4 +1,4 @@
-package components.ViewInfo.ViewMap;
+package components.ViewInfo.ViewMap.MapBackup;
 
 import Logic.Customers.Customer;
 import Logic.Store.Store;

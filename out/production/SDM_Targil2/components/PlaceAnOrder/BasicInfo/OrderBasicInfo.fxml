@@ -37,7 +37,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="chooseCustomerCB" layoutX="184.0" layoutY="189.0" prefHeight="25.0" prefWidth="158.0" />
+      <ComboBox fx:id="chooseCustomerCB" layoutX="184.0" layoutY="189.0" prefHeight="25.0" prefWidth="351.0" />
       <DatePicker fx:id="chooseDateDP" layoutX="184.0" layoutY="307.0" />
       <RadioButton fx:id="radioStaticOrder" layoutX="201.0" layoutY="429.0" text="Static order">
          <toggleGroup>

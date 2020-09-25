@@ -3,6 +3,7 @@ package components.ViewInfo.ViewOrders.SingleOrder;
 import Logic.Order.CartItem;
 import Logic.Order.Order;
 import Logic.Store.Store;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -40,7 +41,7 @@ public class SingleOrderViewController  {
     private TableColumn<CartItem, Float> amountColumn;
 
     @FXML
-    private TableColumn<CartItem, Float> costColumn;
+    private TableColumn<CartItem, String> costColumn;
 
     @FXML
     private Label totalNumItemsLabel;
@@ -72,12 +73,19 @@ public class SingleOrderViewController  {
     }
 
     private void setOrderTable(Order order) {
-        order.getCartForThisOrder().getCart().values().forEach(i->items.add(i));
-        itemTableView.setItems(items);
         itemIdColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Integer>("itemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<CartItem,String>("itemName"));
         amountColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Float>("itemAmount"));
         unitPriceColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Integer>("price"));
+        costColumn.setCellValueFactory(cellData ->{
+            CartItem item = cellData.getValue();
+            String res = String.format("%.2f",item.getItemAmount()* item.getPrice());
+            return new ReadOnlyStringWrapper(res);
+        });
+
+        order.getCartForThisOrder().getCart().values().forEach(item->items.add(item));
+        order.getCartForThisOrder().getDiscountCart().values().forEach(item->items.add(item));
+        itemTableView.setItems(items);
     }
 
     private void setLabels(Order order) {
@@ -88,12 +96,12 @@ public class SingleOrderViewController  {
             sb.append(store.getStoreId() + ", ");
         }
         storeNameLabel.setText(sb.toString());
-        totalNumberStoresLabel.setText(String.valueOf(order.getStoresBoughtFrom().size()));
-        totalTypeItemsLabel.setText("?????");
         totalNumItemsLabel.setText(String.valueOf(order.getNumberOfItemsInOrder()));
+        totalTypeItemsLabel.setText(String.valueOf(order.getNumberItemsByType()));
+        totalNumberStoresLabel.setText(String.valueOf(order.getStoresBoughtFrom().size()));
         subtotalLabel.setText(String.valueOf(order.getCartTotal()));
-        deliveryFeeLabel.setText(String.valueOf(order.getDeliveryCost()));
-        totalLabel.setText(String.valueOf(order.getDeliveryCost()+order.getCartTotal()));
+        deliveryFeeLabel.setText(String.valueOf(order.getTotalDeliveryCost()));
+        totalLabel.setText(String.valueOf(order.getTotalDeliveryCost()+order.getCartTotal()));
     }
 
 

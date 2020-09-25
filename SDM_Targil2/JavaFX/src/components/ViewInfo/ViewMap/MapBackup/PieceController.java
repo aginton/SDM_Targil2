@@ -1,4 +1,4 @@
-package components.ViewInfo.ViewMap;
+package components.ViewInfo.ViewMap.MapBackup;
 
 import Logic.Customers.Customer;
 import Logic.Store.Store;
@@ -6,10 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.fxml.FXML;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
-
-import static components.ViewInfo.ViewMap.ViewMapController.TILE_SIZE;
 
 
 public class PieceController {

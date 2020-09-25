@@ -1,8 +1,11 @@
 package Logic.Order;
 
+import Logic.Customers.Customer;
 import Logic.Inventory.ePurchaseCategory;
 import Logic.Store.Store;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 public class Order {
@@ -13,21 +16,36 @@ public class Order {
     }
 
     private OrderId orderId;
-    private List<Integer> userLocation;
+    private Customer customer;
     private Date orderDate;
-    private Cart cart;
-    private float deliveryCost;
-    Set<Store> storesBoughtFrom;
     eOrderType orderType;
+    private float totalDeliveryCost;
+
+    private Cart bigCart;
+    Set<Store> storesBoughtFrom;
     private double numberOfItemsInOrder;
     private double totalOrderCost;
     private int numberItemsByType;
 
-    public Order(List<Integer> userLocation,
-                 Date orderDate,
-                 float deliveryCost,
-                 Cart cart, Set<Store> storesBoughtFrom,
-                 eOrderType orderType) {
+    public Order(Customer customer,
+                 Date orderDate, eOrderType orderType,
+                 float totalDeliveryCost,
+                 HashMap<Store, Cart> mapStoresToCarts
+    ) {
+        this.customer = customer;
+        this.orderDate = orderDate;
+        this.orderType = orderType;
+        this.totalDeliveryCost = totalDeliveryCost;
+        bigCart = new Cart();
+        storesBoughtFrom = new HashSet<>();
+        mapStoresToCarts.forEach((store, cart) -> {
+            storesBoughtFrom.add(store);
+            bigCart.addCartToCart(cart);
+        });
+
+        totalOrderCost = bigCart.getCartTotalPrice() + totalDeliveryCost;
+        numberOfItemsInOrder = calculateNumberOfItemsInOrder(bigCart);
+        numberItemsByType = bigCart.getNumberOfTypesOfItemsInCart();
 
         if (orderType == eOrderType.STATIC_ORDER || orderType == eOrderType.DYNAMIC_ORDER) {
             numOfOrders++;
@@ -40,16 +58,6 @@ public class Order {
             int storeId = iterator.next().getStoreId();
             this.orderId = new OrderId(numOfOrders, storeId);
         }
-
-        this.userLocation = userLocation;
-        this.orderDate = orderDate;
-        this.deliveryCost = deliveryCost;
-        this.cart = cart;
-        this.storesBoughtFrom = storesBoughtFrom;
-        this.orderType = orderType;
-        numberOfItemsInOrder = calculateNumberOfItemsInOrder(cart);
-        totalOrderCost = cart.getCartTotalPrice()+deliveryCost;
-        numberItemsByType=cart.getNumberOfTypesOfItemsInCart();
     }
 
     public double getNumberOfItemsInOrder() {
@@ -58,25 +66,39 @@ public class Order {
 
     private double calculateNumberOfItemsInOrder(Cart cart) {
         double res = 0;
-        for (CartItem item: cart.getCart().values()){
-            if (item.getPurchaseCategory()==ePurchaseCategory.QUANTITY)
+        for (CartItem item : cart.getCart().values()) {
+            if (item.getPurchaseCategory() == ePurchaseCategory.QUANTITY)
                 res += item.getItemAmount();
-            else if (item.getPurchaseCategory()==ePurchaseCategory.WEIGHT)
+            else if (item.getPurchaseCategory() == ePurchaseCategory.WEIGHT)
                 res++;
         }
         return res;
     }
 
 
-    public List<Integer> getUserLocation() {
-        return userLocation;
+    public static int getNumOfOrders() {
+        return numOfOrders;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public Cart getBigCart() {
+        return bigCart;
+    }
+
+    public int getNumberItemsByType() {
+        return numberItemsByType;
     }
 
     public Set<Store> getStoresBoughtFrom() {
         return storesBoughtFrom;
     }
 
-    public OrderId getOrderId(){return orderId;}
+    public OrderId getOrderId() {
+        return orderId;
+    }
 
     public int getNumberOfStoresInvolved() {
         return storesBoughtFrom.size();
@@ -86,13 +108,22 @@ public class Order {
         return orderType;
     }
 
-    public double getCartTotal() {return cart.getCartTotalPrice();}
+    public double getCartTotal() {
+        double preciseVal = bigCart.getCartTotalPrice();
+        BigDecimal bd = new BigDecimal(preciseVal).setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 
-    public float getDeliveryCost(){return deliveryCost;}
-    public Date getOrderDate(){return orderDate;}
+    public float getTotalDeliveryCost() {
+        return totalDeliveryCost;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
 
     public Cart getCartForThisOrder() {
-        return cart;
+        return bigCart;
     }
 
     @Override
@@ -101,15 +132,15 @@ public class Order {
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
         return orderId == order.orderId &&
-                Float.compare(order.deliveryCost, deliveryCost) == 0 &&
-                Objects.equals(userLocation, order.userLocation) &&
+                Float.compare(order.totalDeliveryCost, totalDeliveryCost) == 0 &&
+                Objects.equals(customer, order.customer) &&
                 Objects.equals(orderDate, order.orderDate) &&
-                Objects.equals(cart, order.cart);
+                Objects.equals(bigCart, order.bigCart);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, userLocation, orderDate, deliveryCost, cart);
+        return Objects.hash(orderId, customer, orderDate, totalDeliveryCost, bigCart);
     }
 
     public double getTotalOrderCost() {
@@ -118,5 +149,13 @@ public class Order {
 
     public void setTotalOrderCost(double totalOrderCost) {
         this.totalOrderCost = totalOrderCost;
+    }
+
+    public String getNamesOfStoresInvolved(){
+        StringBuilder sb = new StringBuilder("");
+        for (Store store: storesBoughtFrom){
+            sb.append(store.getStoreName() + ", ");
+        }
+        return sb.toString();
     }
 }

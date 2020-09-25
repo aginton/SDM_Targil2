@@ -1,4 +1,4 @@
-package components.ViewInfo.ViewMap;
+package components.ViewInfo.ViewMap.MapBackup;
 
 public enum eObjectType {
     STORE, CUSTOMER, BLANK

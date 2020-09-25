@@ -76,25 +76,28 @@ public class ChooseItemsDynamicOrderController implements Initializable {
     @FXML
     private FlowPane flowpane;
 
-
+    private String TAG = "ChooseItemsDynamicOrderController";
     private Inventory inventory = SDMManager.getInstance().getInventory();
     private HashMap<InventoryItem, Double> mapItemsChosenToAmount;
     private ObservableList<InventoryItemWrapper> itemWrappers;
-    private ObservableMap<Store, List<CartItem>> mapStoreToCartItems;
-    private Cart cart;
-    private Set<Store> storesBoughtFrom;
-    private HashMap<Store,Cart> mapStoreToCart;
+    //private ObservableMap<Store, List<CartItem>> mapStoreToCartItems;
+//    private Cart cart;
+//    private Set<Store> storesBoughtFrom;
+    private HashMap<Store,Cart> mapStoresToCarts;
     private DoubleProperty cartsSubtotal;
     private FloatProperty deliveryFeeTotal;
     private Customer customer;
+    private DoubleProperty regularItemsSubtotal;
+
 
     public ChooseItemsDynamicOrderController(){
         mapItemsChosenToAmount = new HashMap<>();
-        mapStoreToCart = new HashMap<>();
-        mapStoreToCartItems=FXCollections.observableHashMap();
+        mapStoresToCarts = new HashMap<>();
+//        mapStoreToCartItems=FXCollections.observableHashMap();
         itemWrappers = FXCollections.observableArrayList();
         cartsSubtotal = new SimpleDoubleProperty(0);
         deliveryFeeTotal = new SimpleFloatProperty(0f);
+        regularItemsSubtotal = new SimpleDoubleProperty(0);
         SDMManager.getInstance().getInventory().getListInventoryItems().forEach(item->{
             itemWrappers.add(new InventoryItemWrapper(item));
         });
@@ -105,7 +108,9 @@ public class ChooseItemsDynamicOrderController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         deliveryFeeLabel.setText("???");
-        cartSubtotalLabel.textProperty().bind(cartsSubtotal.asString("%.2f"));
+        deliveryFeeLabel.textProperty().bind(deliveryFeeTotal.asString("%.2f"));
+        cartSubtotalLabel.textProperty().bind(cartsSubtotal.add(regularItemsSubtotal).asString("%.2f"));
+        totalCostLabel.textProperty().bind(deliveryFeeTotal.add(cartsSubtotal).asString("%.2f"));
         itemIdColumn.setCellValueFactory(new PropertyValueFactory<InventoryItemWrapper,Integer>("ItemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<InventoryItemWrapper,String>("ItemName"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<InventoryItemWrapper, ObjectProperty<ePurchaseCategory>>("PurchaseCategory"));
@@ -115,8 +120,6 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         setUpRemoveButtonColumn();
         setTableEditable();
         itemsTableView.setItems(itemWrappers);
-
-
     }
 
     @FXML
@@ -132,10 +135,10 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         //cart = SDMManager.getInstance().findCheapestCartForUser(mapItemsChosenToAmount);
         HashMap<Store,Cart> dummyMapStoreToCart = SDMManager.getInstance().findCheapestStoresForItems(dummyMap);
         dummyMapStoreToCart.forEach((k,v)->{
-            if (mapStoreToCart.get(k)==null){
-                mapStoreToCart.put(k,v);
+            if (mapStoresToCarts.get(k)==null){
+                mapStoresToCarts.put(k,v);
             } else{
-                mapStoreToCart.get(k).addCartToCart(v);
+                mapStoresToCarts.get(k).addCartToCart(v);
             }
         });
 
@@ -145,14 +148,14 @@ public class ChooseItemsDynamicOrderController implements Initializable {
     }
 
     private void updateDeliveryFeeTotal() {
-        setDeliveryFeeTotal(0);
-
         if (customer == null){
             System.out.println("ChooseItemsDynamicOrder customer is null!");
             return;
         }
+        setDeliveryFeeTotal(0);
+
         List<Integer> customerLocation = customer.getLocation();
-        mapStoreToCart.keySet().forEach(store -> {
+        mapStoresToCarts.keySet().forEach(store -> {
              float total = getDeliveryFeeTotal();
              setDeliveryFeeTotal(store.getDeliveryCost(customerLocation)+total);
         });
@@ -170,7 +173,7 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         flowpane.getChildren().clear();
         setCartsSubtotal(0);
 
-        mapStoreToCart.forEach((k,v)->{
+        mapStoresToCarts.forEach((k, v)->{
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/PlaceAnOrder/ChooseItems/DynamicOrder/DynamicSubOrder.fxml"));
                 Node n = loader.load();
@@ -261,12 +264,7 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         }
     }
 
-    private void resestWrappers() {
-        itemWrappers.forEach(i->{
-            i.setAmount(0);
-        });
-        storesBoughtFrom.clear();
-    }
+
 
     private void setUpAddButtonColumn() {
         addButtonColumn.setCellFactory(col->{
@@ -355,13 +353,18 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         itemsTableView.edit(focusedCell.getRow(), focusedCell.getTableColumn());
     }
 
-    public HashMap<Store, Cart> getMapStoresToCarts() {
-        return mapStoreToCart;
+    public boolean hasNecessaryInformation(){
+        if (mapStoresToCarts.size()==0){
+            System.out.println(TAG + "mapStoresToCarts can't be empty!");
+            return false;
+        }
+        return true;
     }
 
-    public Set<Store> getStoresBoughtFrom() {
-        return storesBoughtFrom;
+    public HashMap<Store, Cart> getMapStoresToCarts() {
+        return mapStoresToCarts;
     }
+
 
     public float getDeliveryFeeTotal() {
         return deliveryFeeTotal.get();
@@ -377,9 +380,11 @@ public class ChooseItemsDynamicOrderController implements Initializable {
 
     public void resetFields() {
         mapItemsChosenToAmount.clear();
-        mapStoreToCartItems.clear();
-        mapStoreToCart.clear();
+        setDeliveryFeeTotal(0);
+//        mapStoreToCartItems.clear();
+        mapStoresToCarts.clear();
         cartsSubtotal.setValue(0);
+        flowpane.getChildren().clear();
     }
 
     public void setCustomer(Customer customer) {

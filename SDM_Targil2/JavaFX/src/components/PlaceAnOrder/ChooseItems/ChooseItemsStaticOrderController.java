@@ -27,6 +27,9 @@ import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
+//TODO: Update DeliveryFee and Total label after adding items
+//TODO: Make cartSubtotal initially show regula items subtotal
+
 public class ChooseItemsStaticOrderController implements Initializable{
 
     @FXML
@@ -100,7 +103,8 @@ public class ChooseItemsStaticOrderController implements Initializable{
     private DoubleProperty cartSubtotal;
     private FloatProperty deliveryFeeProperty;
     private DoubleProperty totalCost;
-
+    private String TAG = "ChooseItemsStaticOrderController";
+    private DoubleProperty regularItemsSubtotal;
 
 
     public ChooseItemsStaticOrderController(){
@@ -108,6 +112,7 @@ public class ChooseItemsStaticOrderController implements Initializable{
         storeItems = FXCollections.observableArrayList();
         cartItems = FXCollections.observableArrayList();
         customerObjectProperty = new SimpleObjectProperty<>();
+        regularItemsSubtotal = new SimpleDoubleProperty();
 
         cartSubtotal = new SimpleDoubleProperty(this, "cartSubtotal",0);
 
@@ -337,14 +342,13 @@ public class ChooseItemsStaticOrderController implements Initializable{
     }
 
 
-    public Cart getDummyCart() {
+    public Cart getCartForStaticOrder() {
         Cart dummyCart = new Cart();
         for (CartItem item: cartItems){
             dummyCart.add(item);
         }
         return dummyCart;
     }
-
 
 
 
@@ -414,6 +418,21 @@ public class ChooseItemsStaticOrderController implements Initializable{
         setUpTableColumns();
     }
 
+    public boolean hasNecessaryInformation(){
+        if (cartItems.size() == 0){
+            System.out.println(TAG + "cart can't be empty!");
+            return false;
+        }
+        return true;
+    }
+
+    public HashMap<Store, Cart> getMapStoreToCart() {
+        HashMap<Store,Cart> res = new HashMap<>();
+        Cart cart = new Cart();
+        cartItems.forEach(i->cart.add(i));
+        res.put(this.store,cart);
+        return res;
+    }
 
 
     public class ItemWrapper {

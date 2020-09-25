@@ -8,6 +8,8 @@ import Logic.Order.CartItem;
 import Logic.Order.Order;
 import Logic.Store.Store;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -60,13 +62,16 @@ public class Inventory  {
     public void updateSalesMap(Order order) {
         Cart cart = order.getCartForThisOrder();
         cart.getCart().forEach((k, v) -> updateSalesMap(v));
+        notifyListeners();
+        notifyListenersSalesMapChanged();
     }
+
+
 
     private void updateSalesMap(CartItem cartItem) {
         InventoryItem item = getInventoryItemById(cartItem.getItemId());
         Double oldAmount = mapItemsToTotalSold.get(item);
         mapItemsToTotalSold.put(item, oldAmount + cartItem.getItemAmount());
-        notifyListeners();
     }
 
     @Override
@@ -134,5 +139,27 @@ public class Inventory  {
     private void notifyListeners(){
         for (inventoryChangeInterface listener: listeners)
             listener.onInventoryChanged();
+    }
+
+    private void notifyListenersSalesMapChanged() {
+        for (inventoryChangeInterface listener: listeners)
+            listener.onInventoryChanged();
+    }
+
+    public float getAveragePriceForItem(InventoryItem item) {
+        int sum = 0;
+        float res = 0;
+        for (Store store: mapItemsToStoresWithItem.get(item)){
+            sum += store.getNormalPriceForItem(item);
+        }
+        res = sum / mapItemsToStoresWithItem.get(item).size();
+        BigDecimal bd = new BigDecimal(res).setScale(2, RoundingMode.HALF_UP);
+        return bd.floatValue();
+    }
+
+    public double getTotalSoldForItem(InventoryItem item) {
+        double total = mapItemsToTotalSold.get(item);
+        BigDecimal bd = new BigDecimal(total).setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

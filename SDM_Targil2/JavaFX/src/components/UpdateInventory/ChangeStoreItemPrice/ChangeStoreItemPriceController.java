@@ -54,8 +54,9 @@ public class ChangeStoreItemPriceController implements Initializable {
     void onAddButtonAction(ActionEvent event) {
         int val;
         if ((val=isTextAPositiveInt(priceTextField.getText().trim())) > 0){
-            selectedItem.setNormalPrice(val);
-            selectedStore.getMapItemToPrices().put(selectedItem.getItemId(), val);
+//            selectedItem.setNormalPrice(val);
+//            selectedStore.getMapItemToPrices().put(selectedItem.getItemId(), val);
+            selectedStore.updatePriceForItem(selectedItem,val);
             inventory.updateAvePrice();
             errorLabel.setVisible(false);
             accordian.setExpandedPane(storeTitledPane);

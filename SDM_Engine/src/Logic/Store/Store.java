@@ -1,6 +1,5 @@
 package Logic.Store;
 
-import Logic.Inventory.Inventory;
 import Logic.Inventory.InventoryItem;
 import Logic.Order.Cart;
 import Logic.Order.Order;
@@ -19,7 +18,6 @@ import javafx.util.Callback;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.*;
 
 public class Store implements hasLocationInterface {
@@ -259,9 +257,34 @@ public class Store implements hasLocationInterface {
     public void addStoreChangeListener(StoreChangeListener listener){
         listeners.add(listener);
     }
-    public void notifyStoreWasChanged(){
+
+//    public void notifyStoreWasChanged(){
+//        for (StoreChangeListener storeChangeListener: listeners){
+//            storeChangeListener.storeWasChanged(this);
+//        }
+//    }
+
+    private void notifyOrderWasAdded(Order order) {
         for (StoreChangeListener storeChangeListener: listeners){
-            storeChangeListener.storeWasChanged(this);
+            storeChangeListener.orderWasAdded(this, order);
+        }
+    }
+
+    private void notifyItemWasAdded(Store store, StoreItem newItem) {
+        for (StoreChangeListener storeChangeListener: listeners){
+            storeChangeListener.newStoreItemAdded(this, newItem);
+        }
+    }
+
+    private void notifyItemPriceWasUpdated(Store store, StoreItem newItem) {
+        for (StoreChangeListener storeChangeListener: listeners){
+            storeChangeListener.itemPriceChanged(this, newItem);
+        }
+    }
+
+    private void notifyStoreItemRemoved(Store store, StoreItem newItem) {
+        for (StoreChangeListener storeChangeListener: listeners){
+            storeChangeListener.storeItemWasDeleted(this, newItem);
         }
     }
 
@@ -293,10 +316,13 @@ public class Store implements hasLocationInterface {
 
     public void addOrder(Order order) {
         storeOrders.add(order);
-        setTotalDeliveryIncome(order.getDeliveryCost()+this.getTotalDeliveryIncome());
+        setTotalDeliveryIncome(order.getTotalDeliveryCost()+this.getTotalDeliveryIncome());
         updateStoreInventory(order.getCartForThisOrder());
-        notifyStoreWasChanged();
+//        notifyStoreWasChanged();
+        notifyOrderWasAdded(order);
     }
+
+
 
     private void updateStoreInventory(Cart cart) {
         cart.getCart().forEach((k, v) -> {
@@ -307,6 +333,7 @@ public class Store implements hasLocationInterface {
             storeItem.increaseTotalAmountSold(v.getItemAmount());
         });
         //notifyStoreWasChanged();
+
     }
 
     private StoreItem getStoreItemById(int id){
@@ -333,9 +360,11 @@ public class Store implements hasLocationInterface {
         Collections.sort(inventoryItems);
         mapItemsToAmountSold.put(item.getItemId(), 0.0);
         mapItemToPrices.put(item.getItemId(), price);
-        notifyStoreWasChanged();
-
+        StoreItem newItem = new StoreItem(item, price);
+        this.getStoreItems().add(newItem);
+        notifyItemWasAdded(this, newItem);
     }
+
 
 
 
@@ -384,5 +413,18 @@ public class Store implements hasLocationInterface {
                 return item.getNormalPrice();
         }
         return Integer.MAX_VALUE;
+    }
+
+    public void updatePriceForItem(StoreItem selectedItem, int val) {
+        selectedItem.setNormalPrice(val);
+        notifyItemPriceWasUpdated(this, selectedItem);
+        getMapItemToPrices().put(selectedItem.getItemId(), val);
+    }
+
+    public void removeStoreItem(StoreItem selectedItem) {
+        InventoryItem item = this.getInventoryItemById(selectedItem.getItemId());
+        getInventoryItems().remove(item);
+        getStoreItems().remove(selectedItem);
+        notifyStoreItemRemoved(this, selectedItem);
     }
 }
