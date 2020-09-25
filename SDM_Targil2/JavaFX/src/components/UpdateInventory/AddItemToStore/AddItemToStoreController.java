@@ -119,6 +119,20 @@ public class AddItemToStoreController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        setUpFields();
+
+    }
+
+    public void refresh(){
+        chooseStoreCB.getItems().clear();
+        chooseItemCB.getItems().clear();
+        stores.clear();
+        itemsNotInSelectedStore.clear();
+        stores= FXCollections.observableArrayList(SDMManager.getInstance().getStores());
+        setUpFields();
+    }
+
+    private void setUpFields() {
         accordian.setExpandedPane(chooseStoreTitledPane);
         chooseStoreCB.setItems(stores);
         //chooseStoreCB.getSelectionModel().selectFirst();
@@ -142,7 +156,6 @@ public class AddItemToStoreController implements Initializable {
                     System.out.println("Item Change listener called!");
                     selectedItem = newValue;
                     if (newValue!= null){
-//                        accordian.setExpandedPane(choosePriceTitledPane);
                     }
                 })
         );

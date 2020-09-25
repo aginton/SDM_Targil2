@@ -203,11 +203,11 @@ public class ViewMapController implements Initializable {
         for (hasLocationInterface obj: listToGoThrough){
             if (obj.getX() > maxXValue){
                 maxXValue = obj.getX();
-                System.out.println("maxXValue was changed to " + maxXValue + "!");
+//                System.out.println("maxXValue was changed to " + maxXValue + "!");
             }
             if (obj.getY() > maxYValue){
                 maxYValue = obj.getY();
-                System.out.println("maxYValue was changed to " + maxYValue + "!");
+//                System.out.println("maxYValue was changed to " + maxYValue + "!");
             }
 
         }

@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 public class MapController implements Initializable {
 
+    private static final String TAG = "MapController";
     @FXML
     private AnchorPane mapAnchorPane;
     @FXML
@@ -34,13 +35,17 @@ public class MapController implements Initializable {
     private int maxYValue;
 
     private static final double ELEMENT_SIZE = 100;
-    private static final double GAP = ELEMENT_SIZE / 10;
+
     private int BOARDSIZE;
     private Cell[][] cell;
     private GridPane pane;
     private BorderPane borderPane;
 
     public MapController(){
+        setUpBasicData();
+    }
+
+    private void setUpBasicData(){
         pane = new GridPane();
         maxXValue = 0;
         maxYValue = 0;
@@ -50,12 +55,14 @@ public class MapController implements Initializable {
         updateMaxXandY(stores);
         this.BOARDSIZE = (maxXValue>maxYValue)? maxXValue:maxYValue;
         cell = new Cell[BOARDSIZE+1][BOARDSIZE+1];
-//        WIDTH = maxYValue;
-//        HEIGHT = maxXValue;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        setUpFields();
+    }
+
+    private void setUpFields() {
         statusMsg.setText("Nothing to see...");
 
         for (int i=0; i<=BOARDSIZE; i++){
@@ -64,9 +71,6 @@ public class MapController implements Initializable {
                 pane.add(cell[i][j],j,i);
             }
         }
-//        borderPane = new BorderPane();
-//        borderPane.setCenter(pane);
-//        borderPane.setBottom(statusMsg);
         for (Store store: stores){
             int x = store.getX();
             int y = store.getY();
@@ -91,14 +95,23 @@ public class MapController implements Initializable {
         for (hasLocationInterface obj: listToGoThrough){
             if (obj.getX() > maxXValue){
                 maxXValue = obj.getX();
-                System.out.println("maxXValue was changed to " + maxXValue + "!");
+                //System.out.println("maxXValue was changed to " + maxXValue + "!");
             }
             if (obj.getY() > maxYValue){
                 maxYValue = obj.getY();
-                System.out.println("maxYValue was changed to " + maxYValue + "!");
+                //System.out.println("maxYValue was changed to " + maxYValue + "!");
             }
 
         }
+    }
+
+    public void refresh() {
+        System.out.println(TAG + " - refresh()");
+        mapAnchorPane.getChildren().clear();
+        customers.clear();
+        stores.clear();
+        setUpBasicData();
+        setUpFields();
     }
 
     public class Cell extends Pane{
@@ -110,7 +123,7 @@ public class MapController implements Initializable {
 
         public Cell(int i, int j){
             setStyle("-fx-border-color: black");
-            this.setPrefSize(300,300);
+            this.setPrefSize(500,500);
             this.setOnMouseClicked(e->handleClick());
             type = 0;
             this.x = i;

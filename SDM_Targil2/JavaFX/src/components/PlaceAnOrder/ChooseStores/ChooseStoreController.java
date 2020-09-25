@@ -46,7 +46,7 @@ public class ChooseStoreController implements Initializable {
 
     private ObjectProperty<Customer> customerObjectProperty;
     private Customer customer;
-
+    private String TAG = "ChooseStoreController";
 
     public ChooseStoreController(){
         stores = FXCollections.observableArrayList(SDMManager.getInstance().getStores());
@@ -56,32 +56,7 @@ public class ChooseStoreController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        chooseStoreCB.getItems().addAll(stores);
-
-        chooseStoreCB.getSelectionModel().selectedItemProperty().addListener(
-                storeChangeListener = (((observable, oldValue, newValue) -> {
-                    System.out.println("Selected customer is " + newValue);
-                    selectedStore = newValue;
-                    if (customer != null){
-                        deliveryFeeLabel.setText(String.valueOf(selectedStore.getDeliveryCost(customer.getLocation())));
-                        selectedStoreLabel.setText(selectedStore.getStoreName());
-                        storeLocationLabel.setText(selectedStore.getLocation().toString());
-                        ppkLabel.setText(String.valueOf(selectedStore.getDeliveryPpk()));
-                    }
-                }))
-        );
-//        chooseStoreCB.getSelectionModel().selectFirst();
-
-
-
-
-        customerObjectProperty.addListener(((observable, oldValue, newValue) -> {
-            System.out.println("ChooseStoreController customerChangeListener called!");
-            if (newValue != null){
-                deliveryFeeLabel.setText(String.valueOf(selectedStore.getDeliveryCost(newValue.getLocation())));
-            }
-        }));
+        setUpFields();
     }
 
 
@@ -110,4 +85,36 @@ public class ChooseStoreController implements Initializable {
     }
 
 
+    public void refresh() {
+        System.out.println("\n" + TAG + " - refresh()");
+        chooseStoreCB.getItems().clear();
+        stores.clear();
+        stores = FXCollections.observableArrayList(SDMManager.getInstance().getStores());
+        customerObjectProperty = new SimpleObjectProperty<>();
+        setUpFields();
+    }
+
+    private void setUpFields() {
+        chooseStoreCB.getItems().addAll(stores);
+
+        chooseStoreCB.getSelectionModel().selectedItemProperty().addListener(
+                storeChangeListener = (((observable, oldValue, newValue) -> {
+                    System.out.println("Selected customer is " + newValue);
+                    selectedStore = newValue;
+                    if (customer != null){
+                        deliveryFeeLabel.setText(String.valueOf(selectedStore.getDeliveryCost(customer.getLocation())));
+                        selectedStoreLabel.setText(selectedStore.getStoreName());
+                        storeLocationLabel.setText(selectedStore.getLocation().toString());
+                        ppkLabel.setText(String.valueOf(selectedStore.getDeliveryPpk()));
+                    }
+                }))
+        );
+
+        customerObjectProperty.addListener(((observable, oldValue, newValue) -> {
+            System.out.println("ChooseStoreController customerChangeListener called!");
+            if (newValue != null){
+                deliveryFeeLabel.setText(String.valueOf(selectedStore.getDeliveryCost(newValue.getLocation())));
+            }
+        }));
+    }
 }

@@ -2,6 +2,9 @@ package components.UpdateInventory;
 
 import Logic.Inventory.Inventory;
 import Logic.SDM.SDMManager;
+import components.UpdateInventory.AddItemToStore.AddItemToStoreController;
+import components.UpdateInventory.ChangeStoreItemPrice.ChangeStoreItemPriceController;
+import components.UpdateInventory.RemoveItemFromStore.RemoveItemFromStoreController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,19 +53,40 @@ public class UpdateInventoryContainerController{
     }
 
     private Node addItemRef, removeItemRef, updatePriceRef;
+    private AddItemToStoreController addItemToStoreController;
+    private RemoveItemFromStoreController removeItemFromStoreController;
+    private ChangeStoreItemPriceController changeStoreItemPriceController;
 
     private Inventory inventory;
 
     public UpdateInventoryContainerController(){
         inventory = SDMManager.getInstance().getInventory();
         try {
-            addItemRef = FXMLLoader.load(getClass().getResource("/components/UpdateInventory/AddItemToStore/AddItemToStore.fxml"));
-            removeItemRef = FXMLLoader.load(getClass().getResource("/components/UpdateInventory/RemoveItemFromStore/RemoveItemFromStore.fxml"));
-            updatePriceRef = FXMLLoader.load(getClass().getResource("/components/UpdateInventory/ChangeStoreItemPrice/ChangeStoreItemPrice.fxml"));
+            FXMLLoader addItemLoader = new FXMLLoader();
+            addItemLoader.setLocation(getClass().getResource("/components/UpdateInventory/AddItemToStore/AddItemToStore.fxml"));
+            addItemRef = addItemLoader.load();
+            addItemToStoreController = addItemLoader.getController();
+
+            FXMLLoader removeItemLoader = new FXMLLoader();
+            removeItemLoader.setLocation(getClass().getResource("/components/UpdateInventory/RemoveItemFromStore/RemoveItemFromStore.fxml"));
+            removeItemRef = removeItemLoader.load();
+            removeItemFromStoreController = removeItemLoader.getController();
+
+            FXMLLoader changePriceLoader = new FXMLLoader();
+            changePriceLoader.setLocation(getClass().getResource("/components/UpdateInventory/ChangeStoreItemPrice/ChangeStoreItemPrice.fxml"));
+            updatePriceRef = changePriceLoader.load();
+            changeStoreItemPriceController = changePriceLoader.getController();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
+    public void refreshOthers() {
+
+        addItemToStoreController.refresh();
+        removeItemFromStoreController.refresh();
+        changeStoreItemPriceController.refresh();
+    }
 }

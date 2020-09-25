@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ViewOrdersController implements OrderChangeInterface {
+    private static final String TAG = "ViewOrdersController";
     @FXML
     private AnchorPane orderViewAnchorPane;
 
@@ -51,26 +52,13 @@ public class ViewOrdersController implements OrderChangeInterface {
         }
     }
 
-//    public void initialize(){
-////        System.out.println("Inside OrderViewController Initializer");
-////        orders.addListener((InvalidationListener) observable -> updateOrderHistoryView());
-//
-//    }
+    public void refresh() {
+        System.out.println(TAG + " - refresh()");
+        orderHistoryFlowpane.getChildren().clear();
+        orders.clear();
+        orders = SDMManager.getInstance().getOrderHistory().getOrdersObservableList();
+        SDMManager.getInstance().getOrderHistory().addOrdersChangeListener(this);
 
-//    public void updateOrderHistoryView() {
-//            try {
-//                orderHistoryFlowpane.getChildren().clear();
-//                for (Order order: orders){
-//                FXMLLoader loader = new FXMLLoader(getClass().getResource("/components/ViewInfo/ViewOrders/SingleOrder/SingleOrderView.fxml"));
-//                Node n = loader.load();
-//                SingleOrderViewController controller = loader.getController();
-//                controller.setOrder(order);
-//                orderHistoryFlowpane.getChildren().add(n);
-//            }
-//            }catch (IOException e) {
-//                e.printStackTrace();
-//        }
-//    }
-
+    }
 
 }

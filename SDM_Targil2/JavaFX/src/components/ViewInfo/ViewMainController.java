@@ -1,5 +1,10 @@
 package components.ViewInfo;
 
+import components.ViewInfo.ViewItems.ViewItemsController;
+import components.ViewInfo.ViewMap.MapBackup.ViewMapController;
+import components.ViewInfo.ViewMap.MapController;
+import components.ViewInfo.ViewOrders.ViewOrdersController;
+import components.ViewInfo.ViewStore.ViewStoreController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,19 +41,35 @@ public class ViewMainController implements Initializable {
     private AnchorPane childAnchorPane;
 
     private Node viewMapRef, viewOrderHistoryRef, viewStoresRef, viewInventoryItemsRef, storesListRef;
+    private ViewStoreController viewStoreController;
+    private ViewOrdersController viewOrdersController;
+    private ViewItemsController viewItemsController;
+    private MapController viewMapController;
+    private String TAG = "ViewMainController";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-
             System.out.println("Inside MainAppController initialize().");
-            viewStoresRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewStore/ViewStore.fxml"));
-            viewInventoryItemsRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewItems/ViewItems.fxml"));
-            viewOrderHistoryRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewOrders/ViewOrders.fxml"));
-            viewMapRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewMap/Map.fxml"));
-//            viewMapRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewMap/TilePaneMap.fxml"));
+            FXMLLoader viewStoresLoader = new FXMLLoader();
+            viewStoresLoader.setLocation(getClass().getResource("/components/ViewInfo/ViewStore/ViewStore.fxml"));
+            viewStoresRef = viewStoresLoader.load();
+            viewStoreController = viewStoresLoader.getController();
 
+            FXMLLoader viewItemsLoader = new FXMLLoader();
+            viewItemsLoader.setLocation(getClass().getResource("/components/ViewInfo/ViewItems/ViewItems.fxml"));
+            viewInventoryItemsRef = viewItemsLoader.load();
+            viewItemsController = viewItemsLoader.getController();
 
+            FXMLLoader viewOrdersLoader = new FXMLLoader();
+            viewOrdersLoader.setLocation(getClass().getResource("/components/ViewInfo/ViewOrders/ViewOrders.fxml"));
+            viewOrderHistoryRef = viewOrdersLoader.load();
+            viewOrdersController = viewOrdersLoader.getController();
+
+            FXMLLoader viewMapLoader = new FXMLLoader();
+            viewMapLoader.setLocation(getClass().getResource("/components/ViewInfo/ViewMap/Map.fxml"));
+            viewMapRef = viewMapLoader.load();
+            viewMapController = viewMapLoader.getController();
 
             loadNewPane(viewStoresRef);
 
@@ -91,4 +112,15 @@ public class ViewMainController implements Initializable {
         AnchorPane.setTopAnchor(paneToLoad, 0.0);
     }
 
+    public void resetAllFields() {
+
+    }
+
+    public void refreshOthers() {
+        System.out.println("\n" + TAG + " - refreshOthers() called!");
+        viewStoreController.refresh();
+        viewItemsController.refresh();
+        viewOrdersController.refresh();
+        viewMapController.refresh();
+    }
 }
