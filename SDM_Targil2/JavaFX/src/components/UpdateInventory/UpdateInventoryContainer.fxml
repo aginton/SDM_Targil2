@@ -20,7 +20,7 @@
           <RowConstraints minHeight="10.0" percentHeight="34.0" prefHeight="30.0" vgrow="NEVER" />
         </rowConstraints>
          <children>
-            <StackPane prefHeight="150.0" prefWidth="200.0" stylesheets="@../../CSS/MainAppCSS.css">
+            <StackPane prefHeight="150.0" prefWidth="200.0" stylesheets="@../Main/MainAppCSS.css">
                <children>
                   <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddButtonAction" text="Add" />
                </children>

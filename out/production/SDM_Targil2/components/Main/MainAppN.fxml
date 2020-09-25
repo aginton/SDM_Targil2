@@ -9,105 +9,93 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainBorderPane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.Main.MainAppNController">
-    <top>
-        <Pane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="145.0" prefWidth="837.0" styleClass="head-background" stylesheets="@/CSS/styles.css" BorderPane.alignment="CENTER">
-            <children>
-                <Label layoutX="181.0" layoutY="35.0" prefHeight="36.0" prefWidth="191.0" text="Super Duper Market">
-                    <font>
-                        <Font size="20.0" />
-                    </font>
-                </Label>
-                <Label layoutX="192.0" layoutY="63.0" text="text text">
-                    <font>
-                        <Font size="11.0" />
-                    </font>
-                </Label>
-                <Label layoutX="183.0" layoutY="107.0" text="File:">
-                    <font>
-                        <Font size="11.0" />
-                    </font>
-                </Label>
-                <Label fx:id="filePath" layoutX="212.0" layoutY="107.0" prefHeight="16.0" prefWidth="522.0" text="(file path)">
-                    <font>
-                        <Font name="System Italic" size="11.0" />
-                    </font>
-                </Label>
-                <ImageView fitHeight="110.0" fitWidth="116.0" layoutX="55.0" layoutY="24.0" opacity="0.92" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@/resources/logo.png" />
-                    </image>
-                </ImageView>
-                <VBox fillWidth="false" layoutX="842.0" layoutY="16.0">
-                    <children>
-                        <ComboBox fx:id="themeComboBox" prefWidth="150.0" promptText="Change theme" />
-                    </children>
-                </VBox>
-            </children>
-        </Pane>
-    </top>
+<BorderPane fx:id="mainBorderPane" prefHeight="700.0" prefWidth="1000.0" stylesheets="@MainAppCSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.Main.MainAppNController">
     <left>
-        <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="455.0" prefWidth="250.0" style="-fx-background-color: ffff;" BorderPane.alignment="CENTER">
+        <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="221.0" styleClass="menu-background" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="homeButton" alignment="BASELINE_LEFT" onAction="#HomeButtonAction" prefHeight="50.0" prefWidth="224.0" text="Home" textFill="#5b5858">
-                    <VBox.margin>
-                        <Insets bottom="10.0" top="20.0" />
-                    </VBox.margin>
+            <Label styleClass="menu-header" text="MENU">
+               <VBox.margin>
+                  <Insets left="5.0" top="30.0" />
+               </VBox.margin>
+            </Label>
+                <Button fx:id="homeButton" alignment="BASELINE_LEFT" graphicTextGap="12.0" onAction="#HomeButtonAction" prefHeight="50.0" prefWidth="226.0" styleClass="menu_button" stylesheets="@MainAppCSS.css" text="Home" textFill="#5b5858">
                     <font>
                         <Font size="14.0" />
                     </font>
-                    <graphic>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ababab" height="36.0" opacity="0.93" smooth="false" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="5.0" />
-                    </graphic>
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/menu_icons/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
                 </Button>
-                <Button fx:id="loadButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="90.0" onAction="#loadButtonAction" prefHeight="50.0" prefWidth="224.0" text="Load" textFill="#5b5858">
+                <Button fx:id="loadButton" alignment="BASELINE_LEFT" graphicTextGap="12.0" layoutX="10.0" layoutY="90.0" onAction="#loadButtonAction" prefHeight="50.0" prefWidth="224.0" styleClass="menu_button" text="Load" textFill="#5b5858">
                     <font>
                         <Font size="14.0" />
                     </font>
-                    <graphic>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ababab" height="36.0" opacity="0.93" smooth="false" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="5.0" />
-                    </graphic>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/menu_icons/load.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+                </Button>
+                <Button fx:id="viewButton" alignment="BASELINE_LEFT" graphicTextGap="12.0" layoutX="10.0" layoutY="140.0" onAction="#ViewButtonAction" prefHeight="50.0" prefWidth="224.0" styleClass="menu_button" text="View" textFill="#5b5858">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/menu_icons/view.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+                </Button>
+                <Button fx:id="placeAnOrderButton" alignment="BASELINE_LEFT" graphicTextGap="12.0" layoutX="10.0" layoutY="190.0" onAction="#PlaceAnOrderAction" prefHeight="50.0" prefWidth="224.0" styleClass="menu_button" text="Place an order" textFill="#5b5858">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/menu_icons/placeanorder.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+                </Button>
+                <Button fx:id="updateButton" alignment="BASELINE_LEFT" graphicTextGap="12.0" layoutX="10.0" layoutY="240.0" onAction="#UpdateAction" prefHeight="50.0" prefWidth="224.0" styleClass="menu_button" text="Update" textFill="#5b5858">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
                     <VBox.margin>
                         <Insets bottom="10.0" />
                     </VBox.margin>
-                </Button>
-                <Button fx:id="viewButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="140.0" onAction="#ViewButtonAction" prefHeight="50.0" prefWidth="224.0" text="View" textFill="#5b5858">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                    <graphic>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ababab" height="36.0" opacity="0.93" smooth="false" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="5.0" />
-                    </graphic>
-                    <VBox.margin>
-                        <Insets bottom="10.0" />
-                    </VBox.margin>
-                </Button>
-                <Button fx:id="placeAnOrderButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="190.0" onAction="#PlaceAnOrderAction" prefHeight="50.0" prefWidth="224.0" text="Place an order" textFill="#5b5858">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                    <graphic>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ababab" height="36.0" opacity="0.93" smooth="false" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="5.0" />
-                    </graphic>
-                    <VBox.margin>
-                        <Insets bottom="10.0" />
-                    </VBox.margin>
-                </Button>
-                <Button fx:id="updateButton" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="240.0" onAction="#UpdateAction" prefHeight="50.0" prefWidth="224.0" text="Update" textFill="#5b5858">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                    <graphic>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ababab" height="36.0" opacity="0.93" smooth="false" stroke="BLACK" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="5.0" />
-                    </graphic>
-                    <VBox.margin>
-                        <Insets bottom="10.0" />
-                    </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/menu_icons/update.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
                 </Button>
             </children>
         </VBox>
@@ -131,11 +119,63 @@
             </BorderPane.margin>
         </AnchorPane>
     </center>
-    <bottom>
-        <AnchorPane prefHeight="22.0" prefWidth="962.0" BorderPane.alignment="CENTER">
-            <children>
-                <Label layoutX="10.0" layoutY="3.0" text="BOTTOM" />
-            </children>
-        </AnchorPane>
-    </bottom>
+   <top>
+      <HBox fx:id="borderPaneTop" prefHeight="144.0" prefWidth="1000.0" spacing="20.0" styleClass="head-background" BorderPane.alignment="TOP_RIGHT">
+         <children>
+                <ImageView fitHeight="168.0" fitWidth="175.0" opacity="0.92" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../resources/logo.png" />
+                    </image>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+                </ImageView>
+            <VBox alignment="CENTER_LEFT" prefHeight="148.0" prefWidth="580.0">
+               <children>
+                      <Label fx:id="superDuperMarketHeader" prefHeight="25.0" prefWidth="256.0" text="Super Duper Market" textFill="WHITE">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                      </Label>
+                      <Label text="text" textFill="WHITE">
+                          <font>
+                              <Font size="14.0" />
+                          </font>
+                      </Label>
+                  <HBox prefHeight="96.0" prefWidth="271.0" spacing="10.0">
+                     <children>
+                            <Label text="File:" textFill="WHITE">
+                                <font>
+                                    <Font size="11.0" />
+                                </font>
+                            </Label>
+                            <Label fx:id="filePath" prefHeight="16.0" prefWidth="522.0" text="(file path)">
+                                <font>
+                                    <Font name="System Italic" size="11.0" />
+                                </font>
+                            </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets top="20.0" />
+               </HBox.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+            <VBox alignment="TOP_RIGHT" prefHeight="144.0" prefWidth="195.0">
+               <children>
+                        <ComboBox fx:id="themeComboBox" prefWidth="150.0" promptText="Change theme" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </top>
 </BorderPane>

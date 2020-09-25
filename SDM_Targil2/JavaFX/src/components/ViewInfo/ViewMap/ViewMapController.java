@@ -23,7 +23,26 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
-//https://stackoverflow.com/questions/31095954/how-to-get-gridpane-row-and-column-ids-on-mouse-entered-in-each-cell-of-grid-in
+//https://stackoverflow.com/questions/31095954/how-to-get-gridpane-row-and-colu
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// תץ-of-grid-in
 //https://www.google.com/search?q=javafx+add+label+gridpane+x+y+coordinates&rlz=1C1EKKP_enUS760IL760&sxsrf=ALeKk03VOboLNwLYypm-xRPIlKQqjKveNA:1600323798318&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiIsZjcxu_rAhVO_aQKHbtoBZYQ_AUoAXoECBoQAw&biw=1920&bih=1007#imgrc=_t2oQARJUl4BiM&imgdii=bIACUuTGBnmNbM
 
 
@@ -60,8 +79,8 @@ public class ViewMapController implements Initializable {
 
     private GridPane grid;
     public static int TILE_SIZE = 100;
-    public static int WIDTH = 8;
-    public static int HEIGHT = 8;
+    public static int WIDTH = 10;
+    public static int HEIGHT = 10;
     private Group tileGroup = new Group();
     private Group pieceGroup = new Group();
     Color[] colors = {Color.GRAY, Color.BLUE, Color.GREEN, Color.RED};

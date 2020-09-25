@@ -24,7 +24,7 @@ public class SDMApp extends Application {
         Parent root = fxmlLoader.load(url.openStream());
 
         Scene scene = new Scene(root);
-        final String cssURL = this.getClass().getResource("/CSS/MainAppCSS.css").toExternalForm();
+        final String cssURL = this.getClass().getResource("/components/Main/MainAppCSS.css").toExternalForm();
         scene.getStylesheets().add(cssURL);
         primaryStage.setScene(scene);
         primaryStage.show();

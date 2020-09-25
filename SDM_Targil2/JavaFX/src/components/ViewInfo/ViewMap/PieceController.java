@@ -25,7 +25,7 @@ public class PieceController {
         StringBuilder sb = new StringBuilder();
 
         if (obj.getClass().equals(Store.class)){
-            Image imageObj = new Image("/resources/storecute.jpg");
+            Image imageObj = new Image("/resources/storecute.png");
             image = new ImageView(imageObj);
             Store store = (Store)obj;
             System.out.println("I see you passed in a store!");

@@ -46,7 +46,7 @@ public class Piece extends StackPane {
 
     public Piece(Store store){
         clazz = Store.class;
-        Image imageObj = new Image("/resources/storecute.jpg");
+        Image imageObj = new Image("/resources/storecute.png");
         image = new ImageView(imageObj);
         obj = store;
 

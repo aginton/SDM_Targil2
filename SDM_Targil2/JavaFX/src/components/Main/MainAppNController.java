@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -33,7 +34,7 @@ public class MainAppNController {
     private Label filePath;
 
     @FXML
-    private ComboBox<?> themeComboBox;
+    private ComboBox<String> themeComboBox;
 
     @FXML
     private Button homeButton;
@@ -55,8 +56,6 @@ public class MainAppNController {
 
     @FXML
     private Label errorMessageLabel;
-
-
 
     private Node orderMenuRef, viewMenuRef, updateRef;
     private UpdateInventoryContainerController updateController;
@@ -93,6 +92,10 @@ public class MainAppNController {
         viewButton.disableProperty().bind(isFileSelected.not());
         placeAnOrderButton.disableProperty().bind(isFileSelected.not());
         updateButton.disableProperty().bind(isFileSelected.not());
+
+        themeComboBox.getItems().add("blue");
+        themeComboBox.getItems().add("green");
+        themeComboBox.getItems().add("dark");
     }
 
 
