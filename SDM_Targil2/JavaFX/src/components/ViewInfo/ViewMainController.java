@@ -1,7 +1,6 @@
 package components.ViewInfo;
 
 import components.ViewInfo.ViewItems.ViewItemsController;
-import components.ViewInfo.ViewMap.MapBackup.ViewMapController;
 import components.ViewInfo.ViewMap.MapController;
 import components.ViewInfo.ViewOrders.ViewOrdersController;
 import components.ViewInfo.ViewStore.ViewStoreController;

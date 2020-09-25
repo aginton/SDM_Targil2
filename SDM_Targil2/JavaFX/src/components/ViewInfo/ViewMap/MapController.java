@@ -123,7 +123,9 @@ public class MapController implements Initializable {
 
         public Cell(int i, int j){
             setStyle("-fx-border-color: black");
-            this.setPrefSize(500,500);
+            //this.setPrefSize(200,200);
+            this.setMinSize(50,50);
+            this.setMaxSize(100,100);
             this.setOnMouseClicked(e->handleClick());
             type = 0;
             this.x = i;
@@ -136,7 +138,7 @@ public class MapController implements Initializable {
 
             if (type == 1){
                 Store store = (Store) arg;
-                StringBuilder sb = new StringBuilder("Customer")
+                StringBuilder sb = new StringBuilder("Store")
                         .append("\nName: "+ store.getStoreName())
                         .append("\nLocation: "+ store.getLocation())
                         .append("\nNumber of orders: " + store.getStoreOrders().size());
@@ -149,8 +151,18 @@ public class MapController implements Initializable {
                 ellipse.radiusYProperty().bind(this.heightProperty().divide(2).subtract(10));
                 ellipse.setStroke(Color.BLACK);
                 ellipse.setFill(Color.RED);
+                setStyle("-fx-background-color: hotpink");
                 getChildren().add(ellipse);
+
+                store.totalNumberOfOrdersProperty().addListener(((observable, oldValue, newValue) -> {
+                    StringBuilder sb2 = new StringBuilder("Store")
+                            .append("\nName: "+ store.getStoreName())
+                            .append("\nLocation: "+ store.getLocation())
+                            .append("\nNumber of orders: " + store.getStoreOrders().size());
+                    msg = sb2.toString();
+                }));
             }
+
             if (type == 2){
                 Customer customer = (Customer) arg;
                 StringBuilder sb = new StringBuilder("Customer")
@@ -166,6 +178,7 @@ public class MapController implements Initializable {
                 ellipse.setStroke(Color.BLACK);
                 ellipse.setFill(Color.BLUE);
                 getChildren().add(ellipse);
+                setStyle("-fx-background-color: chocolate");
             }
         }
 
