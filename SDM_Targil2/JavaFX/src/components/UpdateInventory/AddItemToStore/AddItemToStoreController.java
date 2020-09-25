@@ -85,8 +85,7 @@ public class AddItemToStoreController implements Initializable {
         int val;
         if ((val=isTextAPositiveInt(priceTextField.getText().trim())) > 0){
             SDMManager.getInstance().addInventoryItemToStore(selectedItem,selectedStore,val);
-            StoreItem newItem = new StoreItem(selectedItem,val);
-            selectedStore.getStoreItems().add(newItem);
+            selectedStore.addItemToStoreInventory(selectedItem, val);
             errorLabel.setVisible(false);
             accordian.setExpandedPane(chooseStoreTitledPane);
             priceTextField.clear();

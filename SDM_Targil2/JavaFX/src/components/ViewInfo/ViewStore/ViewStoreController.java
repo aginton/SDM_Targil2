@@ -5,7 +5,6 @@ import Logic.Order.Order;
 import Logic.Order.OrderId;
 import Logic.Order.StoreItem;
 import Logic.SDM.SDMManager;
-import Logic.Store.DiscountOffer;
 import Logic.Store.Store;
 import Logic.Store.StoreChangeListener;
 import javafx.beans.property.ObjectProperty;
@@ -82,6 +81,8 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
     @FXML
     private TableColumn<StoreItem, Float> itemAmountSoldColumn;
 
+
+
     @FXML
     private TableView storeOrdersTableView;
 
@@ -112,8 +113,8 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
     // transformed into "update" change of ListChangeListener.
     private ObservableList<Store> observableStoresList;
     private ChangeListener<Store> storeChangeListener;
-
     private ObservableList<Order> storeOrders;
+    private String TAG = "ViewStoresController";
 
     public ViewStoreController(){
         //observableStoresList = FXCollections.observableList(SDMManager.getInstance().getStores());
@@ -165,7 +166,7 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
 
         orderIDColumn.setCellValueFactory(new PropertyValueFactory<Order,ObjectProperty<OrderId>>("orderId"));
         orderDateColumn.setCellValueFactory(new PropertyValueFactory<Order,LocalDate>("orderDate"));
-        deliveryFeeColumn.setCellValueFactory(new PropertyValueFactory<Order,Float>("DeliveryCost"));
+        deliveryFeeColumn.setCellValueFactory(new PropertyValueFactory<Order,Float>("totalDeliveryCost"));
 
         numItemsInCartColumn.setCellValueFactory(cellData->{
             Order order = cellData.getValue();
@@ -182,7 +183,7 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
 
         orderTotalColumn.setCellValueFactory(cellData->{
             Order order = cellData.getValue();
-            String res = String.valueOf(order.getCartTotal()+order.getDeliveryCost());
+            String res = String.valueOf(order.getCartTotal()+order.getTotalDeliveryCost());
             return new ReadOnlyStringWrapper(res);
         });
     }
@@ -204,6 +205,40 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
             storeOrdersTableView.setItems(storeOrders);
             updateBasicStoreInfo(selectedStore);
             storeInventoryTableView.refresh();
+        }
+    }
+
+    @Override
+    public void orderWasAdded(Store store, Order order) {
+        System.out.println(TAG + " - Store " + store.getStoreName() + " received a new Order!");
+        if (selectedStore == store){
+            storeOrders.add(order);
+            storeOrdersTableView.refresh();
+        }
+        storeInventoryTableView.refresh();
+    }
+
+    @Override
+    public void itemPriceChanged(Store store, StoreItem item) {
+        System.out.println(TAG + " - Store " + store.getStoreName() + " sees price of item " + item.getItemName() + " changed!");
+        if (selectedStore == store){
+            storeInventoryTableView.setItems(FXCollections.observableList(store.getStoreItems()));
+        }
+    }
+
+    @Override
+    public void newStoreItemAdded(Store store, StoreItem item) {
+        System.out.println(TAG + " - Store " + store.getStoreName() + " sees item " + item.getItemName() + " was added!");
+        if (selectedStore == store){
+            storeInventoryTableView.setItems(FXCollections.observableList(store.getStoreItems()));
+        }
+    }
+
+    @Override
+    public void storeItemWasDeleted(Store store, StoreItem item) {
+        System.out.println(TAG + " - Store " + store.getStoreName() + " sees item " + item.getItemName() + " was removed!");
+        if (selectedStore == store){
+            storeInventoryTableView.setItems(FXCollections.observableList(store.getStoreItems()));
         }
     }
 }

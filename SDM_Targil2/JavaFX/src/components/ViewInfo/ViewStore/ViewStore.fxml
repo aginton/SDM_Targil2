@@ -78,17 +78,18 @@
                               <TableColumn fx:id="itemCategoryColumn" prefWidth="75.0" text="Category" />
                               <TableColumn fx:id="itemPriceColumn" prefWidth="75.0" text="Price" />
                               <TableColumn fx:id="itemAmountSoldColumn" prefWidth="127.0" text="Amount Sold" />
+                              <TableColumn fx:id="discountColumn" prefWidth="75.0" text="In Discount" />
                           </columns>
                         </TableView>
                         <Label text="Order History:" GridPane.rowIndex="8" />
                         <TableView fx:id="storeOrdersTableView" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="9" GridPane.rowSpan="2">
                           <columns>
-                            <TableColumn fx:id="orderDateColumn" prefWidth="75.0" text="Date" />
+                            <TableColumn fx:id="orderDateColumn" prefWidth="67.0" text="Date" />
                             <TableColumn fx:id="orderIDColumn" prefWidth="75.0" text="Order ID" />
-                              <TableColumn fx:id="numItemsInCartColumn" prefWidth="95.0" text="# Items in Cart" />
-                              <TableColumn fx:id="cartSubtotalColumn" prefWidth="75.0" text="Cart Subtotal" />
-                              <TableColumn fx:id="deliveryFeeColumn" prefWidth="75.0" text="Delivery Fee" />
-                              <TableColumn fx:id="orderTotalColumn" prefWidth="75.0" text="Total" />
+                              <TableColumn fx:id="numItemsInCartColumn" prefWidth="82.0" text="# Items in Cart" />
+                              <TableColumn fx:id="cartSubtotalColumn" prefWidth="96.0" text="Cart Subtotal" />
+                              <TableColumn fx:id="deliveryFeeColumn" prefWidth="84.0" text="Delivery Fee" />
+                              <TableColumn fx:id="orderTotalColumn" prefWidth="66.0" text="Total" />
                           </columns>
                         </TableView>
                         <Label fx:id="storeIdLabel" text="Label" GridPane.columnIndex="1" />

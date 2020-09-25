@@ -84,8 +84,7 @@ public class RemoveItemFromStoreController implements Initializable {
     @FXML
     void deleteButtonAction(ActionEvent event) {
         InventoryItem item = selectedStore.getInventoryItemById(selectedItem.getItemId());
-        selectedStore.getInventoryItems().remove(item);
-        selectedStore.getStoreItems().remove(selectedItem);
+        selectedStore.removeStoreItem(selectedItem);
         inventory.getMapItemsToStoresWithItem().get(item).remove(selectedStore);
         inventory.updateAvePrice();
         accordian.setExpandedPane(chooseItemsPane);

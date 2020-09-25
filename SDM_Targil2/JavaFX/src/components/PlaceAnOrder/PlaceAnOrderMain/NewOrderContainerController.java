@@ -342,18 +342,16 @@ public class NewOrderContainerController implements Initializable {
         String dateStr = new SimpleDateFormat("dd/MM\tHH:mm").format(date);
 
 
-        Order order = new Order(customer.getLocation(),
+        Order order = new Order(customer,
                 date,
-                6,
-                currentCart,
-                mapStoresToCarts.keySet(),
-                orderType);
+                orderType,
+                deliveryFee,mapStoresToCarts);
 
         if (orderType==eOrderType.STATIC_ORDER)
             SDMManager.getInstance().addNewStaticOrder(selectedStore, order);
 
         if (orderType==eOrderType.DYNAMIC_ORDER)
-            SDMManager.getInstance().addNewDynamicOrder(mapStoresToCarts.keySet(), order);
+            SDMManager.getInstance().addNewDynamicOrder(order);
 
 
         resetInfo();

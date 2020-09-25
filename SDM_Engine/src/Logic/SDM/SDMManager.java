@@ -170,7 +170,8 @@ public class SDMManager extends SDMFileVerifier{
         return "";
     }
 
-    public void addNewDynamicOrder(Set<Store> storesBoughtFrom, Order order) {
+    public void addNewDynamicOrder(Order order) {
+        Set<Store> storesBoughtFrom = order.getStoresBoughtFrom();
         addSplittedOrdersToStores(storesBoughtFrom, order);
         orderHistory.addOrder(order);
         inventory.updateSalesMap(order);
@@ -179,16 +180,18 @@ public class SDMManager extends SDMFileVerifier{
     private void addSplittedOrdersToStores(Set<Store> storesBoughtFrom, Order order) {
         storesBoughtFrom.forEach(store -> {
             Cart cartForStore = ExtractCartForStore(store, order);
-            float deliveryCostForStore = store.getDeliveryCost(order.getUserLocation());
-
+            float deliveryCostForStore = store.getDeliveryCost(order.getCustomer().getLocation());
             Set<Store> storeForThisSubOrder = new HashSet<Store>();
             storeForThisSubOrder.add(store);
-            Order orderForStore = new Order(order.getUserLocation(),
+            HashMap<Store,Cart> mapStoreToCart = new HashMap<>();
+            mapStoreToCart.put(store,cartForStore);
+
+            Order orderForStore = new Order(order.getCustomer(),
                     order.getOrderDate(),
+                    eOrderType.SPLITTED_DYNAMIC_ORDER,
                     deliveryCostForStore,
-                    cartForStore,
-                    storeForThisSubOrder,
-                    eOrderType.SPLITTED_DYNAMIC_ORDER);
+                    mapStoreToCart
+                    );
             store.addOrder(orderForStore);
         });
     }

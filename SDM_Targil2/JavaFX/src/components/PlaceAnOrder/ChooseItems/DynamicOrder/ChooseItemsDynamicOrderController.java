@@ -380,6 +380,7 @@ public class ChooseItemsDynamicOrderController implements Initializable {
 
     public void resetFields() {
         mapItemsChosenToAmount.clear();
+        setDeliveryFeeTotal(0);
 //        mapStoreToCartItems.clear();
         mapStoresToCarts.clear();
         cartsSubtotal.setValue(0);
