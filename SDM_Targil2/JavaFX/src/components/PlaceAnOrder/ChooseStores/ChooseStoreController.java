@@ -85,6 +85,13 @@ public class ChooseStoreController implements Initializable {
     }
 
 
+    public boolean hasNecessaryInformation(){
+        if (selectedStore == null){
+            System.out.println("Store can't be null!");
+            return false;
+        }
+        return true;
+    }
 
     public Store getSelectedStore() {
         return selectedStore;
