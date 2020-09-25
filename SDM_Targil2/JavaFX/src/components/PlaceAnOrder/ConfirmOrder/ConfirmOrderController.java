@@ -163,8 +163,7 @@ public class ConfirmOrderController implements Initializable {
         });
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void setUpTables(){
         discountCol.setCellValueFactory(new PropertyValueFactory<CartItem,String>("discountName"));
         itemIdColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Integer>("itemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<CartItem,String>("itemName"));
@@ -177,13 +176,27 @@ public class ConfirmOrderController implements Initializable {
         });
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setUpTables();
+    }
+
 
     public void resetFields() {
+        mapStoreToCartItems.clear();
+        customerObjectProperty = new SimpleObjectProperty<>();
+        localDateObjectProperty = new SimpleObjectProperty<>();
         deliveryFee = 0;
         orderTotal = 0;
         cartsSubtotal = 0;
         cartItems.clear();
-    }
+        deliveryFee = 0;
+        cartsSubtotal = 0;
+        orderTotal = 0;
+        orderItemsTableView.getItems().clear();
+        cartItems =FXCollections.observableArrayList();
 
+        setUpTables();
+    }
 
 }

@@ -1,9 +1,11 @@
-package components.ViewInfo.ViewMap;
+package components.ViewInfo.ViewMap.MapBackup;
 
 import Logic.Customers.Customer;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
 import Logic.Interfaces.hasLocationInterface;
+import components.ViewInfo.ViewMap.MapBackup.Piece;
+import components.ViewInfo.ViewMap.MapBackup.Tile;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +18,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.fxml.FXML;
-import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
 import java.util.List;
@@ -31,9 +32,6 @@ import java.util.ResourceBundle;
 //https://stackoverflow.com/questions/25403267/how-to-maintain-gridpanes-fixed-size-after-adding-elemnts-dynamically
 
 public class ViewMapController implements Initializable {
-
-//    @FXML
-//    private GridPane gridpane;
 
     @FXML
     private AnchorPane scrollpChildAnchorPane;
@@ -78,6 +76,7 @@ public class ViewMapController implements Initializable {
         WIDTH = maxYValue;
         HEIGHT = maxXValue;
         grid = new GridPane();
+        grid.setGridLinesVisible(true);
     }
 
     @Override
@@ -104,17 +103,24 @@ public class ViewMapController implements Initializable {
     }
 
     private void createBoard() {
+
         for (int row = 0; row < maxYValue; row++) {
             for (int col = 0; col < maxXValue; col++) {
                 Tile tile = new Tile(col, row);
-                Color color;
-                if ((row + col) % 2 == 0) color = Color.WHITE;
-                else color = Color.BLACK;
-                tile.setFill(color);
+                Color color = Color.CORAL;
+                AnchorPane anchorPane = new AnchorPane();
+                anchorPane.getChildren().add(tile);
+                AnchorPane.setTopAnchor(tile,0.0);
+                AnchorPane.setRightAnchor(tile,0.0);
+                AnchorPane.setLeftAnchor(tile,0.0);
+                AnchorPane.setBottomAnchor(tile,0.0);
+//                if ((row + col) % 2 == 0) color = Color.WHITE;
+//                else color = Color.BLACK;
+                //tile.setFill(color);
 
-                grid.add(tile, col, row);
-                tile.getRectangle().widthProperty().bind(grid.widthProperty().divide(ELEMENT_SIZE));
-                tile.getRectangle().heightProperty().bind(grid.heightProperty().divide(ELEMENT_SIZE));
+                grid.add(anchorPane, col, row);
+                //tile.getRectangle().widthProperty().bind(grid.widthProperty().divide(ELEMENT_SIZE));
+                //tile.getRectangle().heightProperty().bind(grid.heightProperty().divide(ELEMENT_SIZE));
             }
         }
     }

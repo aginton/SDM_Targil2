@@ -1,4 +1,4 @@
-package components.ViewInfo.ViewMap;
+package components.ViewInfo.ViewMap.MapBackup;
 
 import Logic.Customers.Customer;
 import Logic.Store.Store;
@@ -8,14 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
-import static components.ViewInfo.ViewMap.ViewMapController.TILE_SIZE;
 
 public class Piece extends StackPane {
     private Object obj;
@@ -91,7 +87,7 @@ public class Piece extends StackPane {
         try {
             System.out.println("Yanna dabba");
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/components/ViewInfo/ViewMap/BasicInfoPopup.fxml"));
+            loader.setLocation(getClass().getResource("/components/ViewInfo/ViewMap/MapBackup/BasicInfoPopup.fxml"));
             Parent root = loader.load();
             BasicInfoPopupController controller = loader.getController();
             if (clazz.equals(Store.class)){
