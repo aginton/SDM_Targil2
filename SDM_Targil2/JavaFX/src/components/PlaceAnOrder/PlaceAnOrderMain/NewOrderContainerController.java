@@ -348,10 +348,10 @@ public class NewOrderContainerController implements Initializable {
                 deliveryFee,mapStoresToCarts);
 
         if (orderType==eOrderType.STATIC_ORDER)
-            SDMManager.getInstance().addNewStaticOrder(selectedStore, order);
+            SDMManager.getInstance().addNewStaticOrder(selectedStore, order, customer);
 
         if (orderType==eOrderType.DYNAMIC_ORDER)
-            SDMManager.getInstance().addNewDynamicOrder(order);
+            SDMManager.getInstance().addNewDynamicOrder(order, customer);
 
 
         resetInfo();

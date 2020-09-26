@@ -35,7 +35,7 @@ public class ViewMainController implements Initializable {
     @FXML
     private AnchorPane childAnchorPane;
 
-    private Node viewMapRef, viewOrderHistoryRef, viewStoresRef, viewInventoryItemsRef, storesListRef;
+    private Node viewMapRef, viewOrderHistoryRef, viewStoresRef, viewInventoryItemsRef, viewCustomersRef, storesListRef;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -46,9 +46,7 @@ public class ViewMainController implements Initializable {
             viewInventoryItemsRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewItems/ViewItems.fxml"));
             viewOrderHistoryRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewOrders/ViewOrders.fxml"));
             viewMapRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewMap/Map.fxml"));
-//            viewMapRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewMap/TilePaneMap.fxml"));
-
-
+            viewCustomersRef = FXMLLoader.load(getClass().getResource("/components/ViewInfo/ViewCustomers/ViewCustomers.fxml"));
 
             loadNewPane(viewStoresRef);
 
@@ -58,9 +56,7 @@ public class ViewMainController implements Initializable {
     }
 
     @FXML
-    void viewCustomersAction(ActionEvent event) {
-
-    }
+    void viewCustomersAction(ActionEvent event) { loadNewPane(viewCustomersRef);}
 
     @FXML
     void viewItemsAction(ActionEvent event) {

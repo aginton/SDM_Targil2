@@ -12,6 +12,11 @@ public class Customer implements hasLocationInterface {
     private String customerName;
     private List<Integer> customerLocation;
     private List<Order> orders;
+    private float totalPriceOfAllOrders;
+    private float aveOrdersPrice;
+    private float totalPriceofAllDeliveries;
+    private float aveDeliveryPrice;
+
 
     public Customer(int id, String name, int xPosition, int yPosition){
         this.customerId = id;
@@ -20,6 +25,37 @@ public class Customer implements hasLocationInterface {
         customerLocation.add(xPosition);
         customerLocation.add(yPosition);
         orders = new ArrayList<>();
+        totalPriceOfAllOrders = 0f;
+        aveOrdersPrice = 0f;
+        totalPriceofAllDeliveries = 0f;
+        aveDeliveryPrice = 0f;
+
+    }
+
+    public float getTotalPriceOfAllOrders() {
+        return totalPriceOfAllOrders;
+    }
+
+    public float getAveOrdersPrice() {
+        return aveOrdersPrice;
+    }
+
+    public float getTotalPriceofAllDeliveries() {
+        return totalPriceofAllDeliveries;
+    }
+
+    public float getAveDeliveryPrice() {
+        return aveDeliveryPrice;
+    }
+
+    public void updateAveOrdersPrice() {
+        this.aveOrdersPrice = this.totalPriceOfAllOrders / this.getOrders().size();
+        System.out.println("total price of all orders: " + totalPriceOfAllOrders +
+                "ave orders price: " + aveOrdersPrice);
+    }
+
+    public void updateAveDeliveryPrice() {
+        this.aveDeliveryPrice = this.totalPriceofAllDeliveries / this.getOrders().size();
     }
 
     public int getCustomerId() {
@@ -74,6 +110,14 @@ public class Customer implements hasLocationInterface {
     @Override
     public void setY(int y) {
         customerLocation.set(1,y);
+    }
+
+    public void addOrder(Order order) {
+        this.orders.add(order);
+        totalPriceOfAllOrders += order.getCartTotal();
+        totalPriceofAllDeliveries += order.getTotalDeliveryCost();
+        updateAveOrdersPrice();
+        updateAveDeliveryPrice();
     }
 
     @Override

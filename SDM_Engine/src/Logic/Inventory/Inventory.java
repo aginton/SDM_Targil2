@@ -136,6 +136,7 @@ public class Inventory  {
     public void addListener(inventoryChangeInterface listener){
         listeners.add(listener);
     }
+
     private void notifyListeners(){
         for (inventoryChangeInterface listener: listeners)
             listener.onInventoryChanged();

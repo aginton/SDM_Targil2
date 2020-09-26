@@ -156,10 +156,12 @@ public class SDMManager extends SDMFileVerifier{
         }
     }
 
-    public void addNewStaticOrder(Store storeChoice, Order order) {
+    public void addNewStaticOrder(Store storeChoice, Order order, Customer customer) {
         storeChoice.addOrder(order);
         orderHistory.addOrder(order);
         inventory.updateSalesMap(order);
+        //customer.addOrder(order);
+        customers.addOrderToCustomer(order,customer);
     }
 
     private String getItemNameById(int id){
@@ -170,11 +172,13 @@ public class SDMManager extends SDMFileVerifier{
         return "";
     }
 
-    public void addNewDynamicOrder(Order order) {
+    public void addNewDynamicOrder(Order order, Customer customer) {
         Set<Store> storesBoughtFrom = order.getStoresBoughtFrom();
         addSplittedOrdersToStores(storesBoughtFrom, order);
         orderHistory.addOrder(order);
         inventory.updateSalesMap(order);
+        //customer.addOrder(order);
+        customers.addOrderToCustomer(order,customer);
     }
 
     private void addSplittedOrdersToStores(Set<Store> storesBoughtFrom, Order order) {
