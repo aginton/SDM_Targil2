@@ -102,7 +102,7 @@ public class MainAppNController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("xml files", "*.xml"));
 
         try {
-          //  System.out.println("Inside try for loadButtonAction");
+            //  System.out.println("Inside try for loadButtonAction");
             File file = fileChooser.showOpenDialog(stage);
             fileChooser.setInitialDirectory(file.getParentFile());
 
@@ -164,7 +164,7 @@ public class MainAppNController {
             viewMenuRef = viewLoader.load();
             viewMainController = viewLoader.getController();
 
-          //  System.out.println("Going to try and store ref to orderMenu.fxml");
+            //  System.out.println("Going to try and store ref to orderMenu.fxml");
 
             FXMLLoader newOrderLoader = new FXMLLoader();
             newOrderLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderContainer.fxml"));

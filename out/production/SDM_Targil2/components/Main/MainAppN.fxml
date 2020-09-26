@@ -86,7 +86,7 @@
                         <Font size="14.0" />
                     </font>
                     <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets />
                     </VBox.margin>
                <graphic>
                   <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
@@ -96,6 +96,18 @@
                   </ImageView>
                </graphic>
                 </Button>
+            <VBox prefHeight="232.0" prefWidth="209.0">
+               <children>
+                  <HBox prefHeight="238.0" prefWidth="211.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="TOP" prefHeight="16.0" prefWidth="48.0" styleClass="menu-header" text="THEME" />
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </VBox>
             </children>
         </VBox>
     </left>
