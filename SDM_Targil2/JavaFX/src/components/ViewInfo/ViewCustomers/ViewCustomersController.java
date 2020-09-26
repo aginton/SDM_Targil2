@@ -50,17 +50,22 @@ public class ViewCustomersController implements Initializable, customersChangeIn
         sdmManager = SDMManager.getInstance();
         allCustomers = sdmManager.getCustomers();
         allCustomers.addListener(this);
-        customersList = FXCollections.observableArrayList(allCustomers.getCustomers());
+        customersList = FXCollections.observableArrayList(allCustomers.getListOfCustomers());
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        setUpFields();
+    }
+
+    private void setUpFields() {
+
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
 
-        customerLocationCol.setCellValueFactory(celldata-> {
+        customerLocationCol.setCellValueFactory(celldata -> {
             Customer customer = celldata.getValue();
             int xLoc = customer.getX();
             int yLoc = customer.getY();
@@ -70,14 +75,14 @@ public class ViewCustomersController implements Initializable, customersChangeIn
             return new ReadOnlyStringWrapper(locString.toString());
         });
 
-        customerNumOfOrdersCol.setCellValueFactory(celldata-> {
+        customerNumOfOrdersCol.setCellValueFactory(celldata -> {
             Customer customer = celldata.getValue();
             int numOfOrders = customer.getOrders().size();
             return new ReadOnlyStringWrapper(String.valueOf(numOfOrders));
         });
 
         customerAveOrdersPriceCol.setCellValueFactory(new PropertyValueFactory<>("aveOrdersPrice"));
-        customerAveOrdersPriceCol.setCellFactory(c -> new TableCell<Customer,Float>() {
+        customerAveOrdersPriceCol.setCellFactory(c -> new TableCell<Customer, Float>() {
             @Override
             protected void updateItem(Float ave, boolean empty) {
                 super.updateItem(ave, empty);
@@ -90,7 +95,7 @@ public class ViewCustomersController implements Initializable, customersChangeIn
         });
 
         customerAveDeliveryPriceCol.setCellValueFactory(new PropertyValueFactory<>("aveDeliveryPrice"));
-        customerAveDeliveryPriceCol.setCellFactory(c -> new TableCell<Customer,Float>() {
+        customerAveDeliveryPriceCol.setCellFactory(c -> new TableCell<Customer, Float>() {
             @Override
             protected void updateItem(Float ave, boolean empty) {
                 super.updateItem(ave, empty);
@@ -108,28 +113,17 @@ public class ViewCustomersController implements Initializable, customersChangeIn
     @Override
     public void onCustomersChange() {
 
-            System.out.println("ViewCustomersController: Refreshing itemsTableView");
-            customersTableView.refresh();
+        System.out.println("ViewCustomersController: Refreshing itemsTableView");
+        customersTableView.refresh();
     }
 
-//    private void setUpLocationCol() {
-//        customerLocationCol.setCellFactory(col -> {
-//            TableCell<Customer, String> cell = new TableCell<Customer, String>() {
-//                @Override
-//                protected void updateItem(String item, boolean empty) {
-//                    super.updateItem(item, empty);
-//                    this.setText(null);
-//                    if (!isEmpty()) {
-//                        int rowIndex = this.getTableRow().getIndex();
-//                        Customer customer = this.getTableView().getItems().get(rowIndex);
-//                        int xLoc = customer.getX();
-//                        int yLoc = customer.getY();
-//                        this.setText("[" + xLoc + "," + yLoc + "]");
-//                    }
-//                }
-//            };
-//            return cell;
-//        });
-//    }
+    public void refresh() {
+        sdmManager = SDMManager.getInstance();
+        allCustomers = sdmManager.getCustomers();
+        allCustomers.addListener(this);
+        customersList.clear();
+        customersList = FXCollections.observableArrayList(allCustomers.getListOfCustomers());
 
+        setUpFields();
+    }
 }

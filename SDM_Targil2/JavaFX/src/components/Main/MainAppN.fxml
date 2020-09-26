@@ -97,13 +97,6 @@
                </graphic>
                 </Button>
             <VBox prefHeight="232.0" prefWidth="209.0">
-               <children>
-                  <HBox prefHeight="238.0" prefWidth="211.0">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="TOP" prefHeight="16.0" prefWidth="48.0" styleClass="menu-header" text="THEME" />
-                     </children>
-                  </HBox>
-               </children>
                <VBox.margin>
                   <Insets />
                </VBox.margin>

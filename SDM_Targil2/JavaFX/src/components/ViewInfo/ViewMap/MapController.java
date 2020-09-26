@@ -5,7 +5,6 @@ import Logic.Interfaces.hasLocationInterface;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
@@ -14,7 +13,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Line;
 
 import java.net.URL;
 import java.util.List;
@@ -49,7 +47,7 @@ public class MapController implements Initializable {
         pane = new GridPane();
         maxXValue = 0;
         maxYValue = 0;
-        customers = SDMManager.getInstance().getCustomers().getCustomers();
+        customers = SDMManager.getInstance().getCustomers().getListOfCustomers();
         stores = SDMManager.getInstance().getStores();
         updateMaxXandY(customers);
         updateMaxXandY(stores);

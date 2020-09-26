@@ -9,3 +9,17 @@
     -fx-font-size: 14px;
     -fx-text-fill: #aeacac;
 }
+
+.nav-button {
+    -fx-background-color : #7d66f4;
+    -fx-text-fill        : #E1F5FE;
+    -fx-font-weight      : 900;
+}
+
+.nav-button:hover {
+    -fx-background-color : #01579B;
+}
+
+.nav-button:disabled {
+    -fx-text-fill        : #E1F5FE;
+}

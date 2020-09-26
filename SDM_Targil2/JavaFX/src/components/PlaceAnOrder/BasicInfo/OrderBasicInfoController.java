@@ -2,33 +2,18 @@ package components.PlaceAnOrder.BasicInfo;
 
 
 import Logic.Customers.Customer;
-import Logic.Order.Cart;
 import Logic.Order.eOrderType;
 import Logic.SDM.SDMManager;
-import Logic.Store.Store;
-import components.PlaceAnOrder.ChooseItems.ChooseItemsStaticOrderController;
-import components.PlaceAnOrder.ChooseStores.ChooseStoreController;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class OrderBasicInfoController {
 
@@ -69,7 +54,7 @@ public class OrderBasicInfoController {
 
     public OrderBasicInfoController(){
         sdmManager = SDMManager.getInstance();
-        customers = FXCollections.observableArrayList(sdmManager.getCustomers().getCustomers());
+        customers = FXCollections.observableArrayList(sdmManager.getCustomers().getListOfCustomers());
     }
 
     @FXML
@@ -123,7 +108,7 @@ public class OrderBasicInfoController {
         customers.clear();
         chooseCustomerCB.getItems().clear();
         sdmManager = SDMManager.getInstance();
-        customers = FXCollections.observableArrayList(sdmManager.getCustomers().getCustomers());
+        customers = FXCollections.observableArrayList(sdmManager.getCustomers().getListOfCustomers());
         setUpFields();
     }
 

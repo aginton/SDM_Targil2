@@ -123,6 +123,7 @@ public class ViewMainController implements Initializable {
         viewStoreController.refresh();
         viewItemsController.refresh();
         viewOrdersController.refresh();
+        viewCustomersController.refresh();
         viewMapController.refresh();
     }
 }

@@ -1,47 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.PlaceAnOrder.ChooseItems.ChooseItemsStaticOrderController">
+<ScrollPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.PlaceAnOrder.ChooseItems.ChooseItemsStaticOrderController">
    <content>
       <AnchorPane>
          <children>
-            <GridPane hgap="5.0" prefHeight="515.0" prefWidth="784.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <GridPane hgap="5.0" prefHeight="600.0" prefWidth="800.0" vgap="5.0">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="649.0" minWidth="10.0" prefWidth="61.0" />
-                <ColumnConstraints hgrow="ALWAYS" maxWidth="712.0" minWidth="10.0" prefWidth="595.0" />
-                  <ColumnConstraints hgrow="NEVER" maxWidth="712.0" minWidth="10.0" prefWidth="85.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="712.0" minWidth="10.0" prefWidth="24.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="712.0" minWidth="10.0" prefWidth="676.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                 <ColumnConstraints hgrow="ALWAYS" maxWidth="516.0" minWidth="10.0" prefWidth="319.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="164.0" minHeight="7.0" prefHeight="48.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="228.0" minHeight="5.0" prefHeight="27.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="228.0" minHeight="1.0" prefHeight="27.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="281.0" minHeight="10.0" prefHeight="206.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="427.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="427.0" minHeight="10.0" prefHeight="191.0" vgrow="ALWAYS" />
+                <RowConstraints maxHeight="164.0" minHeight="7.0" prefHeight="58.33333206176758" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="20.0" minHeight="8.000003814697266" prefHeight="18.666667938232422" vgrow="NEVER" />
+                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="281.0" minHeight="10.0" prefHeight="156.66668701171875" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="427.0" minHeight="8.666656494140625" prefHeight="31.666656494140625" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="427.0" minHeight="10.0" prefHeight="275.0" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="36.66668701171875" minHeight="10.0" prefHeight="11.0" vgrow="NEVER" />
               </rowConstraints>
                <children>
-                  <Label text="Your order" GridPane.columnIndex="1">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
+                  <HBox prefHeight="57.0" prefWidth="475.0" spacing="20.0" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets left="40.0" />
                      </GridPane.margin>
-                  </Label>
-                  <Label alignment="TOP_CENTER" text="Order summary" GridPane.columnIndex="3">
+                     <children>
+                        <ImageView fitHeight="58.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../resources/place_an_order_icons/addcart.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="-35.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label prefHeight="64.0" prefWidth="123.0" styleClass="form-page-header" text="Choose Items">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label alignment="TOP_CENTER" styleClass="form-page-header" text="Order summary" GridPane.columnIndex="3">
                      <opaqueInsets>
                         <Insets left="50.0" />
                      </opaqueInsets>
@@ -62,32 +79,39 @@
                         <Insets left="40.0" />
                      </GridPane.margin>
                   </Label>
-                   <TableView fx:id="itemsTableView" prefHeight="200.0" prefWidth="477.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                   <TableView fx:id="itemsTableView" prefHeight="137.0" prefWidth="515.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                        <columns>
-                           <TableColumn fx:id="itemIdColumn" prefWidth="51.0" text="Item Id" />
-                           <TableColumn fx:id="itemNameColumn" prefWidth="81.66665649414062" text="Item Name" />
-                           <TableColumn fx:id="categoryColumn" prefWidth="80.33331298828125" text="Category" />
-                           <TableColumn fx:id="priceColumn" prefWidth="62.66668701171875" text="Price" />
-                           <TableColumn fx:id="amountColumn" prefWidth="56.0" text="Amount" />
-                           <TableColumn fx:id="addButtonColumn" prefWidth="65.0" text="Add" />
-                           <TableColumn fx:id="removeButtonColumn" prefWidth="75.0" text="Remove" />
+                           <TableColumn fx:id="itemIdColumn" prefWidth="52.0" text="Item Id" />
+                           <TableColumn fx:id="itemNameColumn" prefWidth="96.0" text="Item Name" />
+                           <TableColumn fx:id="categoryColumn" prefWidth="72.0" text="Category" />
+                           <TableColumn fx:id="priceColumn" prefWidth="57.0" text="Price" />
+                           <TableColumn fx:id="amountColumn" prefWidth="66.0" text="Amount" />
+                           <TableColumn fx:id="addButtonColumn" prefWidth="79.0" text="Add" />
+                           <TableColumn fx:id="removeButtonColumn" prefWidth="89.0" text="Remove" />
                        </columns>
                      <GridPane.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="2.0" />
                      </GridPane.margin>
                    </TableView>
-                  <Button fx:id="addToCartButton" onAction="#addToCartAction" text="Add to cart" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                  <Button fx:id="addToCartButton" onAction="#addToCartAction" styleClass="nav-button" text="Add to cart" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </GridPane.margin>
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../resources/place_an_order_icons/plus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
-                  <TableView fx:id="cartTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+                  <TableView fx:id="cartTable" prefHeight="237.0" prefWidth="561.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
                     <columns>
                       <TableColumn fx:id="cartItemIdCol" prefWidth="51.0" text="Item id" />
-                      <TableColumn fx:id="cartItemNameCol" prefWidth="91.0" text="Item name" />
-                        <TableColumn fx:id="cartUnitPriceCol" prefWidth="141.0" text="Unit price" />
-                        <TableColumn fx:id="cartItemAmountCol" prefWidth="132.0" text="Amount" />
-                        <TableColumn fx:id="cartItemCostCol" prefWidth="157.0" text="Cost" />
+                      <TableColumn fx:id="cartItemNameCol" prefWidth="124.0" text="Item name" />
+                        <TableColumn fx:id="cartUnitPriceCol" prefWidth="136.0" text="Unit price" />
+                        <TableColumn fx:id="cartItemAmountCol" minWidth="0.0" prefWidth="119.0" text="Amount" />
+                        <TableColumn fx:id="cartItemCostCol" prefWidth="84.0" text="Cost" />
                     </columns>
                      <GridPane.margin>
                         <Insets bottom="5.0" />
@@ -101,8 +125,8 @@
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="Cart subtotal:" GridPane.valignment="TOP" />
@@ -111,22 +135,27 @@
                               <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Label text="Total:" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                        <Label alignment="BOTTOM_LEFT" prefHeight="75.0" prefWidth="134.0" text="Total:" GridPane.rowIndex="3" GridPane.valignment="TOP">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Label>
                         <Label fx:id="cartSubtotalLabel" text="Label" GridPane.columnIndex="1" GridPane.valignment="TOP" />
                         <Label fx:id="deliveryFeeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                        <Label fx:id="totalCostLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                        <Label fx:id="totalCostLabel" alignment="BOTTOM_LEFT" prefHeight="86.0" prefWidth="175.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
                      </children>
                   </GridPane>
+                  <Separator orientation="VERTICAL" prefHeight="484.0" prefWidth="4.0" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.rowSpan="3" />
                </children>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </GridPane>
          </children>
+         <stylesheets>
+            <URL value="@../PlaceAnOrderMain/NewOrderContainerCSS.css" />
+            <URL value="@../../Main/MainAppCSS.css" />
+         </stylesheets>
       </AnchorPane>
    </content>
 </ScrollPane>

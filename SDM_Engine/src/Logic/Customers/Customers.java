@@ -18,7 +18,7 @@ public class Customers {
         listeners = new ArrayList<>();
     }
 
-    public List<Customer> getCustomers() {
+    public List<Customer> getListOfCustomers() {
         return customers;
     }
 

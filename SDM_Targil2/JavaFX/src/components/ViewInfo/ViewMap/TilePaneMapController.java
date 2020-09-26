@@ -36,7 +36,7 @@ public class TilePaneMapController implements Initializable{
     public TilePaneMapController () {
 
         stores = sdm.getStores();
-        customers = sdm.getCustomers().getCustomers();
+        customers = sdm.getCustomers().getListOfCustomers();
         locationables = createLocationableList();
         mapMaxCoordinates = getLargestXYCoordinatesForMap(locationables);
         locationableMatrix = createLocationableMatrix(locationables,mapMaxCoordinates);
