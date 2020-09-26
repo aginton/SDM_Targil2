@@ -18,26 +18,8 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12079fe1-433f-4321-8686-68adaa6eba3a" name="Default Changelist" comment="clicking load when file already loaded now gets rid of old data and replaces with new data">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_19_00__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_19_00__Default_Changelist_.xml" afterDir="false" />
+    <list default="true" id="12079fe1-433f-4321-8686-68adaa6eba3a" name="Default Changelist" comment="changed the ui and css">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppCSS.css" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppCSS.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppN.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppN.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppNController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppNController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/BasicInfo/OrderBasicInfo.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/BasicInfo/OrderBasicInfo.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/BasicInfo/OrderBasicInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/BasicInfo/OrderBasicInfoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseStores/ChooseStore.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/ChooseStores/ChooseStore.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMainContainer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMainContainer.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/MainAppCSS.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/MainAppCSS.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/MainAppN.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/MainAppN.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/MainAppNController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/MainAppNController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/BasicInfo/OrderBasicInfo.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/BasicInfo/OrderBasicInfo.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/BasicInfo/OrderBasicInfoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/BasicInfo/OrderBasicInfoController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseStores/ChooseStore.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/ChooseStores/ChooseStore.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderContainerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderContainerController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMainContainer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMainContainer.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMainController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -392,7 +374,13 @@
       <option name="project" value="LOCAL" />
       <updated>1601059117200</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL‎00032" summary="changed the ui and css">
+      <created>1601092839931</created>
+      <option name="number" value="LOCAL‎00032" />
+      <option name="presentableId" value="LOCAL‎00032" />
+      <updated>1601092839931</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -426,7 +414,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/SDM_Targil2" />
     </ignored-roots>
-    <MESSAGE value="started trying to implement tableView, began changing class fields to properties" />
     <MESSAGE value="init commit" />
     <MESSAGE value="changed container types" />
     <MESSAGE value="inventoryTableView lets you edit amount value directly" />
@@ -451,7 +438,8 @@
     <MESSAGE value="dynamic order updates up until confirm" />
     <MESSAGE value="trying to use regular pages instead of accordion" />
     <MESSAGE value="clicking load when file already loaded now gets rid of old data and replaces with new data" />
-    <option name="LAST_COMMIT_MESSAGE" value="clicking load when file already loaded now gets rid of old data and replaces with new data" />
+    <MESSAGE value="changed the ui and css" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed the ui and css" />
   </component>
   <component name="WindowStateProjectService">
     <state x="578" y="183" key="#Inspections" timestamp="1599386944020">
@@ -552,11 +540,12 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="545" y="154" width="810" height="786" key="StructurePopup/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600528704528" />
-    <state x="50" y="0" key="Vcs.Push.Dialog.v2" timestamp="1600970449654">
-      <screen x="0" y="0" width="1920" height="1080" />
+    <state x="36" y="0" key="Vcs.Push.Dialog.v2" timestamp="1601092845006">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="50" y="0" key="Vcs.Push.Dialog.v2/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600970449654" />
     <state x="33" y="0" key="Vcs.Push.Dialog.v2/0.0.1280.720@0.0.1280.720" timestamp="1599732580066" />
+    <state x="36" y="0" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1601092845006" />
     <state x="514" y="143" key="VcsDiffUtil.ChangesDialog" timestamp="1601053259812">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
