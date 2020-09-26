@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.ViewInfo.ViewCustomers.ViewCustomersController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+      <ColumnConstraints hgrow="NEVER" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="NEVER" />
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="NEVER" />
+   </rowConstraints>
+   <children>
+      <TableView fx:id="customersTableView" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <columns>
+          <TableColumn fx:id="customerIdCol" prefWidth="60.0" text="ID" />
+          <TableColumn fx:id="customerNameCol" prefWidth="141.0" text="Name" />
+            <TableColumn fx:id="customerLocationCol" prefWidth="64.0" text="Location" />
+            <TableColumn fx:id="customerNumOfOrdersCol" prefWidth="132.0" text="# Orders" />
+            <TableColumn fx:id="customerAveOrdersPriceCol" prefWidth="121.0" text="Ave orders price" />
+            <TableColumn fx:id="customerAveDeliveryPriceCol" prefWidth="141.0" text="Ave delivery price" />
+        </columns>
+      </TableView>
+   </children>
+</GridPane>

@@ -1,0 +1,11 @@
+.form-page-header {
+    -fx-font-size: 16px;
+    -fx-text-fill: #6B5EE5;
+    -fx-font-weight: bold;
+}
+
+.form-labels {
+    -fx-font-family: System;
+    -fx-font-size: 14px;
+    -fx-text-fill: #aeacac;
+}

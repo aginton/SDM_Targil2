@@ -1,0 +1,154 @@
+<changelist name="Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]" date="1601048831283" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 25/09/2020 18:35 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderContainerController.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderContainerController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/NewOrderContainerController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseStores/ChooseStoreController.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseStores/ChooseStoreController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/ChooseStoreController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/MapBackup/Tile.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/Tile.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsStaticOrderController.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsStaticOrderController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/ChooseItemsStaticOrderController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsStaticOrderController$ItemWrapper.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsStaticOrderController$ItemWrapper.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/ChooseItemsStaticOrderController$ItemWrapper.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/MapBackup/Piece.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/Piece.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsStaticOrderController$2.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsStaticOrderController$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/ChooseItemsStaticOrderController$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/ViewMapController.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/eObjectType.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/MapBackup/eObjectType.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/eObjectType.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController$InventoryItemWrapper.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController$InventoryItemWrapper.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/ChooseItemsDynamicOrderController$InventoryItemWrapper.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/DynamicOrderDiscounts/DynamicDiscountsController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/DynamicDiscountsController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/ChooseItemsDynamicOrderController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/MapBackup/ViewMapController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/ViewMapController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController$1.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/ChooseItemsDynamicOrderController$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/MapController$Cell.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/MapController$Cell.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsController$DiscountWrapper.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsController$DiscountWrapper.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/ChooseDiscountsController$DiscountWrapper.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMainController.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMainController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/ViewMainController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/BasicInfoPopupController.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/MapBackup/BasicInfoPopupController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/BasicInfoPopupController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController$2.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrderController$2.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/ChooseItemsDynamicOrderController$2.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsStaticOrderController$1.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseItems/ChooseItemsStaticOrderController$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/ChooseItemsStaticOrderController$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/BasicInfo/OrderBasicInfoController.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/BasicInfo/OrderBasicInfoController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/OrderBasicInfoController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ConfirmOrder/ConfirmOrderController.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ConfirmOrder/ConfirmOrderController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/ConfirmOrderController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/Tile.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/Piece.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/DynamicOrderDiscounts/DynamicDiscountsController$DiscountWrapper.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/DynamicDiscountsController$DiscountWrapper.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/MapController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/MapController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsController.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/ChooseDiscountsController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/TilePaneMapController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/TilePaneMapController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/PieceController.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/ViewInfo/ViewMap/MapBackup/PieceController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35_[Default_Changelist]/PieceController.class" />
+  </binary>
+</changelist>
