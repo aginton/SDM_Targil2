@@ -98,9 +98,7 @@ public class ViewMainController implements Initializable {
     }
 
     @FXML
-    void viewOrdersAction(ActionEvent event) {
-        loadNewPane(viewOrderHistoryRef);
-    }
+    void viewOrdersAction(ActionEvent event) { loadNewPane(viewOrderHistoryRef); }
 
     @FXML
     void viewStoresAction(ActionEvent event) {
@@ -125,7 +123,6 @@ public class ViewMainController implements Initializable {
         viewStoreController.refresh();
         viewItemsController.refresh();
         viewOrdersController.refresh();
-        viewCustomersController.refresh();
         viewMapController.refresh();
     }
 }

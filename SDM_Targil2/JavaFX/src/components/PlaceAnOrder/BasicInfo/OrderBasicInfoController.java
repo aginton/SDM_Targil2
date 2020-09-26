@@ -21,6 +21,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -126,8 +128,43 @@ public class OrderBasicInfoController {
     }
 
     private void setUpFields(){
+
         chooseCustomerCB.getItems().addAll(customers);
 
+        //combobox dropdown list shows customer id and name
+        chooseCustomerCB.setCellFactory(new Callback<ListView<Customer>,ListCell<Customer>>(){
+            @Override
+            public ListCell<Customer> call(ListView<Customer> l){
+                return new ListCell<Customer>(){
+                    @Override
+                    protected void updateItem(Customer item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null || empty) {
+                            setGraphic(null);
+                        } else {
+                            setText(item.getCustomerId() + " - " + item.getCustomerName());
+                        }
+                    }
+                } ;
+            }
+        });
+
+        //combobox selected value shows customer id and name
+        chooseCustomerCB.setConverter(new StringConverter<Customer>() {
+            @Override
+            public String toString(Customer customer) {
+                if (customer == null){
+                    return null;
+                } else {
+                    return customer.getCustomerId() + " - " + customer.getCustomerName();
+                }
+            }
+
+            @Override
+            public Customer fromString(String userId) {
+                return null;
+            }
+        });
 
         orderTypeGroup.selectedToggleProperty().addListener(
                 orderTypeChangeListener = (((observable, oldValue, newValue) -> {

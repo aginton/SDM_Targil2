@@ -1,35 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="placeAStaticOrderRootPane" prefHeight="559.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.PlaceAnOrder.ChooseStores.ChooseStoreController">
+<AnchorPane fx:id="placeAStaticOrderRootPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../PlaceAnOrderMain/NewOrderContainerCSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.PlaceAnOrder.ChooseStores.ChooseStoreController">
    <children>
-      <Label layoutX="146.0" layoutY="106.0" text="CHOOSE STORE TO ORDER FROM" textFill="#aeacac" />
-      <ComboBox fx:id="chooseStoreCB" layoutX="146.0" layoutY="132.0" prefHeight="25.0" prefWidth="181.0" />
-      <Label layoutX="146.0" layoutY="209.0" text="DETAILS" textFill="#aeacac" />
-      <Label layoutX="146.0" layoutY="245.0" text="Delivery Fee: " textFill="#4d4c4c" />
-      <Label layoutX="146.0" layoutY="271.0" text="Store Location:" textFill="#4d4c4c" />
-      <Label layoutX="146.0" layoutY="297.0" text="PPK:" textFill="#4d4c4c" />
-      <Label fx:id="deliveryFeeLabel" layoutX="250.0" layoutY="245.0" text="145 " />
-      <Label fx:id="storeLocationLabel" layoutX="250.0" layoutY="271.0" text="(3,4)" />
-      <Label fx:id="ppkLabel" layoutX="255.0" layoutY="297.0" text="20" />
-      <HBox layoutX="48.0" layoutY="368.0" prefHeight="43.0" prefWidth="575.0">
-         <children>
-            <Label prefHeight="17.0" prefWidth="191.0" text="Current Store:" textFill="#614949">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="selectedStoreLabel" prefHeight="17.0" prefWidth="191.0" text="(no store selected)" textFill="#614949">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
+      <ScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <GridPane prefHeight="400.0" prefWidth="804.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="508.0" minWidth="10.0" prefWidth="496.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="104.0" minHeight="10.0" prefHeight="78.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="101.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="106.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <VBox prefHeight="72.0" prefWidth="480.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label styleClass="form-labels" text="CHOOSE STORE TO ORDER FROM" textFill="#aeacac" />
+                        <ComboBox fx:id="chooseStoreCB" prefHeight="25.0" prefWidth="181.0" />
+                     </children>
+                  </VBox>
+                  <Label styleClass="form-labels" text="DETAILS" textFill="#aeacac" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <Label text="Delivery Fee: " textFill="#4d4c4c" />
+                        <Label fx:id="deliveryFeeLabel" text="--" />
+                     </children>
+                  </HBox>
+                  <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <children>
+                        <Label text="Store Location:" textFill="#4d4c4c" />
+                        <Label fx:id="storeLocationLabel" text="--" />
+                     </children>
+                  </HBox>
+                  <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <children>
+                        <Label text="PPK:" textFill="#4d4c4c" />
+                        <Label fx:id="ppkLabel" text="--" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="43.0" prefWidth="575.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="75.0" text="Current Store:" textFill="#4d4c4c" />
+                        <Label fx:id="selectedStoreLabel" prefHeight="17.0" prefWidth="113.0" text="(no store selected)" textFill="#4d4c4c" />
+                     </children>
+                  </HBox>
+                  <Label styleClass="form-page-header" text="CHOOSE STORE" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="TOP_CENTER">
+                     <children>
+                        <ImageView fitHeight="57.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../resources/place_an_order_icons/shop.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets top="15.0" />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

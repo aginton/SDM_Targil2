@@ -1,5 +1,5 @@
 .head-background {
-    -fx-background-color: linear-gradient(to left, #fff, #795AF3);
+    -fx-background-color: linear-gradient(to left, #fff, #7f62f1);
 }
 
 #superDuperMarketHeader {
@@ -8,7 +8,7 @@
 }
 
 .menu-background {
-    -fx-background-color: #D9DAEA;
+    -fx-background-color: #cdcee7;
 }
 
 .menu-header {
@@ -19,7 +19,7 @@
 .menu_button {
     -fx-text-fill: #918EBE;
     -fx-font-size: 14px;
-    -fx-background-color: #D9DAEA;
+    -fx-background-color: #cdcee7;
     -fx-background-insets: 0;
 }
 
@@ -37,28 +37,8 @@
     -fx-text-fill: grey;
 }
 
-.combo-box{
-    -fx-border-color:#E6E6E6;
-    -fx-border-style:solid;
-    -fx-border-width:1;
-    -fx-background-color: transparent;
-}
-.combo-box .arrow{
-    -fx-background-color:#5E6B80;
-}
-.combo-box .arrow-button{
-    -fx-background-color:white;
-    -fx-border-style:none;
-}
-.combo-box .arrow-button{
-    -fx-background-color:white;
-}
-.combo-box .list-cell{
-    -fx-background-color:white;
-}
-
-.combo-box .list-cell:hover{
-    -fx-background-color: #CAC9E6;
+.scroll-pane {
+    -fx-background-color:transparent;
 }
 
 /*.selected {*/

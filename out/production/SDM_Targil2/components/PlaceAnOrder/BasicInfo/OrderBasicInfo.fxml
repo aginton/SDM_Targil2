@@ -1,48 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="559.0" prefWidth="730.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.PlaceAnOrder.BasicInfo.OrderBasicInfoController">
+<AnchorPane fx:id="mainPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.PlaceAnOrder.BasicInfo.OrderBasicInfoController">
    <children>
-      <Label layoutX="184.0" layoutY="97.0" text="Place an order" textFill="#4d4c4c">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="87.0" fitWidth="90.0" layoutX="87.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@/resources/placeanorder.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="184.0" layoutY="158.0" text="CHOOSE CUSTOMER" textFill="#aeacac">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="184.0" layoutY="270.0" text="DATE" textFill="#aeacac">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="184.0" layoutY="391.0" text="ORDER TYPE" textFill="#aeacac">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="chooseCustomerCB" layoutX="184.0" layoutY="189.0" prefHeight="25.0" prefWidth="351.0" />
-      <DatePicker fx:id="chooseDateDP" layoutX="184.0" layoutY="307.0" />
-      <RadioButton fx:id="radioStaticOrder" layoutX="201.0" layoutY="429.0" text="Static order">
-         <toggleGroup>
-            <ToggleGroup fx:id="orderTypeGroup" />
-         </toggleGroup></RadioButton>
-      <RadioButton fx:id="radioDynamicOrder" layoutX="201.0" layoutY="453.0" text="Dynamic order" toggleGroup="$orderTypeGroup" />
+      <ScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <GridPane minHeight="400.0" prefHeight="559.0" prefWidth="730.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="586.0" minWidth="10.0" prefWidth="473.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="86.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="89.0" minHeight="10.0" prefHeight="89.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="98.0" minHeight="10.0" prefHeight="92.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="87.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label fx:id="placeAnOrderLabel" styleClass="form-page-header" text="PLACE AN ORDER" textFill="#4d4c4c" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <VBox spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label styleClass="form-labels" text="CHOOSE CUSTOMER" textFill="#aeacac">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="chooseCustomerCB" prefHeight="25.0" prefWidth="351.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="88.0" prefWidth="473.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <Label styleClass="form-labels" text="DATE" textFill="#aeacac">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="chooseDateDP" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <Label styleClass="form-labels" text="ORDER TYPE" textFill="#aeacac">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <VBox spacing="4.0">
+                           <children>
+                              <RadioButton fx:id="radioStaticOrder" text="Static order">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="orderTypeGroup" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="radioDynamicOrder" text="Dynamic order" toggleGroup="$orderTypeGroup" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <HBox alignment="TOP_CENTER">
+                     <children>
+                        <ImageView fitHeight="67.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../resources/place_an_order_icons/cart.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets top="15.0" />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
+         </content>
+      </ScrollPane>
    </children>
+   <stylesheets>
+      <URL value="@OrderBasicInfoCSS.css" />
+      <URL value="@../PlaceAnOrderMain/NewOrderContainerCSS.css" />
+   </stylesheets>
 </AnchorPane>

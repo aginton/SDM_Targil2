@@ -1,71 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<GridPane fx:id="rootGridpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="741.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.ViewInfo.ViewMainController">
+<GridPane fx:id="rootGridpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="741.0" stylesheets="@ViewMainContainerCSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.ViewInfo.ViewMainController">
   <columnConstraints>
-    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="364.0" minWidth="10.0" percentWidth="20.0" prefWidth="144.0" />
-    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="597.0" />
+    <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+    <ColumnConstraints hgrow="ALWAYS" maxWidth="588.0" minWidth="10.0" prefWidth="525.0" />
   </columnConstraints>
   <rowConstraints>
-      <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="130.0" minHeight="10.0" percentHeight="20.0" prefHeight="130.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="98.0" minHeight="10.0" percentHeight="20.0" prefHeight="76.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button fx:id="viewStoresButton" mnemonicParsing="false" onAction="#viewStoresAction" prefWidth="123.0" text="Stores">
-         <graphic>
-            <ImageView fitHeight="44.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../resources/stores.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="viewItemsButton" mnemonicParsing="false" onAction="#viewItemsAction" prefWidth="123.0" text="Items" GridPane.rowIndex="1">
-         <graphic>
-            <ImageView fitHeight="44.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../resources/inventory2.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="viewOrdersButton" mnemonicParsing="false" onAction="#viewOrdersAction" prefWidth="123.0" text="Orders" GridPane.rowIndex="2">
-         <graphic>
-            <ImageView fitHeight="44.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../resources/carts.jpg" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="viewCustomersButton" mnemonicParsing="false" onAction="#viewCustomersAction" text="Customers" GridPane.rowIndex="3">
-         <graphic>
-            <ImageView fitHeight="44.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../resources/people.jpg" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="viewMapButton" mnemonicParsing="false" onAction="#viewMapAction" prefWidth="123.0" text="Map" GridPane.rowIndex="4">
-         <graphic>
-            <ImageView fitHeight="44.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../resources/map.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <AnchorPane fx:id="childAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="85.0" prefWidth="593.0" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowSpan="5" GridPane.vgrow="ALWAYS" />
+      <VBox prefHeight="516.0" prefWidth="172.0" styleClass="view_menu-background" GridPane.rowSpan="5">
+         <children>
+            <Button fx:id="viewStoresButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewStoresAction" prefHeight="54.0" prefWidth="234.0" styleClass="view_menu_button" text="Stores">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="viewItemsButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewItemsAction" prefHeight="54.0" prefWidth="195.0" styleClass="view_menu_button" text="Items" />
+            <Button fx:id="viewOrdersButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewOrdersAction" prefHeight="54.0" prefWidth="191.0" styleClass="view_menu_button" text="Orders" />
+            <Button fx:id="viewCustomersButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewCustomersAction" prefHeight="54.0" prefWidth="183.0" styleClass="view_menu_button" text="Customers" />
+            <Button fx:id="viewMapButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewMapAction" prefHeight="43.0" prefWidth="184.0" styleClass="view_menu_button" text="Map" />
+         </children>
+      </VBox>
+      <AnchorPane fx:id="childAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="516.0" prefWidth="530.0" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowSpan="5" GridPane.vgrow="ALWAYS" />
    </children>
 </GridPane>

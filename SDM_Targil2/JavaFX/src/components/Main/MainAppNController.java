@@ -34,9 +34,6 @@ public class MainAppNController {
     private Label filePath;
 
     @FXML
-    private ComboBox<String> themeComboBox;
-
-    @FXML
     private Button homeButton;
 
     @FXML
@@ -93,10 +90,6 @@ public class MainAppNController {
         viewButton.disableProperty().bind(isFileSelected.not());
         placeAnOrderButton.disableProperty().bind(isFileSelected.not());
         updateButton.disableProperty().bind(isFileSelected.not());
-
-        themeComboBox.getItems().add("blue");
-        themeComboBox.getItems().add("green");
-        themeComboBox.getItems().add("dark");
     }
 
 
