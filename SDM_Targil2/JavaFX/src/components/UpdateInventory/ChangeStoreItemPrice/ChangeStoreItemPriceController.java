@@ -97,7 +97,6 @@ public class ChangeStoreItemPriceController implements Initializable {
         chooseStoreCB.getItems().clear();
         chooseItemCB.getItems().clear();
         stores.clear();
-        storeItems.clear();
         stores= FXCollections.observableArrayList(SDMManager.getInstance().getStores());
         setUpFields();
     }

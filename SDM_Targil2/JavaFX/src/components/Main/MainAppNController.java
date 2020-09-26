@@ -2,6 +2,7 @@ package components.Main;
 
 import Logic.SDM.SDMFileVerifier;
 import Logic.SDM.SDMManager;
+import Logic.SDM.SDMVerifierService;
 import components.PlaceAnOrder.PlaceAnOrderMain.NewOrderContainerController;
 import components.UpdateInventory.UpdateInventoryContainerController;
 import components.ViewInfo.ViewMainController;
@@ -16,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -54,33 +56,32 @@ public class MainAppNController {
     @FXML
     private Label errorMessageLabel;
 
-    private Node orderMenuRef, viewMenuRef, updateRef;
+    @FXML
+    private Label statusLabel;
+
+    @FXML
+    private ProgressBar progressBar;
+
+    private Node orderMenuRef, viewMenuRef, updateRef, homePageRef;
     private ViewMainController viewMainController;
     private NewOrderContainerController newOrderContainerController;
     private UpdateInventoryContainerController updateController;
+    private HomePageController homePageController;
 
 
     private SDMManager sdmManager;
     private Boolean hasLoadedSDMFile = false;
     private BooleanProperty isFileSelected;
-    private BooleanProperty isNewOrderComplete;
     private SimpleStringProperty selectedFileProperty;
-    private ChangeListener<Boolean> isNewOrderCompleteChangeListener;
+
 
 
     public MainAppNController(){
         isFileSelected = new SimpleBooleanProperty(false);
-        isNewOrderComplete = new SimpleBooleanProperty(false);
         selectedFileProperty = new SimpleStringProperty("");
         sdmManager = SDMManager.getInstance();
 
-        //This tells MainContainer to replace the NewOrder FXML with the ViewInfo FXML when a New Order is complete
-        isNewOrderComplete.addListener(((observable, oldValue, newValue) -> {
-            if (newValue == true){
-                loadNewPane(viewMenuRef);
-                setIsNewOrderComplete(false);
-            }
-        }));
+
     }
 
     @FXML
@@ -90,6 +91,23 @@ public class MainAppNController {
         viewButton.disableProperty().bind(isFileSelected.not());
         placeAnOrderButton.disableProperty().bind(isFileSelected.not());
         updateButton.disableProperty().bind(isFileSelected.not());
+
+
+        try {
+            FXMLLoader homePageLoader = new FXMLLoader();
+            homePageLoader.setLocation(getClass().getResource("/components/Main/HomePage.fxml"));
+            homePageRef = homePageLoader.load();
+            homePageController = homePageLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+//        filePath.textProperty().bind(homePageController.selectedFilePropertyProperty());
+//        viewButton.disableProperty().bind(homePageController.isFileSelectedProperty().not());
+//        placeAnOrderButton.disableProperty().bind(homePageController.isFileSelectedProperty().not());
+//        updateButton.disableProperty().bind(homePageController.isFileSelectedProperty().not());
+
     }
 
 
@@ -101,43 +119,75 @@ public class MainAppNController {
         fileChooser.setTitle("Choose SDM file");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("xml files", "*.xml"));
 
-        try {
-            //  System.out.println("Inside try for loadButtonAction");
-            File file = fileChooser.showOpenDialog(stage);
-            fileChooser.setInitialDirectory(file.getParentFile());
+        loadNewPane(homePageRef);
+        File file = fileChooser.showOpenDialog(stage);
 
-            SDMFileVerifier sdmForChosenFile = new SDMFileVerifier(file);
+        if (file.getAbsolutePath().equals(selectedFileProperty.get())){
+            System.out.println("This file is already loaded!");
+            return;
+        }
 
-            System.out.printf("Checking if %s file is valid...\n", file.getName());
-
-            if (sdmForChosenFile.getIsValidFile()){
-                System.out.println("Valid, yay!!!");
-                //enableAllButtons();
-
-                errorMessageLabel.setText("");
+        SDMVerifierService service = new SDMVerifierService(file);
+        homePageController.getStatusLabel().textProperty().bind(service.messageProperty());
+        homePageController.getProgressBar().progressProperty().bind(service.progressProperty());
+        service.setOnSucceeded(e->{
+            Boolean ans = service.getValue();
+            System.out.println("service.getValue() returned..." + ans);
+            if (ans == true){
                 selectedFileProperty.set(file.getAbsolutePath());
-                sdmManager.loadNewSDMFile(sdmForChosenFile);
                 if (!hasLoadedSDMFile){
                     System.out.println("Loading others for first time");
                     loadXMLForOtherButtons();
                 }
                 if (hasLoadedSDMFile){
+                    //mainChildAnchorPane.getChildren().clear();
+
                     System.out.println("Resetting others");
                     refreshOthers();
-                    mainChildAnchorPane.getChildren().clear();
+
                 }
                 hasLoadedSDMFile = true;
                 isFileSelected.set(true);
-            } else{
-                System.out.printf("File %s appears to be invalid (GASP!)\n", file.getName());
-                errorMessageLabel.setText(sdmForChosenFile.getLoadingErrorMessage());
-                errorMessageLabel.setTextFill(Color.RED);
-                errorMessageLabel.setVisible(true);
             }
+        });
+        service.start();
 
-        } catch (Exception ex) {
-            System.out.println("error");
-        }
+
+//
+//        try {
+//
+//            SDMFileVerifier sdmForChosenFile = new SDMFileVerifier(file);
+//
+//            System.out.printf("Checking if %s file is valid...\n", file.getName());
+//
+//            if (sdmForChosenFile.getIsValidFile()){
+//                System.out.println("Valid, yay!!!");
+//
+//
+//                errorMessageLabel.setText("");
+//                selectedFileProperty.set(file.getAbsolutePath());
+//                sdmManager.loadNewSDMFile(sdmForChosenFile);
+//                if (!hasLoadedSDMFile){
+//                    System.out.println("Loading others for first time");
+//                    loadXMLForOtherButtons();
+//                }
+//                if (hasLoadedSDMFile){
+//                    System.out.println("Resetting others");
+//                    refreshOthers();
+//                    mainChildAnchorPane.getChildren().clear();
+//                }
+//                hasLoadedSDMFile = true;
+//                isFileSelected.set(true);
+//            } else{
+//                System.out.printf("File %s appears to be invalid (GASP!)\n", file.getName());
+//                errorMessageLabel.setText(sdmForChosenFile.getLoadingErrorMessage());
+//                errorMessageLabel.setTextFill(Color.RED);
+//                errorMessageLabel.setVisible(true);
+//            }
+//
+//        } catch (Exception ex) {
+//            System.out.println("error");
+//        }
     }
 
     private void refreshOthers() {
@@ -205,16 +255,10 @@ public class MainAppNController {
         loadNewPane(viewMenuRef);
     }
 
-    public void setIsNewOrderComplete(boolean isNewOrderComplete) {
-        this.isNewOrderComplete.set(isNewOrderComplete);
-    }
-
-    public boolean isIsNewOrderComplete() {
-        return isNewOrderComplete.get();
-    }
-
-    public BooleanProperty isNewOrderCompleteProperty() {
-        return isNewOrderComplete;
-    }
 
 }
+
+
+
+
+

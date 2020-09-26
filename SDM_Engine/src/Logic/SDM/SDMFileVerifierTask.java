@@ -1,10 +1,7 @@
 package Logic.SDM;
 
 import Resources.Schema.JAXBGenerated.*;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.concurrent.Task;
 
 import javax.xml.bind.JAXBContext;
@@ -17,8 +14,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class SDMFileVerifierTask extends Task<SuperDuperMarketDescriptor> {
-
+public class SDMFileVerifierTask extends Task<Boolean> {
 
     private SuperDuperMarketDescriptor sdmDescriptor;
     private File fileRef;
@@ -27,6 +23,7 @@ public class SDMFileVerifierTask extends Task<SuperDuperMarketDescriptor> {
     private String errorString;
     private String msg;
     private StringProperty loadingMessage;
+    private DoubleProperty p;
 
 
     public SDMFileVerifierTask(File file){
@@ -35,16 +32,27 @@ public class SDMFileVerifierTask extends Task<SuperDuperMarketDescriptor> {
         isValidFile = new SimpleBooleanProperty(false);
         loadingErrorMessage = new SimpleStringProperty("");
         msg = new String("");
+        p = new SimpleDoubleProperty(0);
+    }
+
+    public double getP() {
+        return p.get();
+    }
+
+    public DoubleProperty pProperty() {
+        return p;
+    }
+
+    public void setP(double p) {
+        this.p.set(p);
     }
 
     @Override
-    protected SuperDuperMarketDescriptor call() throws Exception {
-        tryToVerifyFile(fileRef);
-        return this.sdmDescriptor;
-
+    protected Boolean call() throws Exception {
+        return tryToVerifyFile(fileRef);
     }
 
-    private void tryToVerifyFile(File fileRef) {
+    private Boolean tryToVerifyFile(File fileRef) {
 
         JAXBContext jaxbContext = null;
 
@@ -56,14 +64,19 @@ public class SDMFileVerifierTask extends Task<SuperDuperMarketDescriptor> {
             if (isSDMValidAppWise(sdm)) {
                 setIsValidFile(true);
                 sdmDescriptor = sdm;
+                SDMManager.getInstance().loadNewSDMFile(sdmDescriptor);
+                setIsValidFile(true);
+                return true;
             } else{
                 setIsValidFile(false);
+                return false;
             }
 
         } catch (JAXBException e) {
             e.printStackTrace();
             setLoadingErrorMessage(loadingErrorMessage.get().concat("Encountered JAXException: File is not valid schema"));
             setIsValidFile(false);
+            return false;
         }
     }
 
@@ -119,13 +132,9 @@ public class SDMFileVerifierTask extends Task<SuperDuperMarketDescriptor> {
 
     private void updateMessageAndProgress(int i, String question, boolean answer) {
         updateProgress(i,8);
-        if (i == 1)
-            msg = msg.concat("Check " + i + ": "+question+answer);
-        else
-            msg = msg.concat("\nCheck " + i + ": "+question+answer);
-
+        msg = msg.concat("\n"+question+answer);
         if (answer == false){
-            msg = msg.concat(errorString);
+            msg = msg.concat("\n"+errorString);
         }
         updateMessage(msg);
 

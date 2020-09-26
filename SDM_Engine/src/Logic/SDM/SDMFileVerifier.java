@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
-public class SDMFileVerifier {
+public class SDMFileVerifier implements Callable<SDMFileVerifier> {
     private SuperDuperMarketDescriptor sdmDescriptor;
     private File fileRef;
     private String loadingErrorMessage;
@@ -377,5 +378,10 @@ public class SDMFileVerifier {
             }
         }
         return res;
+    }
+
+    @Override
+    public SDMFileVerifier call() throws Exception {
+        return this;
     }
 }

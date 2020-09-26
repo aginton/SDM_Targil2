@@ -1,0 +1,29 @@
+<changelist name="Uncommitted_changes_before_Update_at_26_09_2020_19_31_[Default_Changelist]" date="1601137912434" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_09_2020_19_31_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 26/09/2020 19:31 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/Main/LoadPaneController.class" />
+    <option name="AFTER_PATH" />
+    <option name="SHELVED_PATH" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Targil2/components/UpdateInventory/AddItemToStore/AddItemToStoreController.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Targil2/components/UpdateInventory/AddItemToStore/AddItemToStoreController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_09_2020_19_31_[Default_Changelist]/AddItemToStoreController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Engine/Logic/SDM/SDMFileVerifierTask.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Engine/Logic/SDM/SDMFileVerifierTask.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_09_2020_19_31_[Default_Changelist]/SDMFileVerifierTask.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Engine/Logic/SDM/SDMManager.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Engine/Logic/SDM/SDMManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_09_2020_19_31_[Default_Changelist]/SDMManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/SDM_Engine/Logic/SDM/SDMFileVerifier.class" />
+    <option name="AFTER_PATH" value="out/production/SDM_Engine/Logic/SDM/SDMFileVerifier.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_09_2020_19_31_[Default_Changelist]/SDMFileVerifier.class" />
+  </binary>
+</changelist>

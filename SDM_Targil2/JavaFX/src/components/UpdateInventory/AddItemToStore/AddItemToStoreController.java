@@ -127,7 +127,6 @@ public class AddItemToStoreController implements Initializable {
         chooseStoreCB.getItems().clear();
         chooseItemCB.getItems().clear();
         stores.clear();
-        itemsNotInSelectedStore.clear();
         stores= FXCollections.observableArrayList(SDMManager.getInstance().getStores());
         setUpFields();
     }

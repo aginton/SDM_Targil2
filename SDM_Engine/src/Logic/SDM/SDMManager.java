@@ -113,6 +113,23 @@ public class SDMManager extends SDMFileVerifier{
         }
     }
 
+    public void loadNewSDMFile(SuperDuperMarketDescriptor sdm){
+        System.out.println("The chosen file IS VALID!!! Hurray!");
+        setIsValidFile(true);
+        setLoadingErrorMessage("");
+
+        createCustomers(sdm);
+
+        createInventory(sdm);
+
+        createStores(sdm);
+        Order.setNumOfOrders(0);
+        inventory.updateStoresCarryingItems(stores);
+        inventory.updateAvePrice();
+        orderHistory = new Orders();
+        System.out.println("Finished creating SDM!");
+    }
+
     private void createCustomers(SuperDuperMarketDescriptor sdmDescriptor) {
         customers = new Customers();
         for (SDMCustomer customer: sdmDescriptor.getSDMCustomers().getSDMCustomer()){
