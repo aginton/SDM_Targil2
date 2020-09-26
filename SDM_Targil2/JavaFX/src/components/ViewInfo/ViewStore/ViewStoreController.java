@@ -125,8 +125,11 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        SDMManager.getInstance().fillSampleData(observableStoresList);
+        setUpFields();
+    }
 
+    public void setUpFields(){
+        SDMManager.getInstance().fillSampleData(observableStoresList);
         SortedList<Store> sortedList = new SortedList<>(observableStoresList);
 
         // sort by store ID
@@ -151,7 +154,7 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
                     selectedStore = newValue;
 
                     if (newValue != null){
-                        System.out.println("Selected store: " + newValue);
+                        //System.out.println("Selected store: " + newValue);
                         updateBasicStoreInfo(newValue);
                         storeInventoryTableView.setItems(FXCollections.observableList(newValue.getStoreItems()));
                         storeOrders = FXCollections.observableArrayList(newValue.getStoreOrders());
@@ -240,6 +243,16 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
         if (selectedStore == store){
             storeInventoryTableView.setItems(FXCollections.observableList(store.getStoreItems()));
         }
+    }
+
+    public void refresh() {
+        System.out.println(TAG + " - refresh()");
+        observableStoresList.clear();
+        observableStoresList = FXCollections.observableArrayList();
+        for (Store store: SDMManager.getInstance().getStores())
+            store.addStoreChangeListener(this);
+
+        setUpFields();
     }
 }
 

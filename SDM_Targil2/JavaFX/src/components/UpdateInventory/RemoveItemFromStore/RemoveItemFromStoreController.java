@@ -38,7 +38,7 @@ public class RemoveItemFromStoreController implements Initializable {
     @FXML
     private Button deleteButton;
 
-    private Inventory inventory = SDMManager.getInstance().getInventory();
+    private Inventory inventory;
     private ObservableList<Store> stores;
     private javafx.beans.value.ChangeListener<Store> storeChangeListener;
     private Store selectedStore;
@@ -48,11 +48,24 @@ public class RemoveItemFromStoreController implements Initializable {
     private StoreItem selectedItem;
 
     public RemoveItemFromStoreController(){
+        inventory = SDMManager.getInstance().getInventory();
         stores= FXCollections.observableArrayList(SDMManager.getInstance().getStores());
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        setUpFields();
+    }
+
+    public void refresh(){
+        chooseItemCB.getItems().clear();
+        chooseStoreCB.getItems().clear();
+        stores.clear();
+        inventory = SDMManager.getInstance().getInventory();
+        setUpFields();
+    }
+
+    private void setUpFields() {
         accordian.setExpandedPane(chooseStoresPane);
         chooseStoreCB.setItems(stores);
         chooseStoreCB.getSelectionModel().selectFirst();

@@ -54,7 +54,7 @@ public class OrderBasicInfoController {
     private ObservableList<Customer> customers;
     private ChangeListener<Customer> customerChangeListener;
     private Customer selectedCustomer;
-
+    private String TAG = "OrderBasicInfoController";
     private ChangeListener<LocalDate> orderDateChangeListener;
     private LocalDate orderDate;
 
@@ -66,44 +66,13 @@ public class OrderBasicInfoController {
 
 
     public OrderBasicInfoController(){
-        System.out.println("Inside NewOrderContainerController Constructor...");
         sdmManager = SDMManager.getInstance();
         customers = FXCollections.observableArrayList(sdmManager.getCustomers().getCustomers());
     }
 
     @FXML
     private void initialize(){
-        chooseCustomerCB.getItems().addAll(customers);
-
-
-        orderTypeGroup.selectedToggleProperty().addListener(
-                orderTypeChangeListener = (((observable, oldValue, newValue) -> {
-                    System.out.println("ToggleGroup change detected:");
-                    if (newValue == radioDynamicOrder) {
-                        orderType = eOrderType.DYNAMIC_ORDER;
-                    }
-                    else if (newValue == radioStaticOrder) {
-                        orderType = eOrderType.STATIC_ORDER;
-                    }
-                }))
-        );
-
-        radioStaticOrder.setSelected(true); //Set default orderType as Static Order
-
-        chooseCustomerCB.getSelectionModel().selectedItemProperty().addListener(
-                customerChangeListener = (((observable, oldValue, newValue) -> {
-                    System.out.println("Selected customer is " + newValue);
-                    selectedCustomer = newValue;
-                }))
-        );
-        chooseCustomerCB.getSelectionModel().selectFirst();
-
-        chooseDateDP.valueProperty().addListener(
-                orderDateChangeListener = (((observable, oldValue, newValue) -> {
-                    System.out.println("Selected date: " + newValue);
-                    orderDate = newValue;
-                }))
-        );
+        setUpFields();
     }
 
 
@@ -145,5 +114,48 @@ public class OrderBasicInfoController {
 
     public void resetAllFields(){
         chooseDateDP.getEditor().clear();
+    }
+
+    public void refresh() {
+        System.out.println(TAG + " - refresh()");
+        customers.clear();
+        chooseCustomerCB.getItems().clear();
+        sdmManager = SDMManager.getInstance();
+        customers = FXCollections.observableArrayList(sdmManager.getCustomers().getCustomers());
+        setUpFields();
+    }
+
+    private void setUpFields(){
+        chooseCustomerCB.getItems().addAll(customers);
+
+
+        orderTypeGroup.selectedToggleProperty().addListener(
+                orderTypeChangeListener = (((observable, oldValue, newValue) -> {
+                    //System.out.println("ToggleGroup change detected:");
+                    if (newValue == radioDynamicOrder) {
+                        orderType = eOrderType.DYNAMIC_ORDER;
+                    }
+                    else if (newValue == radioStaticOrder) {
+                        orderType = eOrderType.STATIC_ORDER;
+                    }
+                }))
+        );
+
+        radioStaticOrder.setSelected(true); //Set default orderType as Static Order
+
+        chooseCustomerCB.getSelectionModel().selectedItemProperty().addListener(
+                customerChangeListener = (((observable, oldValue, newValue) -> {
+                    //System.out.println("Selected customer is " + newValue);
+                    selectedCustomer = newValue;
+                }))
+        );
+        chooseCustomerCB.getSelectionModel().selectFirst();
+
+        chooseDateDP.valueProperty().addListener(
+                orderDateChangeListener = (((observable, oldValue, newValue) -> {
+                    //System.out.println("Selected date: " + newValue);
+                    orderDate = newValue;
+                }))
+        );
     }
 }

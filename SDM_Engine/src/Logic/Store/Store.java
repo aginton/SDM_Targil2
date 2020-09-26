@@ -38,6 +38,7 @@ public class Store implements hasLocationInterface {
     private HashMap<Integer, Integer> mapItemToPrices;
     private List<Order> storeOrders;
     private List<StoreDiscount> storeDiscounts;
+    private IntegerProperty totalNumberOfOrders;
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Constructor
@@ -76,6 +77,7 @@ public class Store implements hasLocationInterface {
         this.mapItemToPrices = new HashMap<>();
         storeLocation.add(store.getLocation().getX());
         storeLocation.add(store.getLocation().getY());
+        totalNumberOfOrders = new SimpleIntegerProperty(0);
 
         for (SDMSell sell : store.getSDMPrices().getSDMSell()) {
             mapItemToPrices.put(sell.getItemId(), sell.getPrice());
@@ -320,9 +322,21 @@ public class Store implements hasLocationInterface {
         updateStoreInventory(order.getCartForThisOrder());
 //        notifyStoreWasChanged();
         notifyOrderWasAdded(order);
+        int old = getTotalNumberOfOrders();
+        setTotalNumberOfOrders(old+1);
     }
 
+    public int getTotalNumberOfOrders() {
+        return totalNumberOfOrders.get();
+    }
 
+    public IntegerProperty totalNumberOfOrdersProperty() {
+        return totalNumberOfOrders;
+    }
+
+    public void setTotalNumberOfOrders(int totalNumberOfOrders) {
+        this.totalNumberOfOrders.set(totalNumberOfOrders);
+    }
 
     private void updateStoreInventory(Cart cart) {
         cart.getCart().forEach((k, v) -> {

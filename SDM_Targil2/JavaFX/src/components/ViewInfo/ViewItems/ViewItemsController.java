@@ -75,6 +75,10 @@ public class ViewItemsController implements inventoryChangeInterface {
     }
 
     public void initialize(){
+        setUpFields();
+    }
+
+    private void setUpFields() {
         itemIdColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem,Integer>("itemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem,String>("itemName"));
         itemCategoryColumn.setCellValueFactory(new PropertyValueFactory<InventoryItem, ObjectProperty<ePurchaseCategory>>("purchaseCategory"));
@@ -98,68 +102,18 @@ public class ViewItemsController implements inventoryChangeInterface {
             return new ReadOnlyStringWrapper(String.valueOf(num));
         });
 
-//        setUpTotalSoldCol();
-//        setUpNumberCarryingStoresCol();
-
         itemsTableView.setItems(items);
     }
-//
-//    private void setUpNumberCarryingStoresCol() {
-//        numCarryingStoresColumn.setCellFactory(col->{
-//            TableCell<InventoryItem, Integer> cell = new TableCell<InventoryItem,Integer>(){
-//                @Override
-//                protected void updateItem(Integer item, boolean empty) {
-//                    super.updateItem(item, empty);
-//                    this.setText(null);
-//                    if (!isEmpty()){
-//                        int rowIndex = this.getTableRow().getIndex();
-//                        InventoryItem inventoryItem = this.getTableView().getItems().get(rowIndex);
-//                        int numberCarryingStores = inventory.getMapItemsToStoresWithItem().get(inventoryItem).size();
-//                        this.setText(String.valueOf(numberCarryingStores));
-//                    }
-//                }
-//            };
-//            return cell;
-//        });
-//    }
 
-//    private void setUpTotalSoldCol() {
-//        totalAmountSoldColumn.setCellFactory(col->{
-//            TableCell<InventoryItem, Float> cell = new TableCell<InventoryItem,Float>(){
-//                @Override
-//                protected void updateItem(Float item, boolean empty) {
-//                    super.updateItem(item, empty);
-//                    this.setText(null);
-//                    if (!isEmpty()){
-//                        int rowIndex = this.getTableRow().getIndex();
-//                        InventoryItem inventoryItem = this.getTableView().getItems().get(rowIndex);
-//                        Double totalAmountSold = inventory.getMapItemsToTotalSold().get(inventoryItem);
-//                        this.setText(String.valueOf(totalAmountSold));
-//                    }
-//                }
-//            };
-//            return cell;
-//        });
-//    }
+    public void refresh() {
+        System.out.println(TAG + " - refresh()");
+        sdmManager = SDMManager.getInstance();
+        inventory = sdmManager.getInventory();
+        inventory.addListener(this);
+        items.clear();
+        items = FXCollections.observableArrayList(inventory.getListInventoryItems());
 
-
-//    private void setUpAvePriceCol() {
-//        avePriceColumn.setCellFactory(col->{
-//            TableCell<InventoryItem, Float> cell = new TableCell<InventoryItem,Float>(){
-//                @Override
-//                protected void updateItem(Float item, boolean empty) {
-//                    super.updateItem(item, empty);
-//                    this.setText(null);
-//                    if (!isEmpty()){
-//                        int rowIndex = this.getTableRow().getIndex();
-//                        InventoryItem inventoryItem = this.getTableView().getItems().get(rowIndex);
-//                        float avePrice = inventory.getMapItemsToAvePrice().get(inventoryItem);
-//                        this.setText(String.valueOf(avePrice));
-//                    }
-//                }
-//            };
-//            return cell;
-//        });
-//    }
+        setUpFields();
+    }
 
 }

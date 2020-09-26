@@ -91,17 +91,21 @@ public class SingleOrderViewController  {
     private void setLabels(Order order) {
         orderIdLabel.setText(order.getOrderId().toString());
         orderDateLabel.setText(order.getOrderDate().toString());
-        StringBuilder sb = new StringBuilder("");
+
+        StringBuilder storeNames = new StringBuilder("");
+        StringBuilder storeIds = new StringBuilder("");
         for (Store store: order.getStoresBoughtFrom()){
-            sb.append(store.getStoreId() + ", ");
+            storeIds.append(store.getStoreId() +", ");
+            storeNames.append(store.getStoreName() + ", ");
         }
-        storeNameLabel.setText(sb.toString());
+        storeIdLabel.setText(storeIds.toString());
+        storeNameLabel.setText(storeNames.toString());
         totalNumItemsLabel.setText(String.valueOf(order.getNumberOfItemsInOrder()));
         totalTypeItemsLabel.setText(String.valueOf(order.getNumberItemsByType()));
         totalNumberStoresLabel.setText(String.valueOf(order.getStoresBoughtFrom().size()));
         subtotalLabel.setText(String.valueOf(order.getCartTotal()));
         deliveryFeeLabel.setText(String.valueOf(order.getTotalDeliveryCost()));
-        totalLabel.setText(String.valueOf(order.getTotalDeliveryCost()+order.getCartTotal()));
+        totalLabel.setText(String.valueOf(order.getTotalOrderCost()));
     }
 
 

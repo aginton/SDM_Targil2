@@ -34,6 +34,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
+
+
 public class NewOrderContainerController implements Initializable {
 
     @FXML
@@ -51,6 +53,8 @@ public class NewOrderContainerController implements Initializable {
     @FXML
     private Button confirmButton;
 
+
+    private String TAG = "NewOrderContainerController";
     private Node basicInfoRef, chooseStoresRef, chooseItemsStaticOrderRef, chooseItemsDynamicRef, chooseDiscountsRef, chooseDiscountsDynamicRef, confirmOrderRef, currentNode;
     private OrderBasicInfoController basicInfoController;
     private ChooseStoreController chooseStoreController;
@@ -154,19 +158,19 @@ public class NewOrderContainerController implements Initializable {
 
     private void setTitleLabel() {
         if (currentNode == basicInfoRef){
-            System.out.println("Current node is basicInfo!");
+            //System.out.println("Current node is basicInfo!");
             titleLabel.setText("Basic Order Info");
         }
         if (currentNode == chooseStoresRef){
-            System.out.println("Current node is chooseStores!");
+            //System.out.println("Current node is chooseStores!");
             titleLabel.setText("Choose Stores");
         }
         if (currentNode.equals(chooseItemsStaticOrderRef)){
-            System.out.println("Current node is chooseItemsStatic - and used .equals() this time!");
+            //System.out.println("Current node is chooseItemsStatic - and used .equals() this time!");
             titleLabel.setText("Choose Items");
         }
         if (currentNode.equals(chooseItemsDynamicRef)){
-            System.out.println("Current node is chooseItemsStatic - and used .equals() this time!");
+            //System.out.println("Current node is chooseItemsStatic - and used .equals() this time!");
             titleLabel.setText("Choose Items DYNAMICALLY");
         }
         if (currentNode.equals(chooseDiscountsRef)){
@@ -392,7 +396,20 @@ public class NewOrderContainerController implements Initializable {
         mapStoresToCarts.clear();
         deliveryFee = 0;
         selectedStore = null;
+    }
 
+    public void refreshOthers(){
+        System.out.println("\n" + TAG + " - refreshOthers() called");
+        currentCart = new Cart();
+        mapStoresToCarts = new HashMap<>();
+        currentNode = basicInfoRef;
+        backButton.setDisable(true);
+        confirmButton.setVisible(false);
+        confirmButton.setDisable(false);
+        setNodeForPane(basicInfoRef);
+
+        basicInfoController.refresh();
+        chooseStoreController.refresh();
     }
 
 

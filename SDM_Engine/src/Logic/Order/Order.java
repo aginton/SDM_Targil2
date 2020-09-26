@@ -144,12 +144,12 @@ public class Order {
     }
 
     public double getTotalOrderCost() {
-        return totalOrderCost;
+        double preciseVal = bigCart.getCartTotalPrice();
+        preciseVal += totalDeliveryCost;
+        BigDecimal bd = new BigDecimal(preciseVal).setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
-    public void setTotalOrderCost(double totalOrderCost) {
-        this.totalOrderCost = totalOrderCost;
-    }
 
     public String getNamesOfStoresInvolved(){
         StringBuilder sb = new StringBuilder("");

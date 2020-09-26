@@ -90,6 +90,19 @@ public class ChangeStoreItemPriceController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        setUpFields();
+    }
+
+    public void refresh(){
+        chooseStoreCB.getItems().clear();
+        chooseItemCB.getItems().clear();
+        stores.clear();
+        storeItems.clear();
+        stores= FXCollections.observableArrayList(SDMManager.getInstance().getStores());
+        setUpFields();
+    }
+
+    private void setUpFields() {
         accordian.setExpandedPane(storeTitledPane);
         chooseStoreCB.setItems(stores);
         chooseStoreCB.getSelectionModel().selectFirst();

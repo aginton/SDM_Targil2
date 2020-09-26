@@ -2,6 +2,7 @@ package components.Main;
 
 import Logic.SDM.SDMFileVerifier;
 import Logic.SDM.SDMManager;
+import components.PlaceAnOrder.PlaceAnOrderMain.NewOrderContainerController;
 import components.UpdateInventory.UpdateInventoryContainerController;
 import components.ViewInfo.ViewMainController;
 import javafx.beans.property.BooleanProperty;
@@ -17,7 +18,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -58,6 +58,8 @@ public class MainAppNController {
     private Label errorMessageLabel;
 
     private Node orderMenuRef, viewMenuRef, updateRef;
+    private ViewMainController viewMainController;
+    private NewOrderContainerController newOrderContainerController;
     private UpdateInventoryContainerController updateController;
 
 
@@ -66,7 +68,6 @@ public class MainAppNController {
     private BooleanProperty isFileSelected;
     private BooleanProperty isNewOrderComplete;
     private SimpleStringProperty selectedFileProperty;
-    private ViewMainController viewMainController;
     private ChangeListener<Boolean> isNewOrderCompleteChangeListener;
 
 
@@ -108,7 +109,7 @@ public class MainAppNController {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("xml files", "*.xml"));
 
         try {
-            System.out.println("Inside try for loadButtonAction");
+          //  System.out.println("Inside try for loadButtonAction");
             File file = fileChooser.showOpenDialog(stage);
             fileChooser.setInitialDirectory(file.getParentFile());
 
@@ -120,13 +121,20 @@ public class MainAppNController {
                 System.out.println("Valid, yay!!!");
                 //enableAllButtons();
 
-                hasLoadedSDMFile = true;
-                isFileSelected.set(true);
+                errorMessageLabel.setText("");
                 selectedFileProperty.set(file.getAbsolutePath());
                 sdmManager.loadNewSDMFile(sdmForChosenFile);
-
-                errorMessageLabel.setText("");
-                loadXMLForOtherButtons();
+                if (!hasLoadedSDMFile){
+                    System.out.println("Loading others for first time");
+                    loadXMLForOtherButtons();
+                }
+                if (hasLoadedSDMFile){
+                    System.out.println("Resetting others");
+                    refreshOthers();
+                    mainChildAnchorPane.getChildren().clear();
+                }
+                hasLoadedSDMFile = true;
+                isFileSelected.set(true);
             } else{
                 System.out.printf("File %s appears to be invalid (GASP!)\n", file.getName());
                 errorMessageLabel.setText(sdmForChosenFile.getLoadingErrorMessage());
@@ -137,6 +145,12 @@ public class MainAppNController {
         } catch (Exception ex) {
             System.out.println("error");
         }
+    }
+
+    private void refreshOthers() {
+        newOrderContainerController.refreshOthers();
+        viewMainController.refreshOthers();
+        updateController.refreshOthers();
     }
 
 
@@ -150,18 +164,19 @@ public class MainAppNController {
     }
 
     private void loadXMLForOtherButtons() {
-        System.out.println("Going to try and store ref to viewMenu.fxml");
+        //System.out.println("Going to try and store ref to viewMenu.fxml");
         try {
             FXMLLoader viewLoader = new FXMLLoader();
             viewLoader.setLocation(getClass().getResource("/components/ViewInfo/ViewMainContainer.fxml"));
             viewMenuRef = viewLoader.load();
             viewMainController = viewLoader.getController();
 
-            System.out.println("Going to try and store ref to orderMenu.fxml");
+          //  System.out.println("Going to try and store ref to orderMenu.fxml");
 
             FXMLLoader newOrderLoader = new FXMLLoader();
             newOrderLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderContainer.fxml"));
             orderMenuRef = newOrderLoader.load();
+            newOrderContainerController = newOrderLoader.getController();
 
             FXMLLoader updateLoader = new FXMLLoader();
             updateLoader.setLocation(getClass().getResource("/components/UpdateInventory/UpdateInventoryContainer.fxml"));
@@ -181,7 +196,7 @@ public class MainAppNController {
 
     @FXML
     void PlaceAnOrderAction(ActionEvent event) {
-        System.out.println("Calling setCenterPane(orderMenuRef):");
+        //System.out.println("Calling setCenterPane(orderMenuRef):");
         loadNewPane(orderMenuRef);
     }
 
@@ -193,7 +208,7 @@ public class MainAppNController {
     @FXML
     void ViewButtonAction(ActionEvent event) {
         //loadPage("/components/viewMenu/ViewMenu");
-        System.out.println("Calling setCenterPane(viewMenuRef):");
+        //System.out.println("Calling setCenterPane(viewMenuRef):");
         loadNewPane(viewMenuRef);
     }
 
