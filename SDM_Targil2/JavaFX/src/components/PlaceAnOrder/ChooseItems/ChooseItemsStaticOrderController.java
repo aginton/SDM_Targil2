@@ -471,7 +471,7 @@ public class ChooseItemsStaticOrderController implements Initializable{
             return storeItem.getItemId();
         }
 
-        public String getName(){
+        public String getItemName(){
             return storeItem.getItemName();
         }
 
