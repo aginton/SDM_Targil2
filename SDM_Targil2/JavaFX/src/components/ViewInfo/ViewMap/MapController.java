@@ -2,8 +2,11 @@ package components.ViewInfo.ViewMap;
 
 import Logic.Customers.Customer;
 import Logic.Interfaces.hasLocationInterface;
+import Logic.Order.Order;
+import Logic.Order.StoreItem;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
+import Logic.Store.StoreChangeListener;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
@@ -116,7 +119,7 @@ public class MapController implements Initializable {
         setUpFields();
     }
 
-    public class Cell extends Pane{
+    public class Cell extends Pane implements StoreChangeListener {
         private eMapElementType elementType;
         private String msg;
         private int x;
@@ -165,6 +168,7 @@ public class MapController implements Initializable {
 
             if (elementType == eMapElementType.STORE){
                 Store store = (Store) arg;
+                store.addStoreChangeListener(this);
                 StringBuilder sb = new StringBuilder("Store")
                         .append("\nName: "+ store.getStoreName())
                         .append("\nLocation: "+ store.getLocation())
@@ -224,6 +228,31 @@ public class MapController implements Initializable {
             //update tooltip text
             tooltip = (Tooltip) cell.getProperties().get(cellCoord.toString());
             tooltip.setText(msg);
+        }
+
+        @Override
+        public void storeWasChanged(Store store) {
+
+        }
+
+        @Override
+        public void orderWasAdded(Store store, Order order) {
+
+        }
+
+        @Override
+        public void itemPriceChanged(Store store, StoreItem item) {
+
+        }
+
+        @Override
+        public void newStoreItemAdded(Store store, StoreItem item) {
+
+        }
+
+        @Override
+        public void storeItemWasDeleted(Store store, StoreItem item) {
+
         }
 
 //        private void handleClick() {

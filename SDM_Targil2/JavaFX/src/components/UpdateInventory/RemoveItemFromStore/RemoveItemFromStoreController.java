@@ -111,13 +111,18 @@ public class RemoveItemFromStoreController implements Initializable {
     @FXML
     void deleteButtonAction(ActionEvent event) {
 
+
         if (selectedItem != null && selectedStore != null){
-            boolean ans = SDMManager.getInstance().checkIfItemCanBeRemovedFromStore(selectedItem,selectedStore);
-            if (!ans){
-                new AlertInfoBox().display("Error", "Unable to perform this operation", "Currently item " + selectedItem.getItemId() + " is only sold at " + selectedStore.getStoreName() +".");
+            if (selectedStore.getStoreItems().size()==1){
+                new AlertInfoBox().display("Error", "Unable to perform this operation", "Currently item " + selectedItem.getItemId() + " is the only item sold at " + selectedStore.getStoreName() +".\nEach store must sell at least one item.");
                 return;
             }
 
+            boolean ans = SDMManager.getInstance().checkIfItemCanBeRemovedFromStore(selectedItem,selectedStore);
+            if (!ans){
+                new AlertInfoBox().display("Error", "Unable to perform this operation", "Currently item " + selectedItem.getItemId() + " is only sold at " + selectedStore.getStoreName() +".\nEach item must be sold in at least one store.");
+                return;
+            }
         }
         InventoryItem item = selectedStore.getInventoryItemById(selectedItem.getItemId());
         selectedStore.removeStoreItem(selectedItem);
