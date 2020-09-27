@@ -74,8 +74,6 @@ public class SDMManager extends SDMFileVerifier{
         this.orderHistory = orderHistory;
     }
 
-
-
     public Customers getCustomers() {
         return customers;
     }

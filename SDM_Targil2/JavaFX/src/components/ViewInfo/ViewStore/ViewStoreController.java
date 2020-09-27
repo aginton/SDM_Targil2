@@ -199,17 +199,17 @@ public class ViewStoreController implements Initializable, StoreChangeListener {
         storeTotalDeliveryIncomeLabel.setText(String.valueOf(newValue.getTotalDeliveryIncome()));
     }
 
-    @Override
-    public void storeWasChanged(Store store) {
-        System.out.println("Store " + store.getStoreName() + " was changed!");
-        if (selectedStore == store){
-            storeOrders = FXCollections.observableArrayList(selectedStore.getStoreOrders());
-            storeOrdersTableView.getItems().clear();
-            storeOrdersTableView.setItems(storeOrders);
-            updateBasicStoreInfo(selectedStore);
-            storeInventoryTableView.refresh();
-        }
-    }
+//    @Override
+//    public void storeWasChanged(Store store) {
+//        System.out.println("Store " + store.getStoreName() + " was changed!");
+//        if (selectedStore == store){
+//            storeOrders = FXCollections.observableArrayList(selectedStore.getStoreOrders());
+//            storeOrdersTableView.getItems().clear();
+//            storeOrdersTableView.setItems(storeOrders);
+//            updateBasicStoreInfo(selectedStore);
+//            storeInventoryTableView.refresh();
+//        }
+//    }
 
     @Override
     public void orderWasAdded(Store store, Order order) {

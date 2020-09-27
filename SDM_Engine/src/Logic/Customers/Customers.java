@@ -36,6 +36,7 @@ public class Customers {
 
     public void addOrderToCustomer(Order order, Customer customer) {
 
+        System.out.println("about to add order to customer: " + customer.getCustomerName());
         customer.addOrder(order);
         notifyListeners();
     }

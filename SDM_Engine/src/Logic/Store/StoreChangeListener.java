@@ -5,7 +5,6 @@ import Logic.Order.StoreItem;
 import Logic.Store.Store;
 
 public interface StoreChangeListener {
-    void storeWasChanged(Store store);
 
     void orderWasAdded(Store store, Order order);
 

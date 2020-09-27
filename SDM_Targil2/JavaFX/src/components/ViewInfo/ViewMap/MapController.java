@@ -1,11 +1,15 @@
 package components.ViewInfo.ViewMap;
 
 import Logic.Customers.Customer;
+import Logic.Customers.Customers;
+import Logic.Interfaces.customersChangeInterface;
 import Logic.Interfaces.hasLocationInterface;
+import Logic.Order.Order;
+import Logic.Order.StoreItem;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
+import Logic.Store.StoreChangeListener;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -19,18 +23,18 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MapController implements Initializable {
+public class MapController implements Initializable, customersChangeInterface, StoreChangeListener {
 
     private static final String TAG = "MapController";
     @FXML
     private AnchorPane mapAnchorPane;
 
+    private SDMManager sdmManager;
+    private Customers allCustomers;
     private List<Customer> customers;
     private List<Store> stores;
     private int maxXValue;
     private int maxYValue;
-
-    private static final double ELEMENT_SIZE = 100;
 
     //private int XBoardSize = 0;
     //private int YBoardSize = 0;
@@ -39,6 +43,16 @@ public class MapController implements Initializable {
     private BorderPane borderPane;
 
     public MapController(){
+
+        sdmManager = SDMManager.getInstance();
+        allCustomers = sdmManager.getCustomers();
+        allCustomers.addListener(this);
+
+        stores = sdmManager.getStores();
+        for (Store store : stores) {
+            store.addStoreChangeListener(this);
+        }
+
         setUpBasicData();
     }
 
@@ -50,7 +64,6 @@ public class MapController implements Initializable {
         stores = SDMManager.getInstance().getStores();
         updateMaxXandY(customers);
         updateMaxXandY(stores);
-       // this.BOARDSIZE = (maxXValue>maxYValue)? maxXValue:maxYValue;
         cell = new Cell[maxXValue+1][maxYValue+1];
     }
 
@@ -60,12 +73,14 @@ public class MapController implements Initializable {
     }
 
     private void setUpFields() {
-        //statusMsg.setText("Nothing to see...");
+        System.out.println("there are: " + customers.size() + " customers in system");
+        System.out.println("there are: " + stores.size() + " stores in system");
 
         for (int i = maxXValue; i >= 0; i--){
             for (int j = 0; j <= maxYValue; j++){
                 cell[i][j] = new Cell(i,j);
                 pane.add(cell[i][j],j,maxXValue-i);
+                System.out.println("cell " + "(" + i + "," + j + ") was added to map!");
             }
         }
         for (Store store: stores){
@@ -110,10 +125,37 @@ public class MapController implements Initializable {
     public void refresh() {
         System.out.println(TAG + " - refresh()");
         mapAnchorPane.getChildren().clear();
-        customers.clear();
-        stores.clear();
+        //customers.clear();
+        //stores.clear();
         setUpBasicData();
         setUpFields();
+    }
+
+    @Override
+    public void onCustomersChange() {
+        System.out.println("ViewMapController: Refreshing Map - on customer change");
+        refresh();
+    }
+
+    @Override
+    public void orderWasAdded(Store store, Order order) {
+        System.out.println("ViewMapController: Refreshing Map - on order was added to store");
+        refresh();
+    }
+
+    @Override
+    public void itemPriceChanged(Store store, StoreItem item) {
+
+    }
+
+    @Override
+    public void newStoreItemAdded(Store store, StoreItem item) {
+
+    }
+
+    @Override
+    public void storeItemWasDeleted(Store store, StoreItem item) {
+
     }
 
     public class Cell extends Pane{
@@ -131,8 +173,8 @@ public class MapController implements Initializable {
 //            this.minHeightProperty().bind(mapAnchorPane.heightProperty().divide(10));
 //            this.maxWidthProperty().bind(mapAnchorPane.widthProperty().divide(10));
 //            this.minWidthProperty().bind(mapAnchorPane.widthProperty().divide(10));
-            this.setMinSize(40,40);
-            this.setMaxSize(40,40);
+            this.setMinSize(10,10);
+            this.setMaxSize(10,10);
 
             //this.setOnMouseClicked(e->handleClick());
             elementType = eMapElementType.EMPTY;
