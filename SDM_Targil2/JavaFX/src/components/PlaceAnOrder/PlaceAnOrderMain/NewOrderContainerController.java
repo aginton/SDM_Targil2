@@ -14,6 +14,10 @@ import components.PlaceAnOrder.ChooseItems.ChooseItemsStaticOrderController;
 import components.PlaceAnOrder.ChooseItems.DynamicOrder.ChooseItemsDynamicOrderController;
 import components.PlaceAnOrder.ChooseStores.ChooseStoreController;
 import components.PlaceAnOrder.ConfirmOrder.ConfirmOrderController;
+import components.PlaceAnOrder.SuccessOrError.AlertInfoBox;
+import components.PlaceAnOrder.SuccessOrError.ConfirmBox;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,10 +77,16 @@ public class NewOrderContainerController implements Initializable {
     private float deliveryFee;
     private double regularItemsSubtotal;
     private double discountItemsSubtotal;
+    private BooleanProperty orderInProgress;
+    private BooleanProperty orderInProgressDynamic;
+
+
 
     public NewOrderContainerController(){
         currentCart = new Cart();
         mapStoresToCarts = new HashMap<>();
+        orderInProgress = new SimpleBooleanProperty(false);
+        orderInProgressDynamic = new SimpleBooleanProperty(false);
 
         try {
             //1. choose basic info (customer, order type, date)
@@ -98,6 +108,8 @@ public class NewOrderContainerController implements Initializable {
             chooseItemsLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ChooseItems/ChooseItems.fxml"));
             chooseItemsStaticOrderRef = chooseItemsLoader.load();
             chooseItemsStaticOrderController = chooseItemsLoader.getController();
+            orderInProgress.bind(chooseItemsStaticOrderController.orderInProgressProperty());
+
 
             //currentCart = chooseItemsController.getDummyCart();
 
@@ -106,6 +118,7 @@ public class NewOrderContainerController implements Initializable {
             chooseItemsDynamicLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ChooseItems/DynamicOrder/ChooseItemsDynamicOrder.fxml"));
             chooseItemsDynamicRef = chooseItemsDynamicLoader.load();
             chooseItemsDynamicController = chooseItemsDynamicLoader.getController();
+            orderInProgressDynamic.bind(chooseItemsDynamicController.orderInProgressProperty());
 
 
 
@@ -242,16 +255,28 @@ public class NewOrderContainerController implements Initializable {
 
     private boolean checkIfCanContinue() {
         if (currentNode.equals(basicInfoRef)){
-            return basicInfoController.hasNecessaryInformation();
+            boolean ans = basicInfoController.hasNecessaryInformation();
+            if (!ans)
+                new AlertInfoBox().display("Missing Information", "Missing Basic Information","Please enter a valid date and choose existing customer in order to continue.");
+            return ans;
         }
         if (currentNode.equals(chooseStoresRef)){
-            return chooseStoreController.hasNecessaryInformation();
+            boolean ans = chooseStoreController.hasNecessaryInformation();
+            if (!ans)
+                new AlertInfoBox().display("Missing Information", "Missing Store Information","Please choose existing store in order to continue.");
+            return ans;
         }
         if (currentNode.equals(chooseItemsStaticOrderRef)){
-            return chooseItemsStaticOrderController.hasNecessaryInformation();
+            boolean ans = chooseItemsStaticOrderController.hasNecessaryInformation();
+            if (!ans)
+                new AlertInfoBox().display("Empty Cart Error", "Empty Cart","Your cart is currently empty. Please enter a some items in order to continue");
+            return ans;
         }
         if (currentNode.equals(chooseItemsDynamicRef)){
-            return chooseItemsDynamicController.hasNecessaryInformation();
+            boolean ans = chooseItemsDynamicController.hasNecessaryInformation();
+            if (!ans)
+                new AlertInfoBox().display("Empty Cart Error", "Empty Cart","Your cart is currently empty. Please enter a some items in order to continue");
+            return ans;
         }
         return true;
     }
@@ -313,18 +338,60 @@ public class NewOrderContainerController implements Initializable {
         }
 
         if (currentNode.equals(chooseDiscountsRef)){
+            boolean alreadyAddedSomeDiscounts = chooseDiscountsController.isAlreadyAddedSomeDiscounts();
+            if (alreadyAddedSomeDiscounts){
+                boolean response = new ConfirmBox().display("Warning", "Discounts already added", "If you go back now, your current discounts will be erased. Do you wish to continue?");
+                if (!response)
+                    return;
+                chooseDiscountsController.resetFields();
+                confirmOrderController.resetFields();
+            }
             setNodeForPane(chooseItemsStaticOrderRef);
             return;
         }
         if (currentNode.equals(chooseDiscountsDynamicRef)){
+            boolean alreadyAddedSomeDiscounts = chooseDiscountsDynamicController.isAlreadyAddedDiscounts();
+            if (alreadyAddedSomeDiscounts){
+                boolean response = new ConfirmBox().display("Warning", "Discounts already added", "If you go back now, your current discounts will be erased. Do you wish to continue?");
+                if (!response)
+                    return;
+
+                chooseDiscountsDynamicController.resetFields();
+                confirmOrderController.resetFields();
+            }
             setNodeForPane(chooseItemsDynamicRef);
             return;
         }
         if (currentNode.equals(chooseItemsStaticOrderRef)){
-            setNodeForPane(chooseStoresRef);
-            return;
+            if (isOrderInProgress()){
+                boolean ans = new ConfirmBox().display("Warning: Order in progress","If you go back now, your cart will be emptied", "Do you wish to continue?");
+
+                if (!ans){
+                    return;
+                } else{
+                    chooseItemsStaticOrderController.resetFields();
+                    chooseDiscountsController.resetFields();
+                    confirmOrderController.resetFields();
+                    setNodeForPane(chooseStoresRef);
+                    return;
+                }
+            } else{
+                setNodeForPane(chooseStoresRef);
+                return;
+            }
         }
         if (currentNode.equals(chooseItemsDynamicRef)){
+            if (isOrderInProgressDynamic()){
+                boolean response = new ConfirmBox().display("Warning: Order in progress","If you go back now, your cart will be emptied", "Do you wish to continue?");
+                if (!response)
+                    return;
+                chooseItemsDynamicController.resetFields();
+                chooseDiscountsDynamicController.resetFields();
+                confirmOrderController.resetFields();
+                backButton.setDisable(true);
+                setNodeForPane(basicInfoRef);
+                return;
+            }
             backButton.setDisable(true);
             setNodeForPane(basicInfoRef);
             return;
@@ -396,6 +463,30 @@ public class NewOrderContainerController implements Initializable {
         mapStoresToCarts.clear();
         deliveryFee = 0;
         selectedStore = null;
+    }
+
+    public boolean isOrderInProgress() {
+        return orderInProgress.get();
+    }
+
+    public BooleanProperty orderInProgressProperty() {
+        return orderInProgress;
+    }
+
+    public void setOrderInProgress(boolean orderInProgress) {
+        this.orderInProgress.set(orderInProgress);
+    }
+
+    public boolean isOrderInProgressDynamic() {
+        return orderInProgressDynamic.get();
+    }
+
+    public BooleanProperty orderInProgressDynamicProperty() {
+        return orderInProgressDynamic;
+    }
+
+    public void setOrderInProgressDynamic(boolean orderInProgressDynamic) {
+        this.orderInProgressDynamic.set(orderInProgressDynamic);
     }
 
     public void refreshOthers(){

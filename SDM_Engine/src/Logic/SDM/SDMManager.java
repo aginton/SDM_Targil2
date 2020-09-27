@@ -288,6 +288,7 @@ public class SDMManager extends SDMFileVerifier{
         Store res = null;
         int currentMin=Integer.MAX_VALUE;
         int cur;
+        Set<Store> setStores = inventory.getStoresCarryingItem(k);
         for (Store store: inventory.getStoresCarryingItem(k)){
             if (res == null){
                 res = store;
@@ -300,5 +301,16 @@ public class SDMManager extends SDMFileVerifier{
             }
         }
     return res;
+    }
+
+    public boolean checkIfItemCanBeRemovedFromStore(StoreItem selectedItem, Store selectedStore) {
+        InventoryItem item = this.getInventory().getInventoryItemById(selectedItem.getItemId());
+
+        Set<Store> setStoresCarryingItem = inventory.getStoresCarryingItem(item);
+        if (!setStoresCarryingItem.contains(selectedStore))
+            return false;
+        if (inventory.getStoresCarryingItem(item).size()==1)
+            return false;
+        return true;
     }
 }

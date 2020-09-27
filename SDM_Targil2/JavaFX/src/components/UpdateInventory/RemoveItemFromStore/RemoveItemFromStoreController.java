@@ -5,6 +5,7 @@ import Logic.Inventory.InventoryItem;
 import Logic.Order.StoreItem;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
+import components.PlaceAnOrder.SuccessOrError.AlertInfoBox;
 import components.PlaceAnOrder.SuccessOrError.SuccessPopUpController;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -147,6 +148,15 @@ public class RemoveItemFromStoreController implements Initializable {
 
     @FXML
     void deleteButtonAction(ActionEvent event) {
+
+        if (selectedItem != null && selectedStore != null){
+            boolean ans = SDMManager.getInstance().checkIfItemCanBeRemovedFromStore(selectedItem,selectedStore);
+            if (!ans){
+                new AlertInfoBox().display("Error", "Unable to perform this operation", "Currently item " + selectedItem.getItemId() + " is only sold at " + selectedStore.getStoreName() +".");
+                return;
+            }
+
+        }
         InventoryItem item = selectedStore.getInventoryItemById(selectedItem.getItemId());
         selectedStore.removeStoreItem(selectedItem);
         inventory.getMapItemsToStoresWithItem().get(item).remove(selectedStore);

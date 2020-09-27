@@ -101,6 +101,7 @@ public class OrderBasicInfoController {
 
     public void resetAllFields(){
         chooseDateDP.getEditor().clear();
+        orderDate = null;
     }
 
     public void refresh() {
