@@ -7,12 +7,13 @@ import Logic.Store.Store;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
+
 
 import java.net.URL;
 import java.util.List;
@@ -23,9 +24,6 @@ public class MapController implements Initializable {
     private static final String TAG = "MapController";
     @FXML
     private AnchorPane mapAnchorPane;
-    @FXML
-    private Label statusMsg;
-
 
     private List<Customer> customers;
     private List<Store> stores;
@@ -61,10 +59,10 @@ public class MapController implements Initializable {
     }
 
     private void setUpFields() {
-        statusMsg.setText("Nothing to see...");
+        //statusMsg.setText("Nothing to see...");
 
-        for (int i=0; i<=BOARDSIZE; i++){
-            for (int j=0; j<=BOARDSIZE;j++){
+        for (int i = 0; i <= BOARDSIZE; i++){
+            for (int j = 0; j <= BOARDSIZE;j++){
                 cell[i][j] = new Cell(i,j);
                 pane.add(cell[i][j],j,i);
             }
@@ -72,13 +70,13 @@ public class MapController implements Initializable {
         for (Store store: stores){
             int x = store.getX();
             int y = store.getY();
-            cell[y][x].setType(1, store);
+            cell[y][x].setType(eMapElementType.STORE, store, cell[y][x]);
         }
 
         for (Customer customer: customers){
             int x = customer.getX();
             int y = customer.getY();
-            cell[y][x].setType(2, customer);
+            cell[y][x].setType(eMapElementType.CUSTOMER, customer, cell[y][x]);
         }
 
         mapAnchorPane.getChildren().add(pane);
@@ -113,44 +111,66 @@ public class MapController implements Initializable {
     }
 
     public class Cell extends Pane{
-        private int type;
+        private eMapElementType elementType;
         private String msg;
         private int x;
         private int y;
 
 
-        public Cell(int i, int j){
+        public Cell(int i, int j) {
             setStyle("-fx-border-color: black");
             //this.setPrefSize(200,200);
-            this.setMinSize(50,50);
-            this.setMaxSize(100,100);
-            this.setOnMouseClicked(e->handleClick());
-            type = 0;
+            this.setMinSize(20,20);
+            this.setMaxSize(20,20);
+            //this.setOnMouseClicked(e->handleClick());
+            elementType = eMapElementType.EMPTY;
             this.x = i;
             this.y = j;
             msg = "Nothing to show\nLocation: [" + i + ", " + j +"]";
+
+            StringBuilder cellCoord = new StringBuilder();
+            cellCoord.append("(").append(i).append(",").append(j).append(")");
+
+            //assign tooltip(i,j) to this cell
+            Tooltip tooltip = new Tooltip(msg);
+            this.getProperties().put(cellCoord.toString(), tooltip);
+            Tooltip.install(this,tooltip);
         }
 
-        public void setType(int t, Object arg){
-            this.type = t;
+        public int getX() {
+            return x;
+        }
 
-            if (type == 1){
+        public int getY() {
+            return y;
+        }
+
+        public void setType(eMapElementType elementType, Object arg, Cell cell){
+            this.elementType = elementType;
+            Tooltip tooltip;
+            ImageView storeIcon;
+
+            if (elementType == eMapElementType.STORE){
                 Store store = (Store) arg;
                 StringBuilder sb = new StringBuilder("Store")
                         .append("\nName: "+ store.getStoreName())
                         .append("\nLocation: "+ store.getLocation())
                         .append("\nNumber of orders: " + store.getStoreOrders().size());
                 msg = sb.toString();
+//                Ellipse ellipse = new Ellipse(this.getWidth()/2, this.getHeight()/2, this.getWidth()/2-10, this.getHeight()/2 -10);
+//                ellipse.centerXProperty().bind(this.widthProperty().divide(2));
+//                ellipse.centerYProperty().bind(this.heightProperty().divide(2));
+//                ellipse.radiusXProperty().bind(this.widthProperty().divide(2).subtract(10));
+//                ellipse.radiusYProperty().bind(this.heightProperty().divide(2).subtract(10));
+//                ellipse.setStroke(Color.BLACK);
+//                ellipse.setFill(Color.RED);
 
-                Ellipse ellipse = new Ellipse(this.getWidth()/2, this.getHeight()/2, this.getWidth()/2-10, this.getHeight()/2 -10);
-                ellipse.centerXProperty().bind(this.widthProperty().divide(2));
-                ellipse.centerYProperty().bind(this.heightProperty().divide(2));
-                ellipse.radiusXProperty().bind(this.widthProperty().divide(2).subtract(10));
-                ellipse.radiusYProperty().bind(this.heightProperty().divide(2).subtract(10));
-                ellipse.setStroke(Color.BLACK);
-                ellipse.setFill(Color.RED);
-                setStyle("-fx-background-color: hotpink");
-                getChildren().add(ellipse);
+                storeIcon = new ImageView("/resources/map_icons/store.png");
+                storeIcon.fitWidthProperty().bind(cell.widthProperty());
+                storeIcon.fitHeightProperty().bind(cell.heightProperty());
+
+                //setStyle("-fx-background-color: hotpink");
+                getChildren().add(storeIcon);
 
                 store.totalNumberOfOrdersProperty().addListener(((observable, oldValue, newValue) -> {
                     StringBuilder sb2 = new StringBuilder("Store")
@@ -161,27 +181,38 @@ public class MapController implements Initializable {
                 }));
             }
 
-            if (type == 2){
+            if (elementType == eMapElementType.CUSTOMER){
                 Customer customer = (Customer) arg;
                 StringBuilder sb = new StringBuilder("Customer")
                         .append("\nName: "+ customer.getCustomerName())
                         .append("\nLocation: "+ customer.getLocation())
                         .append("\nNumber of orders: " + customer.getOrders().size());
                 msg = sb.toString();
-                Ellipse ellipse = new Ellipse(this.getWidth()/2, this.getHeight()/2, this.getWidth()/2-10, this.getHeight()/2 -10);
-                ellipse.centerXProperty().bind(this.widthProperty().divide(2));
-                ellipse.centerYProperty().bind(this.heightProperty().divide(2));
-                ellipse.radiusXProperty().bind(this.widthProperty().divide(2).subtract(10));
-                ellipse.radiusYProperty().bind(this.heightProperty().divide(2).subtract(10));
-                ellipse.setStroke(Color.BLACK);
-                ellipse.setFill(Color.BLUE);
-                getChildren().add(ellipse);
-                setStyle("-fx-background-color: chocolate");
+//                Ellipse ellipse = new Ellipse(this.getWidth()/2, this.getHeight()/2, this.getWidth()/2-10, this.getHeight()/2 -10);
+//                ellipse.centerXProperty().bind(this.widthProperty().divide(2));
+//                ellipse.centerYProperty().bind(this.heightProperty().divide(2));
+//                ellipse.radiusXProperty().bind(this.widthProperty().divide(2).subtract(10));
+//                ellipse.radiusYProperty().bind(this.heightProperty().divide(2).subtract(10));
+//                ellipse.setStroke(Color.BLACK);
+//                ellipse.setFill(Color.BLUE);
+
+                storeIcon = new ImageView("/resources/map_icons/customer.png");
+                storeIcon.fitWidthProperty().bind(cell.widthProperty());
+                storeIcon.fitHeightProperty().bind(cell.heightProperty());
+                getChildren().add(storeIcon);
+                //setStyle("-fx-background-color: chocolate");
             }
+
+            StringBuilder cellCoord = new StringBuilder();
+            cellCoord.append("(").append(cell.getX()).append(",").append(cell.getY()).append(")");
+
+            //update tooltip text
+            tooltip = (Tooltip) cell.getProperties().get(cellCoord.toString());
+            tooltip.setText(msg);
         }
 
-        private void handleClick() {
-            statusMsg.setText(msg);
-        }
+//        private void handleClick() {
+//            statusMsg.setText(msg);
+//        }
     }
 }

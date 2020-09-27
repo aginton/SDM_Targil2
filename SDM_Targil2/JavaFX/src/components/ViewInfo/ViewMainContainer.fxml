@@ -23,15 +23,15 @@
    <children>
       <VBox prefHeight="516.0" prefWidth="172.0" styleClass="view_menu-background" GridPane.rowSpan="5">
          <children>
-            <Button fx:id="viewStoresButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewStoresAction" prefHeight="54.0" prefWidth="234.0" styleClass="view_menu_button" text="Stores">
+            <Button fx:id="viewStoresButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewStoresAction" prefHeight="50.0" prefWidth="151.0" styleClass="view_menu_button" text="Stores">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="viewItemsButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewItemsAction" prefHeight="54.0" prefWidth="195.0" styleClass="view_menu_button" text="Items" />
-            <Button fx:id="viewOrdersButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewOrdersAction" prefHeight="54.0" prefWidth="191.0" styleClass="view_menu_button" text="Orders" />
-            <Button fx:id="viewCustomersButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewCustomersAction" prefHeight="54.0" prefWidth="183.0" styleClass="view_menu_button" text="Customers" />
-            <Button fx:id="viewMapButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewMapAction" prefHeight="43.0" prefWidth="184.0" styleClass="view_menu_button" text="Map" />
+            <Button fx:id="viewItemsButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewItemsAction" prefHeight="50.0" prefWidth="150.0" styleClass="view_menu_button" text="Items" />
+            <Button fx:id="viewOrdersButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewOrdersAction" prefHeight="50.0" prefWidth="150.0" styleClass="view_menu_button" text="Orders" />
+            <Button fx:id="viewCustomersButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewCustomersAction" prefHeight="50.0" prefWidth="150.0" styleClass="view_menu_button" text="Customers" />
+            <Button fx:id="viewMapButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewMapAction" prefHeight="50.0" prefWidth="150.0" styleClass="view_menu_button" text="Map" />
          </children>
       </VBox>
       <AnchorPane fx:id="childAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="516.0" prefWidth="530.0" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowSpan="5" GridPane.vgrow="ALWAYS" />
