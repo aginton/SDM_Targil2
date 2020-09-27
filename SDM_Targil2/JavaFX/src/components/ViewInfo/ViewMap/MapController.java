@@ -32,7 +32,8 @@ public class MapController implements Initializable {
 
     private static final double ELEMENT_SIZE = 100;
 
-    private int BOARDSIZE;
+    //private int XBoardSize = 0;
+    //private int YBoardSize = 0;
     private Cell[][] cell;
     private GridPane pane;
     private BorderPane borderPane;
@@ -49,8 +50,8 @@ public class MapController implements Initializable {
         stores = SDMManager.getInstance().getStores();
         updateMaxXandY(customers);
         updateMaxXandY(stores);
-        this.BOARDSIZE = (maxXValue>maxYValue)? maxXValue:maxYValue;
-        cell = new Cell[BOARDSIZE+1][BOARDSIZE+1];
+       // this.BOARDSIZE = (maxXValue>maxYValue)? maxXValue:maxYValue;
+        cell = new Cell[maxXValue+1][maxYValue+1];
     }
 
     @Override
@@ -61,22 +62,22 @@ public class MapController implements Initializable {
     private void setUpFields() {
         //statusMsg.setText("Nothing to see...");
 
-        for (int i = 0; i <= BOARDSIZE; i++){
-            for (int j = 0; j <= BOARDSIZE;j++){
+        for (int i = maxXValue; i >= 0; i--){
+            for (int j = 0; j <= maxYValue; j++){
                 cell[i][j] = new Cell(i,j);
-                pane.add(cell[i][j],j,i);
+                pane.add(cell[i][j],j,maxXValue-i);
             }
         }
         for (Store store: stores){
             int x = store.getX();
             int y = store.getY();
-            cell[y][x].setType(eMapElementType.STORE, store, cell[y][x]);
+            cell[x][y].setType(eMapElementType.STORE, store, cell[x][y]);
         }
 
         for (Customer customer: customers){
             int x = customer.getX();
             int y = customer.getY();
-            cell[y][x].setType(eMapElementType.CUSTOMER, customer, cell[y][x]);
+            cell[x][y].setType(eMapElementType.CUSTOMER, customer, cell[x][y]);
         }
 
         mapAnchorPane.getChildren().add(pane);
@@ -118,7 +119,7 @@ public class MapController implements Initializable {
 
 
         public Cell(int i, int j) {
-            setStyle("-fx-border-color: black");
+            setStyle("-fx-border-color: #828181");
             //this.setPrefSize(200,200);
             this.setMinSize(20,20);
             this.setMaxSize(20,20);
@@ -128,6 +129,7 @@ public class MapController implements Initializable {
             this.y = j;
             msg = "Nothing to show\nLocation: [" + i + ", " + j +"]";
 
+            //tooltip unique key
             StringBuilder cellCoord = new StringBuilder();
             cellCoord.append("(").append(i).append(",").append(j).append(")");
 
@@ -174,6 +176,7 @@ public class MapController implements Initializable {
 
                 store.totalNumberOfOrdersProperty().addListener(((observable, oldValue, newValue) -> {
                     StringBuilder sb2 = new StringBuilder("Store")
+                            .append("\nID: " + store.getStoreId())
                             .append("\nName: "+ store.getStoreName())
                             .append("\nLocation: "+ store.getLocation())
                             .append("\nNumber of orders: " + store.getStoreOrders().size());
@@ -184,6 +187,7 @@ public class MapController implements Initializable {
             if (elementType == eMapElementType.CUSTOMER){
                 Customer customer = (Customer) arg;
                 StringBuilder sb = new StringBuilder("Customer")
+                        .append("\nID: " + customer.getCustomerId())
                         .append("\nName: "+ customer.getCustomerName())
                         .append("\nLocation: "+ customer.getLocation())
                         .append("\nNumber of orders: " + customer.getOrders().size());
