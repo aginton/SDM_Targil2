@@ -13,16 +13,51 @@
     <select>
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12079fe1-433f-4321-8686-68adaa6eba3a" name="Default Changelist" comment="view map - changed icons, changed fxml layout, added tooltips to cells">
+    <list default="true" id="12079fe1-433f-4321-8686-68adaa6eba3a" name="Default Changelist" comment="added warning alert in placeAnOrder when required information is missing&#10;going back from chooseItems empties current cart">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_09_2020_19_24__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_09_2020_19_24__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_18_35__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_19_00__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_25_09_2020_19_00__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_09_2020_11_33__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_09_2020_11_33__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_09_2020_19_31__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_09_2020_19_31__Default_Changelist_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_09_2020_22_23__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26_09_2020_22_23__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/HomePage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/HomePage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Engine/src/Logic/SDM/SDMFileVerifierTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Engine/src/Logic/SDM/SDMFileVerifierTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/CSS/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/CSS/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppNController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppNController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/SuccessOrError/AlertBox.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/SuccessOrError/AlertBoxController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/SuccessOrError/SuccessPopUpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/PlaceAnOrder/SuccessOrError/SuccessPopUpController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/UpdateInventory/AddItemToStore/AddItemToStore.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/UpdateInventory/AddItemToStore/AddItemToStore.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/UpdateInventory/AddItemToStore/AddItemToStoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/UpdateInventory/AddItemToStore/AddItemToStoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/UpdateInventory/ChangeStoreItemPrice/ChangeStoreItemPrice.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/UpdateInventory/ChangeStoreItemPrice/ChangeStoreItemPrice.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/UpdateInventory/ChangeStoreItemPrice/ChangeStoreItemPriceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/UpdateInventory/ChangeStoreItemPrice/ChangeStoreItemPriceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/UpdateInventory/RemoveItemFromStore/RemoveItemFromStore.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/UpdateInventory/RemoveItemFromStore/RemoveItemFromStore.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/UpdateInventory/RemoveItemFromStore/RemoveItemFromStoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/UpdateInventory/RemoveItemFromStore/RemoveItemFromStoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/UpdateInventory/UpdateInventoryContainerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/UpdateInventory/UpdateInventoryContainerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMap/Map.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMap/Map.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMap/MapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/ViewInfo/ViewMap/MapController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMainContainer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMainContainer.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/SDM/SDMFileVerifierTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Engine/Logic/SDM/SDMFileVerifierTask.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Engine/META-INF/SDM_Engine.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/CSS/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/CSS/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/META-INF/SDM_Targil2.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/MainAppNController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/Main/MainAppNController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/SuccessOrError/AlertBox.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/SuccessOrError/AlertBoxController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/SuccessOrError/SuccessPopUpController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/PlaceAnOrder/SuccessOrError/SuccessPopUpController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/UpdateInventory/AddItemToStore/AddItemToStore.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/UpdateInventory/AddItemToStore/AddItemToStore.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/UpdateInventory/AddItemToStore/AddItemToStoreController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/UpdateInventory/AddItemToStore/AddItemToStoreController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/UpdateInventory/ChangeStoreItemPrice/ChangeStoreItemPrice.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/UpdateInventory/ChangeStoreItemPrice/ChangeStoreItemPrice.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/UpdateInventory/ChangeStoreItemPrice/ChangeStoreItemPriceController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/UpdateInventory/ChangeStoreItemPrice/ChangeStoreItemPriceController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/UpdateInventory/RemoveItemFromStore/RemoveItemFromStore.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/UpdateInventory/RemoveItemFromStore/RemoveItemFromStore.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/UpdateInventory/RemoveItemFromStore/RemoveItemFromStoreController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/UpdateInventory/RemoveItemFromStore/RemoveItemFromStoreController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/UpdateInventory/UpdateInventoryContainerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/UpdateInventory/UpdateInventoryContainerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMap/Map.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMap/Map.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMap/MapController$Cell.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMap/MapController$Cell.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMap/MapController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SDM_Targil2/components/ViewInfo/ViewMap/MapController.class" afterDir="false" />
     </list>
@@ -41,10 +76,10 @@
       <list>
         <option value="Interface" />
         <option value="JavaFXApplication" />
-        <option value="FxmlFile" />
-        <option value="Class" />
         <option value="CSS File" />
         <option value="Enum" />
+        <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -125,6 +160,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.SDMApp" />
@@ -134,7 +182,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="false" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -392,19 +440,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601124340632</updated>
     </task>
-    <task id="LOCAL‎00034" summary="view map - changed icons, changed fxml layout, added tooltips to cells">
-      <created>1601167823149</created>
-      <option name="number" value="LOCAL‎00034" />
-      <option name="presentableId" value="LOCAL‎00034" />
-      <updated>1601167823149</updated>
+    <task id="LOCAL-00034" summary="added warning alert in placeAnOrder when required information is missing&#10;going back from chooseItems empties current cart">
+      <created>1601199151230</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1601199151230</updated>
     </task>
-    <task id="LOCAL‎00035" summary="view map - changed icons, changed fxml layout, added tooltips to cells">
-      <created>1601167841424</created>
-      <option name="number" value="LOCAL‎00035" />
-      <option name="presentableId" value="LOCAL‎00035" />
-      <updated>1601167841424</updated>
-    </task>
-    <option name="localTasksCounter" value="36" />
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,18 +505,18 @@
     <MESSAGE value="clicking load when file already loaded now gets rid of old data and replaces with new data" />
     <MESSAGE value="changed the ui and css" />
     <MESSAGE value="choose items for static order now shows item name" />
-    <MESSAGE value="view map - changed icons, changed fxml layout, added tooltips to cells" />
-    <option name="LAST_COMMIT_MESSAGE" value="view map - changed icons, changed fxml layout, added tooltips to cells" />
+    <MESSAGE value="added warning alert in placeAnOrder when required information is missing&#10;going back from chooseItems empties current cart" />
+    <option name="LAST_COMMIT_MESSAGE" value="added warning alert in placeAnOrder when required information is missing&#10;going back from chooseItems empties current cart" />
   </component>
   <component name="WindowStateProjectService">
     <state x="578" y="183" key="#Inspections" timestamp="1599386944020">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="578" y="183" key="#Inspections/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1599386944020" />
-    <state x="751" y="91" key="#com.intellij.ide.util.MemberChooser" timestamp="1601162980701">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="1056" y="135" key="#com.intellij.ide.util.MemberChooser" timestamp="1601203955392">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="1056" y="135" key="#com.intellij.ide.util.MemberChooser/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601141865277" />
+    <state x="1056" y="135" key="#com.intellij.ide.util.MemberChooser/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601203955392" />
     <state x="751" y="91" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1601162980700" />
     <state x="389" y="430" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1600244333455">
       <screen x="0" y="0" width="1920" height="1080" />
@@ -483,10 +526,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="125" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600941031541" />
-    <state x="559" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1600525519336">
+    <state x="559" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1601207524611">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="559" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600525519336" />
+    <state x="559" y="162" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601207524611" />
     <state x="559" y="162" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1601130439926">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -499,40 +542,40 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="574" y="304" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600537129530" />
-    <state x="95" y="79" width="1736" height="896" key="DiffContextDialog" timestamp="1601139992779">
+    <state x="95" y="79" width="1736" height="896" key="DiffContextDialog" timestamp="1601199629945">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="95" y="79" width="1736" height="896" key="DiffContextDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601139992779" />
+    <state x="95" y="79" width="1736" height="896" key="DiffContextDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601199629945" />
     <state x="451" y="117" key="FileChooserDialogImpl" timestamp="1601151157763">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="634" y="174" key="FileChooserDialogImpl/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600691375777" />
     <state x="423" y="0" key="FileChooserDialogImpl/0.0.1280.720@0.0.1280.720" timestamp="1599735782305" />
     <state x="451" y="117" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1601151157763" />
-    <state width="1321" height="85" key="GridCell.Tab.0.bottom" timestamp="1601220848851">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1853" height="226" key="GridCell.Tab.0.bottom" timestamp="1601210883525">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="229" key="GridCell.Tab.0.bottom/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601142268186" />
+    <state width="1853" height="226" key="GridCell.Tab.0.bottom/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601210883525" />
     <state width="1213" height="146" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1599754459453" />
-    <state width="1321" height="85" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1601220848851" />
-    <state width="1321" height="85" key="GridCell.Tab.0.center" timestamp="1601220848851">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1321" height="103" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1601167700651" />
+    <state width="1853" height="226" key="GridCell.Tab.0.center" timestamp="1601210883524">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="229" key="GridCell.Tab.0.center/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601142268186" />
+    <state width="1853" height="226" key="GridCell.Tab.0.center/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601210883524" />
     <state width="1213" height="146" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1599754459453" />
-    <state width="1321" height="85" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1601220848851" />
-    <state width="1321" height="85" key="GridCell.Tab.0.left" timestamp="1601220848850">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1321" height="103" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1601167700651" />
+    <state width="1853" height="226" key="GridCell.Tab.0.left" timestamp="1601210883524">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="229" key="GridCell.Tab.0.left/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601142268186" />
+    <state width="1853" height="226" key="GridCell.Tab.0.left/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601210883524" />
     <state width="1213" height="146" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1599754459452" />
-    <state width="1321" height="85" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1601220848850" />
-    <state width="1321" height="85" key="GridCell.Tab.0.right" timestamp="1601220848851">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1321" height="103" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1601167700650" />
+    <state width="1853" height="226" key="GridCell.Tab.0.right" timestamp="1601210883525">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1853" height="229" key="GridCell.Tab.0.right/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601142268186" />
+    <state width="1853" height="226" key="GridCell.Tab.0.right/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601210883525" />
     <state width="1213" height="146" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1599754459453" />
-    <state width="1321" height="85" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1601220848851" />
+    <state width="1321" height="103" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1601167700651" />
     <state width="1853" height="272" key="GridCell.Tab.1.bottom" timestamp="1601140224608">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -566,16 +609,16 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="545" y="154" width="810" height="786" key="StructurePopup/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600528704528" />
-    <state x="36" y="0" key="Vcs.Push.Dialog.v2" timestamp="1601167848186">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="50" y="0" key="Vcs.Push.Dialog.v2" timestamp="1601124343642">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="50" y="0" key="Vcs.Push.Dialog.v2/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601124343642" />
     <state x="33" y="0" key="Vcs.Push.Dialog.v2/0.0.1280.720@0.0.1280.720" timestamp="1599732580066" />
-    <state x="36" y="0" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1601167848186" />
-    <state x="514" y="143" key="VcsDiffUtil.ChangesDialog" timestamp="1601139922889">
+    <state x="36" y="0" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1601092845006" />
+    <state x="514" y="143" key="VcsDiffUtil.ChangesDialog" timestamp="1601199550278">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="514" y="143" key="VcsDiffUtil.ChangesDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601139922889" />
+    <state x="514" y="143" key="VcsDiffUtil.ChangesDialog/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601199550278" />
     <state x="680" y="282" key="chooseDestDirectoryDialog" timestamp="1599398127334">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
@@ -597,10 +640,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="220" y="136" width="1480" height="858" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1600082341257" />
-    <state x="510" y="107" width="738" height="569" key="find.popup" timestamp="1601156584004">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="717" y="158" width="1036" height="844" key="find.popup" timestamp="1601208796593">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="717" y="158" width="1036" height="844" key="find.popup/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601139856164" />
+    <state x="717" y="158" width="1036" height="844" key="find.popup/-1920.0.1280.720/0.0.1920.1080@0.0.1920.1080" timestamp="1601208796593" />
     <state x="365" y="0" width="915" height="720" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1599744459388" />
     <state x="510" y="107" width="738" height="569" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1601156584004" />
     <state x="234" y="209" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1599732367479">
@@ -655,7 +698,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/SDM_Engine/src/Logic/Order/Orders.java</url>
           <line>37</line>
-          <properties class="Logic.Order.Orders">
+          <properties class="Logic.Order.Orders" method="notifyListenersOrderWasAdded">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="44" />
@@ -663,7 +706,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/SDM_Engine/src/Logic/Order/Orders.java</url>
           <line>31</line>
-          <properties class="Logic.Order.Orders">
+          <properties class="Logic.Order.Orders" method="addOrder">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="45" />
@@ -687,7 +730,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/SDM_Engine/src/Logic/Store/DiscountCondition.java</url>
           <line>32</line>
-          <properties class="Logic.Store.DiscountCondition">
+          <properties class="Logic.Store.DiscountCondition" method="toString">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="67" />
@@ -695,7 +738,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/SDM_Engine/src/Logic/Store/DiscountOffers.java</url>
           <line>40</line>
-          <properties class="Logic.Store.DiscountOffers">
+          <properties class="Logic.Store.DiscountOffers" method="toString">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="69" />
@@ -718,8 +761,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppNController.java</url>
-          <line>192</line>
-          <properties class="components.Main.MainAppNController">
+          <line>189</line>
+          <properties class="components.Main.MainAppNController" method="refreshOthers">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="177" />
@@ -801,7 +844,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/SDM_Targil2/JavaFX/src/components/Main/MainAppNController.java</url>
-          <line>195</line>
+          <line>192</line>
           <option name="timeStamp" value="180" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

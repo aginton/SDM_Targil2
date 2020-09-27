@@ -1,48 +1,54 @@
-/*.gridpane-borders{*/
-/*    -fx-border-color: #912344;*/
-/*    -fx-border-radius: 2;*/
-/*}*/
-/*.border-2{*/
-/*    -fx-border-color: #25b52d;*/
-/*    -fx-border-radius: 15;*/
-/*}*/
-/*.text-display{*/
-/*    -fx-font-weight: 18;*/
-/*    -fx-font-family: "Arial Rounded MT Bold";*/
-/*}*/
-/*.selected-cell{*/
-/*    -fx-background-color: #dc910e;*/
-/*    -fx-font-weight: bold;*/
-/*    -fx-border-radius: 1;*/
-/*    -fx-border-color: black;*/
-/*}*/
-/*.titled-pane > .title > .arrow-button .arrow{*/
-/*    -fx-shape: null;*/
-/*}*/
-/*.accordion .title > .arrow-button*/
-/*{*/
-/*    visibility: hidden;*/
-/*}*/
-/*.square-button{*/
-/*    -fx-shape: M 50 300 L 50 550 L 300 550 L 300 300 L 50 300 ;*/
-/*    -fx-background-color: #039BE5;*/
-/*    -fx-arc-height: 10;*/
-/*    -fx-arc-width: 10;*/
-/*}*/
-/*.test {*/
-/*    -fx-background-color: #32a850;*/
-/*}*/
-/*.selected {*/
-/*    -fx-text-fill: #b11010;*/
-/*    -fx-font-size: 25px;*/
-/*}*/
-/*.bordered-label{*/
-/*    -fx-border-radius: 2;*/
-/*    -fx-border-color: black;*/
-/*}*/
-/*#currentlySelectedLabel{*/
-/*    -fx-text-fill: pink;*/
-/*}*/
-/*.colorStack{*/
-/*    -fx-background-color: LIGHTBLUE;*/
-/*}*/
+.gridpane-borders{
+    -fx-border-color: #912344;
+    -fx-border-radius: 2;
+}
+.border-2{
+    -fx-border-color: #25b52d;
+    -fx-border-radius: 15;
+}
+.text-display{
+    -fx-font-size: 18;
+    -fx-font-family: "Arial Rounded MT Bold";
+}
+.selected-cell{
+    -fx-background-color: #dc910e;
+    -fx-font-weight: bold;
+    -fx-border-radius: 1;
+    -fx-border-color: black;
+}
+.titled-pane > .title > .arrow-button .arrow{
+    -fx-shape: null;
+}
+.accordion .title > .arrow-button
+{
+    visibility: hidden;
+}
+.square-button{
+    -fx-shape: M 50 300 L 50 550 L 300 550 L 300 300 L 50 300 ;
+    -fx-background-color: #039BE5;
+    -fx-arc-height: 10;
+    -fx-arc-width: 10;
+}
+.test {
+    -fx-background-color: #32a850;
+}
+.selected {
+    -fx-text-fill: #b11010;
+    -fx-font-size: 25px;
+}
+.bordered-label{
+    -fx-border-radius: 2;
+    -fx-border-color: black;
+}
+#currentlySelectedLabel{
+    -fx-text-fill: pink;
+}
+.colorStack{
+    -fx-background-color: LIGHTBLUE;
+}
+.table-view .table-row-cell:selected {
+    -fx-body-color: #CEDAE3;
+    -fx-background-color: #CEDAE3;
+    -fx-text-fill: black;
+    -fx-font-family: bold;
+}
