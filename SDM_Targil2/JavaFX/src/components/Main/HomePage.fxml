@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="homePageAnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.Main.HomePageController">
    <children>
       <Label layoutX="66.0" layoutY="51.0" styleClass="menu-header" text="Welcome!">
@@ -13,7 +12,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ProgressBar fx:id="progressBar" layoutX="146.0" layoutY="113.0" prefHeight="18.0" prefWidth="276.0" progress="0.0" />
-      <Label fx:id="statusLabel" layoutX="251.0" layoutY="166.0" text="Status" />
+      <ProgressBar fx:id="progressBar" layoutX="106.0" layoutY="105.0" prefHeight="18.0" prefWidth="276.0" progress="0.0" />
+      <Label fx:id="statusLabel" layoutX="106.0" layoutY="145.0" text="Status" />
    </children>
 </AnchorPane>
