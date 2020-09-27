@@ -34,6 +34,6 @@
             <Button fx:id="viewMapButton" graphicTextGap="12.0" mnemonicParsing="false" onAction="#viewMapAction" prefHeight="50.0" prefWidth="150.0" styleClass="view_menu_button" text="Map" />
          </children>
       </VBox>
-      <AnchorPane fx:id="childAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="516.0" prefWidth="530.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowSpan="5" GridPane.vgrow="ALWAYS" />
+      <AnchorPane fx:id="childAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="516.0" prefWidth="530.0" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowSpan="5" GridPane.vgrow="ALWAYS" />
    </children>
 </GridPane>

@@ -19,6 +19,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -93,6 +95,42 @@ public class RemoveItemFromStoreController implements Initializable {
                         storeItems= FXCollections.observableArrayList(newValue.getStoreItems());
                         chooseItemCB.getItems().clear();
                         chooseItemCB.setItems(storeItems);
+
+                        //combobox dropdown list shows item id and name
+                        chooseItemCB.setCellFactory(new Callback<ListView<StoreItem>,ListCell<StoreItem>>(){
+                            @Override
+                            public ListCell<StoreItem> call(ListView<StoreItem> l){
+                                return new ListCell<StoreItem>(){
+                                    @Override
+                                    protected void updateItem(StoreItem item, boolean empty) {
+                                        super.updateItem(item, empty);
+                                        if (item == null || empty) {
+                                            setGraphic(null);
+                                        } else {
+                                            setText(item.getItemId() + " - " + item.getItemName());
+                                        }
+                                    }
+                                };
+                            }
+                        });
+
+                        //combobox selected value shows customer id and name
+                        chooseItemCB.setConverter(new StringConverter<StoreItem>() {
+                            @Override
+                            public String toString(StoreItem item) {
+                                if (item == null){
+                                    return null;
+                                } else {
+                                    return item.getItemId() + " - " + item.getItemName();
+                                }
+                            }
+
+                            @Override
+                            public StoreItem fromString(String userId) {
+                                return null;
+                            }
+                        });
+
                         chooseItemCB.getSelectionModel().selectFirst();
                     }
                 }))
