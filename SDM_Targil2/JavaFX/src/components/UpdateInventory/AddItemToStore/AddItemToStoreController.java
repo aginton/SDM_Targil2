@@ -6,14 +6,21 @@ import Logic.Order.StoreItem;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
 import components.PlaceAnOrder.SuccessOrError.SuccessPopUp;
+import components.PlaceAnOrder.SuccessOrError.SuccessPopUpController;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -62,22 +69,33 @@ public class AddItemToStoreController implements Initializable {
     }
 
     @FXML
+    private Label itemValueLabel;
+
+
+    @FXML
     void nextFromChooseItemsButtonAction(ActionEvent event) {
         if (selectedItem!=null)
             accordian.setExpandedPane(choosePriceTitledPane);
     }
 
     @FXML
-    void nextFromChooseStoresButtonAction(ActionEvent event) {
+    void nextFromChooseStoresButton(ActionEvent event) {
         if (selectedStore != null)
             accordian.setExpandedPane(chooseItemTitledPane);
     }
+
 
     @FXML
     private ComboBox<Store> chooseStoreCB;
 
     @FXML
     private ComboBox<InventoryItem> chooseItemCB;
+
+    @FXML
+    private Label chooseItemValueLabel;
+
+    @FXML
+    private Label enterPriceValueLabel;
 
 
     @FXML
@@ -87,9 +105,31 @@ public class AddItemToStoreController implements Initializable {
             SDMManager.getInstance().addInventoryItemToStore(selectedItem,selectedStore,val);
             selectedStore.addItemToStoreInventory(selectedItem, val);
             errorLabel.setVisible(false);
-            accordian.setExpandedPane(chooseStoreTitledPane);
+            selectedStore = null;
+            chooseStoreCB.getSelectionModel().clearSelection();
             priceTextField.clear();
-            new SuccessPopUp();
+
+            chooseItemValueLabel.setText("");
+            chooseItemCB.getItems().clear();
+            enterPriceValueLabel.setText("");
+
+
+            try {
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/components/PlaceAnOrder/SuccessOrError/SuccessPopUp.fxml"));
+                Parent root = null;
+                root = loader.load();
+                SuccessPopUpController controller = loader.getController();
+                controller.setSuccess_error_label_Text("Item successfully added!");
+
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            accordian.setExpandedPane(chooseStoreTitledPane);
             return;
         }
         errorLabel.setVisible(true);
@@ -120,6 +160,7 @@ public class AddItemToStoreController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setUpFields();
+        accordian.setExpandedPane(chooseStoreTitledPane);
 
     }
 
@@ -137,11 +178,11 @@ public class AddItemToStoreController implements Initializable {
         //chooseStoreCB.getSelectionModel().selectFirst();
         chooseStoreCB.getSelectionModel().selectedItemProperty().addListener(
                 storeChangeListener = (((observable, oldValue, newValue) -> {
-                    System.out.println("Store change listener called!");
                     selectedStore = newValue;
                     if (newValue != null){
+                        chooseItemValueLabel.setText("Choose item to add to store " + selectedStore.getStoreName());
                         selectedStoreLabel.setText("Selected store" + selectedStore.getStoreName());
-                        selectedStoreLabel.setVisible(true);
+//                        selectedStoreLabel.setVisible(true);
                         itemsNotInSelectedStore=FXCollections.observableArrayList(inventory.getListOfItemsNotSoldByStore(selectedStore));
                         chooseItemCB.getItems().clear();
                         chooseItemCB.setItems(itemsNotInSelectedStore);
@@ -152,9 +193,9 @@ public class AddItemToStoreController implements Initializable {
 
         chooseItemCB.getSelectionModel().selectedItemProperty().addListener(
                 itemChangeListener = ((observable, oldValue, newValue) -> {
-                    System.out.println("Item Change listener called!");
                     selectedItem = newValue;
                     if (newValue!= null){
+                        enterPriceValueLabel.setText("Enter price for item " + selectedItem.getItemName() + " at store " + selectedStore.getStoreName());
                     }
                 })
         );

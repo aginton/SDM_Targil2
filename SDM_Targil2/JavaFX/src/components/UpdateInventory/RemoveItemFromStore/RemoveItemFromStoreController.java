@@ -5,21 +5,28 @@ import Logic.Inventory.InventoryItem;
 import Logic.Order.StoreItem;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
+import components.PlaceAnOrder.SuccessOrError.SuccessPopUpController;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TitledPane;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class RemoveItemFromStoreController implements Initializable {
+
+    @FXML
+    private Label chooseItemValueLabel;
     @FXML
     private Accordion accordian;
 
@@ -28,6 +35,13 @@ public class RemoveItemFromStoreController implements Initializable {
 
     @FXML
     private ComboBox<Store> chooseStoreCB;
+
+    @FXML
+    private Label selectedStoreLabel;
+
+    @FXML
+    private Button nextButton;
+
 
     @FXML
     private TitledPane chooseItemsPane;
@@ -55,6 +69,7 @@ public class RemoveItemFromStoreController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setUpFields();
+        accordian.setExpandedPane(chooseStoresPane);
     }
 
     public void refresh(){
@@ -68,24 +83,22 @@ public class RemoveItemFromStoreController implements Initializable {
     private void setUpFields() {
         accordian.setExpandedPane(chooseStoresPane);
         chooseStoreCB.setItems(stores);
-        chooseStoreCB.getSelectionModel().selectFirst();
+
         chooseStoreCB.getSelectionModel().selectedItemProperty().addListener(
                 storeChangeListener = (((observable, oldValue, newValue) -> {
-                    System.out.println("Store change listener called!");
                     selectedStore = newValue;
                     if (newValue != null){
+                        chooseItemValueLabel.setText("Choose item to delete from Store " + selectedStore.getStoreName());
                         storeItems= FXCollections.observableArrayList(newValue.getStoreItems());
                         chooseItemCB.getItems().clear();
                         chooseItemCB.setItems(storeItems);
                         chooseItemCB.getSelectionModel().selectFirst();
-                        accordian.setExpandedPane(chooseItemsPane);
                     }
                 }))
         );
 
         chooseItemCB.getSelectionModel().selectedItemProperty().addListener(
                 storeItemChangeListener = ((observable, oldValue, newValue) -> {
-                    System.out.println("Item Change listener called!");
                     selectedItem = newValue;
                     if (newValue!= null){
 
@@ -100,6 +113,34 @@ public class RemoveItemFromStoreController implements Initializable {
         selectedStore.removeStoreItem(selectedItem);
         inventory.getMapItemsToStoresWithItem().get(item).remove(selectedStore);
         inventory.updateAvePrice();
+
+
+        try {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/components/PlaceAnOrder/SuccessOrError/SuccessPopUp.fxml"));
+            Parent root = null;
+            root = loader.load();
+            SuccessPopUpController controller = loader.getController();
+            controller.setSuccess_error_label_Text("Item successfully removed!");
+
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        chooseItemValueLabel.setText("");
+        chooseItemCB.getItems().clear();
+
+        selectedStore = null;
+        chooseStoreCB.getSelectionModel().clearSelection();
+        accordian.setExpandedPane(chooseStoresPane);
+    }
+
+    @FXML
+    void nextButtonAction(ActionEvent event) {
         accordian.setExpandedPane(chooseItemsPane);
     }
 

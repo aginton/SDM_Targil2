@@ -1,6 +1,5 @@
 package components.Main;
 
-import Logic.SDM.SDMFileVerifier;
 import Logic.SDM.SDMManager;
 import Logic.SDM.SDMVerifierService;
 import components.PlaceAnOrder.PlaceAnOrderMain.NewOrderContainerController;
@@ -9,18 +8,15 @@ import components.ViewInfo.ViewMainController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -67,6 +63,7 @@ public class MainAppNController {
     private NewOrderContainerController newOrderContainerController;
     private UpdateInventoryContainerController updateController;
     private HomePageController homePageController;
+
 
 
     private SDMManager sdmManager;
@@ -119,7 +116,7 @@ public class MainAppNController {
         fileChooser.setTitle("Choose SDM file");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("xml files", "*.xml"));
 
-        loadNewPane(homePageRef);
+        swapPanes(homePageRef);
         File file = fileChooser.showOpenDialog(stage);
 
         if (file.getAbsolutePath().equals(selectedFileProperty.get())){
@@ -197,7 +194,7 @@ public class MainAppNController {
     }
 
 
-    private void loadNewPane(Node paneToLoad) {
+    private void swapPanes(Node paneToLoad) {
         mainChildAnchorPane.getChildren().clear();
         mainChildAnchorPane.getChildren().add(paneToLoad);
         AnchorPane.setBottomAnchor(paneToLoad, 0.0);
@@ -226,6 +223,7 @@ public class MainAppNController {
             updateRef = updateLoader.load();
             updateController = updateLoader.getController();
 
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -234,25 +232,26 @@ public class MainAppNController {
 
     @FXML
     void HomeButtonAction(ActionEvent event) {
-
+        swapPanes(homePageRef);
     }
 
     @FXML
     void PlaceAnOrderAction(ActionEvent event) {
         //System.out.println("Calling setCenterPane(orderMenuRef):");
-        loadNewPane(orderMenuRef);
+        swapPanes(orderMenuRef);
     }
 
     @FXML
     void UpdateAction(ActionEvent event) {
-        loadNewPane(updateRef);
+        swapPanes(updateRef);
+
     }
 
     @FXML
     void ViewButtonAction(ActionEvent event) {
         //loadPage("/components/viewMenu/ViewMenu");
         //System.out.println("Calling setCenterPane(viewMenuRef):");
-        loadNewPane(viewMenuRef);
+        swapPanes(viewMenuRef);
     }
 
 

@@ -57,6 +57,7 @@ public class UpdateInventoryContainerController{
     private RemoveItemFromStoreController removeItemFromStoreController;
     private ChangeStoreItemPriceController changeStoreItemPriceController;
 
+
     private Inventory inventory;
 
     public UpdateInventoryContainerController(){
@@ -76,6 +77,7 @@ public class UpdateInventoryContainerController{
             changePriceLoader.setLocation(getClass().getResource("/components/UpdateInventory/ChangeStoreItemPrice/ChangeStoreItemPrice.fxml"));
             updatePriceRef = changePriceLoader.load();
             changeStoreItemPriceController = changePriceLoader.getController();
+
 
         } catch (IOException e) {
             e.printStackTrace();

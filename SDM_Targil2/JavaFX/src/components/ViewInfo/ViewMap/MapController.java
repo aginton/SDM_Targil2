@@ -80,10 +80,15 @@ public class MapController implements Initializable {
         }
 
         mapAnchorPane.getChildren().add(pane);
+//        pane.maxHeightProperty().bind(mapAnchorPane.heightProperty());
+//        pane.minHeightProperty().bind(mapAnchorPane.heightProperty());
+//        pane.maxWidthProperty().bind(mapAnchorPane.widthProperty());
+//        pane.minWidthProperty().bind(mapAnchorPane.widthProperty());
         AnchorPane.setBottomAnchor(pane,0.0);
         AnchorPane.setLeftAnchor(pane,0.0);
         AnchorPane.setRightAnchor(pane,0.0);
         AnchorPane.setTopAnchor(pane,0.0);
+
     }
 
     //This method updates maxXValue and maxYValue if there are positions in input list that are larger than current max values
@@ -120,8 +125,14 @@ public class MapController implements Initializable {
         public Cell(int i, int j) {
             setStyle("-fx-border-color: black");
             //this.setPrefSize(200,200);
-            this.setMinSize(20,20);
-            this.setMaxSize(20,20);
+
+//            this.maxHeightProperty().bind(mapAnchorPane.heightProperty().divide(10));
+//            this.minHeightProperty().bind(mapAnchorPane.heightProperty().divide(10));
+//            this.maxWidthProperty().bind(mapAnchorPane.widthProperty().divide(10));
+//            this.minWidthProperty().bind(mapAnchorPane.widthProperty().divide(10));
+            this.setMinSize(40,40);
+            this.setMaxSize(40,40);
+
             //this.setOnMouseClicked(e->handleClick());
             elementType = eMapElementType.EMPTY;
             this.x = i;

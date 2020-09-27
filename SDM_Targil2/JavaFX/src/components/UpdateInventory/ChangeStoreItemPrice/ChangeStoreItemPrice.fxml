@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.UpdateInventory.ChangeStoreItemPrice.ChangeStoreItemPriceController">
    <children>
@@ -35,8 +35,14 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="CHOOSE STORE TO ORDER FROM" textFill="#aeacac" GridPane.columnIndex="1" />
+                              <Label text="CHOOSE STORE WITH ITEM TO BE UPDATED" textFill="#aeacac" GridPane.columnIndex="1" />
                               <ComboBox fx:id="chooseStoreCB" prefHeight="25.0" prefWidth="158.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                              <Label fx:id="selectedStoreLabel" text="Selected Store: " textFill="#aeacac" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button fx:id="nextFromChooseStoresButton" mnemonicParsing="false" onAction="#nextFromChooseStoresButtonAction" text="Next" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                                 <GridPane.margin>
+                                    <Insets bottom="15.0" right="15.0" />
+                                 </GridPane.margin>
+                              </Button>
                            </children>
                         </GridPane>
                      </children>
@@ -57,14 +63,39 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label text="Choose Item" GridPane.columnIndex="1">
+                              <Label fx:id="chooseItemValueLabel" text="Choose Item" GridPane.columnIndex="1">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
                               <ComboBox fx:id="chooseItemCB" prefHeight="25.0" prefWidth="341.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                              <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                                 <children>
+                                    <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
+                                    <Button fx:id="nextFromChooseItemsButton" mnemonicParsing="false" onAction="#nextFromChooseItemsButtonAction" text="Next" />
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets bottom="15.0" right="15.0" />
+                                 </GridPane.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                 <children>
+                                    <Label fx:id="currentItemLabel" text="Current Item:" visible="false">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="itemValueLabel" text="Label" visible="false">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
                            </children>
                         </GridPane>
                      </children>
@@ -79,7 +110,7 @@
                            <children>
                               <VBox alignment="CENTER" fillWidth="false" prefHeight="225.0" prefWidth="431.0">
                                  <children>
-                                    <Label text="Enter New Price">
+                                    <Label fx:id="enterPriceValueLabel" text="Enter New Price">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
