@@ -1,5 +1,6 @@
 package components.UpdateInventory.AddItemToStore;
 
+import Logic.Customers.Customer;
 import Logic.Inventory.Inventory;
 import Logic.Inventory.InventoryItem;
 import Logic.Order.StoreItem;
@@ -19,6 +20,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -185,7 +188,43 @@ public class AddItemToStoreController implements Initializable {
 //                        selectedStoreLabel.setVisible(true);
                         itemsNotInSelectedStore=FXCollections.observableArrayList(inventory.getListOfItemsNotSoldByStore(selectedStore));
                         chooseItemCB.getItems().clear();
-                        chooseItemCB.setItems(itemsNotInSelectedStore);
+                        chooseItemCB.getItems().addAll(itemsNotInSelectedStore);
+
+                        //combobox dropdown list shows item id and name
+                        chooseItemCB.setCellFactory(new Callback<ListView<InventoryItem>,ListCell<InventoryItem>>(){
+                            @Override
+                            public ListCell<InventoryItem> call(ListView<InventoryItem> l){
+                                return new ListCell<InventoryItem>(){
+                                    @Override
+                                    protected void updateItem(InventoryItem item, boolean empty) {
+                                        super.updateItem(item, empty);
+                                        if (item == null || empty) {
+                                            setGraphic(null);
+                                        } else {
+                                            setText(item.getItemId() + " - " + item.getItemName());
+                                        }
+                                    }
+                                };
+                            }
+                        });
+
+                        //combobox selected value shows item id and name
+                        chooseItemCB.setConverter(new StringConverter<InventoryItem>() {
+                            @Override
+                            public String toString(InventoryItem item) {
+                                if (item == null){
+                                    return null;
+                                } else {
+                                    return item.getItemId() + " - " + item.getItemName();
+                                }
+                            }
+
+                            @Override
+                            public InventoryItem fromString(String userId) {
+                                return null;
+                            }
+                        });
+
                         chooseItemCB.getSelectionModel().selectFirst();
                     }
                 }))
