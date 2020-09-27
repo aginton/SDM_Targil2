@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 //TODO: Implement IRRELEVANT discount
@@ -85,7 +86,7 @@ public class ChooseDiscountsController implements Initializable {
     private TableColumn<CartItem, Integer> cartForAdditionalColumn;
 
     @FXML
-    private TableColumn<CartItem, Double> costColumn;
+    private TableColumn<CartItem, String> costColumn;
 
     @FXML
     private TableColumn<CartItem, String> cartDiscountNameColumn;
@@ -103,6 +104,8 @@ public class ChooseDiscountsController implements Initializable {
     private HashMap<Integer, Double> dummyCartRepresentation;
     private HashMap<Integer, CartItem> mapIdsToDiscountCartItems;
     private DoubleProperty regularItemsSubtotal;
+    private boolean alreadyAddedSomeDiscounts;
+    private HashMap<DiscountWrapper, Integer> mapTimesDiscountsAlreadyUsed;
 
 
     TableView.TableViewSelectionModel<DiscountOffer> defaultSelectionModel;
@@ -115,19 +118,31 @@ public class ChooseDiscountsController implements Initializable {
         cartItems = FXCollections.observableArrayList();
         mapIdsToDiscountCartItems = new HashMap<>();
         regularItemsSubtotal = new SimpleDoubleProperty(0);
+        alreadyAddedSomeDiscounts = false;
+        mapTimesDiscountsAlreadyUsed = new HashMap<>();
     }
 
 
     @FXML
     void addButtonAction(ActionEvent event) {
+        if (!alreadyAddedSomeDiscounts)
+            alreadyAddedSomeDiscounts = true;
+
         String operator = selectedDiscountWrapper.getStoreDiscount().getDiscountOffers().getOperator();
         System.out.println("addButton called for " + operator + " discount");
+        if (mapTimesDiscountsAlreadyUsed.keySet().contains(selectedDiscountWrapper)){
+            int old = mapTimesDiscountsAlreadyUsed.get(selectedDiscountWrapper);
+            mapTimesDiscountsAlreadyUsed.put(selectedDiscountWrapper,old+1);
+        } else{
+            mapTimesDiscountsAlreadyUsed.put(selectedDiscountWrapper,1);
+        }
 
         if (operator.equals("ALL-OR-NOTHING")){
             offersTableView.getItems().forEach(item->{
                 System.out.println("Adding " + item.getItemName() + "to chosenDiscountOffers");
                 addSelectedOfferToMapStatic(item);
             });
+
 
             updateDummyCartAfterUsingDiscount(selectedDiscountWrapper.getStoreDiscount().getDiscountCondition());
             updateDiscountWrappers();
@@ -141,7 +156,9 @@ public class ChooseDiscountsController implements Initializable {
         }
     }
 
-
+    public boolean isAlreadyAddedSomeDiscounts() {
+        return alreadyAddedSomeDiscounts;
+    }
 
     private void updateDiscountWrappers() {
         for (DiscountWrapper discountWrapper: discountsListView.getItems()){
@@ -248,7 +265,14 @@ public class ChooseDiscountsController implements Initializable {
         cartItemNameColumn.setCellValueFactory(new PropertyValueFactory<CartItem,String>("itemName"));
         cartForAdditionalColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Integer>("price"));
         cartQuantityColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Double>("itemAmount"));
-        costColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Double>("cost"));
+        //costColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Double>("cost"));
+
+        costColumn.setCellValueFactory(celldata->{
+            CartItem item = celldata.getValue();
+            double val = item.getItemAmount()*item.getPrice();
+            return new ReadOnlyStringWrapper(String.valueOf(val));
+        });
+
         cartDiscountNameColumn.setCellValueFactory(new PropertyValueFactory<CartItem,String>("discountName"));
 
         cartTable.setItems(cartItems);
@@ -272,16 +296,23 @@ public class ChooseDiscountsController implements Initializable {
             return;
         }
 
+        createDiscountWrappers(selectedStore,dummyCartRepresentation);
+        setUpDiscountsListView();
+    }
+
+    private void createDiscountWrappers(Store selectedStore, HashMap<Integer, Double> dummyCartRepresentation) {
         selectedStore.getStoreDiscounts().forEach(discount-> discountWrappers.add(new DiscountWrapper(discount)));
         for (DiscountWrapper discountWrapper : discountWrappers){
             StoreDiscount discount = discountWrapper.getStoreDiscount();
             int timesDiscountCanBeApplied = discount.countTimesConditionIsMet(dummyCartRepresentation);
+            if (mapTimesDiscountsAlreadyUsed.containsKey(discountWrapper)){
+                timesDiscountCanBeApplied = timesDiscountCanBeApplied - mapTimesDiscountsAlreadyUsed.get(discountWrapper);
+            }
             System.out.println("Based on current cart, discount: " + discount.getName() + " can be applied " + timesDiscountCanBeApplied + " times");
             discountWrapper.setTimesDiscountCanBeApplied(timesDiscountCanBeApplied);
         }
-
-        setUpDiscountsListView();
     }
+
 
     private void setUpDiscountsListView() {
         discountsListView.setItems(discountWrappers);
@@ -366,7 +397,9 @@ public class ChooseDiscountsController implements Initializable {
 
     public void resetFields() {
         cartItems.clear();
+        alreadyAddedSomeDiscounts = false;
         cartTable.getItems().clear();
+        mapTimesDiscountsAlreadyUsed.clear();
         setDeliveryFee(0);
         setSubtotal(0);
         mapIdsToDiscountCartItems.clear();
@@ -409,6 +442,20 @@ public class ChooseDiscountsController implements Initializable {
 
         public void setTimesDiscountCanBeApplied(int timesDiscountCanBeApplied) {
             this.timesDiscountCanBeApplied.set(timesDiscountCanBeApplied);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof DiscountWrapper)) return false;
+            DiscountWrapper that = (DiscountWrapper) o;
+            return store.equals(that.store) &&
+                    storeDiscount.equals(that.storeDiscount);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(store, storeDiscount);
         }
 
         @Override

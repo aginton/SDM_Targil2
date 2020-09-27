@@ -67,11 +67,6 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label fx:id="chooseItemValueLabel" text="Choose Item" GridPane.columnIndex="1">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
                               <ComboBox fx:id="chooseItemCB" prefHeight="25.0" prefWidth="341.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                               <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
                                  <children>
@@ -96,6 +91,7 @@
                                     </Label>
                                  </children>
                               </HBox>
+                              <Label fx:id="chooseItemValueLabel" text="CHOOSE STORE YOU WISH TO ADD ITEM TO" textFill="#aeacac" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
                      </children></AnchorPane>

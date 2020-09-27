@@ -9,12 +9,8 @@ import Logic.Order.StoreItem;
 import Logic.Store.Store;
 import Utilities.MyDoubleStringConverter;
 import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,7 +21,6 @@ import javafx.scene.input.KeyCode;
 
 import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
 
 //TODO: Update DeliveryFee and Total label after adding items
 //TODO: Make cartSubtotal initially show regula items subtotal
@@ -90,7 +85,7 @@ public class ChooseItemsStaticOrderController implements Initializable{
     private TableColumn<CartItem, Double> cartItemAmountCol;
 
     @FXML
-    private TableColumn<CartItem, Double> cartItemCostCol;
+    private TableColumn<CartItem, String> cartItemCostCol;
 
     private Store store;
     private ObservableList<ItemWrapper> storeItems;
@@ -105,6 +100,10 @@ public class ChooseItemsStaticOrderController implements Initializable{
     private DoubleProperty totalCost;
     private String TAG = "ChooseItemsStaticOrderController";
     private DoubleProperty regularItemsSubtotal;
+    private BooleanProperty orderInProgress;
+
+    private BooleanProperty listOfCartItemsToBeAddedIsReady;
+    private List<CartItem> cartItemsToBeAdded;
 
 
     public ChooseItemsStaticOrderController(){
@@ -113,6 +112,9 @@ public class ChooseItemsStaticOrderController implements Initializable{
         cartItems = FXCollections.observableArrayList();
         customerObjectProperty = new SimpleObjectProperty<>();
         regularItemsSubtotal = new SimpleDoubleProperty();
+        orderInProgress = new SimpleBooleanProperty(false);
+        listOfCartItemsToBeAddedIsReady = new SimpleBooleanProperty(false);
+        cartItemsToBeAdded = new ArrayList<>();
 
         cartSubtotal = new SimpleDoubleProperty(this, "cartSubtotal",0);
 
@@ -144,11 +146,16 @@ public class ChooseItemsStaticOrderController implements Initializable{
         categoryColumn.setCellValueFactory(new PropertyValueFactory<ItemWrapper, ObjectProperty<ePurchaseCategory>>("PurchaseCategory"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<ItemWrapper, Integer>("Price"));
 
+
         cartItemIdCol.setCellValueFactory(new PropertyValueFactory<CartItem,Integer>("itemId"));
         cartItemNameCol.setCellValueFactory(new PropertyValueFactory<CartItem,String>("itemName"));
         cartUnitPriceCol.setCellValueFactory(new PropertyValueFactory<CartItem,Integer>("price"));
         cartItemAmountCol.setCellValueFactory(new PropertyValueFactory<CartItem,Double>("itemAmount"));
-        cartItemCostCol.setCellValueFactory(new PropertyValueFactory<CartItem,Double>("cost"));
+        cartItemCostCol.setCellValueFactory(celldata->{
+            CartItem item = celldata.getValue();
+            double val = item.getItemAmount()*item.getPrice();
+            return new ReadOnlyStringWrapper(String.valueOf(val));
+        });
 
         cartTable.setItems(cartItems);
 
@@ -312,13 +319,24 @@ public class ChooseItemsStaticOrderController implements Initializable{
 
     @FXML
     void addToCartAction(ActionEvent event) {
+        if (!isOrderInProgress())
+            setOrderInProgress(true);
+
+
+
         mapItemWrappersToAddToCart.forEach((k,v)->{
+
 
             double subtotal= cartSubtotal.doubleValue();
             subtotal += (v.getItemAmount()*v.getPrice());
             setCartSubtotal(subtotal);
 
             StoreItem item = v.getStoreItem();
+            CartItem newCartItem2 = new CartItem((InventoryItem) item,
+                    v.getItemAmount(),
+                    v.getPrice(),v.getStoreBoughtFrom());
+
+            cartItemsToBeAdded.add(newCartItem2);
 
             System.out.println("Adding itemId=" + item.getItemId() + ", itemAmount=" + v.getItemAmount());
 
@@ -339,8 +357,30 @@ public class ChooseItemsStaticOrderController implements Initializable{
             System.out.println("cartItems is now: " + cartItems);
         });
         mapItemWrappersToAddToCart.clear();
+
+        setListOfCartItemsToBeAddedIsReady(true);
     }
 
+    public boolean isListOfCartItemsToBeAddedIsReady() {
+        return listOfCartItemsToBeAddedIsReady.get();
+    }
+
+    public BooleanProperty listOfCartItemsToBeAddedIsReadyProperty() {
+        return listOfCartItemsToBeAddedIsReady;
+    }
+
+    public void setListOfCartItemsToBeAddedIsReady(boolean listOfCartItemsToBeAddedIsReady) {
+        this.listOfCartItemsToBeAddedIsReady.set(listOfCartItemsToBeAddedIsReady);
+    }
+
+    public List<CartItem> getCartItemsToBeAdded() {
+        return cartItemsToBeAdded;
+    }
+
+    public void mainContainerReceivedListOfCartItems(){
+        setListOfCartItemsToBeAddedIsReady(false);
+        cartItemsToBeAdded.clear();
+    }
 
     public Cart getCartForStaticOrder() {
         Cart dummyCart = new Cart();
@@ -407,7 +447,7 @@ public class ChooseItemsStaticOrderController implements Initializable{
         cartItems.clear();
         cartTable.getItems().clear();
         itemsTableView.getItems().clear();
-
+        setOrderInProgress(false);
 
         cartSubtotal.setValue(0);
         setCartSubtotal(0);
@@ -427,6 +467,8 @@ public class ChooseItemsStaticOrderController implements Initializable{
     }
 
     public HashMap<Store, Cart> getMapStoreToCart() {
+
+
         HashMap<Store,Cart> res = new HashMap<>();
         Cart cart = new Cart();
         cartItems.forEach(i->cart.add(i));
@@ -434,6 +476,17 @@ public class ChooseItemsStaticOrderController implements Initializable{
         return res;
     }
 
+    public boolean isOrderInProgress() {
+        return orderInProgress.get();
+    }
+
+    public BooleanProperty orderInProgressProperty() {
+        return orderInProgress;
+    }
+
+    public void setOrderInProgress(boolean orderInProgress) {
+        this.orderInProgress.set(orderInProgress);
+    }
 
     public class ItemWrapper {
 

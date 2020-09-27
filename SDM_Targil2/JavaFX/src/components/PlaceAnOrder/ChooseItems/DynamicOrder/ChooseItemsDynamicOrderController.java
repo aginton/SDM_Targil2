@@ -88,10 +88,12 @@ public class ChooseItemsDynamicOrderController implements Initializable {
     private FloatProperty deliveryFeeTotal;
     private Customer customer;
     private DoubleProperty regularItemsSubtotal;
+    private BooleanProperty orderInProgress;
 
 
     public ChooseItemsDynamicOrderController(){
         mapItemsChosenToAmount = new HashMap<>();
+        orderInProgress = new SimpleBooleanProperty(false);
         mapStoresToCarts = new HashMap<>();
 //        mapStoreToCartItems=FXCollections.observableHashMap();
         itemWrappers = FXCollections.observableArrayList();
@@ -111,9 +113,13 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         deliveryFeeLabel.textProperty().bind(deliveryFeeTotal.asString("%.2f"));
         cartSubtotalLabel.textProperty().bind(cartsSubtotal.add(regularItemsSubtotal).asString("%.2f"));
         totalCostLabel.textProperty().bind(deliveryFeeTotal.add(cartsSubtotal).asString("%.2f"));
+
+
         itemIdColumn.setCellValueFactory(new PropertyValueFactory<InventoryItemWrapper,Integer>("ItemId"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<InventoryItemWrapper,String>("ItemName"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<InventoryItemWrapper, ObjectProperty<ePurchaseCategory>>("PurchaseCategory"));
+
+
 
         setUpAmountColumn();
         setUpAddButtonColumn();
@@ -124,6 +130,9 @@ public class ChooseItemsDynamicOrderController implements Initializable {
 
     @FXML
     void addToCartAction(ActionEvent event) {
+        if (!isOrderInProgress())
+            setOrderInProgress(true);
+
         HashMap<InventoryItem, Double> dummyMap = new HashMap<>();
         for (InventoryItemWrapper wrapper: itemsTableView.getItems()){
             if (wrapper.getAmount()>0){
@@ -353,6 +362,18 @@ public class ChooseItemsDynamicOrderController implements Initializable {
         itemsTableView.edit(focusedCell.getRow(), focusedCell.getTableColumn());
     }
 
+    public boolean isOrderInProgress() {
+        return orderInProgress.get();
+    }
+
+    public BooleanProperty orderInProgressProperty() {
+        return orderInProgress;
+    }
+
+    public void setOrderInProgress(boolean orderInProgress) {
+        this.orderInProgress.set(orderInProgress);
+    }
+
     public boolean hasNecessaryInformation(){
         if (mapStoresToCarts.size()==0){
             System.out.println(TAG + "mapStoresToCarts can't be empty!");
@@ -381,6 +402,7 @@ public class ChooseItemsDynamicOrderController implements Initializable {
     public void resetFields() {
         mapItemsChosenToAmount.clear();
         setDeliveryFeeTotal(0);
+        setOrderInProgress(false);
 //        mapStoreToCartItems.clear();
         mapStoresToCarts.clear();
         cartsSubtotal.setValue(0);

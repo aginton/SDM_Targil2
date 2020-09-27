@@ -98,6 +98,7 @@ public class DynamicDiscountsController implements Initializable {
     private DiscountWrapper selectedDiscountWrapper;
     private BooleanProperty isDiscountApplicable = new SimpleBooleanProperty(false);
     private Store selectedStore;
+    private boolean alreadyAddedDiscounts;
 
 
     private HashMap<Store, HashMap<Integer,Double>> dummyCartsRepresentation;
@@ -122,9 +123,14 @@ public class DynamicDiscountsController implements Initializable {
         deliveryFee = new SimpleFloatProperty(this, "deliveryFee",0);
     }
 
+    public boolean isAlreadyAddedDiscounts() {
+        return alreadyAddedDiscounts;
+    }
 
     @FXML
     void addButtonAction(ActionEvent event) {
+        if (!alreadyAddedDiscounts)
+            alreadyAddedDiscounts = true;
         String operator = selectedDiscountWrapper.getStoreDiscount().getDiscountOffers().getOperator();
         System.out.println("addButton called for " + operator + " discount");
 
@@ -380,6 +386,7 @@ public class DynamicDiscountsController implements Initializable {
     }
 
     public void resetFields() {
+        alreadyAddedDiscounts = false;
         cartItems.clear();
         cartTable.getItems().clear();
         setDeliveryFee(0);

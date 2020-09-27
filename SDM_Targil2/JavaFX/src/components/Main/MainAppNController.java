@@ -149,42 +149,6 @@ public class MainAppNController {
         });
         service.start();
 
-
-//
-//        try {
-//
-//            SDMFileVerifier sdmForChosenFile = new SDMFileVerifier(file);
-//
-//            System.out.printf("Checking if %s file is valid...\n", file.getName());
-//
-//            if (sdmForChosenFile.getIsValidFile()){
-//                System.out.println("Valid, yay!!!");
-//
-//
-//                errorMessageLabel.setText("");
-//                selectedFileProperty.set(file.getAbsolutePath());
-//                sdmManager.loadNewSDMFile(sdmForChosenFile);
-//                if (!hasLoadedSDMFile){
-//                    System.out.println("Loading others for first time");
-//                    loadXMLForOtherButtons();
-//                }
-//                if (hasLoadedSDMFile){
-//                    System.out.println("Resetting others");
-//                    refreshOthers();
-//                    mainChildAnchorPane.getChildren().clear();
-//                }
-//                hasLoadedSDMFile = true;
-//                isFileSelected.set(true);
-//            } else{
-//                System.out.printf("File %s appears to be invalid (GASP!)\n", file.getName());
-//                errorMessageLabel.setText(sdmForChosenFile.getLoadingErrorMessage());
-//                errorMessageLabel.setTextFill(Color.RED);
-//                errorMessageLabel.setVisible(true);
-//            }
-//
-//        } catch (Exception ex) {
-//            System.out.println("error");
-//        }
     }
 
     private void refreshOthers() {

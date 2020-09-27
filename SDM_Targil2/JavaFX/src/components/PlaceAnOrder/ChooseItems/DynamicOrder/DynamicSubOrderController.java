@@ -3,6 +3,7 @@ package components.PlaceAnOrder.ChooseItems.DynamicOrder;
 import Logic.Order.Cart;
 import Logic.Order.CartItem;
 import Logic.Store.Store;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -45,7 +46,7 @@ public class DynamicSubOrderController implements Initializable {
     private TableColumn<CartItem, Double> itemAmountColumn;
 
     @FXML
-    private TableColumn<CartItem, Double> itemCostColumn;
+    private TableColumn<CartItem, String> itemCostColumn;
 
     @FXML
     private Label numTypesOfItemsLabel;
@@ -72,6 +73,12 @@ public class DynamicSubOrderController implements Initializable {
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<CartItem,String>("itemName"));
         itemPriceColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Integer>("price"));
         itemAmountColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Double>("itemAmount"));
-        itemCostColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Double>("cost"));
+        //itemCostColumn.setCellValueFactory(new PropertyValueFactory<CartItem,Double>("cost"));
+
+        itemCostColumn.setCellValueFactory(celldata->{
+            CartItem item = celldata.getValue();
+            double val = item.getItemAmount()*item.getPrice();
+            return new ReadOnlyStringWrapper(String.valueOf(val));
+        });
     }
 }
