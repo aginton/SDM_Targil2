@@ -8,7 +8,7 @@ import Logic.Order.eOrderType;
 import Logic.SDM.SDMManager;
 import Logic.Store.Store;
 import components.PlaceAnOrder.BasicInfo.OrderBasicInfoController;
-import components.PlaceAnOrder.ChooseDiscounts.ChooseDiscountsController;
+import components.PlaceAnOrder.ChooseDiscounts.ChooseDiscountsStaticOrderController;
 import components.PlaceAnOrder.ChooseDiscounts.DynamicOrderDiscounts.DynamicDiscountsController;
 import components.PlaceAnOrder.ChooseItems.ChooseItemsStaticOrderController;
 import components.PlaceAnOrder.ChooseItems.DynamicOrder.ChooseItemsDynamicOrderController;
@@ -64,7 +64,7 @@ public class NewOrderContainerController implements Initializable {
     private ChooseStoreController chooseStoreController;
     private ChooseItemsStaticOrderController chooseItemsStaticOrderController;
     private ChooseItemsDynamicOrderController chooseItemsDynamicController;
-    private ChooseDiscountsController chooseDiscountsController;
+    private ChooseDiscountsStaticOrderController chooseDiscountsStaticOrderController;
     private DynamicDiscountsController chooseDiscountsDynamicController;
     private ConfirmOrderController confirmOrderController;
 
@@ -83,7 +83,7 @@ public class NewOrderContainerController implements Initializable {
 
 
     public NewOrderContainerController(){
-        currentCart = new Cart();
+//        currentCart = new Cart();
         mapStoresToCarts = new HashMap<>();
         orderInProgress = new SimpleBooleanProperty(false);
         orderInProgressDynamic = new SimpleBooleanProperty(false);
@@ -124,9 +124,9 @@ public class NewOrderContainerController implements Initializable {
 
             //4. choose discounts
             FXMLLoader chooseDiscountsLoader = new FXMLLoader();
-            chooseDiscountsLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscounts.fxml"));
+            chooseDiscountsLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ChooseDiscounts/ChooseDiscountsStaticOrder.fxml"));
             chooseDiscountsRef = chooseDiscountsLoader.load();
-            chooseDiscountsController = chooseDiscountsLoader.getController();
+            chooseDiscountsStaticOrderController = chooseDiscountsLoader.getController();
 
             FXMLLoader chooseDiscountsDynamicLoader = new FXMLLoader();
             chooseDiscountsDynamicLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/ChooseDiscounts/DynamicOrderDiscounts/DynamicDiscounts.fxml"));
@@ -235,8 +235,8 @@ public class NewOrderContainerController implements Initializable {
         }
 
         if (currentNode.equals(chooseDiscountsRef)){
-            discountItemsSubtotal = chooseDiscountsController.getDiscountsSubtotal();
-            HashMap<Integer, CartItem> discountItemsToAddToCart = chooseDiscountsController.getMapIdsToDiscountCartItems();
+            discountItemsSubtotal = chooseDiscountsStaticOrderController.getDiscountsSubtotal();
+            HashMap<Integer, CartItem> discountItemsToAddToCart = chooseDiscountsStaticOrderController.getMapIdsToDiscountCartItems();
             discountItemsToAddToCart.forEach((k,v)->{
                 mapStoresToCarts.get(selectedStore).add(v);
             });
@@ -307,7 +307,7 @@ public class NewOrderContainerController implements Initializable {
         }
 
         if (currentNode.equals(chooseItemsStaticOrderRef)){
-            chooseDiscountsController.fillViewsForStaticOrder(customer, selectedStore, mapStoresToCarts.get(selectedStore),deliveryFee,regularItemsSubtotal);
+            chooseDiscountsStaticOrderController.fillViewsForStaticOrder(customer, selectedStore, mapStoresToCarts.get(selectedStore),deliveryFee,regularItemsSubtotal);
             setNodeForPane(chooseDiscountsRef);
             return;
         }
@@ -338,12 +338,12 @@ public class NewOrderContainerController implements Initializable {
         }
 
         if (currentNode.equals(chooseDiscountsRef)){
-            boolean alreadyAddedSomeDiscounts = chooseDiscountsController.isAlreadyAddedSomeDiscounts();
+            boolean alreadyAddedSomeDiscounts = chooseDiscountsStaticOrderController.isAlreadyAddedSomeDiscounts();
             if (alreadyAddedSomeDiscounts){
                 boolean response = new ConfirmBox().display("Warning", "Discounts already added", "If you go back now, your current discounts will be erased. Do you wish to continue?");
                 if (!response)
                     return;
-                chooseDiscountsController.resetFields();
+                chooseDiscountsStaticOrderController.resetFields();
                 confirmOrderController.resetFields();
             }
             setNodeForPane(chooseItemsStaticOrderRef);
@@ -370,7 +370,7 @@ public class NewOrderContainerController implements Initializable {
                     return;
                 } else{
                     chooseItemsStaticOrderController.resetFields();
-                    chooseDiscountsController.resetFields();
+                    chooseDiscountsStaticOrderController.resetFields();
                     confirmOrderController.resetFields();
                     setNodeForPane(chooseStoresRef);
                     return;
@@ -456,7 +456,7 @@ public class NewOrderContainerController implements Initializable {
         } else{
             chooseItemsDynamicController.resetFields();
         }
-        chooseDiscountsController.resetFields();
+        chooseDiscountsStaticOrderController.resetFields();
 
         customer = null;
         orderDate = null;
@@ -491,7 +491,7 @@ public class NewOrderContainerController implements Initializable {
 
     public void refreshOthers(){
         System.out.println("\n" + TAG + " - refreshOthers() called");
-        currentCart = new Cart();
+        //currentCart = new Cart();
         mapStoresToCarts = new HashMap<>();
         currentNode = basicInfoRef;
         backButton.setDisable(true);

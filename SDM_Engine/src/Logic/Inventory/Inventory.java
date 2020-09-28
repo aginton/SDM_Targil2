@@ -115,8 +115,10 @@ public class Inventory  {
         for(InventoryItem item : listInventoryItems) {
             Set<Store> setOfStores = mapItemsToStoresWithItem.get(item);
             for(Store store : stores) {
-                if (!setOfStores.contains(item) && store.getInventoryItems().contains(item))
+                if (!setOfStores.contains(store) && store.doesStoryCarryItem(item))
                     setOfStores.add(store);
+//                if (!setOfStores.contains(item) && store.getInventoryItems().contains(item))
+//                    setOfStores.add(store);
             }
             mapItemsToStoresWithItem.put(item, setOfStores);
         }

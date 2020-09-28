@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 
 //TODO: Implement IRRELEVANT discount
 
-public class ChooseDiscountsController implements Initializable {
+public class ChooseDiscountsStaticOrderController implements Initializable {
 
 
     @FXML
@@ -114,7 +114,7 @@ public class ChooseDiscountsController implements Initializable {
     private DoubleProperty total;
     private ObservableList<CartItem> cartItems;
 
-    public ChooseDiscountsController(){
+    public ChooseDiscountsStaticOrderController(){
         cartItems = FXCollections.observableArrayList();
         mapIdsToDiscountCartItems = new HashMap<>();
         regularItemsSubtotal = new SimpleDoubleProperty(0);

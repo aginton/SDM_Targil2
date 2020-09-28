@@ -103,6 +103,9 @@ public class AddItemToStoreController implements Initializable {
 
     @FXML
     void onAddButtonAction(ActionEvent event) {
+        if (selectedStore == null || selectedItem == null)
+            return;
+
         int val;
         if ((val=isTextAPositiveInt(priceTextField.getText().trim())) > 0){
             SDMManager.getInstance().addInventoryItemToStore(selectedItem,selectedStore,val);

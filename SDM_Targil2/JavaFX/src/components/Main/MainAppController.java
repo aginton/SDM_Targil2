@@ -14,7 +14,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
@@ -23,19 +22,13 @@ import javafx.stage.Window;
 import java.io.File;
 import java.io.IOException;
 
-public class MainAppNController {
+public class MainAppController {
 
     @FXML
     private BorderPane mainBorderPane;
 
     @FXML
     private Label filePath;
-
-    @FXML
-    private Button homeButton;
-
-    @FXML
-    private Button loadButton;
 
     @FXML
     private Button viewButton;
@@ -49,14 +42,6 @@ public class MainAppNController {
     @FXML
     private AnchorPane mainChildAnchorPane;
 
-    @FXML
-    private Label errorMessageLabel;
-
-    @FXML
-    private Label statusLabel;
-
-    @FXML
-    private ProgressBar progressBar;
 
     private Node orderMenuRef, viewMenuRef, updateRef, homePageRef;
     private ViewMainController viewMainController;
@@ -64,17 +49,15 @@ public class MainAppNController {
     private UpdateInventoryContainerController updateController;
     private HomePageController homePageController;
 
-
-
     private SDMManager sdmManager;
-    private Boolean hasLoadedSDMFile = false;
-    private BooleanProperty isFileSelected;
+    //private Boolean hasLoadedSDMFile = false;
+    private BooleanProperty isFileLoaded;
     private SimpleStringProperty selectedFileProperty;
 
 
 
-    public MainAppNController(){
-        isFileSelected = new SimpleBooleanProperty(false);
+    public MainAppController(){
+        isFileLoaded = new SimpleBooleanProperty(false);
         selectedFileProperty = new SimpleStringProperty("");
         sdmManager = SDMManager.getInstance();
 
@@ -85,9 +68,9 @@ public class MainAppNController {
     private void initialize(){
         System.out.println("Inside MainAppController initialize().");
         filePath.textProperty().bind(selectedFileProperty);
-        viewButton.disableProperty().bind(isFileSelected.not());
-        placeAnOrderButton.disableProperty().bind(isFileSelected.not());
-        updateButton.disableProperty().bind(isFileSelected.not());
+        viewButton.disableProperty().bind(isFileLoaded.not());
+        placeAnOrderButton.disableProperty().bind(isFileLoaded.not());
+        updateButton.disableProperty().bind(isFileLoaded.not());
 
 
         try {
@@ -135,23 +118,22 @@ public class MainAppNController {
             System.out.println("service.getValue() returned..." + ans);
             if (ans == true){
                 selectedFileProperty.set(file.getAbsolutePath());
-                if (!hasLoadedSDMFile){
+                if (!isFileLoaded()){
                     System.out.println("Loading others for first time");
                     loadXMLForOtherButtons();
                 }
-                if (hasLoadedSDMFile){
+                if (isFileLoaded()){
                     //mainChildAnchorPane.getChildren().clear();
 
                     System.out.println("Resetting others");
                     refreshOthers();
 
                 }
-                hasLoadedSDMFile = true;
-                isFileSelected.set(true);
+                //hasLoadedSDMFile = true;
+                setIsFileLoaded(true);
             }
         });
         service.start();
-
     }
 
     private void refreshOthers() {
@@ -221,7 +203,17 @@ public class MainAppNController {
         swapPanes(viewMenuRef);
     }
 
+    public boolean isFileLoaded() {
+        return isFileLoaded.get();
+    }
 
+    public BooleanProperty isFileLoadedProperty() {
+        return isFileLoaded;
+    }
+
+    public void setIsFileLoaded(boolean isFileLoaded) {
+        this.isFileLoaded.set(isFileLoaded);
+    }
 }
 
 

@@ -19,6 +19,7 @@ import javafx.util.Callback;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Store implements hasLocationInterface {
 
@@ -31,11 +32,11 @@ public class Store implements hasLocationInterface {
 
     private List<StoreChangeListener> listeners;
 
-    private List<InventoryItem> inventoryItems = FXCollections.observableArrayList();
+    //private List<InventoryItem> inventoryItems = FXCollections.observableArrayList();
     private List<StoreItem> storeItems = FXCollections.observableArrayList();
-    private HashMap<Integer, Double> mapItemsToAmountSold;
+    //private HashMap<Integer, Double> mapItemsToAmountSold;
 
-    private HashMap<Integer, Integer> mapItemToPrices;
+    //private HashMap<Integer, Integer> mapItemToPrices;
     private List<Order> storeOrders;
     private List<StoreDiscount> storeDiscounts;
     private IntegerProperty totalNumberOfOrders;
@@ -73,22 +74,22 @@ public class Store implements hasLocationInterface {
         listeners = new ArrayList<>();
         storeDiscounts = new ArrayList<>();
         this.storeOrders = new ArrayList<>();
-        this.mapItemsToAmountSold = new HashMap<Integer, Double>();
-        this.mapItemToPrices = new HashMap<>();
+//        this.mapItemsToAmountSold = new HashMap<Integer, Double>();
+//        this.mapItemToPrices = new HashMap<>();
         storeLocation.add(store.getLocation().getX());
         storeLocation.add(store.getLocation().getY());
         totalNumberOfOrders = new SimpleIntegerProperty(0);
 
-        for (SDMSell sell : store.getSDMPrices().getSDMSell()) {
-            mapItemToPrices.put(sell.getItemId(), sell.getPrice());
-            mapItemsToAmountSold.put(sell.getItemId(), (double) 0);
-
-        }
+//        for (SDMSell sell : store.getSDMPrices().getSDMSell()) {
+//            mapItemToPrices.put(sell.getItemId(), sell.getPrice());
+//            mapItemsToAmountSold.put(sell.getItemId(), (double) 0);
+//
+//        }
 
         for (SDMSell sell: store.getSDMPrices().getSDMSell()){
             InventoryItem itemToAdd = sdmManager.getInventory().getListInventoryItems().stream().filter(i->i.getItemId()==sell.getItemId()).findFirst().get();
             if (itemToAdd != null){
-                inventoryItems.add(itemToAdd);
+                //inventoryItems.add(itemToAdd);
 
                 StoreItem storeItem = new StoreItem(itemToAdd, sell.getPrice());
                 storeItems.add(storeItem);
@@ -213,19 +214,24 @@ public class Store implements hasLocationInterface {
     }
 
     //inventoryItems
-    public List<InventoryItem> getInventoryItems() {
-        return inventoryItems;
+//    public List<InventoryItem> getInventoryItems() {
+//        return inventoryItems;
+//    }
+
+    public Boolean doesStoryCarryItem(InventoryItem item){
+        List<Integer> listOfStoreItemIds = storeItems.stream().map(i->i.getItemId()).collect(Collectors.toList());
+        return listOfStoreItemIds.contains(item.getItemId());
     }
 
-    public void setInventoryItems(List<InventoryItem> inventoryItems) {
-        this.inventoryItems = inventoryItems;
-    }
-
-    public void setStoreInventory(ObservableList<InventoryItem> i_inventoryItems) {
-        if (this.inventoryItems != null)
-            inventoryItems = FXCollections.observableArrayList();
-        this.inventoryItems = i_inventoryItems;
-    }
+//    public void setInventoryItems(List<InventoryItem> inventoryItems) {
+//        this.inventoryItems = inventoryItems;
+//    }
+//
+//    public void setStoreInventory(ObservableList<InventoryItem> i_inventoryItems) {
+//        if (this.inventoryItems != null)
+//            inventoryItems = FXCollections.observableArrayList();
+//        this.inventoryItems = i_inventoryItems;
+//    }
 
     public List<StoreDiscount> getStoreDiscounts() {
         return storeDiscounts;
@@ -235,18 +241,18 @@ public class Store implements hasLocationInterface {
         this.storeDiscounts = storeDiscounts;
     }
 
-    public HashMap<Integer, Double> getMapItemsToAmountSold() {
-        if (mapItemsToAmountSold == null)
-            mapItemsToAmountSold = new HashMap<Integer, Double>();
-        return mapItemsToAmountSold;
-    }
-
-    public HashMap<Integer, Integer> getMapItemToPrices() {
-        if (mapItemToPrices == null)
-            mapItemToPrices = new HashMap<>();
-        return mapItemToPrices;
-    }
-
+//    public HashMap<Integer, Double> getMapItemsToAmountSold() {
+//        if (mapItemsToAmountSold == null)
+//            mapItemsToAmountSold = new HashMap<Integer, Double>();
+//        return mapItemsToAmountSold;
+//    }
+//
+//    public HashMap<Integer, Integer> getMapItemToPrices() {
+//        if (mapItemToPrices == null)
+//            mapItemToPrices = new HashMap<>();
+//        return mapItemToPrices;
+//    }
+//
 
 
     public List<Order> getStoreOrders() {
@@ -340,9 +346,9 @@ public class Store implements hasLocationInterface {
 
     private void updateStoreInventory(Cart cart) {
         cart.getCart().forEach((k, v) -> {
-            double amountInCart = v.getItemAmount();
-            Double oldAmountSold = mapItemsToAmountSold.get(k);
-            mapItemsToAmountSold.put(k, amountInCart + oldAmountSold);
+//            double amountInCart = v.getItemAmount();
+//            Double oldAmountSold = mapItemsToAmountSold.get(k);
+//            mapItemsToAmountSold.put(k, amountInCart + oldAmountSold);
             StoreItem storeItem = getStoreItemById(k);
             storeItem.increaseTotalAmountSold(v.getItemAmount());
         });
@@ -358,22 +364,31 @@ public class Store implements hasLocationInterface {
         return null;
     }
 
+//    public InventoryItem getInventoryItemById(int priceID) {
+//        for (InventoryItem item : inventoryItems) {
+//            if (item.getItemId() == priceID)
+//                return item;
+//        }
+//        return null;
+//    }
+
     public InventoryItem getInventoryItemById(int priceID) {
-        for (InventoryItem item : inventoryItems) {
+        for (StoreItem item : storeItems) {
             if (item.getItemId() == priceID)
-                return item;
+                return SDMManager.getInstance().getInventory().getInventoryItemById(item.getItemId());
         }
         return null;
     }
 
     public void addItemToStoreInventory(InventoryItem item, int price){
-        if (inventoryItems.contains(item)){
+        List<Integer> storeItemIds = storeItems.stream().map(i->i.getItemId()).collect(Collectors.toList());
+        if (storeItemIds.contains(item.getItemId())){
             return;
         }
-        inventoryItems.add(item);
-        Collections.sort(inventoryItems);
-        mapItemsToAmountSold.put(item.getItemId(), 0.0);
-        mapItemToPrices.put(item.getItemId(), price);
+        //inventoryItems.add(item);
+        //Collections.sort(inventoryItems);
+//        mapItemsToAmountSold.put(item.getItemId(), 0.0);
+//        mapItemToPrices.put(item.getItemId(), price);
         StoreItem newItem = new StoreItem(item, price);
         this.getStoreItems().add(newItem);
         notifyItemWasAdded(this, newItem);
@@ -432,12 +447,12 @@ public class Store implements hasLocationInterface {
     public void updatePriceForItem(StoreItem selectedItem, int val) {
         selectedItem.setNormalPrice(val);
         notifyItemPriceWasUpdated(this, selectedItem);
-        getMapItemToPrices().put(selectedItem.getItemId(), val);
+        //getMapItemToPrices().put(selectedItem.getItemId(), val);
     }
 
     public void removeStoreItem(StoreItem selectedItem) {
         InventoryItem item = this.getInventoryItemById(selectedItem.getItemId());
-        getInventoryItems().remove(item);
+        //getInventoryItems().remove(item);
         getStoreItems().remove(selectedItem);
         notifyStoreItemRemoved(this, selectedItem);
     }

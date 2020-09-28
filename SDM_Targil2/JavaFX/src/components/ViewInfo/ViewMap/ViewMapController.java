@@ -23,7 +23,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MapController implements Initializable, customersChangeListener, StoreChangeListener {
+public class ViewMapController implements Initializable, customersChangeListener, StoreChangeListener {
 
     private static final String TAG = "MapController";
     @FXML
@@ -40,9 +40,8 @@ public class MapController implements Initializable, customersChangeListener, St
     //private int YBoardSize = 0;
     private Cell[][] cell;
     private GridPane pane;
-    private BorderPane borderPane;
 
-    public MapController(){
+    public ViewMapController(){
 
         sdmManager = SDMManager.getInstance();
         allCustomers = sdmManager.getCustomers();
@@ -80,7 +79,7 @@ public class MapController implements Initializable, customersChangeListener, St
             for (int j = 0; j <= maxYValue; j++){
                 cell[i][j] = new Cell(i,j);
                 pane.add(cell[i][j],j,maxXValue-i);
-                System.out.println("cell " + "(" + i + "," + j + ") was added to map!");
+//                System.out.println("cell " + "(" + i + "," + j + ") was added to map!");
             }
         }
         for (Store store: stores){
@@ -169,10 +168,6 @@ public class MapController implements Initializable, customersChangeListener, St
             setStyle("-fx-border-color: #828181");
             //this.setPrefSize(200,200);
 
-//            this.maxHeightProperty().bind(mapAnchorPane.heightProperty().divide(10));
-//            this.minHeightProperty().bind(mapAnchorPane.heightProperty().divide(10));
-//            this.maxWidthProperty().bind(mapAnchorPane.widthProperty().divide(10));
-//            this.minWidthProperty().bind(mapAnchorPane.widthProperty().divide(10));
             this.setMinSize(10,10);
             this.setMaxSize(10,10);
 
@@ -212,13 +207,7 @@ public class MapController implements Initializable, customersChangeListener, St
                         .append("\nLocation: "+ store.getLocation())
                         .append("\nNumber of orders: " + store.getStoreOrders().size());
                 msg = sb.toString();
-//                Ellipse ellipse = new Ellipse(this.getWidth()/2, this.getHeight()/2, this.getWidth()/2-10, this.getHeight()/2 -10);
-//                ellipse.centerXProperty().bind(this.widthProperty().divide(2));
-//                ellipse.centerYProperty().bind(this.heightProperty().divide(2));
-//                ellipse.radiusXProperty().bind(this.widthProperty().divide(2).subtract(10));
-//                ellipse.radiusYProperty().bind(this.heightProperty().divide(2).subtract(10));
-//                ellipse.setStroke(Color.BLACK);
-//                ellipse.setFill(Color.RED);
+
 
                 storeIcon = new ImageView("/resources/map_icons/store.png");
                 storeIcon.fitWidthProperty().bind(cell.widthProperty());

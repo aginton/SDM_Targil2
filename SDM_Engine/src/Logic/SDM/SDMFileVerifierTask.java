@@ -106,7 +106,6 @@ public class SDMFileVerifierTask extends Task<Boolean> {
 
         areCustomerIdsUnique = checkListOfIntsUnique(listOfCustomerIds, "SDMCustomer");
         updateMessageAndProgress(3,"Check 3: Are customer IDs unique? : ", areCustomerIdsUnique);
-        updateMessage("sssaaaaaaaaaaaaaaaaasssssssa");
 
         isStoreUsingExistingItemIds = checkItemsSoldExist(sdmStores, listOfItemIds);
         updateMessageAndProgress(4,"Check 4: Do stores only sell items with existing IDs? :", isStoreUsingExistingItemIds);
@@ -118,11 +117,11 @@ public class SDMFileVerifierTask extends Task<Boolean> {
         updateMessageAndProgress(6,"Check 6: Do stores sell items with unique IDs? : ",isStoreUsingUniqueItemIds);
 
         areLocationsLegal = checkLocationsAreAllowed(listOfStoreLocations, listOfCustomerLocations);
-        updateMessageAndProgress(7,"Check 7:Are all customer and store locations legal? : ", areLocationsLegal);
+        updateMessageAndProgress(7,"Check 7: Are all customer and store locations legal? : ", areLocationsLegal);
 
 
         areItemsOnSaleSoldAtStore = checkIfItemsOnSaleAreSoldAtStores(sdmStores);
-        updateMessageAndProgress(8,"Check 8:Do stores only have discounts for items they currently sell? : ", areItemsOnSaleSoldAtStore);
+        updateMessageAndProgress(8,"Check 8: Do stores only have discounts for items they currently sell? : ", areItemsOnSaleSoldAtStore);
 
         return (areItemIdsUnique && areStoreIdsUnique && areCustomerIdsUnique &&
                 isStoreUsingExistingItemIds && isStoreUsingUniqueItemIds &&
@@ -134,7 +133,7 @@ public class SDMFileVerifierTask extends Task<Boolean> {
         updateProgress(i,8);
         msg = msg.concat("\n"+question+answer);
         if (answer == false){
-            msg = msg.concat("\n"+errorString);
+            msg = msg.concat("\n"+errorString + "\n");
         }
         updateMessage(msg);
 
@@ -186,17 +185,15 @@ public class SDMFileVerifierTask extends Task<Boolean> {
 
         for (Integer i: listOfIfYouBuyIds){
             if (setOfItemIds.add(i)){
-                errorString = errorString.concat(String.format("Store %d has if-you-buy for item id=%d, but no such item id found in store inventory!\n",store.getId(),i));
-//                setLoadingErrorMessage(loadingErrorMessage.get().concat(
-//                        String.format("Store %d has if-you-buy for item id=%d, but no such item id found in store inventory!\n",store.getId(),i)
-//                ));
+                errorString = errorString.concat(String.format("\n\tStore %d has if-you-buy for item id=%d, but no such item id found in store inventory!",store.getId(),i));
+
                 res =false;
             }
         }
 
         for (Integer i: listThenYouGetIDs){
             if (setOfItemIds.add(i)){
-                errorString = errorString.concat(String.format("Store %d has then-you-get for item id=%d, but no such item id found in store inventory!\n",store.getId(),i));
+                errorString = errorString.concat(String.format("\n\tStore %d has then-you-get for item id=%d, but no such item id found in store inventory!",store.getId(),i));
 //                setLoadingErrorMessage(loadingErrorMessage.get().concat(
 //                        String.format("Store %d has then-you-get for item id=%d, but no such item id found in store inventory!\n",store.getId(),i)
 //                ));
@@ -312,14 +309,13 @@ public class SDMFileVerifierTask extends Task<Boolean> {
         for (List<Integer> loc: listOfStoreLocations){
             if (set.add(loc) == false){
                 //setLoadingErrorMessage(loadingErrorMessage.get().concat(String.format("Error: Store location (%d,%d) appears more than once\n",loc.get(0), loc.get(1))));
-                errorString = errorString.concat(String.format("Error: Store location (%d,%d) appears more than once\n",loc.get(0), loc.get(1)));
+                errorString = errorString.concat(String.format("\n\tError: Store location (%d,%d) appears more than once",loc.get(0), loc.get(1)));
                 res = false;
             }
         }
         for (List<Integer> loc: listOfCustomerLocations){
             if (set.add(loc) == false){
-                //setLoadingErrorMessage(loadingErrorMessage.get().concat(String.format("Error: Customer location (%d,%d) appears more than once\n",loc.get(0), loc.get(1))));
-                errorString = errorString.concat(String.format("Error: Customer location (%d,%d) appears more than once\n",loc.get(0), loc.get(1)));
+                errorString = errorString.concat(String.format("\n\tError: Customer location (%d,%d) appears more than once",loc.get(0), loc.get(1)));
                 res = false;
             }
         }
@@ -341,7 +337,7 @@ public class SDMFileVerifierTask extends Task<Boolean> {
         for (Integer existingItem: listOfExistingItemIds){
             if (!itemsSold.contains(existingItem)){
                 //setLoadingErrorMessage(loadingErrorMessage.get().concat("Error: Item with id= " + existingItem + " is not sold in any store."));
-                errorString=errorString.concat("Error: Item with id= " + existingItem + " is not sold in any store.");
+                errorString=errorString.concat("\n\tError: Item with id= " + existingItem + " is not sold in any store.");
                 res = false;
             }
         }
@@ -357,8 +353,8 @@ public class SDMFileVerifierTask extends Task<Boolean> {
 
             for (SDMSell sold: itemsSold){
                 if (!listOfAllowedIds.contains(sold.getItemId())){
-                    //setLoadingErrorMessage(loadingErrorMessage.get().concat("Error: Store-Id = "+ store.getId() + " has item with item-Id= " + sold.getItemId() + ", but no such id exists in SDMItems!"));
-                    errorString = errorString.concat("Error: Store-Id = "+ store.getId() + " has item with item-Id= " + sold.getItemId() + ", but no such id exists in SDMItems!");
+
+                    errorString = errorString.concat("\n\tError: Store-Id = "+ store.getId() + " has item with item-Id= " + sold.getItemId() + ", but no such id exists in SDMItems!");
                     res = false;
                 }
             }
@@ -379,8 +375,8 @@ public class SDMFileVerifierTask extends Task<Boolean> {
 
             for (SDMSell sold: itemsSold){
                 if (!tmpSet.add(sold.getItemId())){
-                    //setLoadingErrorMessage(loadingErrorMessage.get().concat("Error: Store-Id = " + store.getId() + " is selling multiple items with id =" + sold.getItemId()));
-                    errorString = errorString.concat("Error: Store-Id = " + store.getId() + " is selling multiple items with id =" + sold.getItemId());
+
+                    errorString = errorString.concat("\n\tError: Store-Id = " + store.getId() + " is selling multiple items with id =" + sold.getItemId());
                     res = false;
                 }
             }
@@ -395,8 +391,7 @@ public class SDMFileVerifierTask extends Task<Boolean> {
         errorString = new String("");
         for (Integer num: inputList){
             if (!tmpSet.add(num)){
-                //setLoadingErrorMessage(loadingErrorMessage.get().concat("Error: id=" + num + " is not unique for type " + problematicType + "\n"));
-                errorString = errorString.concat("Error: id=" + num + " is not unique for type " + problematicType + "\n");
+                errorString = errorString.concat("\n\tError: id=" + num + " is not unique for type " + problematicType);
                 res = false;
             }
         }

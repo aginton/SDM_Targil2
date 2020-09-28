@@ -148,7 +148,8 @@ public class RemoveItemFromStoreController implements Initializable {
 
     @FXML
     void deleteButtonAction(ActionEvent event) {
-
+        if (selectedStore == null || selectedItem == null)
+            return;
 
         if (selectedItem != null && selectedStore != null){
             if (selectedStore.getStoreItems().size()==1){

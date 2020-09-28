@@ -19,12 +19,12 @@ public class SDMApp extends Application {
 
         primaryStage.setTitle("Super Duper Market");
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource("MainAppN.fxml");
+        URL url = getClass().getResource("MainApp.fxml");
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(url.openStream());
 
         Scene scene = new Scene(root);
-        final String cssURL = this.getClass().getResource("/components/Main/MainAppCSS.css").toExternalForm();
+        final String cssURL = this.getClass().getResource("/CSS/MainAppCSS.css").toExternalForm();
         scene.getStylesheets().add(cssURL);
         primaryStage.setScene(scene);
         primaryStage.show();

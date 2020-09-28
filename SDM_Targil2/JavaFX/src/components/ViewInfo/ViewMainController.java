@@ -1,7 +1,7 @@
 package components.ViewInfo;
 
 import components.ViewInfo.ViewItems.ViewItemsController;
-import components.ViewInfo.ViewMap.MapController;
+import components.ViewInfo.ViewMap.ViewMapController;
 import components.ViewInfo.ViewOrders.ViewOrdersController;
 import components.ViewInfo.ViewStore.ViewStoreController;
 import components.ViewInfo.ViewCustomers.ViewCustomersController;
@@ -45,7 +45,7 @@ public class ViewMainController implements Initializable {
     private ViewOrdersController viewOrdersController;
     private ViewItemsController viewItemsController;
     private ViewCustomersController viewCustomersController;
-    private MapController viewMapController;
+    private ViewMapController viewMapController;
     private String TAG = "ViewMainController";
 
     @Override
@@ -73,7 +73,7 @@ public class ViewMainController implements Initializable {
             viewCustomersController = viewCustomersLoader.getController();
 
             FXMLLoader viewMapLoader = new FXMLLoader();
-            viewMapLoader.setLocation(getClass().getResource("/components/ViewInfo/ViewMap/Map.fxml"));
+            viewMapLoader.setLocation(getClass().getResource("/components/ViewInfo/ViewMap/ViewMap.fxml"));
             viewMapRef = viewMapLoader.load();
             viewMapController = viewMapLoader.getController();
 
