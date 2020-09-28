@@ -9,16 +9,16 @@ import java.util.List;
 public class Orders {
 
     private List<Order> orders;
-    private ObservableList<Order> ordersObservableList;
-    public List<OrderChangeInterface> listeners;
+    //private ObservableList<Order> ordersObservableList;
+    public List<OrderChangeListener> listeners;
 
     public Orders() {
         orders = new ArrayList<>();
-        ordersObservableList = FXCollections.observableArrayList();
+        //ordersObservableList = FXCollections.observableArrayList();
         listeners = new ArrayList<>();
     }
 
-    public void addOrdersChangeListener(OrderChangeInterface listener){
+    public void addOrdersChangeListener(OrderChangeListener listener){
         listeners.add(listener);
     }
 
@@ -31,22 +31,22 @@ public class Orders {
 
     public void addOrder(Order order){
         orders.add(order);
-        ordersObservableList.add(order);
+        //ordersObservableList.add(order);
         notifyListenersOrderWasAdded(order);
     }
 
     private void notifyListenersOrderWasAdded(Order order) {
-        for (OrderChangeInterface listener: listeners){
+        for (OrderChangeListener listener: listeners){
             listener.orderWasAdded(order);
         }
     }
 
-    public ObservableList<Order> getOrdersObservableList() {
-
-        return ordersObservableList;
-    }
-
-    public void setOrdersObservableList(ObservableList<Order> ordersObservableList) {
-        this.ordersObservableList = ordersObservableList;
-    }
+//    public ObservableList<Order> getOrdersObservableList() {
+//
+//        return ordersObservableList;
+//    }
+//
+//    public void setOrdersObservableList(ObservableList<Order> ordersObservableList) {
+//        this.ordersObservableList = ordersObservableList;
+//    }
 }

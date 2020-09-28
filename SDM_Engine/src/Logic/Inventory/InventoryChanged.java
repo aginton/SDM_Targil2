@@ -1,5 +1,5 @@
-package Logic.Inventory;
-
-public interface InventoryChanged {
-
-}
+//package Logic.Inventory;
+//
+//public interface InventoryChanged {
+//
+//}

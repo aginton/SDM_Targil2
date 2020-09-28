@@ -1,6 +1,6 @@
 package Logic.Interfaces;
 
-public interface customersChangeInterface {
+public interface customersChangeListener {
 
     void onCustomersChange();
 }

@@ -1,6 +1,6 @@
 package components.ViewInfo.ViewItems;
 
-import Logic.Interfaces.inventoryChangeInterface;
+import Logic.Interfaces.inventoryChangeListener;
 import Logic.Inventory.Inventory;
 import Logic.Inventory.InventoryItem;
 import Logic.Inventory.ePurchaseCategory;
@@ -10,12 +10,11 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class ViewItemsController implements inventoryChangeInterface {
+public class ViewItemsController implements inventoryChangeListener {
 
     @FXML
     private TableView<InventoryItem> itemsTableView;

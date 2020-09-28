@@ -421,7 +421,7 @@ public class Store implements hasLocationInterface {
         return res;
     }
 
-    public int getNormalPriceForItem(InventoryItem k) {
+    public Integer getNormalPriceForItem(InventoryItem k) {
         for (StoreItem item: storeItems){
             if (item.getItemId()==k.getItemId())
                 return item.getNormalPrice();

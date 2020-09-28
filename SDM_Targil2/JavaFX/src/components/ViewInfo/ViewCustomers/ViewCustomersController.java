@@ -2,7 +2,7 @@ package components.ViewInfo.ViewCustomers;
 
 import Logic.Customers.Customer;
 import Logic.Customers.Customers;
-import Logic.Interfaces.customersChangeInterface;
+import Logic.Interfaces.customersChangeListener;
 import Logic.SDM.SDMManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -17,7 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ViewCustomersController implements Initializable, customersChangeInterface {
+public class ViewCustomersController implements Initializable, customersChangeListener {
 
     @FXML
     private TableView<Customer> customersTableView;

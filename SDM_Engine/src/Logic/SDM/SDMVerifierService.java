@@ -24,6 +24,4 @@ public class SDMVerifierService extends Service<Boolean> {
         }
         return new SDMFileVerifierTask(file);
     }
-
-
 }

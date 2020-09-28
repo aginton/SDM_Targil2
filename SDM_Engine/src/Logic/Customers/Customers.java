@@ -1,7 +1,6 @@
 package Logic.Customers;
 
-import Logic.Interfaces.customersChangeInterface;
-import Logic.Interfaces.inventoryChangeInterface;
+import Logic.Interfaces.customersChangeListener;
 import Logic.Order.Order;
 
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.List;
 public class Customers {
 
     private List<Customer> customers;
-    private List<customersChangeInterface> listeners;
+    private List<customersChangeListener> listeners;
 
     public Customers(){
 
@@ -30,7 +29,7 @@ public class Customers {
         customers.add(newCustomer);
     }
 
-    public void addListener(customersChangeInterface listener){
+    public void addListener(customersChangeListener listener){
         listeners.add(listener);
     }
 
@@ -42,7 +41,7 @@ public class Customers {
     }
 
     public void notifyListeners(){
-        for (customersChangeInterface listener: listeners)
+        for (customersChangeListener listener: listeners)
             listener.onCustomersChange();
     }
 }

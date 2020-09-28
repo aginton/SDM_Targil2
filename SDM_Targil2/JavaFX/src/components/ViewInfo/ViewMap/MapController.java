@@ -2,7 +2,7 @@ package components.ViewInfo.ViewMap;
 
 import Logic.Customers.Customer;
 import Logic.Customers.Customers;
-import Logic.Interfaces.customersChangeInterface;
+import Logic.Interfaces.customersChangeListener;
 import Logic.Interfaces.hasLocationInterface;
 import Logic.Order.Order;
 import Logic.Order.StoreItem;
@@ -23,7 +23,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MapController implements Initializable, customersChangeInterface, StoreChangeListener {
+public class MapController implements Initializable, customersChangeListener, StoreChangeListener {
 
     private static final String TAG = "MapController";
     @FXML

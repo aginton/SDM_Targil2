@@ -1,5 +1,5 @@
 package Logic.Order;
 
-public interface OrderChangeInterface {
+public interface OrderChangeListener {
     void orderWasAdded(Order order);
 }

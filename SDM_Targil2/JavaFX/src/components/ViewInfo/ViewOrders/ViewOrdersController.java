@@ -1,27 +1,20 @@
 package components.ViewInfo.ViewOrders;
 
-import Logic.Inventory.Inventory;
-import Logic.Inventory.InventoryItem;
 import Logic.Order.Order;
-import Logic.Order.OrderChangeInterface;
+import Logic.Order.OrderChangeListener;
 import Logic.SDM.SDMManager;
 import components.ViewInfo.ViewOrders.SingleOrder.SingleOrderViewController;
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
-import java.util.List;
 
-public class ViewOrdersController implements OrderChangeInterface {
+public class ViewOrdersController implements OrderChangeListener {
     private static final String TAG = "ViewOrdersController";
     @FXML
     private AnchorPane orderViewAnchorPane;
@@ -33,7 +26,8 @@ public class ViewOrdersController implements OrderChangeInterface {
     private ObservableList<Order> orders;
 
     public ViewOrdersController(){
-        orders = SDMManager.getInstance().getOrderHistory().getOrdersObservableList();
+//        orders = SDMManager.getInstance().getOrderHistory().getOrdersObservableList();
+        orders = FXCollections.observableArrayList(SDMManager.getInstance().getOrderHistory().getOrders());
         SDMManager.getInstance().getOrderHistory().addOrdersChangeListener(this);
     }
 
@@ -56,7 +50,8 @@ public class ViewOrdersController implements OrderChangeInterface {
         System.out.println(TAG + " - refresh()");
         orderHistoryFlowpane.getChildren().clear();
         orders.clear();
-        orders = SDMManager.getInstance().getOrderHistory().getOrdersObservableList();
+        //orders = SDMManager.getInstance().getOrderHistory().getOrdersObservableList();
+        orders = FXCollections.observableArrayList(SDMManager.getInstance().getOrderHistory().getOrders());
         SDMManager.getInstance().getOrderHistory().addOrdersChangeListener(this);
 
     }

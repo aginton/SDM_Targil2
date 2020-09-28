@@ -9,5 +9,4 @@ public interface hasLocationInterface {
     void setLocation(List<Integer> location);
     void setX(int x);
     void setY(int y);
-
 }

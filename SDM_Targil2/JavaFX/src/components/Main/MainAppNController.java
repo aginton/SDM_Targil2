@@ -119,6 +119,9 @@ public class MainAppNController {
         swapPanes(homePageRef);
         File file = fileChooser.showOpenDialog(stage);
 
+        if (file == null)
+            return;
+
         if (file.getAbsolutePath().equals(selectedFileProperty.get())){
             System.out.println("This file is already loaded!");
             return;

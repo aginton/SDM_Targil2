@@ -2,7 +2,7 @@ package Logic.Inventory;
 
 
 
-import Logic.Interfaces.inventoryChangeInterface;
+import Logic.Interfaces.inventoryChangeListener;
 import Logic.Order.Cart;
 import Logic.Order.CartItem;
 import Logic.Order.Order;
@@ -19,7 +19,7 @@ public class Inventory  {
     private HashMap<InventoryItem, Double> mapItemsToTotalSold;
     private HashMap<InventoryItem, Float> mapItemsToAvePrice;
     private HashMap<InventoryItem, Set<Store>> mapItemsToStoresWithItem;
-    private List<inventoryChangeInterface> listeners;
+    private List<inventoryChangeListener> listeners;
 
     public Inventory() {
         this.listInventoryItems = new ArrayList<InventoryItem>();
@@ -101,7 +101,8 @@ public class Inventory  {
             Set<Store> setOStores = mapItemsToStoresWithItem.get(item);
             float sum = 0;
             for (Store store : setOStores) {
-                sum += store.getMapItemToPrices().get(item.getItemId());
+                //sum += store.getMapItemToPrices().get(item.getItemId());
+                sum += store.getNormalPriceForItem(item.getInventoryItem());
             }
             int size = setOStores.size();
             mapItemsToAvePrice.put(item, sum / size);
@@ -133,17 +134,17 @@ public class Inventory  {
         return listInventoryItems.stream().filter( item-> !mapItemsToStoresWithItem.get(item).contains(store)).collect(Collectors.toList());
     }
 
-    public void addListener(inventoryChangeInterface listener){
+    public void addListener(inventoryChangeListener listener){
         listeners.add(listener);
     }
 
     private void notifyListeners(){
-        for (inventoryChangeInterface listener: listeners)
+        for (inventoryChangeListener listener: listeners)
             listener.onInventoryChanged();
     }
 
     private void notifyListenersSalesMapChanged() {
-        for (inventoryChangeInterface listener: listeners)
+        for (inventoryChangeListener listener: listeners)
             listener.onInventoryChanged();
     }
 

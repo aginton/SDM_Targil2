@@ -97,32 +97,32 @@ public class SDMFileVerifierTask extends Task<Boolean> {
 
         //error 3.2
         areItemIdsUnique = checkListOfIntsUnique(listOfItemIds, "course.java.sdm.engine.SDM-Items");
-        updateMessageAndProgress(1,"Are all Inventory Item IDs unique?: ", areItemIdsUnique);
+        updateMessageAndProgress(1,"Check 1: Are all Inventory Item IDs unique?: ", areItemIdsUnique);
 
 
         //error 3.3
         areStoreIdsUnique = checkListOfIntsUnique(listOfStoreIds, "course.java.sdm.engine.SDM-Stores");
-        updateMessageAndProgress(2,"Are all store IDs unique? : ", areStoreIdsUnique);
+        updateMessageAndProgress(2,"Check 2: Are all store IDs unique? : ", areStoreIdsUnique);
 
         areCustomerIdsUnique = checkListOfIntsUnique(listOfCustomerIds, "SDMCustomer");
-        updateMessageAndProgress(3,"Are customer IDs unique? : ", areCustomerIdsUnique);
+        updateMessageAndProgress(3,"Check 3: Are customer IDs unique? : ", areCustomerIdsUnique);
         updateMessage("sssaaaaaaaaaaaaaaaaasssssssa");
 
         isStoreUsingExistingItemIds = checkItemsSoldExist(sdmStores, listOfItemIds);
-        updateMessageAndProgress(4,"Do stores only sell items with existing IDs? :", isStoreUsingExistingItemIds);
+        updateMessageAndProgress(4,"Check 4: Do stores only sell items with existing IDs? :", isStoreUsingExistingItemIds);
 
         isEachExistingItemSoldSomewhere = checkEachExistingItemSoldSomewhere(sdmStores, listOfItemIds);
-        updateMessageAndProgress(5,"Is every existing item sold somewhere? : ", isEachExistingItemSoldSomewhere);
+        updateMessageAndProgress(5,"Check 5: Is every existing item sold somewhere? : ", isEachExistingItemSoldSomewhere);
 
         isStoreUsingUniqueItemIds = checkStoreUsesUniqueItemIds(sdmStores);
-        updateMessageAndProgress(6,"Do stores sell items with unique IDs? : ",isStoreUsingUniqueItemIds);
+        updateMessageAndProgress(6,"Check 6: Do stores sell items with unique IDs? : ",isStoreUsingUniqueItemIds);
 
         areLocationsLegal = checkLocationsAreAllowed(listOfStoreLocations, listOfCustomerLocations);
-        updateMessageAndProgress(7,"Are all customer and store locations legal? : ", areLocationsLegal);
+        updateMessageAndProgress(7,"Check 7:Are all customer and store locations legal? : ", areLocationsLegal);
 
 
         areItemsOnSaleSoldAtStore = checkIfItemsOnSaleAreSoldAtStores(sdmStores);
-        updateMessageAndProgress(8,"Do stores only have discounts for items they currently sell? : ", areItemsOnSaleSoldAtStore);
+        updateMessageAndProgress(8,"Check 8:Do stores only have discounts for items they currently sell? : ", areItemsOnSaleSoldAtStore);
 
         return (areItemIdsUnique && areStoreIdsUnique && areCustomerIdsUnique &&
                 isStoreUsingExistingItemIds && isStoreUsingUniqueItemIds &&

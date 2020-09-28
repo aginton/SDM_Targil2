@@ -8,7 +8,6 @@ import Logic.Order.*;
 import Logic.Store.Store;
 import Logic.Store.StoreDiscount;
 import Resources.Schema.JAXBGenerated.*;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.*;
@@ -239,7 +238,8 @@ public class SDMManager extends SDMFileVerifier{
 
         mapItemsChosenToAmount.forEach((item,amount) -> {
             Store cheapestStore = findCheapestStoreForItem(item);
-            int cheapestPrice = cheapestStore.getMapItemToPrices().get(item.getItemId());
+//            int cheapestPrice = cheapestStore.getMapItemToPrices().get(item.getItemId());
+            int cheapestPrice = cheapestStore.getNormalPriceForItem(item.getInventoryItem());
             CartItem cartItem = new CartItem(item, amount, cheapestPrice, cheapestStore);
             cart.add(cartItem);
         });
@@ -248,8 +248,11 @@ public class SDMManager extends SDMFileVerifier{
     }
 
     public Store findCheapestStoreForItem(InventoryItem item) {
-        Comparator<Store> comparator = (store1, store2) -> store1.getMapItemToPrices().get(item.getItemId())
-                .compareTo(store2.getMapItemToPrices().get(item.getItemId()));
+//        Comparator<Store> comparator = (store1, store2) -> store1.getMapItemToPrices().get(item.getItemId())
+//                .compareTo(store2.getMapItemToPrices().get(item.getItemId()));
+        Comparator<Store> comparator = (store1, store2) -> store1.getNormalPriceForItem(item.getInventoryItem())
+                .compareTo(store2.getNormalPriceForItem(item.getInventoryItem()));
+
         Set<Store> storesWithItem = inventory.getMapItemsToStoresWithItem().get(item);
         Store cheapestStore = Collections.min(storesWithItem, comparator);
 
