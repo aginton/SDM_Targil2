@@ -11,10 +11,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 
 public class UpdateInventoryContainerController{
+    @FXML
+    private GridPane rootGridPane;
 
     @FXML
     private Button addButton;
@@ -67,16 +70,21 @@ public class UpdateInventoryContainerController{
             addItemLoader.setLocation(getClass().getResource("/components/UpdateInventory/AddItemToStore/AddItemToStore.fxml"));
             addItemRef = addItemLoader.load();
             addItemToStoreController = addItemLoader.getController();
+//            addItemToStoreController.bindToChildAnchorPane(childAnchorPane);
 
             FXMLLoader removeItemLoader = new FXMLLoader();
             removeItemLoader.setLocation(getClass().getResource("/components/UpdateInventory/RemoveItemFromStore/RemoveItemFromStore.fxml"));
             removeItemRef = removeItemLoader.load();
             removeItemFromStoreController = removeItemLoader.getController();
+            //removeItemFromStoreController.bindToChildAnchorPane(childAnchorPane);
+
+
 
             FXMLLoader changePriceLoader = new FXMLLoader();
             changePriceLoader.setLocation(getClass().getResource("/components/UpdateInventory/ChangeStoreItemPrice/ChangeStoreItemPrice.fxml"));
             updatePriceRef = changePriceLoader.load();
             changeStoreItemPriceController = changePriceLoader.getController();
+            //changeStoreItemPriceController.bindToChildAnchorPane(childAnchorPane);
 
 
         } catch (IOException e) {
@@ -90,5 +98,10 @@ public class UpdateInventoryContainerController{
         addItemToStoreController.refresh();
         removeItemFromStoreController.refresh();
         changeStoreItemPriceController.refresh();
+    }
+
+    public void bindToMainChildAnchorPane(AnchorPane mainChildAnchorPane) {
+        rootGridPane.prefWidthProperty().bind(mainChildAnchorPane.widthProperty());
+        rootGridPane.prefHeightProperty().bind(mainChildAnchorPane.heightProperty());
     }
 }

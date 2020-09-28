@@ -173,6 +173,7 @@ public class MainAppController {
             updateLoader.setLocation(getClass().getResource("/components/UpdateInventory/UpdateInventoryContainer.fxml"));
             updateRef = updateLoader.load();
             updateController = updateLoader.getController();
+            updateController.bindToMainChildAnchorPane(mainChildAnchorPane);
 
 
         } catch (IOException e) {

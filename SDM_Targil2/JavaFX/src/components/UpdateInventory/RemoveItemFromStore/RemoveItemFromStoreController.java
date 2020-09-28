@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -27,6 +28,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class RemoveItemFromStoreController implements Initializable {
+
+    @FXML
+    private AnchorPane rootAnchorPane;
 
     @FXML
     private Label chooseItemValueLabel;
@@ -198,4 +202,7 @@ public class RemoveItemFromStoreController implements Initializable {
         accordian.setExpandedPane(chooseItemsPane);
     }
 
+    public void bindToChildAnchorPane(AnchorPane childAnchorPane) {
+        rootAnchorPane.prefWidthProperty().bind(childAnchorPane.widthProperty());
+    }
 }

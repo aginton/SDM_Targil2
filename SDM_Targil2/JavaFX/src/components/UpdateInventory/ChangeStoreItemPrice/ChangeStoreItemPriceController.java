@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -26,6 +27,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ChangeStoreItemPriceController implements Initializable {
+
+    @FXML
+    private AnchorPane rootAnchorPane;
 
     @FXML
     private Accordion accordian;
@@ -216,4 +220,7 @@ public class ChangeStoreItemPriceController implements Initializable {
     }
 
 
+    public void bindToChildAnchorPane(AnchorPane childAnchorPane) {
+        rootAnchorPane.prefWidthProperty().bind(childAnchorPane.widthProperty());
+    }
 }
