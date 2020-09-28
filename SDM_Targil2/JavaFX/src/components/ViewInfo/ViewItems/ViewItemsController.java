@@ -13,8 +13,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 
 public class ViewItemsController implements inventoryChangeListener {
+
+    @FXML
+    private GridPane rootGridPane;
+
+    @FXML
+    private ColumnConstraints gridMiddleColumn;
+
+
 
     @FXML
     private TableView<InventoryItem> itemsTableView;
@@ -102,6 +113,14 @@ public class ViewItemsController implements inventoryChangeListener {
         });
 
         itemsTableView.setItems(items);
+
+        itemIdColumn.prefWidthProperty().bind(itemsTableView.widthProperty().multiply(8.0/100));
+        itemNameColumn.prefWidthProperty().bind(itemsTableView.widthProperty().multiply(20.0/100));
+        itemCategoryColumn.prefWidthProperty().bind(itemsTableView.widthProperty().multiply(20.0/100));
+        numCarryingStoresColumn.prefWidthProperty().bind(itemsTableView.widthProperty().multiply(15.0/100));
+        avePriceColumn.prefWidthProperty().bind(itemsTableView.widthProperty().multiply(15.0/100));
+        totalAmountSoldColumn.prefWidthProperty().bind(itemsTableView.widthProperty().multiply(20.0/100));
+
     }
 
     public void refresh() {
@@ -115,4 +134,9 @@ public class ViewItemsController implements inventoryChangeListener {
         setUpFields();
     }
 
+    public void bindToMainAnchorPane(AnchorPane childAnchorPane) {
+//        rootGridPane.prefWidthProperty().bind(childAnchorPane.widthProperty());
+        //itemsTableView.prefWidthProperty().bind(rootGridPane.widthProperty());
+        itemsTableView.prefWidthProperty().bind(childAnchorPane.widthProperty());
+    }
 }

@@ -159,6 +159,7 @@ public class MainAppController {
             viewLoader.setLocation(getClass().getResource("/components/ViewInfo/ViewMainContainer.fxml"));
             viewMenuRef = viewLoader.load();
             viewMainController = viewLoader.getController();
+            viewMainController.bindToMainChildAnchorPane(mainChildAnchorPane);
 
             //  System.out.println("Going to try and store ref to orderMenu.fxml");
 
@@ -166,6 +167,7 @@ public class MainAppController {
             newOrderLoader.setLocation(getClass().getResource("/components/PlaceAnOrder/PlaceAnOrderMain/NewOrderContainer.fxml"));
             orderMenuRef = newOrderLoader.load();
             newOrderContainerController = newOrderLoader.getController();
+            newOrderContainerController.bindToMainChildAnchorPane(mainChildAnchorPane);
 
             FXMLLoader updateLoader = new FXMLLoader();
             updateLoader.setLocation(getClass().getResource("/components/UpdateInventory/UpdateInventoryContainer.fxml"));

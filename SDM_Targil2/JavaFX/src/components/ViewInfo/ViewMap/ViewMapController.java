@@ -157,6 +157,11 @@ public class ViewMapController implements Initializable, customersChangeListener
 
     }
 
+    public void bindToMainAnchorPane(AnchorPane childAnchorPane) {
+        mapAnchorPane.prefWidthProperty().bind(childAnchorPane.widthProperty());
+        mapAnchorPane.prefHeightProperty().bind(childAnchorPane.heightProperty());
+    }
+
     public class Cell extends Pane{
         private eMapElementType elementType;
         private String msg;
@@ -168,10 +173,10 @@ public class ViewMapController implements Initializable, customersChangeListener
             setStyle("-fx-border-color: #828181");
             //this.setPrefSize(200,200);
 
-            this.setMinSize(10,10);
-            this.setMaxSize(10,10);
+            this.setMinSize(40,40);
+            this.setMaxSize(40,40);
 
-            //this.setOnMouseClicked(e->handleClick());
+
             elementType = eMapElementType.EMPTY;
             this.x = i;
             this.y = j;
@@ -213,7 +218,6 @@ public class ViewMapController implements Initializable, customersChangeListener
                 storeIcon.fitWidthProperty().bind(cell.widthProperty());
                 storeIcon.fitHeightProperty().bind(cell.heightProperty());
 
-                //setStyle("-fx-background-color: hotpink");
                 getChildren().add(storeIcon);
 
                 store.totalNumberOfOrdersProperty().addListener(((observable, oldValue, newValue) -> {
@@ -234,19 +238,11 @@ public class ViewMapController implements Initializable, customersChangeListener
                         .append("\nLocation: "+ customer.getLocation())
                         .append("\nNumber of orders: " + customer.getOrders().size());
                 msg = sb.toString();
-//                Ellipse ellipse = new Ellipse(this.getWidth()/2, this.getHeight()/2, this.getWidth()/2-10, this.getHeight()/2 -10);
-//                ellipse.centerXProperty().bind(this.widthProperty().divide(2));
-//                ellipse.centerYProperty().bind(this.heightProperty().divide(2));
-//                ellipse.radiusXProperty().bind(this.widthProperty().divide(2).subtract(10));
-//                ellipse.radiusYProperty().bind(this.heightProperty().divide(2).subtract(10));
-//                ellipse.setStroke(Color.BLACK);
-//                ellipse.setFill(Color.BLUE);
 
                 storeIcon = new ImageView("/resources/map_icons/customer.png");
                 storeIcon.fitWidthProperty().bind(cell.widthProperty());
                 storeIcon.fitHeightProperty().bind(cell.heightProperty());
                 getChildren().add(storeIcon);
-                //setStyle("-fx-background-color: chocolate");
             }
 
             StringBuilder cellCoord = new StringBuilder();

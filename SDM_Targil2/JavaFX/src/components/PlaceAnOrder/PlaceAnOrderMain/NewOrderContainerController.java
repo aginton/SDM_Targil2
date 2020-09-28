@@ -43,6 +43,10 @@ import java.util.*;
 public class NewOrderContainerController implements Initializable {
 
     @FXML
+    private AnchorPane rootAnchorPane;
+
+
+    @FXML
     private Label titleLabel;
 
     @FXML
@@ -504,4 +508,8 @@ public class NewOrderContainerController implements Initializable {
     }
 
 
+    public void bindToMainChildAnchorPane(AnchorPane mainChildAnchorPane) {
+        rootAnchorPane.prefHeightProperty().bind(mainChildAnchorPane.heightProperty());
+        rootAnchorPane.prefWidthProperty().bind(mainChildAnchorPane.widthProperty());
+    }
 }

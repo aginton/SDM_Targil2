@@ -56,11 +56,13 @@ public class ViewMainController implements Initializable {
             viewStoresLoader.setLocation(getClass().getResource("/components/ViewInfo/ViewStore/ViewStore.fxml"));
             viewStoresRef = viewStoresLoader.load();
             viewStoreController = viewStoresLoader.getController();
+            viewStoreController.bindToMainAnchorPane(childAnchorPane);
 
             FXMLLoader viewItemsLoader = new FXMLLoader();
             viewItemsLoader.setLocation(getClass().getResource("/components/ViewInfo/ViewItems/ViewItems.fxml"));
             viewInventoryItemsRef = viewItemsLoader.load();
             viewItemsController = viewItemsLoader.getController();
+            viewItemsController.bindToMainAnchorPane(childAnchorPane);
 
             FXMLLoader viewOrdersLoader = new FXMLLoader();
             viewOrdersLoader.setLocation(getClass().getResource("/components/ViewInfo/ViewOrders/ViewOrders.fxml"));
@@ -76,6 +78,8 @@ public class ViewMainController implements Initializable {
             viewMapLoader.setLocation(getClass().getResource("/components/ViewInfo/ViewMap/ViewMap.fxml"));
             viewMapRef = viewMapLoader.load();
             viewMapController = viewMapLoader.getController();
+            viewMapController.bindToMainAnchorPane(childAnchorPane);
+
 
             loadNewPane(viewStoresRef);
 
@@ -125,5 +129,9 @@ public class ViewMainController implements Initializable {
         viewOrdersController.refresh();
         viewCustomersController.refresh();
         viewMapController.refresh();
+    }
+
+    public void bindToMainChildAnchorPane(AnchorPane mainChildAnchorPane) {
+        rootGridpane.prefWidthProperty().bind(mainChildAnchorPane.widthProperty());
     }
 }

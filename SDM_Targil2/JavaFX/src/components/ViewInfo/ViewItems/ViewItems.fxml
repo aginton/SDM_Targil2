@@ -1,32 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 
-<GridPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.ViewInfo.ViewItems.ViewItemsController">
-   <columnConstraints>
-      <ColumnConstraints hgrow="NEVER" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="671.0" minWidth="0.0" prefWidth="68.0" />
-      <ColumnConstraints hgrow="NEVER" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="NEVER" />
-      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="NEVER" />
-   </rowConstraints>
-   <children>
-      <TableView fx:id="itemsTableView" GridPane.columnIndex="1" GridPane.rowIndex="1">
-          <columns>
-              <TableColumn fx:id="itemIdColumn" prefWidth="75.0" text="Item ID" />
-              <TableColumn fx:id="itemNameColumn" prefWidth="75.0" text="Item Name" />
-              <TableColumn fx:id="itemCategoryColumn" prefWidth="126.0" text="Purchase Category" />
-              <TableColumn fx:id="numCarryingStoresColumn" prefWidth="122.0" text="# Carrying Stores" />
-              <TableColumn fx:id="avePriceColumn" prefWidth="111.0" text="Ave. Price" />
-              <TableColumn fx:id="totalAmountSoldColumn" prefWidth="150.0" text="Total Amount Sold" />
-          </columns>
-      </TableView>
-   </children>
-</GridPane>
+
+<TableView fx:id="itemsTableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.ViewInfo.ViewItems.ViewItemsController">
+    <columns>
+        <TableColumn fx:id="itemIdColumn" prefWidth="75.0" text="Item ID" />
+        <TableColumn fx:id="itemNameColumn" prefWidth="75.0" text="Item Name" />
+        <TableColumn fx:id="itemCategoryColumn" prefWidth="126.0" text="Purchase Category" />
+        <TableColumn fx:id="numCarryingStoresColumn" prefWidth="122.0" text="# Carrying Stores" />
+        <TableColumn fx:id="avePriceColumn" prefWidth="111.0" text="Ave. Price" />
+        <TableColumn fx:id="totalAmountSoldColumn" prefWidth="150.0" text="Total Amount Sold" />
+    </columns>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+</TableView>
