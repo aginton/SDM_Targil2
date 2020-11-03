@@ -10,5 +10,9 @@ Then you can simulate placing an order, viewing system information, or updating 
 
 <h2>Screenshots</h2>
 
-![alt text](http://url/to/img.png
+![Load Page](loadFile.png)
+
+![View Stores](ViewStores.png)
+
+![Static Order](staticorder.png)
 
