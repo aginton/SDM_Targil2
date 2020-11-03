@@ -12,7 +12,7 @@ Then you can simulate placing an order, viewing system information, or updating 
 
 ![Load Page](loadFile.png)
 
-![View Stores](ViewStores.png)
+![View Stores](ViewStores.PNG)
 
-![Static Order](staticorder.png)
+![Static Order](staticorder.PNG)
 
