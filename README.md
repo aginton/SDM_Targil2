@@ -10,9 +10,9 @@ Then you can simulate placing an order, viewing system information, or updating 
 
 <h2>Screenshots</h2>
 
-![Load Page](loadFile.png)
+![Load Page](loadFile.PNG)
 
-![View Stores](ViewStores.PNG)
+![View Stores](ViewStores.png)
 
 ![Static Order](staticorder.PNG)
 
